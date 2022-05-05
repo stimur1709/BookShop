@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "book_file_type")
-public class BookFileTypeEntity {
+@Table(name = "book_file")
+public class BookFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,11 @@ public class BookFileTypeEntity {
     private int id;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String name;
+    private String hash;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    @Column(columnDefinition = "INT NOT NULL")
+    private int typeId;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String path;
 }

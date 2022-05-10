@@ -1,18 +1,27 @@
 package com.example.mybookshopapp.data.book.links;
 
+import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.data.book.links.key.KeyBook2Genre;
+import com.example.mybookshopapp.data.genre.GenreEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "book2genre")
 public class Book2GenreEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private KeyBook2Genre keyBook2Genre = new KeyBook2Genre();
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
+    @ManyToOne
+    @MapsId("bookId")
+    private BookEntity book;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int genreId;
+    @ManyToOne
+    @MapsId("genreId")
+    private GenreEntity genre;
 }

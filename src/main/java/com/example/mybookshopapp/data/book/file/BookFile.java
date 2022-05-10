@@ -19,8 +19,9 @@ public class BookFile {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int typeId;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(columnDefinition = "INT NOT NULL", name = "type_id")
+    private BookFileTypeEntity bookFileType;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String path;

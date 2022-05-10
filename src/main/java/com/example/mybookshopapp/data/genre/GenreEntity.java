@@ -1,9 +1,12 @@
 package com.example.mybookshopapp.data.genre;
 
+import com.example.mybookshopapp.data.book.links.Book2GenreEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,4 +26,7 @@ public class GenreEntity {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @OneToMany(mappedBy = "genre")
+    private List<Book2GenreEntity> bookList = new ArrayList<>();
 }

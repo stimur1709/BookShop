@@ -1,65 +1,35 @@
 package com.example.mybookshopapp.data.book.links;
 
+import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.data.book.links.key.KeyBook2User;
+import com.example.mybookshopapp.data.user.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "book2user")
 public class Book2UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private KeyBook2User keyBook2User = new KeyBook2User();
 
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int typeId;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(columnDefinition = "INT NOT NULL", name = "type_id")
+    private Book2UserTypeEntity typeId;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
+    @ManyToOne
+    @MapsId("bookId")
+    private BookEntity book;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public int getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    @ManyToOne
+    @MapsId("userId")
+    private UserEntity user;
 }

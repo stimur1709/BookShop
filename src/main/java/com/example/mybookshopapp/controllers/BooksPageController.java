@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.data.book.file.Book;
+import com.example.mybookshopapp.data.book.BookEntity;
 import com.example.mybookshopapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +39,7 @@ public class BooksPageController {
     }
 
     @ModelAttribute("bookList")
-    public List<Book> bookList() {
+    public List<BookEntity> bookList() {
         return bookService.getBooksData();
     }
 }

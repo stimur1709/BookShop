@@ -1,6 +1,11 @@
-package com.example.mybookshopapp.data.book.file;
+package com.example.mybookshopapp.data.book;
 
+import com.example.mybookshopapp.data.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.data.book.links.Book2AuthorEntity;
+import com.example.mybookshopapp.data.book.links.Book2GenreEntity;
+import com.example.mybookshopapp.data.book.links.Book2UserEntity;
+import com.example.mybookshopapp.data.book.review.BookReviewEntity;
+import com.example.mybookshopapp.data.payments.BalanceTransactionEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "books")
-public class Book {
+public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +49,22 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<Book2AuthorEntity> authorList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<BookReviewEntity> reviewList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<Book2GenreEntity> genreList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<Book2UserEntity> userList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<BalanceTransactionEntity> transactionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<FileDownloadEntity> downloadList = new ArrayList<>();
+
 
     public StringBuilder getAuthors() {
         StringBuilder authors = new StringBuilder();

@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class Book2authorId implements Serializable {
+public class KeyBook2Author implements Serializable {
+
     private static final int id = 1;
     private int bookId;
     private int authorId;

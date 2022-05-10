@@ -1,8 +1,21 @@
 package com.example.mybookshopapp.data.user;
 
+import com.example.mybookshopapp.data.book.file.FileDownloadEntity;
+import com.example.mybookshopapp.data.book.links.Book2UserEntity;
+import com.example.mybookshopapp.data.book.review.BookReviewEntity;
+import com.example.mybookshopapp.data.book.review.BookReviewLikeEntity;
+import com.example.mybookshopapp.data.book.review.MessageEntity;
+import com.example.mybookshopapp.data.payments.BalanceTransactionEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -23,43 +36,24 @@ public class UserEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    public int getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<BookReviewEntity> reviewList = new ArrayList<>();
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
-    public String getHash() {
-        return hash;
-    }
+    @OneToOne(mappedBy = "user")
+    private UserContactEntity userContact;
 
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Book2UserEntity> bookList = new ArrayList<>();
 
-    public LocalDateTime getRegTime() {
-        return regTime;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<BalanceTransactionEntity> transactionList = new ArrayList<>();
 
-    public void setRegTime(LocalDateTime regTime) {
-        this.regTime = regTime;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<FileDownloadEntity> downloadList = new ArrayList<>();
 
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<MessageEntity> messageList = new ArrayList<>();
 }

@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.data.book.links;
 
 import com.example.mybookshopapp.data.author.Author;
-import com.example.mybookshopapp.data.book.file.Book;
-import com.example.mybookshopapp.data.book.links.key.Book2authorId;
+import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.data.book.links.key.KeyBook2Author;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,16 +17,16 @@ import javax.persistence.*;
 public class Book2AuthorEntity {
 
     @EmbeddedId
-    private Book2authorId book2authorId = new Book2authorId();
+    private KeyBook2Author keyBook2Author = new KeyBook2Author();
 
     @ManyToOne
     @MapsId("bookId")
-    private Book book;
+    private BookEntity book;
 
     @ManyToOne
     @MapsId("authorId")
     private Author author;
 
-    @Column(columnDefinition = "INT NOT NULL  DEFAULT 0")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int sortIndex;
 }

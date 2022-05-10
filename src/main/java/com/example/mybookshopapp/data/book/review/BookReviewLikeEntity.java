@@ -1,8 +1,16 @@
 package com.example.mybookshopapp.data.book.review;
 
+import com.example.mybookshopapp.data.user.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "book_review_like")
 public class BookReviewLikeEntity {
@@ -11,55 +19,17 @@ public class BookReviewLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int reviewId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "INT NOT NULL", name = "review_id")
+    private BookReviewEntity bookReview;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
+    private UserEntity user;
 
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public short getValue() {
-        return value;
-    }
-
-    public void setValue(short value) {
-        this.value = value;
-    }
 }

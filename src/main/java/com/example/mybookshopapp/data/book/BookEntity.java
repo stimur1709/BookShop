@@ -1,11 +1,12 @@
 package com.example.mybookshopapp.data.book;
 
+import com.example.mybookshopapp.data.author.Author;
 import com.example.mybookshopapp.data.book.file.FileDownloadEntity;
-import com.example.mybookshopapp.data.book.links.Book2AuthorEntity;
 import com.example.mybookshopapp.data.book.links.Book2GenreEntity;
 import com.example.mybookshopapp.data.book.links.Book2UserEntity;
 import com.example.mybookshopapp.data.book.review.BookReviewEntity;
 import com.example.mybookshopapp.data.payments.BalanceTransactionEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -47,8 +48,12 @@ public class BookEntity {
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private int discount;
 
-    @OneToMany(mappedBy = "book")
-    private List<Book2AuthorEntity> authorList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2Author",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")})
+    @JsonManagedReference
+    private List<Author> authorList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> reviewList = new ArrayList<>();
@@ -68,8 +73,8 @@ public class BookEntity {
 
     public StringBuilder getAuthors() {
         StringBuilder authors = new StringBuilder();
-        for(int i = 0; i < authorList.size(); i++) {
-            authors.append(authorList.get(i).getAuthor().getName());
+        for (int i = 0; i < authorList.size(); i++) {
+            authors.append(authorList.get(i).getName());
             if (authorList.size() > 1 && i != authorList.size() - 1) {
                 authors.append(", ");
             }

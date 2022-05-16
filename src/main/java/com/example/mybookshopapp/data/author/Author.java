@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.data.author;
 
-import com.example.mybookshopapp.data.book.links.Book2AuthorEntity;
+import com.example.mybookshopapp.data.book.BookEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +31,10 @@ public class Author {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String description;
 
-    @OneToMany(mappedBy = "author")
-    private List<Book2AuthorEntity> bookList = new ArrayList<>();
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2Author",
+            joinColumns = {@JoinColumn(name = "author_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")})
+    @JsonBackReference
+    private List<BookEntity> bookList = new ArrayList<>();
 }

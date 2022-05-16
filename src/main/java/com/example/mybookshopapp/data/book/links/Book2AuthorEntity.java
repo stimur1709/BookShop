@@ -17,14 +17,14 @@ import javax.persistence.*;
 public class Book2AuthorEntity {
 
     @EmbeddedId
-    private KeyBook2Author keyBook2Author = new KeyBook2Author();
+    private KeyBook2Author id;
 
-    @ManyToOne
-    @MapsId("bookId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private BookEntity book;
 
-    @ManyToOne
-    @MapsId("authorId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
     private Author author;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")

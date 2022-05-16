@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.data.author.Author;
-import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.entity.author.Author;
+import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.service.AuthorService;
@@ -11,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,36 +40,56 @@ public class MainPageController {
         return bookService.getPageOfRecommendBooks(0, 6).getContent();
     }
 
-    @GetMapping("/books/recommended")
+    @GetMapping("/api/books/recommended")
     @ResponseBody
     public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendBooks(offset, limit).getContent());
     }
 
-    @ModelAttribute("recentBooks")
+    @ModelAttribute("recentBooksMainPage")
     public List<BookEntity> recentBooks() {
         return bookService.getPageOfRecentBooks(0, 6).getContent();
     }
 
-    @GetMapping("/books/resent")
+    @GetMapping("/api/books/resent")
     @ResponseBody
-    public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
+    public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
+                                           @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
+        try {
+            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo, offset, limit).getContent());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-//    @ModelAttribute("popularBooks")
-//    public List<BookEntity> popularBooks() {
-//        return bookService.getPageOfPopularBooks(0, 6).getContent();
-//    }
-//
-//    @GetMapping("/books/popular")
-//    @ResponseBody
-//    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
-//                                           @RequestParam("limit") Integer limit) {
-//        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
-//    }
+    @GetMapping("/books/recent")
+    public String recentPage(Model model) {
+        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 5).getContent());
+        return "books/recent";
+    }
+
+    @ModelAttribute("popularBooks")
+    public List<BookEntity> popularBooks() {
+        return bookService.getPageOfPopularBooks(0, 6).getContent();
+    }
+
+    @GetMapping("/api/books/popular")
+    @ResponseBody
+    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
+                                            @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
+    }
+
+    @GetMapping("/books/popular")
+    public String popularPage(Model model) {
+        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 5).getContent());
+        return "books/popular";
+    }
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
@@ -112,22 +135,10 @@ public class MainPageController {
         return "authors/index";
     }
 
-//    @GetMapping("/books/recent")
-//    public String recentPage(Model model) {
-//        model.addAttribute("bookList", bookService.getBooksData());
-//        return "books/recent";
-//    }
-
     @GetMapping("/genres")
     public String genresPage() {
         return "genres/index";
     }
-
-//    @GetMapping("/books/popular")
-//    public String popularPage(Model model) {
-//        model.addAttribute("bookList", bookService.getBooksData());
-//        return "books/popular";
-//    }
 
     @GetMapping("/postponed")
     public String postponedPage() {

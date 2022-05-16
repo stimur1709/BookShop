@@ -1,12 +1,16 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,7 +24,16 @@ public class BooksRestApiController {
     }
 
     @GetMapping("/books/resent1")
-    public ResponseEntity<List<BookEntity>> booksRecent() {
-        return ResponseEntity.ok(bookService.getPageOfRecentBooks(1,10).getContent());
+    public ResponseEntity<List<BookEntity>> booksRecent(@RequestParam("from") String from, @RequestParam("to") String to,
+                                                        @RequestParam("offset") Integer offset,
+                                                        @RequestParam("limit") Integer limit) {
+        try {
+            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+            return ResponseEntity.ok(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo, offset,limit).getContent());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

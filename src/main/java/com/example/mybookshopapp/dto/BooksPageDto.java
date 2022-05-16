@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.dto;
 
-import com.example.mybookshopapp.data.book.BookEntity;
+import com.example.mybookshopapp.entity.book.BookEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;

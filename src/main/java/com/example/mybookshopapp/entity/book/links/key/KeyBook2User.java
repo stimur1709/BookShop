@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.book.links.key;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -9,7 +10,9 @@ import java.io.Serializable;
 @Embeddable
 public class KeyBook2User implements Serializable {
 
-    private static final int id = 1;
+    @Column(name = "book_id")
     private int bookId;
+
+    @Column(name = "user_id")
     private int userId;
 }

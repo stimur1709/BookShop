@@ -22,12 +22,10 @@ import java.util.Map;
 public class MainPageController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
 
     @Autowired
-    public MainPageController(BookService bookService, AuthorService authorService) {
+    public MainPageController(BookService bookService) {
         this.bookService = bookService;
-        this.authorService = authorService;
     }
 
     @GetMapping("/")
@@ -52,43 +50,9 @@ public class MainPageController {
         return bookService.getPageOfRecentBooks(0, 6).getContent();
     }
 
-    @GetMapping("/api/books/resent")
-    @ResponseBody
-    public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
-                                           @RequestParam("offset") Integer offset,
-                                           @RequestParam("limit") Integer limit) {
-        try {
-            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
-            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo, offset, limit).getContent());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @GetMapping("/books/recent")
-    public String recentPage(Model model) {
-        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 5).getContent());
-        return "books/recent";
-    }
-
     @ModelAttribute("popularBooks")
     public List<BookEntity> popularBooks() {
         return bookService.getPageOfPopularBooks(0, 6).getContent();
-    }
-
-    @GetMapping("/api/books/popular")
-    @ResponseBody
-    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
-                                            @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
-    }
-
-    @GetMapping("/books/popular")
-    public String popularPage(Model model) {
-        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 5).getContent());
-        return "books/popular";
     }
 
     @ModelAttribute("searchWordDto")
@@ -123,16 +87,6 @@ public class MainPageController {
     @GetMapping("/search")
     public String getSearchPage() {
         return "search/index";
-    }
-
-    @ModelAttribute("authorsMap")
-    public Map<String, List<Author>> authorsMap() {
-        return authorService.getAuthorsMap();
-    }
-
-    @GetMapping("/authors")
-    public String authorsPage() {
-        return "authors/index";
     }
 
     @GetMapping("/genres")

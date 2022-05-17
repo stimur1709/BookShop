@@ -37,7 +37,7 @@
                     <h1 class="Section-title">Популярное
                     </h1>
                 </div>
-                <div class="Cards Cards_refresh" th:fragment="booksPoolFragment">
+                <div class="Cards Cards_refresh">
                     <div class="Card" th:each="book : ${popularBooks}">
                         <div class="Card-picture"><a href="#" th:href="${book.id}"><img
                                 th:src="${book.image}"

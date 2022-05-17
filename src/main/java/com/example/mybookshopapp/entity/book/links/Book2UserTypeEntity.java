@@ -1,9 +1,14 @@
 package com.example.mybookshopapp.entity.book.links;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +26,7 @@ public class Book2UserTypeEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @OneToOne(mappedBy = "typeId")
-    private Book2UserEntity book2User;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    @JsonBackReference
+    private List<Book2UserEntity> book2UserList = new ArrayList<>();
 }

@@ -3,9 +3,9 @@ package com.example.mybookshopapp.entity.book;
 import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.entity.book.links.Book2GenreEntity;
-import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
+import com.example.mybookshopapp.entity.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -48,6 +48,10 @@ public class BookEntity {
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private int discount;
 
+    @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
+    private Double popularity;
+
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "book_id")},
@@ -61,8 +65,12 @@ public class BookEntity {
     @OneToMany(mappedBy = "book")
     private List<Book2GenreEntity> genreList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book")
-    private List<Book2UserEntity> userList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2User",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    @JsonManagedReference
+    private List<UserEntity> userList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     private List<BalanceTransactionEntity> transactionList = new ArrayList<>();

@@ -3,6 +3,9 @@ package com.example.mybookshopapp.entity.book.links;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.links.key.KeyBook2User;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,20 +19,24 @@ import java.time.LocalDateTime;
 public class Book2UserEntity {
 
     @EmbeddedId
-    private KeyBook2User keyBook2User = new KeyBook2User();
+    private KeyBook2User id;
 
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "type_id")
-    private Book2UserTypeEntity typeId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id", insertable = false, updatable = false)
+    @JsonManagedReference
+    @JsonIgnore
+    private Book2UserTypeEntity type;
 
-    @ManyToOne
-    @MapsId("bookId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    @JsonIgnore
     private BookEntity book;
 
-    @ManyToOne
-    @MapsId("userId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JsonIgnore
     private UserEntity user;
 }

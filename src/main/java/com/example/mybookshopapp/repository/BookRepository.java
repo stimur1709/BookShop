@@ -16,4 +16,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query(value = "SELECT * FROM books WHERE is_bestseller=1", nativeQuery = true)
     Page<BookEntity> getBestsellers(Pageable nextPage);
+
+    @Query(value = "SELECT COUNT(books) FROM books", nativeQuery = true)
+    Integer getNumberOfBooks();
 }

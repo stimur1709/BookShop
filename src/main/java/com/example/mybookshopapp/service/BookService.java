@@ -15,15 +15,13 @@ import java.util.List;
 @Service
 public class BookService {
 
-    BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BooksRatingAndPopularityService booksRatingAndPopularityService;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, BooksRatingAndPopularityService booksRatingAndPopularityService) {
         this.bookRepository = bookRepository;
-    }
-
-    public List<BookEntity> getBooksData() {
-        return bookRepository.findAll();
+        this.booksRatingAndPopularityService = booksRatingAndPopularityService;
     }
 
     public Page<BookEntity> getPageOfRecommendBooks(Integer offset, Integer limit) {
@@ -42,12 +40,22 @@ public class BookService {
     }
 
     public Page<BookEntity> getPageOfPopularBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBestsellers(nextPage);
+        addPopularity();
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "popularity"));
+        return bookRepository.findAll(nextPage);
     }
 
     public Page<BookEntity> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findBookEntityByTitleContaining(wordSearch, nextPage);
+    }
+
+    public void addPopularity() {
+        List<BookEntity> bookList = bookRepository.findAll();
+        bookList.stream().filter(book ->
+                booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
+            book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
+            bookRepository.save(book);
+        });
     }
 }

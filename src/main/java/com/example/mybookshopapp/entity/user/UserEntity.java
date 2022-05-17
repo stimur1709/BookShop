@@ -1,11 +1,14 @@
 package com.example.mybookshopapp.entity.user;
 
+import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewLikeEntity;
 import com.example.mybookshopapp.entity.book.review.MessageEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,8 +48,12 @@ public class UserEntity {
     @OneToOne(mappedBy = "user")
     private UserContactEntity userContact;
 
-    @OneToMany(mappedBy = "user")
-    private List<Book2UserEntity> bookList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2User",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")})
+    @JsonBackReference
+    private List<BookEntity> bookList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<BalanceTransactionEntity> transactionList = new ArrayList<>();

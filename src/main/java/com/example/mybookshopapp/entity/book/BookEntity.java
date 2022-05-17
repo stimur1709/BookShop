@@ -5,6 +5,7 @@ import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.entity.book.links.Book2GenreEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
+import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -51,13 +52,19 @@ public class BookEntity {
     @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
     private Double popularity;
 
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
     @JsonManagedReference
     private List<Author> authorList = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2tag",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    @JsonManagedReference
+    private List<TagEntity> tagList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> reviewList = new ArrayList<>();

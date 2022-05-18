@@ -289,12 +289,12 @@ insert into book2user (time, type_id, book_id, user_id) values ('15.3.2020', 1, 
 
 insert into tags (id, name, slug) values (1, 'Криминал', 'crime');
 insert into tags (id, name, slug) values (2, 'Драма', 'drama');
-insert into tags (id, name, slug) values (3, 'Комедия', 'сomedy');
-insert into tags (id, name, slug) values (4, 'Детский', 'сhildren');
+insert into tags (id, name, slug) values (3, 'Комедия', 'comedy');
+insert into tags (id, name, slug) values (4, 'Детский', 'children');
 insert into tags (id, name, slug) values (5, 'Ужасы', 'horror');
 insert into tags (id, name, slug) values (6, 'Экшн', 'action');
 insert into tags (id, name, slug) values (7, 'Документальный', 'documentary');
-insert into tags (id, name, slug) values (8, 'Фантастика', 'sci-Fi');
+insert into tags (id, name, slug) values (8, 'Фантастика', 'sci-fi');
 insert into tags (id, name, slug) values (9, 'Роман', 'romance');
 insert into tags (id, name, slug) values (10, 'Триллер', 'thriller');
 insert into tags (id, name, slug) values (11, 'Вестерн', 'western');

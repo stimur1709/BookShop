@@ -1,31 +1,29 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.service.AuthorService;
+import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MainPageController {
 
     private final BookService bookService;
+    private final TagService tagService;
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainPageController(BookService bookService, TagService tagService) {
         this.bookService = bookService;
+        this.tagService = tagService;
     }
 
     @GetMapping("/")
@@ -48,6 +46,13 @@ public class MainPageController {
     @ModelAttribute("recentBooksMainPage")
     public List<BookEntity> recentBooks() {
         return bookService.getPageOfRecentBooks(0, 6).getContent();
+    }
+
+    @GetMapping("/api/main_page/books/recent")
+    @ResponseBody
+    public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
+                                           @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
     }
 
     @ModelAttribute("popularBooks")
@@ -82,6 +87,18 @@ public class MainPageController {
                                                   SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(),
                 offset, limit).getContent());
+    }
+
+    @ModelAttribute("tagsBooks")
+    public List<TagEntity> tagsBooks() {
+        return tagService.getPageOfTagsBooks();
+    }
+
+    @GetMapping("/tags/{slug}")
+    public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
+        TagEntity tagEntity = tagService.getPageBySlug(slug);
+        model.addAttribute("tagBooks", tagEntity);
+        return "tags/index";
     }
 
     @GetMapping("/search")

@@ -4,9 +4,11 @@ import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
 import com.example.mybookshopapp.entity.book.links.Book2UserTypeEntity;
+import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BooksRatingAndPopularityService;
+import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,23 +23,17 @@ import java.util.*;
 public class BooksRestApiController {
 
     private final BookService bookService;
+    private final TagService tagService;
 
     @Autowired
-    public BooksRestApiController(BookService bookService) {
+    public BooksRestApiController(BookService bookService, TagService tagService) {
         this.bookService = bookService;
+        this.tagService = tagService;
     }
 
-    @GetMapping("/books/resent1")
-    public ResponseEntity<List<BookEntity>> booksRecent(@RequestParam("from") String from, @RequestParam("to") String to,
-                                                        @RequestParam("offset") Integer offset,
-                                                        @RequestParam("limit") Integer limit) {
-        try {
-            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
-            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return ResponseEntity.ok(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo, offset, limit).getContent());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
+    @GetMapping("/slug1")
+    public ResponseEntity<TagEntity> booksRecent(@RequestParam("slug") String slug) {
+        return ResponseEntity.ok(tagService.getPageBySlug(slug));
+
     }
 }

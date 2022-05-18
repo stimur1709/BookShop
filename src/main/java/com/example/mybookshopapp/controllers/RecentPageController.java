@@ -28,7 +28,7 @@ public class RecentPageController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/api/books/resent")
+    @GetMapping("/api/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
                                            @RequestParam("offset") Integer offset,
@@ -36,7 +36,8 @@ public class RecentPageController {
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
             Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo, offset, limit).getContent());
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo,
+                    offset, limit).getContent());
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -45,7 +46,7 @@ public class RecentPageController {
 
     @GetMapping("/books/recent")
     public String recentPage(Model model) {
-        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 5).getContent());
+        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 20).getContent());
         return "books/recent";
     }
 

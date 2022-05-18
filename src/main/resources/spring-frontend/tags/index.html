@@ -16,31 +16,31 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=91228662">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=91228662">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=91228662">
-    <!--    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]&ndash;&gt;-->
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=91228662"></script>
 </head>
 <body class="Site">
 <header th:replace="~{fragments/header_fragment::headerFragment(main)}"></header>
 <div class="Middle">
-    <div class="wrap">
+    <div class="wrap" th:each="tag : ${tagPage}">
         <main class="Middle-main">
             <ul class="breadcrumbs">
                 <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tagBooks.name}">
+                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tag.name}">
                     <span>Психологическая проза</span>
                 </li>
             </ul>
             <div class="Section">
                 <div class="Section-header">
-                    <h1 class="Section-title" th:text="${tagBooks.name}">Психологическая проза
+                    <h1 class="Section-title" th:text="${tag.name}">Психологическая проза
                     </h1>
                     <div class="Section-header-links"><a class="Section-header-link" href="/index.html#tags">Все
                         тэги</a>
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
-                    <div class="Card" th:each="book : ${tagBooks.getBookList()}">
+                    <div class="Card" th:each="book : ${tag.bookList}">
                         <div class="Card-picture"><a href="#"><img th:src="${book.image}"
                                                                    alt="card.jpg"/></a>
                         </div>

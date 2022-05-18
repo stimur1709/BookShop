@@ -33,7 +33,6 @@ public class TagEntity {
     @JoinTable(name = "book2tag",
             joinColumns = {@JoinColumn(name = "tag_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
-    @JsonManagedReference
     @JsonBackReference
     private List<BookEntity> bookList = new ArrayList<>();
 }

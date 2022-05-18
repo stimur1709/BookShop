@@ -94,13 +94,6 @@ public class MainPageController {
         return tagService.getPageOfTagsBooks();
     }
 
-    @GetMapping("/tags/{slug}")
-    public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
-        TagEntity tagEntity = tagService.getPageBySlug(slug);
-        model.addAttribute("tagBooks", tagEntity);
-        return "tags/index";
-    }
-
     @GetMapping("/search")
     public String getSearchPage() {
         return "search/index";

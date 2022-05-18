@@ -31,9 +31,9 @@ public class BooksRestApiController {
         this.tagService = tagService;
     }
 
-    @GetMapping("/slug1")
-    public ResponseEntity<TagEntity> booksRecent(@RequestParam("slug") String slug) {
-        return ResponseEntity.ok(tagService.getPageBySlug(slug));
-
-    }
+//    @GetMapping("/slug1")
+//    public ResponseEntity<List<BookEntity>> booksRecent(@RequestParam("slug") String slug) {
+//        return ResponseEntity.ok(tagService.getPageOfTagsBooks(slug));
+//
+//    }
 }

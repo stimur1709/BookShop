@@ -1,9 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.BooksPageDto;
+import com.example.mybookshopapp.dto.BooksTagPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +28,13 @@ public class TagPageController {
         return "tags/index";
     }
 
-    //Осталось реализовать загрузку книг при нажатии показать еще
-//    @GetMapping("/api/books/tags")
-//    @ResponseBody
-//    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
-//                                            @RequestParam("limit") Integer limit) {
-//        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
-//    }
-
+    @GetMapping("/api/books/tag/{slug}")
+    @ResponseBody
+    public BooksTagPageDto getPopularBooksPage(@PathVariable(value = "slug") String slug,
+                                            @RequestParam("offset") Integer offset,
+                                            @RequestParam("limit") Integer limit) {
+        return new BooksTagPageDto(tagService.getPageBySlug(slug, offset, limit).getContent());
+    }
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {

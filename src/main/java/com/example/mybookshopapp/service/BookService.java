@@ -1,12 +1,10 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -57,5 +55,10 @@ public class BookService {
             book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
             bookRepository.save(book);
         });
+    }
+
+    public Page<BookEntity> getBooksForPageTage(TagEntity tag, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.getBookByTag(tag.getSlug(), nextPage);
     }
 }

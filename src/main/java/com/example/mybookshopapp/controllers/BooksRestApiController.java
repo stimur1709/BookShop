@@ -1,18 +1,15 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.entity.author.Author;
+import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
-import com.example.mybookshopapp.entity.book.links.Book2UserTypeEntity;
-import com.example.mybookshopapp.entity.tag.TagEntity;
-import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
-import com.example.mybookshopapp.service.BooksRatingAndPopularityService;
 import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
@@ -31,9 +28,20 @@ public class BooksRestApiController {
         this.tagService = tagService;
     }
 
-//    @GetMapping("/slug1")
-//    public ResponseEntity<List<BookEntity>> booksRecent(@RequestParam("slug") String slug) {
-//        return ResponseEntity.ok(tagService.getPageOfTagsBooks(slug));
-//
-//    }
+
+    @GetMapping("/api/books/recent1")
+    @ResponseBody
+    public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
+                                           @RequestParam("offset") Integer offset,
+                                           @RequestParam("limit") Integer limit) {
+        try {
+            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo,
+                    offset, limit).getContent());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -22,25 +22,25 @@
 <body class="Site">
 <header th:replace="~{fragments/header_fragment::headerFragment(main)}"></header>
 <div class="Middle">
-    <div class="wrap" th:each="tag : ${tagPage}">
+    <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
                 <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tag.name}">
+                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tagPage.name}">
                     <span>Психологическая проза</span>
                 </li>
             </ul>
             <div class="Section">
                 <div class="Section-header">
-                    <h1 class="Section-title" th:text="${tag.name}">Психологическая проза
+                    <h1 class="Section-title" th:text="${tagPage.name}">Психологическая проза
                     </h1>
                     <div class="Section-header-links"><a class="Section-header-link" href="/index.html#tags">Все
                         тэги</a>
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
-                    <div class="Card" th:each="book : ${tag.bookList}">
+                    <div class="Card" th:each="book : ${booksTag}">
                         <div class="Card-picture"><a href="#"><img th:src="${book.image}"
                                                                    alt="card.jpg"/></a>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
                                                                      data-refreshshow="tag" data-refreshoffset="0"
                                                                      data-refreshlimit="20"
-                                                                     th:attr="data-refreshid=${tag.slug}"
+                                                                     th:attr="data-refreshid=${tagPage.slug}"
                                                                      data-refreshid="10">Показать
                         еще</a>
                     </div>

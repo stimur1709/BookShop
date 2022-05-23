@@ -14,10 +14,10 @@ import java.util.List;
 public class BooksTagPageDto {
 
     private Integer count;
-    private List<TagEntity> books;
+    private List<BookEntity> bookList;
 
-    public BooksTagPageDto(List<TagEntity> books) {
-        this.books = books;
-        this.count = books.size();
+    public BooksTagPageDto(List<BookEntity> bookList) {
+        this.bookList = bookList;
+        this.count = bookList.size();
     }
 }

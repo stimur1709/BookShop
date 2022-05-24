@@ -44,8 +44,8 @@
                                         class="undefined-amount">(10)</span></a>
                                 </div>
                             </div>
-                            <div th:each="genre : ${genreTwo.value}">
-                                <div class="Tag"><a th:href="'/genres/' + ${genre.slug}" th:text="${genre.name} + ': (' + ${genre.amount} + ')'">Триллер<span
+                            <div>
+                                <div class="Tag" th:each="genre : ${genreTwo.value}"><a th:href="'/genres/' + ${genre.slug}" th:text="${genre.name} + ': (' + ${genre.amount} + ')'">Триллер<span
                                         class="undefined-amount">(134)</span></a>
                                 </div>
                             </div>

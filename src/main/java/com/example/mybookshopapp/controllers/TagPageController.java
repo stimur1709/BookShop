@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
-import com.example.mybookshopapp.dto.BooksTagPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;

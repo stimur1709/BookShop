@@ -34,4 +34,8 @@ public class TagService {
             tagRepository.save(tagEntity);
         });
     }
+
+    public List<TagEntity> getTagsByBook(Integer id) {
+        return tagRepository.getBookByTag(id);
+    }
 }

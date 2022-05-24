@@ -2,7 +2,6 @@ package com.example.mybookshopapp.entity.book;
 
 import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
-import com.example.mybookshopapp.entity.book.links.Book2GenreEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
@@ -47,8 +46,8 @@ public class BookEntity {
     @Column(columnDefinition = "INT NOT NULL")
     private int price;
 
-    @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
-    private int discount;
+    @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
+    private double discount;
 
     @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
     private Double popularity;
@@ -90,7 +89,6 @@ public class BookEntity {
     @OneToMany(mappedBy = "book")
     private List<FileDownloadEntity> downloadList = new ArrayList<>();
 
-
     public StringBuilder getAuthors() {
         StringBuilder authors = new StringBuilder();
         for (int i = 0; i < authorList.size(); i++) {
@@ -100,5 +98,13 @@ public class BookEntity {
             }
         }
         return authors;
+    }
+
+    public Integer discountPrice() {
+        if (discount == 0) {
+            return price;
+        } else {
+            return price - Math.toIntExact(Math.round(price * discount));
+        }
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
@@ -31,4 +32,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             "inner join authors on authors.id = book2author.author_id " +
             "where authors.id = ?1 order by books.pub_date desc", nativeQuery = true)
     Page<BookEntity> getBookByAuthor(Integer id, Pageable nextPage);
+
+    BookEntity findBookEntityBySlug(String slug);
 }

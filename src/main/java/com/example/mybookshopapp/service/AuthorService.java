@@ -23,4 +23,13 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
             return authors.stream().collect(Collectors.groupingBy((Author a) -> a.getName().substring(0, 1)));
     }
+
+    public Author getAuthorsBySlug(String slug) {
+        return authorRepository.findAuthorBySlug(slug);
+    }
+
+
+    public Author getAuthorsById(Integer id) {
+        return authorRepository.getById(id);
+    }
 }

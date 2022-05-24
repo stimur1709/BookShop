@@ -28,7 +28,7 @@ public class Author {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
 
     @ManyToMany(cascade = CascadeType.ALL)

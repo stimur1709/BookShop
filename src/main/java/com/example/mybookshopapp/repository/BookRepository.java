@@ -25,4 +25,10 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             "inner join genre on genre.id = book2genre.genre_id " +
             "where genre.slug = ?1", nativeQuery = true)
     Page<BookEntity> getBookByGenre(String slug, Pageable nextPage);
+
+    @Query(value = "SELECT * FROM books " +
+            "inner join book2author on books.id = book2author.book_id " +
+            "inner join authors on authors.id = book2author.author_id " +
+            "where authors.id = ?1 order by books.pub_date desc", nativeQuery = true)
+    Page<BookEntity> getBookByAuthor(Integer id, Pageable nextPage);
 }

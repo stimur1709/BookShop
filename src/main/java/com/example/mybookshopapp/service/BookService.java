@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.service;
 
+import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
@@ -66,5 +67,10 @@ public class BookService {
     public Page<BookEntity> getBooksForPageGenre(GenreEntity genre, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getBookByGenre(genre.getSlug(), nextPage);
+    }
+
+    public Page<BookEntity> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.getBookByAuthor(author.getId(), nextPage);
     }
 }

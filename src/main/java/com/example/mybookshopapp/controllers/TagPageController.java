@@ -37,7 +37,7 @@ public class TagPageController {
 
     @GetMapping("/api/books/tag/{slug}")
     @ResponseBody
-    public BooksPageDto getPopularBooksPage(@PathVariable(value = "slug") String slug,
+    public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
                                             @RequestParam("offset") Integer offset,
                                             @RequestParam("limit") Integer limit) {
         TagEntity tag = tagService.getPageBySlug(slug);

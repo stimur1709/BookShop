@@ -5,6 +5,7 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +20,18 @@ public class MainPageController {
 
     private final BookService bookService;
     private final TagService tagService;
+    private final GenreService genreService;
 
     @Autowired
-    public MainPageController(BookService bookService, TagService tagService) {
+    public MainPageController(BookService bookService, TagService tagService, GenreService genreService) {
         this.bookService = bookService;
         this.tagService = tagService;
+        this.genreService = genreService;
     }
 
     @GetMapping("/")
     public String mainPage() {
+        genreService.addAmount();
         return "index";
     }
 
@@ -97,11 +101,6 @@ public class MainPageController {
     @GetMapping("/search")
     public String getSearchPage() {
         return "search/index";
-    }
-
-    @GetMapping("/genres")
-    public String genresPage() {
-        return "genres/index";
     }
 
     @GetMapping("/postponed")

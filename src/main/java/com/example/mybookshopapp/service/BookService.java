@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class BookService {
     public Page<BookEntity> getBooksForPageTage(TagEntity tag, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getBookByTag(tag.getSlug(), nextPage);
+    }
+
+    public Page<BookEntity> getBooksForPageGenre(GenreEntity genre, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.getBookByGenre(genre.getSlug(), nextPage);
     }
 }

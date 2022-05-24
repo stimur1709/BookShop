@@ -15,13 +15,13 @@ import javax.persistence.*;
 public class Book2GenreEntity {
 
     @EmbeddedId
-    private KeyBook2Genre keyBook2Genre = new KeyBook2Genre();
+    private KeyBook2Genre id;
 
-    @ManyToOne
-    @MapsId("bookId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private BookEntity book;
 
-    @ManyToOne
-    @MapsId("genreId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private GenreEntity genre;
 }

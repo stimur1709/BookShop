@@ -4,6 +4,7 @@ import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.entity.book.links.Book2GenreEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
+import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
@@ -69,8 +70,12 @@ public class BookEntity {
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book")
-    private List<Book2GenreEntity> genreList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2genre",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+    @JsonManagedReference
+    private List<GenreEntity> genreList = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2User",

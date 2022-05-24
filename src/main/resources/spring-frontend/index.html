@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=64223515">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=64223515">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=64223515">
-    <!--    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
+<!--    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>-->
     <script defer src="/assets/js/scripts.min.js?v=64223515" th:href="@{/assets/js/scripts.min.js}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">
@@ -148,9 +148,9 @@
             </h2>
 
             <div class="Tags" id="tags" th:each="tag : ${tagsBooks}">
-                <div class="Tag">
+                <div class="Tag" th:if="${tag.amount} > 10 ? ' Tag_md' : ' Tag_xs'">
                     <a th:href="'/tags/' + ${tag.slug}" th:text="${tag.name}"
-                    >современная литература</a>
+                                    >современная литература</a>
                 </div>
             </div>
         </main>

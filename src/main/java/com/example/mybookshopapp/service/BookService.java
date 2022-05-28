@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +36,39 @@ public class BookService {
         return bookRepository.findAll(nextPage);
     }
 
-    public Page<BookEntity> getPageOfPubDateBetweenBooks(Date from, Date to, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
-        return bookRepository.findBookEntityByPubDateBetween(from, to, nextPage);
+    public Page<BookEntity> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
+        try {
+            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+            return bookRepository.findBookEntityByPubDateBetween(dateFrom, dateTo, nextPage);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Page<BookEntity> getPageOfPubDateAfterBooks(String from, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
+        try {
+            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+            return bookRepository.findBookEntityByPubDateAfter(dateFrom, nextPage);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public Page<BookEntity> getPageOfPubDateBeforeBooks(String to, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
+        try {
+            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+            return bookRepository.findBookEntityByPubDateBefore(dateTo, nextPage);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Page<BookEntity> getPageOfPopularBooks(Integer offset, Integer limit) {

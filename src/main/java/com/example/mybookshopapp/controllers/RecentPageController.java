@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -33,14 +30,16 @@ public class RecentPageController {
     public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        try {
-            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
-            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(dateFrom, dateTo,
+        if (from.equals("")) {
+            return new BooksPageDto(bookService.getPageOfPubDateBeforeBooks(to,
                     offset, limit).getContent());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
+        }
+        if (to.equals("")) {
+            return new BooksPageDto(bookService.getPageOfPubDateAfterBooks(from,
+                    offset, limit).getContent());
+        } else {
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to,
+                    offset, limit).getContent());
         }
     }
 

@@ -14,6 +14,10 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     Page<BookEntity> findBookEntityByPubDateBetween(Date from, Date to, Pageable nextPage);
 
+    Page<BookEntity> findBookEntityByPubDateBefore(Date to, Pageable nextPage);
+
+    Page<BookEntity> findBookEntityByPubDateAfter(Date from, Pageable nextPage);
+
     @Query(value = "SELECT * FROM books " +
             "inner join book2tag on books.id = book2tag.book_id " +
             "inner join tags on tags.id = book2tag.tag_id " +

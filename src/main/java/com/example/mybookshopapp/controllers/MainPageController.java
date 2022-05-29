@@ -1,9 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.tag.TagEntity;
+import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
@@ -30,14 +29,14 @@ public class MainPageController {
     }
 
     @GetMapping("/")
-    public String mainPage() {
+    public String mainPage(Model model) {
         genreService.addAmount();
+        model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
+        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
+        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
+        model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
+        model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
         return "index";
-    }
-
-    @ModelAttribute("recommendBooks")
-    public List<BookEntity> recommendBooks() {
-        return bookService.getPageOfRecommendBooks(0, 6).getContent();
     }
 
     @GetMapping("/api/books/recommended")
@@ -47,31 +46,11 @@ public class MainPageController {
         return new BooksPageDto(bookService.getPageOfRecommendBooks(offset, limit).getContent());
     }
 
-    @ModelAttribute("recentBooksMainPage")
-    public List<BookEntity> recentBooks() {
-        return bookService.getPageOfRecentBooks(0, 6).getContent();
-    }
-
     @GetMapping("/api/main_page/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
-    }
-
-    @ModelAttribute("popularBooks")
-    public List<BookEntity> popularBooks() {
-        return bookService.getPageOfPopularBooks(0, 6).getContent();
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
-        return new ArrayList<>();
     }
 
     @GetMapping("/search/{searchWord}")
@@ -91,11 +70,6 @@ public class MainPageController {
                                                   SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(),
                 offset, limit).getContent());
-    }
-
-    @ModelAttribute("tagsBooks")
-    public List<TagEntity> tagsBooks() {
-        return tagService.getPageOfTagsBooks();
     }
 
     @GetMapping("/search")
@@ -137,5 +111,14 @@ public class MainPageController {
     public String faqPage() {
         return "faq";
     }
-}
 
+    @ModelAttribute("searchWordDto")
+    public SearchWordDto searchWordDto() {
+        return new SearchWordDto();
+    }
+
+    @ModelAttribute("searchResult")
+    public List<BookEntity> searchResult() {
+        return new ArrayList<>();
+    }
+}

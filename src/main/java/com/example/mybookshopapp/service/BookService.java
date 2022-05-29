@@ -109,4 +109,8 @@ public class BookService {
     public BookEntity getBookBySlug(String slug) {
         return bookRepository.findBookEntityBySlug(slug);
     }
+
+    public Integer getNumbersOffAllBooks() {
+        return bookRepository.getNumbersOffAllBooks();
+    }
 }

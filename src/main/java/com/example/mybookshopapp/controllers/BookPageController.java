@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class BookPageController {
@@ -33,16 +32,8 @@ public class BookPageController {
         model.addAttribute("slugBook", book);
         model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
+        model.addAttribute("searchWordDto", new SearchWordDto());
+        model.addAttribute("searchResult", new ArrayList<>());
         return "books/slug";
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
-        return new ArrayList<>();
     }
 }

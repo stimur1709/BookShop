@@ -2,7 +2,6 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.TagService;
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class TagPageController {
@@ -31,6 +29,8 @@ public class TagPageController {
         TagEntity tag = tagService.getPageBySlug(slug);
         model.addAttribute("tagPage" , tag);
         model.addAttribute("booksTag", bookService.getBooksForPageTage(tag, 0, 20));
+        model.addAttribute("searchWordDto", new SearchWordDto());
+        model.addAttribute("searchResult", new ArrayList<>());
         return "tags/index";
     }
 
@@ -41,15 +41,5 @@ public class TagPageController {
                                             @RequestParam("limit") Integer limit) {
         TagEntity tag = tagService.getPageBySlug(slug);
         return new BooksPageDto(bookService.getBooksForPageTage(tag, offset, limit).getContent());
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
-        return new ArrayList<>();
     }
 }

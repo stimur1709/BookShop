@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=09585989">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=09585989">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=09585989">
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <script defer src="/assets/js/scripts.min.js?v=09585989"></script>
 </head>
 <body class="Site">
@@ -62,7 +63,8 @@
                                 alt="card.jpg"/></a>
                         </div>
                         <div class="Card-content">
-                            <strong class="Card-title"><a href="#" th:text="${book.title}">Техника</a>
+                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
+                                                          th:text="${book.title}">Техника</a>
                             </strong>
                             <div class="Card-description" th:text="${book.getAuthors()}">Кондратенко Александр
                                 Петрович

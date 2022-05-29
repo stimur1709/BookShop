@@ -37,4 +37,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     Page<BookEntity> getBookByAuthor(Integer id, Pageable nextPage);
 
     BookEntity findBookEntityBySlug(String slug);
+
+    @Query(value = "SELECT count(id) from books", nativeQuery = true)
+    Integer getNumbersOffAllBooks();
 }

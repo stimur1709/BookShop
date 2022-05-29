@@ -7,14 +7,12 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AuthorsPageController {
@@ -29,7 +27,8 @@ public class AuthorsPageController {
     }
 
     @GetMapping("/authors")
-    public String authorsPage() {
+    public String authorsPage(Model model) {
+        model.addAttribute("authorsMap", authorService.getAuthorsMap());
         return "authors/index";
     }
 
@@ -55,11 +54,6 @@ public class AuthorsPageController {
                                         @RequestParam("limit") Integer limit) {
         Author author = authorService.getAuthorsById(id);
         return new BooksPageDto(bookService.getBooksForPageAuthor(author, offset, limit).getContent());
-    }
-
-    @ModelAttribute("authorsMap")
-    public Map<String, List<Author>> authorsMap() {
-        return authorService.getAuthorsMap();
     }
 
     @ModelAttribute("searchWordDto")

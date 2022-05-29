@@ -6,6 +6,8 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController {
 
     private final BookService bookService;
@@ -41,6 +44,7 @@ public class MainPageController {
 
     @GetMapping("/api/books/recommended")
     @ResponseBody
+    @Operation(summary = "Постраничный вывод рекомендуемых книг")
     public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendBooks(offset, limit).getContent());
@@ -48,6 +52,7 @@ public class MainPageController {
 
     @GetMapping("/api/main_page/books/recent")
     @ResponseBody
+    @Operation(summary = "Постраничный вывод новых книг")
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
@@ -64,6 +69,7 @@ public class MainPageController {
 
     @GetMapping("/search/page/{searchWord}")
     @ResponseBody
+    @Operation(summary = "Поиск книг")
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)

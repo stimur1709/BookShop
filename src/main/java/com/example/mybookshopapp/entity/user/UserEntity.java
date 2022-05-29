@@ -9,6 +9,7 @@ import com.example.mybookshopapp.entity.book.review.MessageEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@Schema(description = "Сущность пользователя")
 public class UserEntity {
 
     @Id

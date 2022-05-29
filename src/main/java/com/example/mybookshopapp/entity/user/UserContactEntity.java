@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.entity.user;
 
 import com.example.mybookshopapp.entity.enums.ContactType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "user_contact")
+@Schema(description = "Сущность контакта пользователя")
 public class UserContactEntity {
 
     @Id

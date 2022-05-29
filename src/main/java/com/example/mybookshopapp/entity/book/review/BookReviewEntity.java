@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.book.review;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "book_review")
+@Schema(description = "Отзывы о книгах")
 public class BookReviewEntity {
 
     @Id

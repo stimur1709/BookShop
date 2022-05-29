@@ -3,6 +3,7 @@ package com.example.mybookshopapp.entity.tag;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "tags")
+@Schema(description = "Сущность тэга")
 public class TagEntity {
 
     @Id

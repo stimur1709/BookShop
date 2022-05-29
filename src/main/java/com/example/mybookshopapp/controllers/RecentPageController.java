@@ -3,6 +3,8 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 
 @Controller
+@Tag(name = "Страница новинок", description = "Выводит на странице книги в порядке убывания даты публикации")
 public class RecentPageController {
 
     private final BookService bookService;
@@ -24,6 +27,7 @@ public class RecentPageController {
 
     @GetMapping("/api/books/recent")
     @ResponseBody
+    @Operation(summary = "Постраничный вывод книг с указанием параметров даты \"от\" и \"до\"")
     public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {

@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.entity.genre;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.links.Book2GenreEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "genre")
+@Schema(description = "Сущность жанра")
 public class GenreEntity {
 
     @Id

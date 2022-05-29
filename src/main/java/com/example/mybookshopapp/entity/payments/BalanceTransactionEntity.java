@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.payments;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "balance_transaction")
+@Schema(description = "Транзакции по счетам пользователей")
 public class BalanceTransactionEntity {
 
     @Id

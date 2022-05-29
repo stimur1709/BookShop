@@ -6,6 +6,8 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Tag(name = "Страница жанров")
 public class GenrePageController {
 
     private final GenreService genreService;
@@ -43,6 +46,8 @@ public class GenrePageController {
 
     @GetMapping("/api/books/genre/{slug}")
     @ResponseBody
+    @Operation(summary = "Постраничный вывод книг",
+            description = "Выводит на странице книги, привязанных к данному жанру")
     public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {

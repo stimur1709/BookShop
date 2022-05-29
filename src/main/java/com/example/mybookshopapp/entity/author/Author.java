@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.author;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "authors")
+@Schema(description = "Сущность автора")
 public class Author {
 
     @Id

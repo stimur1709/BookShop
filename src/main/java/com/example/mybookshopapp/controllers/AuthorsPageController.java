@@ -6,6 +6,8 @@ import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Tag(name = "Страница авторов", description = "На странице размещается список ссылок на всех авторов, " +
+        "отсортированный по алфавиту и сгруппированы по буквам алфавита. " +
+        "Каждая ссылка ведет на страницу соответствующего автора.")
 public class AuthorsPageController {
 
     private final AuthorService authorService;
@@ -50,6 +55,8 @@ public class AuthorsPageController {
 
     @GetMapping("/api/books/author/{id}")
     @ResponseBody
+    @Operation(summary = "Постраничный вывод книг",
+            description = "Выводит на странице книги, привязанных к данному автору")
     public BooksPageDto authorBooksPage(@PathVariable("id") Integer id, @RequestParam("offset") Integer offset,
                                         @RequestParam("limit") Integer limit) {
         Author author = authorService.getAuthorsById(id);

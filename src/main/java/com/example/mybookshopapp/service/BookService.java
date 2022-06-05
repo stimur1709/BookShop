@@ -113,4 +113,8 @@ public class BookService {
     public Integer getNumbersOffAllBooks() {
         return bookRepository.getNumbersOffAllBooks();
     }
+
+    public void save(BookEntity bookToUpdate) {
+        bookRepository.save(bookToUpdate);
+    }
 }

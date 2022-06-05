@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.entity.book.file;
 
+import com.example.mybookshopapp.entity.book.BookEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,8 @@ public class BookFile {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String path;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity book;
 }

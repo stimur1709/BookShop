@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.entity.book;
 
 import com.example.mybookshopapp.entity.author.Author;
+import com.example.mybookshopapp.entity.book.file.BookFile;
 import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
@@ -100,6 +101,9 @@ public class BookEntity {
 
     @OneToMany(mappedBy = "book")
     private List<FileDownloadEntity> downloadList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
 
     public StringBuilder getAuthors() {
         StringBuilder authors = new StringBuilder();

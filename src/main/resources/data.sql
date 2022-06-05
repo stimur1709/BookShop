@@ -1058,3 +1058,11 @@ insert into book2tag (tag_id, book_id) values (9, 73);
 insert into book2tag (tag_id, book_id) values (9, 74);
 insert into book2tag (tag_id, book_id) values (9, 75);
 insert into book2tag (tag_id, book_id) values (9, 8);
+
+insert into book_file_type (description, name) VALUES ('pdf', 'pdf');
+insert into book_file_type (description, name) VALUES ('epub', 'epub');
+insert into book_file_type (description, name) VALUES ('fb2', 'fb2');
+
+insert into book_file (hash, book_id, type_id, path) values ('451-po-farengeytu-pdf', 15, 1, '/451-po-farengeytu.pdf');
+insert into book_file (hash, book_id, type_id, path) values ('451-po-farengeytu-epub', 15, 2, '/451-po-farengeytu.epub');
+insert into book_file (hash, book_id, type_id, path) values ('451-po-farengeytu-fb2', 15, 3, '/451-po-farengeytu.fb2');

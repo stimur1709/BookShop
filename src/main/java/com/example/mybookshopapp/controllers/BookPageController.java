@@ -59,7 +59,6 @@ public class BookPageController {
 
     @GetMapping("/books/download/{hash}")
     public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
-        System.out.println(storage.getHash(hash).getHash());
         Path path = storage.getBookFilePath(hash);
         MediaType mediaType = storage.getBookFileName(hash);
         byte[] data = storage.getBookFileByteArray(hash);

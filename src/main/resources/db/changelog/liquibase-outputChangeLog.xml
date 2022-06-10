@@ -1,2370 +1,402 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="Admin (generated)" id="1653824090867-1">
+    <changeSet author="Admin (generated)" id="1654874088554-1">
         <createSequence sequenceName="authors_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-2">
+    <changeSet author="Admin (generated)" id="1654874088554-2">
         <createSequence sequenceName="authors_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-3">
+    <changeSet author="Admin (generated)" id="1654874088554-3">
         <createSequence sequenceName="authors_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-4">
+    <changeSet author="Admin (generated)" id="1654874088554-4">
         <createSequence sequenceName="authors_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-5">
+    <changeSet author="Admin (generated)" id="1654874088554-5">
         <createSequence sequenceName="authors_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-6">
-        <createSequence sequenceName="balance_transaction_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-7">
-        <createSequence sequenceName="balance_transaction_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-8">
-        <createSequence sequenceName="balance_transaction_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-9">
-        <createSequence sequenceName="balance_transaction_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-10">
-        <createSequence sequenceName="book2author_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-11">
-        <createSequence sequenceName="book2genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-12">
-        <createSequence sequenceName="book2genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-13">
-        <createSequence sequenceName="book2user_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-14">
-        <createSequence sequenceName="book2user_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-15">
-        <createSequence sequenceName="book2user_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-16">
-        <createSequence sequenceName="book2user_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-17">
-        <createSequence sequenceName="book2user_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-18">
-        <createSequence sequenceName="book2user_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-19">
-        <createSequence sequenceName="book_file_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-20">
-        <createSequence sequenceName="book_file_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-21">
-        <createSequence sequenceName="book_file_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-22">
-        <createSequence sequenceName="book_file_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-23">
-        <createSequence sequenceName="book_file_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-24">
-        <createSequence sequenceName="book_file_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-25">
-        <createSequence sequenceName="book_file_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-26">
-        <createSequence sequenceName="book_review_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-27">
-        <createSequence sequenceName="book_review_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-28">
-        <createSequence sequenceName="book_review_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-29">
-        <createSequence sequenceName="book_review_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-30">
-        <createSequence sequenceName="book_review_like_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-31">
-        <createSequence sequenceName="book_review_like_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-32">
-        <createSequence sequenceName="book_review_like_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-33">
-        <createSequence sequenceName="book_review_like_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-34">
-        <createSequence sequenceName="books_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-35">
-        <createSequence sequenceName="books_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-36">
-        <createSequence sequenceName="books_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-37">
-        <createSequence sequenceName="books_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-38">
-        <createSequence sequenceName="books_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-39">
-        <createSequence sequenceName="document_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-40">
-        <createSequence sequenceName="document_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-41">
-        <createSequence sequenceName="document_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-42">
-        <createSequence sequenceName="document_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-43">
-        <createSequence sequenceName="faq_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-44">
-        <createSequence sequenceName="faq_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-45">
-        <createSequence sequenceName="faq_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-46">
-        <createSequence sequenceName="faq_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-47">
-        <createSequence sequenceName="file_download_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-48">
-        <createSequence sequenceName="file_download_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-49">
-        <createSequence sequenceName="file_download_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-50">
-        <createSequence sequenceName="file_download_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-51">
-        <createSequence sequenceName="genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-52">
-        <createSequence sequenceName="genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-53">
-        <createSequence sequenceName="genre_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-54">
-        <createSequence sequenceName="genre_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-55">
-        <createSequence sequenceName="message_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-56">
-        <createSequence sequenceName="message_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-57">
-        <createSequence sequenceName="message_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-58">
-        <createSequence sequenceName="message_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-59">
-        <createSequence sequenceName="tags_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-60">
-        <createSequence sequenceName="test_entity_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-61">
-        <createSequence sequenceName="user_contact_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-62">
-        <createSequence sequenceName="user_contact_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-63">
-        <createSequence sequenceName="user_contact_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-64">
-        <createSequence sequenceName="user_contact_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-65">
-        <createSequence sequenceName="users_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-66">
-        <createSequence sequenceName="users_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-67">
-        <createSequence sequenceName="users_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-68">
-        <createSequence sequenceName="users_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-69">
-        <createTable tableName="authors">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="authors_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="photo" type="VARCHAR(255)"/>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-70">
-        <createTable tableName="balance_transaction">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="value" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-71">
-        <createTable tableName="book2author">
-            <column name="author_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-72">
-        <createTable tableName="book2genre">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="genre_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-73">
-        <createTable tableName="book2tag">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="tag_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-74">
-        <createTable tableName="book2user">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-75">
-        <createTable tableName="book2user_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book2user_type_pkey"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-76">
-        <createTable tableName="book_file">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_pkey"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="path" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-77">
-        <createTable tableName="book_file_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_type_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-78">
-        <createTable tableName="book_review">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-79">
-        <createTable tableName="book_review_like">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="value" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="review_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-80">
-        <createTable tableName="books">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="books_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column defaultValueNumeric="0.0" name="discount" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="image" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_bestseller" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0.0" name="popularity" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="price" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="pub_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-81">
-        <createTable tableName="document">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="document_pkey"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-82">
-        <createTable tableName="faq">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="faq_pkey"/>
-            </column>
-            <column name="answer" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="question" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-83">
-        <createTable tableName="file_download">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
-            </column>
-            <column defaultValueNumeric="1" name="count" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-84">
-        <createTable tableName="genre">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="parent_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-85">
-        <createTable tableName="message">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="message_pkey"/>
-            </column>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="subject" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-86">
-        <createTable tableName="tags">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="tags_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-87">
-        <createTable tableName="user_contact">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="user_contact_pkey"/>
-            </column>
-            <column name="approved" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code_time" type="date"/>
-            <column name="code_trails" type="INT"/>
-            <column name="contact" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type" type="VARCHAR(255)"/>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-88">
-        <createTable tableName="users">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
-            </column>
-            <column name="balance" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="reg_time" type="date">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-89">
-        <addPrimaryKey columnNames="author_id, book_id" constraintName="book2author_pkey" tableName="book2author"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-90">
-        <addPrimaryKey columnNames="book_id, genre_id" constraintName="book2genre_pkey" tableName="book2genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-91">
-        <addPrimaryKey columnNames="book_id, tag_id" constraintName="book2tag_pkey" tableName="book2tag"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-92">
-        <addPrimaryKey columnNames="book_id, user_id" constraintName="book2user_pkey" tableName="book2user"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-93">
-        <addUniqueConstraint columnNames="user_id" constraintName="uk_gf3ye20ssuitmwm25hveokk1b" tableName="user_contact"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-94">
-        <addUniqueConstraint columnNames="type_id" constraintName="uk_n69d1m4gwkymnapuy8w9rv947" tableName="book_file"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-95">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user" constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-96">
-        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author" constraintName="fk3hyom3yo5q6nfo9ytqofqil37" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-97">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author" constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-98">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book_file" constraintName="fkab7ynoex2ahy28trbmkk9uxu4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_file_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-99">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like" constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-100">
-        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag" constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-101">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre" constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-102">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user" constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-103">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction" constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-104">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download" constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-105">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-106">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book2user" constraintName="fkgshsph8qmeq54ntxrfcodb94" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book2user_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-107">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact" constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-108">
-        <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre" constraintName="fkkdc8kcprnkl4ygg2f0v9588wi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-109">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag" constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-110">
-        <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like" constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_review"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-111">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction" constraintName="fkndi1dijwreoyd8stngrabtx8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-112">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review" constraintName="fkntncp0b191bex8jkm3vy3l13x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-113">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message" constraintName="fkpdrb79dg3bgym7pydlf9k3p1n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1653824090867-114">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download" constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-1">
-        <createSequence sequenceName="authors_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-2">
-        <createSequence sequenceName="authors_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-3">
-        <createSequence sequenceName="authors_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-4">
-        <createSequence sequenceName="authors_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-5">
-        <createSequence sequenceName="authors_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-6">
+    <changeSet author="Admin (generated)" id="1654874088554-6">
         <createSequence sequenceName="authors_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-7">
-        <createSequence sequenceName="balance_transaction_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-8">
-        <createSequence sequenceName="balance_transaction_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-9">
-        <createSequence sequenceName="balance_transaction_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-10">
-        <createSequence sequenceName="balance_transaction_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-11">
-        <createSequence sequenceName="balance_transaction_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-12">
-        <createSequence sequenceName="book2author_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-13">
-        <createSequence sequenceName="book2genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-14">
-        <createSequence sequenceName="book2genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-15">
-        <createSequence sequenceName="book2user_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-16">
-        <createSequence sequenceName="book2user_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-17">
-        <createSequence sequenceName="book2user_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-18">
-        <createSequence sequenceName="book2user_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-19">
-        <createSequence sequenceName="book2user_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-20">
-        <createSequence sequenceName="book2user_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-21">
-        <createSequence sequenceName="book2user_type_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-22">
-        <createSequence sequenceName="book_file_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-23">
-        <createSequence sequenceName="book_file_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-24">
-        <createSequence sequenceName="book_file_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-25">
-        <createSequence sequenceName="book_file_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-26">
-        <createSequence sequenceName="book_file_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-27">
-        <createSequence sequenceName="book_file_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-28">
-        <createSequence sequenceName="book_file_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-29">
-        <createSequence sequenceName="book_file_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-30">
-        <createSequence sequenceName="book_file_type_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-31">
-        <createSequence sequenceName="book_review_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-32">
-        <createSequence sequenceName="book_review_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-33">
-        <createSequence sequenceName="book_review_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-34">
-        <createSequence sequenceName="book_review_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-35">
-        <createSequence sequenceName="book_review_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-36">
-        <createSequence sequenceName="book_review_like_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-37">
-        <createSequence sequenceName="book_review_like_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-38">
-        <createSequence sequenceName="book_review_like_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-39">
-        <createSequence sequenceName="book_review_like_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-40">
-        <createSequence sequenceName="book_review_like_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-41">
-        <createSequence sequenceName="books_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-42">
-        <createSequence sequenceName="books_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-43">
-        <createSequence sequenceName="books_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-44">
-        <createSequence sequenceName="books_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-45">
-        <createSequence sequenceName="books_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-46">
-        <createSequence sequenceName="books_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-47">
-        <createSequence sequenceName="document_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-48">
-        <createSequence sequenceName="document_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-49">
-        <createSequence sequenceName="document_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-50">
-        <createSequence sequenceName="document_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-51">
-        <createSequence sequenceName="document_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-52">
-        <createSequence sequenceName="faq_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-53">
-        <createSequence sequenceName="faq_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-54">
-        <createSequence sequenceName="faq_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-55">
-        <createSequence sequenceName="faq_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-56">
-        <createSequence sequenceName="faq_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-57">
-        <createSequence sequenceName="file_download_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-58">
-        <createSequence sequenceName="file_download_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-59">
-        <createSequence sequenceName="file_download_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-60">
-        <createSequence sequenceName="file_download_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-61">
-        <createSequence sequenceName="file_download_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-62">
-        <createSequence sequenceName="genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-63">
-        <createSequence sequenceName="genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-64">
-        <createSequence sequenceName="genre_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-65">
-        <createSequence sequenceName="genre_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-66">
-        <createSequence sequenceName="genre_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-67">
-        <createSequence sequenceName="message_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-68">
-        <createSequence sequenceName="message_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-69">
-        <createSequence sequenceName="message_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-70">
-        <createSequence sequenceName="message_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-71">
-        <createSequence sequenceName="message_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-72">
-        <createSequence sequenceName="tags_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-73">
-        <createSequence sequenceName="tags_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-74">
-        <createSequence sequenceName="test_entity_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-75">
-        <createSequence sequenceName="user_contact_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-76">
-        <createSequence sequenceName="user_contact_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-77">
-        <createSequence sequenceName="user_contact_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-78">
-        <createSequence sequenceName="user_contact_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-79">
-        <createSequence sequenceName="user_contact_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-80">
-        <createSequence sequenceName="users_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-81">
-        <createSequence sequenceName="users_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-82">
-        <createSequence sequenceName="users_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-83">
-        <createSequence sequenceName="users_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-84">
-        <createSequence sequenceName="users_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-85">
-        <createTable tableName="authors">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="authors_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="photo" type="VARCHAR(255)"/>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-86">
-        <createTable tableName="balance_transaction">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="value" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-87">
-        <createTable tableName="book2author">
-            <column name="author_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-88">
-        <createTable tableName="book2genre">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="genre_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-89">
-        <createTable tableName="book2tag">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="tag_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-90">
-        <createTable tableName="book2user">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-91">
-        <createTable tableName="book2user_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book2user_type_pkey"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-92">
-        <createTable tableName="book_file">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_pkey"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="path" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-93">
-        <createTable tableName="book_file_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_type_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-94">
-        <createTable tableName="book_review">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-95">
-        <createTable tableName="book_review_like">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="value" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="review_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-96">
-        <createTable tableName="books">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="books_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column defaultValueNumeric="0.0" name="discount" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="image" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_bestseller" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0.0" name="popularity" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="price" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="pub_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-97">
-        <createTable tableName="document">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="document_pkey"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-98">
-        <createTable tableName="faq">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="faq_pkey"/>
-            </column>
-            <column name="answer" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="question" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-99">
-        <createTable tableName="file_download">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
-            </column>
-            <column defaultValueNumeric="1" name="count" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-100">
-        <createTable tableName="genre">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="parent_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-101">
-        <createTable tableName="message">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="message_pkey"/>
-            </column>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="subject" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-102">
-        <createTable tableName="tags">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="tags_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-103">
-        <createTable tableName="user_contact">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="user_contact_pkey"/>
-            </column>
-            <column name="approved" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code_time" type="date"/>
-            <column name="code_trails" type="INT"/>
-            <column name="contact" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type" type="VARCHAR(255)"/>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-104">
-        <createTable tableName="users">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
-            </column>
-            <column name="balance" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="reg_time" type="date">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-105">
-        <addPrimaryKey columnNames="author_id, book_id" constraintName="book2author_pkey" tableName="book2author"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-106">
-        <addPrimaryKey columnNames="book_id, genre_id" constraintName="book2genre_pkey" tableName="book2genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-107">
-        <addPrimaryKey columnNames="book_id, tag_id" constraintName="book2tag_pkey" tableName="book2tag"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-108">
-        <addPrimaryKey columnNames="book_id, user_id" constraintName="book2user_pkey" tableName="book2user"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-109">
-        <addUniqueConstraint columnNames="user_id" constraintName="uk_gf3ye20ssuitmwm25hveokk1b" tableName="user_contact"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-110">
-        <addUniqueConstraint columnNames="type_id" constraintName="uk_n69d1m4gwkymnapuy8w9rv947" tableName="book_file"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-111">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user" constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-112">
-        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author" constraintName="fk3hyom3yo5q6nfo9ytqofqil37" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-113">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author" constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-114">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book_file" constraintName="fkab7ynoex2ahy28trbmkk9uxu4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_file_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-115">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like" constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-116">
-        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag" constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-117">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre" constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-118">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user" constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-119">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction" constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-120">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download" constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-121">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-122">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book2user" constraintName="fkgshsph8qmeq54ntxrfcodb94" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book2user_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-123">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact" constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-124">
-        <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre" constraintName="fkkdc8kcprnkl4ygg2f0v9588wi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-125">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag" constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-126">
-        <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like" constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_review"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-127">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction" constraintName="fkndi1dijwreoyd8stngrabtx8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-128">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review" constraintName="fkntncp0b191bex8jkm3vy3l13x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-129">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message" constraintName="fkpdrb79dg3bgym7pydlf9k3p1n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102132248-130">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download" constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-1">
-        <createSequence sequenceName="authors_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-2">
-        <createSequence sequenceName="authors_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-3">
-        <createSequence sequenceName="authors_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-4">
-        <createSequence sequenceName="authors_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-5">
-        <createSequence sequenceName="authors_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-6">
-        <createSequence sequenceName="authors_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-7">
+    <changeSet author="Admin (generated)" id="1654874088554-7">
         <createSequence sequenceName="authors_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-8">
-        <createSequence sequenceName="balance_transaction_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-9">
-        <createSequence sequenceName="balance_transaction_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-10">
-        <createSequence sequenceName="balance_transaction_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-11">
-        <createSequence sequenceName="balance_transaction_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-12">
-        <createSequence sequenceName="balance_transaction_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-13">
-        <createSequence sequenceName="balance_transaction_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-14">
-        <createSequence sequenceName="book2author_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-15">
-        <createSequence sequenceName="book2genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-16">
-        <createSequence sequenceName="book2genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-17">
-        <createSequence sequenceName="book2user_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-18">
-        <createSequence sequenceName="book2user_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-19">
-        <createSequence sequenceName="book2user_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-20">
-        <createSequence sequenceName="book2user_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-21">
-        <createSequence sequenceName="book2user_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-22">
-        <createSequence sequenceName="book2user_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-23">
-        <createSequence sequenceName="book2user_type_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-24">
-        <createSequence sequenceName="book2user_type_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-25">
-        <createSequence sequenceName="book_file_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-26">
-        <createSequence sequenceName="book_file_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-27">
-        <createSequence sequenceName="book_file_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-28">
-        <createSequence sequenceName="book_file_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-29">
-        <createSequence sequenceName="book_file_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-30">
-        <createSequence sequenceName="book_file_type_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-31">
-        <createSequence sequenceName="book_file_type_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-32">
-        <createSequence sequenceName="book_file_type_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-33">
-        <createSequence sequenceName="book_file_type_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-34">
-        <createSequence sequenceName="book_file_type_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-35">
-        <createSequence sequenceName="book_file_type_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-36">
-        <createSequence sequenceName="book_review_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-37">
-        <createSequence sequenceName="book_review_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-38">
-        <createSequence sequenceName="book_review_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-39">
-        <createSequence sequenceName="book_review_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-40">
-        <createSequence sequenceName="book_review_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-41">
-        <createSequence sequenceName="book_review_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-42">
-        <createSequence sequenceName="book_review_like_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-43">
-        <createSequence sequenceName="book_review_like_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-44">
-        <createSequence sequenceName="book_review_like_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-45">
-        <createSequence sequenceName="book_review_like_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-46">
-        <createSequence sequenceName="book_review_like_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-47">
-        <createSequence sequenceName="book_review_like_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-48">
-        <createSequence sequenceName="books_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-49">
-        <createSequence sequenceName="books_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-50">
-        <createSequence sequenceName="books_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-51">
-        <createSequence sequenceName="books_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-52">
-        <createSequence sequenceName="books_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-53">
-        <createSequence sequenceName="books_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-54">
-        <createSequence sequenceName="books_id_seq6"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-55">
-        <createSequence sequenceName="document_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-56">
-        <createSequence sequenceName="document_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-57">
-        <createSequence sequenceName="document_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-58">
-        <createSequence sequenceName="document_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-59">
-        <createSequence sequenceName="document_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-60">
-        <createSequence sequenceName="document_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-61">
-        <createSequence sequenceName="faq_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-62">
-        <createSequence sequenceName="faq_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-63">
-        <createSequence sequenceName="faq_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-64">
-        <createSequence sequenceName="faq_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-65">
-        <createSequence sequenceName="faq_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-66">
-        <createSequence sequenceName="faq_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-67">
-        <createSequence sequenceName="file_download_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-68">
-        <createSequence sequenceName="file_download_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-69">
-        <createSequence sequenceName="file_download_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-70">
-        <createSequence sequenceName="file_download_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-71">
-        <createSequence sequenceName="file_download_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-72">
-        <createSequence sequenceName="file_download_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-73">
-        <createSequence sequenceName="genre_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-74">
-        <createSequence sequenceName="genre_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-75">
-        <createSequence sequenceName="genre_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-76">
-        <createSequence sequenceName="genre_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-77">
-        <createSequence sequenceName="genre_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-78">
-        <createSequence sequenceName="genre_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-79">
-        <createSequence sequenceName="message_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-80">
-        <createSequence sequenceName="message_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-81">
-        <createSequence sequenceName="message_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-82">
-        <createSequence sequenceName="message_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-83">
-        <createSequence sequenceName="message_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-84">
-        <createSequence sequenceName="message_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-85">
-        <createSequence sequenceName="tags_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-86">
-        <createSequence sequenceName="tags_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-87">
-        <createSequence sequenceName="tags_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-88">
-        <createSequence sequenceName="test_entity_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-89">
-        <createSequence sequenceName="user_contact_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-90">
-        <createSequence sequenceName="user_contact_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-91">
-        <createSequence sequenceName="user_contact_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-92">
-        <createSequence sequenceName="user_contact_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-93">
-        <createSequence sequenceName="user_contact_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-94">
-        <createSequence sequenceName="user_contact_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-95">
-        <createSequence sequenceName="users_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-96">
-        <createSequence sequenceName="users_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-97">
-        <createSequence sequenceName="users_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-98">
-        <createSequence sequenceName="users_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-99">
-        <createSequence sequenceName="users_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-100">
-        <createSequence sequenceName="users_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-101">
-        <createTable tableName="authors">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="authors_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="photo" type="VARCHAR(255)"/>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-102">
-        <createTable tableName="balance_transaction">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="value" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-103">
-        <createTable tableName="book2author">
-            <column name="author_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-104">
-        <createTable tableName="book2genre">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="genre_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-105">
-        <createTable tableName="book2tag">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="tag_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-106">
-        <createTable tableName="book2user">
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-107">
-        <createTable tableName="book2user_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book2user_type_pkey"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-108">
-        <createTable tableName="book_file">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_pkey"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="path" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-109">
-        <createTable tableName="book_file_type">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_file_type_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-110">
-        <createTable tableName="book_review">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-111">
-        <createTable tableName="book_review_like">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="value" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="review_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-112">
-        <createTable tableName="books">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="books_pkey"/>
-            </column>
-            <column name="description" type="TEXT"/>
-            <column defaultValueNumeric="0.0" name="discount" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="image" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_bestseller" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0.0" name="popularity" type="FLOAT8">
-                <constraints nullable="false"/>
-            </column>
-            <column name="price" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="pub_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-113">
-        <createTable tableName="document">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="document_pkey"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-114">
-        <createTable tableName="faq">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="faq_pkey"/>
-            </column>
-            <column name="answer" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="question" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="sort_index" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-115">
-        <createTable tableName="file_download">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
-            </column>
-            <column defaultValueNumeric="1" name="count" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-116">
-        <createTable tableName="genre">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="parent_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-117">
-        <createTable tableName="message">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="message_pkey"/>
-            </column>
-            <column name="email" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(255)"/>
-            <column name="subject" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-118">
-        <createTable tableName="tags">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="tags_pkey"/>
-            </column>
-            <column defaultValueNumeric="0" name="amount" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-119">
-        <createTable tableName="user_contact">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="user_contact_pkey"/>
-            </column>
-            <column name="approved" type="SMALLINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="code_time" type="date"/>
-            <column name="code_trails" type="INT"/>
-            <column name="contact" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type" type="VARCHAR(255)"/>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-120">
-        <createTable tableName="users">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
-            </column>
-            <column name="balance" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="reg_time" type="date">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-121">
-        <addPrimaryKey columnNames="author_id, book_id" constraintName="book2author_pkey" tableName="book2author"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-122">
-        <addPrimaryKey columnNames="book_id, genre_id" constraintName="book2genre_pkey" tableName="book2genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-123">
-        <addPrimaryKey columnNames="book_id, tag_id" constraintName="book2tag_pkey" tableName="book2tag"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-124">
-        <addPrimaryKey columnNames="book_id, user_id" constraintName="book2user_pkey" tableName="book2user"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-125">
-        <addUniqueConstraint columnNames="user_id" constraintName="uk_gf3ye20ssuitmwm25hveokk1b" tableName="user_contact"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-126">
-        <addUniqueConstraint columnNames="type_id" constraintName="uk_n69d1m4gwkymnapuy8w9rv947" tableName="book_file"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-127">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user" constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-128">
-        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author" constraintName="fk3hyom3yo5q6nfo9ytqofqil37" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-129">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author" constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-130">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book_file" constraintName="fkab7ynoex2ahy28trbmkk9uxu4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_file_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-131">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like" constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-132">
-        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag" constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-133">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre" constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-134">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user" constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-135">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction" constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-136">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download" constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-137">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-138">
-        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book2user" constraintName="fkgshsph8qmeq54ntxrfcodb94" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book2user_type"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-139">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact" constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-140">
-        <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre" constraintName="fkkdc8kcprnkl4ygg2f0v9588wi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-141">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag" constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-142">
-        <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like" constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_review"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-143">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction" constraintName="fkndi1dijwreoyd8stngrabtx8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-144">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review" constraintName="fkntncp0b191bex8jkm3vy3l13x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-145">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message" constraintName="fkpdrb79dg3bgym7pydlf9k3p1n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654102503074-146">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download" constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-1">
-        <createSequence sequenceName="authors_id_seq"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-2">
-        <createSequence sequenceName="authors_id_seq1"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-3">
-        <createSequence sequenceName="authors_id_seq2"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-4">
-        <createSequence sequenceName="authors_id_seq3"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-5">
-        <createSequence sequenceName="authors_id_seq4"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-6">
-        <createSequence sequenceName="authors_id_seq5"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-7">
-        <createSequence sequenceName="authors_id_seq6"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-8">
+    <changeSet author="Admin (generated)" id="1654874088554-8">
         <createSequence sequenceName="authors_id_seq7"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-9">
+    <changeSet author="Admin (generated)" id="1654874088554-9">
+        <createSequence sequenceName="authors_id_seq8"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-10">
         <createSequence sequenceName="balance_transaction_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-10">
+    <changeSet author="Admin (generated)" id="1654874088554-11">
         <createSequence sequenceName="balance_transaction_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-11">
+    <changeSet author="Admin (generated)" id="1654874088554-12">
         <createSequence sequenceName="balance_transaction_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-12">
+    <changeSet author="Admin (generated)" id="1654874088554-13">
         <createSequence sequenceName="balance_transaction_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-13">
+    <changeSet author="Admin (generated)" id="1654874088554-14">
         <createSequence sequenceName="balance_transaction_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-14">
+    <changeSet author="Admin (generated)" id="1654874088554-15">
         <createSequence sequenceName="balance_transaction_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-15">
+    <changeSet author="Admin (generated)" id="1654874088554-16">
         <createSequence sequenceName="balance_transaction_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-16">
+    <changeSet author="Admin (generated)" id="1654874088554-17">
+        <createSequence sequenceName="balance_transaction_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-18">
         <createSequence sequenceName="book2author_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-17">
+    <changeSet author="Admin (generated)" id="1654874088554-19">
         <createSequence sequenceName="book2genre_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-18">
+    <changeSet author="Admin (generated)" id="1654874088554-20">
         <createSequence sequenceName="book2genre_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-19">
+    <changeSet author="Admin (generated)" id="1654874088554-21">
         <createSequence sequenceName="book2user_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-20">
+    <changeSet author="Admin (generated)" id="1654874088554-22">
         <createSequence sequenceName="book2user_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-21">
+    <changeSet author="Admin (generated)" id="1654874088554-23">
         <createSequence sequenceName="book2user_type_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-22">
+    <changeSet author="Admin (generated)" id="1654874088554-24">
         <createSequence sequenceName="book2user_type_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-23">
+    <changeSet author="Admin (generated)" id="1654874088554-25">
         <createSequence sequenceName="book2user_type_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-24">
+    <changeSet author="Admin (generated)" id="1654874088554-26">
         <createSequence sequenceName="book2user_type_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-25">
+    <changeSet author="Admin (generated)" id="1654874088554-27">
         <createSequence sequenceName="book2user_type_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-26">
+    <changeSet author="Admin (generated)" id="1654874088554-28">
         <createSequence sequenceName="book2user_type_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-27">
+    <changeSet author="Admin (generated)" id="1654874088554-29">
         <createSequence sequenceName="book2user_type_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-28">
+    <changeSet author="Admin (generated)" id="1654874088554-30">
+        <createSequence sequenceName="book2user_type_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-31">
         <createSequence sequenceName="book_file_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-29">
+    <changeSet author="Admin (generated)" id="1654874088554-32">
         <createSequence sequenceName="book_file_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-30">
+    <changeSet author="Admin (generated)" id="1654874088554-33">
         <createSequence sequenceName="book_file_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-31">
+    <changeSet author="Admin (generated)" id="1654874088554-34">
         <createSequence sequenceName="book_file_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-32">
+    <changeSet author="Admin (generated)" id="1654874088554-35">
         <createSequence sequenceName="book_file_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-33">
+    <changeSet author="Admin (generated)" id="1654874088554-36">
         <createSequence sequenceName="book_file_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-34">
+    <changeSet author="Admin (generated)" id="1654874088554-37">
+        <createSequence sequenceName="book_file_id_seq6"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-38">
         <createSequence sequenceName="book_file_type_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-35">
+    <changeSet author="Admin (generated)" id="1654874088554-39">
         <createSequence sequenceName="book_file_type_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-36">
+    <changeSet author="Admin (generated)" id="1654874088554-40">
         <createSequence sequenceName="book_file_type_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-37">
+    <changeSet author="Admin (generated)" id="1654874088554-41">
         <createSequence sequenceName="book_file_type_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-38">
+    <changeSet author="Admin (generated)" id="1654874088554-42">
         <createSequence sequenceName="book_file_type_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-39">
+    <changeSet author="Admin (generated)" id="1654874088554-43">
         <createSequence sequenceName="book_file_type_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-40">
+    <changeSet author="Admin (generated)" id="1654874088554-44">
         <createSequence sequenceName="book_file_type_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-41">
+    <changeSet author="Admin (generated)" id="1654874088554-45">
+        <createSequence sequenceName="book_file_type_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-46">
         <createSequence sequenceName="book_review_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-42">
+    <changeSet author="Admin (generated)" id="1654874088554-47">
         <createSequence sequenceName="book_review_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-43">
+    <changeSet author="Admin (generated)" id="1654874088554-48">
         <createSequence sequenceName="book_review_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-44">
+    <changeSet author="Admin (generated)" id="1654874088554-49">
         <createSequence sequenceName="book_review_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-45">
+    <changeSet author="Admin (generated)" id="1654874088554-50">
         <createSequence sequenceName="book_review_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-46">
+    <changeSet author="Admin (generated)" id="1654874088554-51">
         <createSequence sequenceName="book_review_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-47">
+    <changeSet author="Admin (generated)" id="1654874088554-52">
         <createSequence sequenceName="book_review_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-48">
+    <changeSet author="Admin (generated)" id="1654874088554-53">
+        <createSequence sequenceName="book_review_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-54">
         <createSequence sequenceName="book_review_like_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-49">
+    <changeSet author="Admin (generated)" id="1654874088554-55">
         <createSequence sequenceName="book_review_like_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-50">
+    <changeSet author="Admin (generated)" id="1654874088554-56">
         <createSequence sequenceName="book_review_like_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-51">
+    <changeSet author="Admin (generated)" id="1654874088554-57">
         <createSequence sequenceName="book_review_like_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-52">
+    <changeSet author="Admin (generated)" id="1654874088554-58">
         <createSequence sequenceName="book_review_like_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-53">
+    <changeSet author="Admin (generated)" id="1654874088554-59">
         <createSequence sequenceName="book_review_like_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-54">
+    <changeSet author="Admin (generated)" id="1654874088554-60">
         <createSequence sequenceName="book_review_like_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-55">
+    <changeSet author="Admin (generated)" id="1654874088554-61">
+        <createSequence sequenceName="book_review_like_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-62">
         <createSequence sequenceName="books_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-56">
+    <changeSet author="Admin (generated)" id="1654874088554-63">
         <createSequence sequenceName="books_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-57">
+    <changeSet author="Admin (generated)" id="1654874088554-64">
         <createSequence sequenceName="books_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-58">
+    <changeSet author="Admin (generated)" id="1654874088554-65">
         <createSequence sequenceName="books_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-59">
+    <changeSet author="Admin (generated)" id="1654874088554-66">
         <createSequence sequenceName="books_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-60">
+    <changeSet author="Admin (generated)" id="1654874088554-67">
         <createSequence sequenceName="books_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-61">
+    <changeSet author="Admin (generated)" id="1654874088554-68">
         <createSequence sequenceName="books_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-62">
+    <changeSet author="Admin (generated)" id="1654874088554-69">
         <createSequence sequenceName="books_id_seq7"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-63">
+    <changeSet author="Admin (generated)" id="1654874088554-70">
+        <createSequence sequenceName="books_id_seq8"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-71">
         <createSequence sequenceName="document_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-64">
+    <changeSet author="Admin (generated)" id="1654874088554-72">
         <createSequence sequenceName="document_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-65">
+    <changeSet author="Admin (generated)" id="1654874088554-73">
         <createSequence sequenceName="document_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-66">
+    <changeSet author="Admin (generated)" id="1654874088554-74">
         <createSequence sequenceName="document_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-67">
+    <changeSet author="Admin (generated)" id="1654874088554-75">
         <createSequence sequenceName="document_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-68">
+    <changeSet author="Admin (generated)" id="1654874088554-76">
         <createSequence sequenceName="document_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-69">
+    <changeSet author="Admin (generated)" id="1654874088554-77">
         <createSequence sequenceName="document_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-70">
+    <changeSet author="Admin (generated)" id="1654874088554-78">
+        <createSequence sequenceName="document_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-79">
         <createSequence sequenceName="faq_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-71">
+    <changeSet author="Admin (generated)" id="1654874088554-80">
         <createSequence sequenceName="faq_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-72">
+    <changeSet author="Admin (generated)" id="1654874088554-81">
         <createSequence sequenceName="faq_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-73">
+    <changeSet author="Admin (generated)" id="1654874088554-82">
         <createSequence sequenceName="faq_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-74">
+    <changeSet author="Admin (generated)" id="1654874088554-83">
         <createSequence sequenceName="faq_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-75">
+    <changeSet author="Admin (generated)" id="1654874088554-84">
         <createSequence sequenceName="faq_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-76">
+    <changeSet author="Admin (generated)" id="1654874088554-85">
         <createSequence sequenceName="faq_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-77">
+    <changeSet author="Admin (generated)" id="1654874088554-86">
+        <createSequence sequenceName="faq_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-87">
         <createSequence sequenceName="file_download_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-78">
+    <changeSet author="Admin (generated)" id="1654874088554-88">
         <createSequence sequenceName="file_download_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-79">
+    <changeSet author="Admin (generated)" id="1654874088554-89">
         <createSequence sequenceName="file_download_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-80">
+    <changeSet author="Admin (generated)" id="1654874088554-90">
         <createSequence sequenceName="file_download_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-81">
+    <changeSet author="Admin (generated)" id="1654874088554-91">
         <createSequence sequenceName="file_download_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-82">
+    <changeSet author="Admin (generated)" id="1654874088554-92">
         <createSequence sequenceName="file_download_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-83">
+    <changeSet author="Admin (generated)" id="1654874088554-93">
         <createSequence sequenceName="file_download_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-84">
+    <changeSet author="Admin (generated)" id="1654874088554-94">
+        <createSequence sequenceName="file_download_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-95">
         <createSequence sequenceName="genre_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-85">
+    <changeSet author="Admin (generated)" id="1654874088554-96">
         <createSequence sequenceName="genre_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-86">
+    <changeSet author="Admin (generated)" id="1654874088554-97">
         <createSequence sequenceName="genre_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-87">
+    <changeSet author="Admin (generated)" id="1654874088554-98">
         <createSequence sequenceName="genre_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-88">
+    <changeSet author="Admin (generated)" id="1654874088554-99">
         <createSequence sequenceName="genre_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-89">
+    <changeSet author="Admin (generated)" id="1654874088554-100">
         <createSequence sequenceName="genre_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-90">
+    <changeSet author="Admin (generated)" id="1654874088554-101">
         <createSequence sequenceName="genre_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-91">
+    <changeSet author="Admin (generated)" id="1654874088554-102">
+        <createSequence sequenceName="genre_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-103">
         <createSequence sequenceName="message_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-92">
+    <changeSet author="Admin (generated)" id="1654874088554-104">
         <createSequence sequenceName="message_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-93">
+    <changeSet author="Admin (generated)" id="1654874088554-105">
         <createSequence sequenceName="message_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-94">
+    <changeSet author="Admin (generated)" id="1654874088554-106">
         <createSequence sequenceName="message_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-95">
+    <changeSet author="Admin (generated)" id="1654874088554-107">
         <createSequence sequenceName="message_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-96">
+    <changeSet author="Admin (generated)" id="1654874088554-108">
         <createSequence sequenceName="message_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-97">
+    <changeSet author="Admin (generated)" id="1654874088554-109">
         <createSequence sequenceName="message_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-98">
+    <changeSet author="Admin (generated)" id="1654874088554-110">
+        <createSequence sequenceName="message_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-111">
         <createSequence sequenceName="tags_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-99">
+    <changeSet author="Admin (generated)" id="1654874088554-112">
         <createSequence sequenceName="tags_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-100">
+    <changeSet author="Admin (generated)" id="1654874088554-113">
         <createSequence sequenceName="tags_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-101">
+    <changeSet author="Admin (generated)" id="1654874088554-114">
         <createSequence sequenceName="tags_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-102">
+    <changeSet author="Admin (generated)" id="1654874088554-115">
+        <createSequence sequenceName="tags_id_seq4"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-116">
         <createSequence sequenceName="test_entity_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-103">
+    <changeSet author="Admin (generated)" id="1654874088554-117">
         <createSequence sequenceName="user_contact_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-104">
+    <changeSet author="Admin (generated)" id="1654874088554-118">
         <createSequence sequenceName="user_contact_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-105">
+    <changeSet author="Admin (generated)" id="1654874088554-119">
         <createSequence sequenceName="user_contact_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-106">
+    <changeSet author="Admin (generated)" id="1654874088554-120">
         <createSequence sequenceName="user_contact_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-107">
+    <changeSet author="Admin (generated)" id="1654874088554-121">
         <createSequence sequenceName="user_contact_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-108">
+    <changeSet author="Admin (generated)" id="1654874088554-122">
         <createSequence sequenceName="user_contact_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-109">
+    <changeSet author="Admin (generated)" id="1654874088554-123">
         <createSequence sequenceName="user_contact_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-110">
+    <changeSet author="Admin (generated)" id="1654874088554-124">
+        <createSequence sequenceName="user_contact_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-125">
         <createSequence sequenceName="users_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-111">
+    <changeSet author="Admin (generated)" id="1654874088554-126">
         <createSequence sequenceName="users_id_seq1"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-112">
+    <changeSet author="Admin (generated)" id="1654874088554-127">
         <createSequence sequenceName="users_id_seq2"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-113">
+    <changeSet author="Admin (generated)" id="1654874088554-128">
         <createSequence sequenceName="users_id_seq3"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-114">
+    <changeSet author="Admin (generated)" id="1654874088554-129">
         <createSequence sequenceName="users_id_seq4"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-115">
+    <changeSet author="Admin (generated)" id="1654874088554-130">
         <createSequence sequenceName="users_id_seq5"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-116">
+    <changeSet author="Admin (generated)" id="1654874088554-131">
         <createSequence sequenceName="users_id_seq6"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-117">
+    <changeSet author="Admin (generated)" id="1654874088554-132">
+        <createSequence sequenceName="users_id_seq7"/>
+    </changeSet>
+    <changeSet author="Admin (generated)" id="1654874088554-133">
         <createTable tableName="authors">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="authors_pkey"/>
@@ -2381,7 +413,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-118">
+    <changeSet author="Admin (generated)" id="1654874088554-134">
         <createTable tableName="balance_transaction">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
@@ -2403,7 +435,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-119">
+    <changeSet author="Admin (generated)" id="1654874088554-135">
         <createTable tableName="book2author">
             <column name="author_id" type="INT">
                 <constraints nullable="false"/>
@@ -2416,7 +448,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-120">
+    <changeSet author="Admin (generated)" id="1654874088554-136">
         <createTable tableName="book2genre">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -2426,7 +458,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-121">
+    <changeSet author="Admin (generated)" id="1654874088554-137">
         <createTable tableName="book2tag">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -2436,7 +468,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-122">
+    <changeSet author="Admin (generated)" id="1654874088554-138">
         <createTable tableName="book2user">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -2450,7 +482,7 @@
             <column name="type_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-123">
+    <changeSet author="Admin (generated)" id="1654874088554-139">
         <createTable tableName="book2user_type">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book2user_type_pkey"/>
@@ -2463,7 +495,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-124">
+    <changeSet author="Admin (generated)" id="1654874088554-140">
         <createTable tableName="book_file">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_file_pkey"/>
@@ -2480,7 +512,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-125">
+    <changeSet author="Admin (generated)" id="1654874088554-141">
         <createTable tableName="book_file_type">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_file_type_pkey"/>
@@ -2491,7 +523,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-126">
+    <changeSet author="Admin (generated)" id="1654874088554-142">
         <createTable tableName="book_review">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
@@ -2510,7 +542,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-127">
+    <changeSet author="Admin (generated)" id="1654874088554-143">
         <createTable tableName="book_review_like">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
@@ -2529,7 +561,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-128">
+    <changeSet author="Admin (generated)" id="1654874088554-144">
         <createTable tableName="books">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="books_pkey"/>
@@ -2561,7 +593,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-129">
+    <changeSet author="Admin (generated)" id="1654874088554-145">
         <createTable tableName="document">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="document_pkey"/>
@@ -2580,7 +612,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-130">
+    <changeSet author="Admin (generated)" id="1654874088554-146">
         <createTable tableName="faq">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="faq_pkey"/>
@@ -2596,7 +628,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-131">
+    <changeSet author="Admin (generated)" id="1654874088554-147">
         <createTable tableName="file_download">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
@@ -2612,7 +644,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-132">
+    <changeSet author="Admin (generated)" id="1654874088554-148">
         <createTable tableName="genre">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
@@ -2631,7 +663,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-133">
+    <changeSet author="Admin (generated)" id="1654874088554-149">
         <createTable tableName="message">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="message_pkey"/>
@@ -2650,7 +682,7 @@
             <column name="user_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-134">
+    <changeSet author="Admin (generated)" id="1654874088554-150">
         <createTable tableName="tags">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="tags_pkey"/>
@@ -2666,7 +698,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-135">
+    <changeSet author="Admin (generated)" id="1654874088554-151">
         <createTable tableName="user_contact">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="user_contact_pkey"/>
@@ -2688,7 +720,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-136">
+    <changeSet author="Admin (generated)" id="1654874088554-152">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="users_pkey"/>
@@ -2707,85 +739,82 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-137">
+    <changeSet author="Admin (generated)" id="1654874088554-153">
         <addPrimaryKey columnNames="author_id, book_id" constraintName="book2author_pkey" tableName="book2author"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-138">
+    <changeSet author="Admin (generated)" id="1654874088554-154">
         <addPrimaryKey columnNames="book_id, genre_id" constraintName="book2genre_pkey" tableName="book2genre"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-139">
+    <changeSet author="Admin (generated)" id="1654874088554-155">
         <addPrimaryKey columnNames="book_id, tag_id" constraintName="book2tag_pkey" tableName="book2tag"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-140">
+    <changeSet author="Admin (generated)" id="1654874088554-156">
         <addPrimaryKey columnNames="book_id, user_id" constraintName="book2user_pkey" tableName="book2user"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-141">
+    <changeSet author="Admin (generated)" id="1654874088554-157">
         <addUniqueConstraint columnNames="user_id" constraintName="uk_gf3ye20ssuitmwm25hveokk1b" tableName="user_contact"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-142">
-        <addUniqueConstraint columnNames="type_id" constraintName="uk_n69d1m4gwkymnapuy8w9rv947" tableName="book_file"/>
-    </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-143">
+    <changeSet author="Admin (generated)" id="1654874088554-158">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user" constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-144">
+    <changeSet author="Admin (generated)" id="1654874088554-159">
         <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author" constraintName="fk3hyom3yo5q6nfo9ytqofqil37" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-145">
+    <changeSet author="Admin (generated)" id="1654874088554-160">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author" constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-146">
+    <changeSet author="Admin (generated)" id="1654874088554-161">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book_file" constraintName="fkab7ynoex2ahy28trbmkk9uxu4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_file_type"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-147">
+    <changeSet author="Admin (generated)" id="1654874088554-162">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like" constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-148">
+    <changeSet author="Admin (generated)" id="1654874088554-163">
         <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag" constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-149">
+    <changeSet author="Admin (generated)" id="1654874088554-164">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre" constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-150">
+    <changeSet author="Admin (generated)" id="1654874088554-165">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user" constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-151">
+    <changeSet author="Admin (generated)" id="1654874088554-166">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction" constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-152">
+    <changeSet author="Admin (generated)" id="1654874088554-167">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download" constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-153">
+    <changeSet author="Admin (generated)" id="1654874088554-168">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_file" constraintName="fkg7meofferi2glg6uwj2yhfmp9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-154">
+    <changeSet author="Admin (generated)" id="1654874088554-169">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-155">
+    <changeSet author="Admin (generated)" id="1654874088554-170">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book2user" constraintName="fkgshsph8qmeq54ntxrfcodb94" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book2user_type"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-156">
+    <changeSet author="Admin (generated)" id="1654874088554-171">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact" constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-157">
+    <changeSet author="Admin (generated)" id="1654874088554-172">
         <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre" constraintName="fkkdc8kcprnkl4ygg2f0v9588wi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-158">
+    <changeSet author="Admin (generated)" id="1654874088554-173">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag" constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-159">
+    <changeSet author="Admin (generated)" id="1654874088554-174">
         <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like" constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_review"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-160">
+    <changeSet author="Admin (generated)" id="1654874088554-175">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction" constraintName="fkndi1dijwreoyd8stngrabtx8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-161">
+    <changeSet author="Admin (generated)" id="1654874088554-176">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review" constraintName="fkntncp0b191bex8jkm3vy3l13x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-162">
+    <changeSet author="Admin (generated)" id="1654874088554-177">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message" constraintName="fkpdrb79dg3bgym7pydlf9k3p1n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1654435182779-163">
+    <changeSet author="Admin (generated)" id="1654874088554-178">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download" constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
 </databaseChangeLog>

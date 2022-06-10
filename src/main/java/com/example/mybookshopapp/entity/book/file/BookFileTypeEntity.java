@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +24,6 @@ public class BookFileTypeEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne(mappedBy = "bookFileType")
-    private BookFile bookFile;
+    @OneToMany(mappedBy = "bookFileType")
+    private List<BookFile> bookFileList = new ArrayList<>();
 }

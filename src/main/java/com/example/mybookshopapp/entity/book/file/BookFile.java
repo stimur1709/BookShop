@@ -20,7 +20,7 @@ public class BookFile {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "type_id")
     private BookFileTypeEntity bookFileType;
 

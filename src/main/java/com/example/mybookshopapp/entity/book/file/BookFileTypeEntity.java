@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.entity.book.file;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +26,6 @@ public class BookFileTypeEntity {
     private String description;
 
     @OneToMany(mappedBy = "bookFileType")
+    @JsonBackReference
     private List<BookFile> bookFileList = new ArrayList<>();
 }

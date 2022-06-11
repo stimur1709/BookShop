@@ -102,6 +102,7 @@ public class BookService {
     }
 
     public Page<BookEntity> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
+        System.out.println(author.getName() + " !!!!!!! " + author.getId() + " !!!");
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getBookByAuthor(author.getId(), nextPage);
     }

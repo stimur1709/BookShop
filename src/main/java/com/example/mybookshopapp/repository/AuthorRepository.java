@@ -15,4 +15,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
             "inner join books on books.id = book2author.book_id " +
             "where books.id = ?1", nativeQuery = true)
     List<Author> getAuthorByBook(Integer id);
+
+    Author findAuthorById(Integer id);
 }

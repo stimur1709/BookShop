@@ -103,6 +103,7 @@ public class BookEntity {
     private List<FileDownloadEntity> downloadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
+    @JsonManagedReference
     private List<BookFile> bookFileList = new ArrayList<>();
 
     public StringBuilder getAuthors() {

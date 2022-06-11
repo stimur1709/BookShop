@@ -1,6 +1,8 @@
 package com.example.mybookshopapp.entity.book.file;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +24,7 @@ public class BookFile {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "type_id")
+    @JsonManagedReference
     private BookFileTypeEntity bookFileType;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -29,5 +32,6 @@ public class BookFile {
 
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @JsonBackReference
     private BookEntity book;
 }

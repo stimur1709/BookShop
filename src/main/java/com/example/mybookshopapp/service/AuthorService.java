@@ -29,7 +29,7 @@ public class AuthorService {
     }
 
     public Author getAuthorsById(Integer id) {
-        return authorRepository.getById(id);
+        return authorRepository.findAuthorById(id);
     }
 
     public List<Author> getAuthorsByBook(Integer id) {

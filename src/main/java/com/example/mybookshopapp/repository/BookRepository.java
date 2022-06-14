@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
@@ -40,4 +41,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query(value = "SELECT count(id) from books", nativeQuery = true)
     Integer getNumbersOffAllBooks();
+
+    List<BookEntity> findBookEntitiesBySlugIn(String[] slugs);
 }

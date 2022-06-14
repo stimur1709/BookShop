@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
@@ -58,13 +59,17 @@ public class MainPageController {
         return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
     }
 
-    @GetMapping("/search/{searchWord}")
+    @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                  Model model) {
-        model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResult",
-                bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
-        return "search/index";
+                                  Model model) throws EmptySearchException {
+        if (searchWordDto != null) {
+            model.addAttribute("searchWordDto", searchWordDto);
+            model.addAttribute("searchResult",
+                    bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
+            return "search/index";
+        } else {
+            throw new EmptySearchException("Введите название книги");
+        }
     }
 
     @GetMapping("/search/page/{searchWord}")
@@ -76,11 +81,6 @@ public class MainPageController {
                                                   SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(),
                 offset, limit).getContent());
-    }
-
-    @GetMapping("/search")
-    public String getSearchPage() {
-        return "search/index";
     }
 
     @GetMapping("/postponed")

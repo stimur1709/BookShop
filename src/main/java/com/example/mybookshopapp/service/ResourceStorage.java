@@ -56,7 +56,7 @@ public class ResourceStorage {
     }
 
     public MediaType getBookFileName(String hash) {
-        BookFile bookFile = bookFileRepository.findBookFileByHash(hash);
+        BookFile bookFile = getHash(hash);
         String mimeType = URLConnection.guessContentTypeFromName(Paths.get(bookFile.getPath()).getFileName().toString());
         if (mimeType != null) {
             return MediaType.parseMediaType(mimeType);
@@ -66,7 +66,7 @@ public class ResourceStorage {
     }
 
     public byte[] getBookFileByteArray(String hash) throws IOException {
-        BookFile bookFile = bookFileRepository.findBookFileByHash(hash);
+        BookFile bookFile = getHash(hash);
         Path path = Paths.get(downloadPath, bookFile.getPath());
         return Files.readAllBytes(path);
     }

@@ -28,20 +28,11 @@ public class RecentPageController {
     @GetMapping("/api/books/recent")
     @ResponseBody
     @Operation(summary = "Постраничный вывод книг с указанием параметров даты \"от\" и \"до\"")
-    public BooksPageDto getRecentBooksPage(@RequestParam("from") String from, @RequestParam("to") String to,
+    public BooksPageDto getRecentBooksPage(@RequestParam(value = "from", defaultValue = "16.06.2009") String from,
+                                           @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        if (from.equals("")) {
-            return new BooksPageDto(bookService.getPageOfPubDateBeforeBooks(to,
-                    offset, limit).getContent());
-        }
-        if (to.equals("")) {
-            return new BooksPageDto(bookService.getPageOfPubDateAfterBooks(from,
-                    offset, limit).getContent());
-        } else {
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to,
-                    offset, limit).getContent());
-        }
+        return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit).getContent());
     }
 
     @GetMapping("/books/recent")

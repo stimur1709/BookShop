@@ -37,34 +37,12 @@ public class BookService {
     }
 
     public Page<BookEntity> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
+        System.out.println(from + "---" + to);
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
             Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
             return bookRepository.findBookEntityByPubDateBetween(dateFrom, dateTo, nextPage);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Page<BookEntity> getPageOfPubDateAfterBooks(String from, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
-        try {
-            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
-            return bookRepository.findBookEntityByPubDateAfter(dateFrom, nextPage);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public Page<BookEntity> getPageOfPubDateBeforeBooks(String to, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
-        try {
-            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return bookRepository.findBookEntityByPubDateBefore(dateTo, nextPage);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -117,5 +95,10 @@ public class BookService {
 
     public void save(BookEntity bookToUpdate) {
         bookRepository.save(bookToUpdate);
+        System.out.println(bookToUpdate.getImage());
+    }
+
+    public List<BookEntity> findBookEntitiesBySlugIn(String[] slugs) {
+        return bookRepository.findBookEntitiesBySlugIn(slugs);
     }
 }

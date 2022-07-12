@@ -83,11 +83,6 @@ public class MainPageController {
                 offset, limit).getContent());
     }
 
-    @GetMapping("/postponed")
-    public String postponedPage() {
-        return "postponed";
-    }
-
     @GetMapping("/signin")
     public String signinPage() {
         return "signin";
@@ -96,11 +91,6 @@ public class MainPageController {
     @GetMapping("/about")
     public String aboutPage() {
         return "about";
-    }
-
-    @GetMapping("/cart")
-    public String cartPage() {
-        return "cart";
     }
 
     @GetMapping("/contacts")

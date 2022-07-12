@@ -2,3 +2,4 @@
 /.idea
 /src/main/docker/MyBookShopApp-0.0.1-SNAPSHOT.jar
 /src/main/resources/img/
+/.gradle/

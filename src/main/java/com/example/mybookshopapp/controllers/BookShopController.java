@@ -100,7 +100,6 @@ public class BookShopController {
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
     public String handlerRemoveBookFromCartRequest(@PathVariable("slug") String slug,
                                                    @CookieValue(name = "cartContents", required = false) String cartContents,
-                                                   @CookieValue(name = "keptContents", required = false) String keptContents,
                                                    HttpServletResponse response, Model model) {
         removeCookie(cartContents, slug, response, model, "cartContents", "isCartEmpty");
         return "redirect:/books/cart";

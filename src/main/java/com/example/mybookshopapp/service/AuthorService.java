@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class AuthorService {
 
-    AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {

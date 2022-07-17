@@ -98,7 +98,11 @@ public class BookService {
         System.out.println(bookToUpdate.getImage());
     }
 
-    public List<BookEntity> findBookEntitiesBySlugIn(String[] slugs) {
-        return bookRepository.findBookEntitiesBySlugIn(slugs);
+    public List<BookEntity> getBooksFromCookie(String contents) {
+        contents = contents.startsWith("/") ? contents.substring(1) : contents;
+        contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1)
+                : contents;
+        String[] cookieSlugs = contents.split("/");
+        return bookRepository.findBookEntitiesBySlugIn(cookieSlugs);
     }
 }

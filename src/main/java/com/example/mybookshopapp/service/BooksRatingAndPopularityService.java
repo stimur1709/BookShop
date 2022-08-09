@@ -4,7 +4,6 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.BookRating;
 import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
 import com.example.mybookshopapp.repository.Book2UserRepository;
-import com.example.mybookshopapp.repository.BookRatingRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +18,12 @@ public class BooksRatingAndPopularityService {
 
     private final Book2UserRepository book2UserRepository;
     private final BookRepository bookRepository;
-    private final BookRatingRepository bookRatingRepository;
 
     @Autowired
     public BooksRatingAndPopularityService(Book2UserRepository book2UserRepository,
-                                           BookRepository bookRepository,
-                                           BookRatingRepository bookRatingRepository) {
+                                           BookRepository bookRepository) {
         this.book2UserRepository = book2UserRepository;
         this.bookRepository = bookRepository;
-        this.bookRatingRepository = bookRatingRepository;
     }
 
     public Map<Integer, Double> getPopularity(Integer bookId) {

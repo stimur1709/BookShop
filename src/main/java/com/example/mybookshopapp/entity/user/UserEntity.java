@@ -63,4 +63,6 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<MessageEntity> messageList = new ArrayList<>();
+
+
 }

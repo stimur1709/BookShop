@@ -25,15 +25,17 @@ public class BookPageController {
     private final TagService tagService;
     private final ResourceStorage storage;
     private final BooksRatingAndPopularityService ratingBook;
+    private final BookReviewService bookReviewService;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
-                              TagService tagService, ResourceStorage storage, BooksRatingAndPopularityService ratingBook) {
+                              TagService tagService, ResourceStorage storage, BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
         this.storage = storage;
         this.ratingBook = ratingBook;
+        this.bookReviewService = bookReviewService;
     }
 
     @GetMapping("/books/{slug}")
@@ -77,6 +79,13 @@ public class BookPageController {
     @ResponseBody
     public Boolean rateBook(@RequestParam("bookId") int bookId, @RequestParam("value") int value) {
         ratingBook.rateBook(bookId, value);
+        return true;
+    }
+
+    @PostMapping("/api/bookReview")
+    @ResponseBody
+    public Boolean saveBookReview(@RequestParam("bookId") int bookId, @RequestParam("text") String text) {
+        bookReviewService.saveBookReview(bookId, text);
         return true;
     }
 }

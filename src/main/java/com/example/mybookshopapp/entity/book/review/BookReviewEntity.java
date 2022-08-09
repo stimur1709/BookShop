@@ -39,4 +39,13 @@ public class BookReviewEntity {
     @OneToMany(mappedBy = "bookReview")
     private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
+    public BookReviewEntity(BookEntity book, UserEntity user, String text) {
+        this.book = book;
+        this.user = user;
+        this.time = LocalDateTime.now();
+        this.text = text;
+    }
+
+    public BookReviewEntity() {
+    }
 }

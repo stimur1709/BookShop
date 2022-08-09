@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;

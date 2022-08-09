@@ -2,6 +2,7 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.entity.book.BookRating;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.repository.BookRepository;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -37,7 +39,6 @@ public class BookService {
     }
 
     public Page<BookEntity> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
-        System.out.println(from + "---" + to);
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
@@ -80,7 +81,6 @@ public class BookService {
     }
 
     public Page<BookEntity> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
-        System.out.println(author.getName() + " !!!!!!! " + author.getId() + " !!!");
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getBookByAuthor(author.getId(), nextPage);
     }
@@ -95,7 +95,6 @@ public class BookService {
 
     public void save(BookEntity bookToUpdate) {
         bookRepository.save(bookToUpdate);
-        System.out.println(bookToUpdate.getImage());
     }
 
     public List<BookEntity> getBooksFromCookie(String contents) {

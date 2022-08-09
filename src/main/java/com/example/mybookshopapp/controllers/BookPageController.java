@@ -1,11 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.service.ResourceStorage;
+import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.service.AuthorService;
-import com.example.mybookshopapp.service.BookService;
-import com.example.mybookshopapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -27,14 +24,16 @@ public class BookPageController {
     private final AuthorService authorService;
     private final TagService tagService;
     private final ResourceStorage storage;
+    private final BooksRatingAndPopularityService ratingBook;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
-                              TagService tagService, ResourceStorage storage) {
+                              TagService tagService, ResourceStorage storage, BooksRatingAndPopularityService ratingBook) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
         this.storage = storage;
+        this.ratingBook = ratingBook;
     }
 
     @GetMapping("/books/{slug}")
@@ -45,6 +44,11 @@ public class BookPageController {
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
+        model.addAttribute("sizeOfScore1", ratingBook.getRatingBook(book.getId(), 1));
+        model.addAttribute("sizeOfScore2", ratingBook.getRatingBook(book.getId(), 2));
+        model.addAttribute("sizeOfScore3", ratingBook.getRatingBook(book.getId(), 3));
+        model.addAttribute("sizeOfScore4", ratingBook.getRatingBook(book.getId(), 4));
+        model.addAttribute("sizeOfScore5", ratingBook.getRatingBook(book.getId(), 5));
         return "books/slug";
     }
 
@@ -67,5 +71,12 @@ public class BookPageController {
                 .contentType(mediaType)
                 .contentLength(data.length)
                 .body(new ByteArrayResource(data));
+    }
+
+    @PostMapping("/api/rateBook")
+    @ResponseBody
+    public Boolean rateBook(@RequestParam("bookId") int bookId, @RequestParam("value") int value) {
+        ratingBook.rateBook(bookId, value);
+        return true;
     }
 }

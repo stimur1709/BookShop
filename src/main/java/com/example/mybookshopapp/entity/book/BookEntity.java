@@ -106,6 +106,10 @@ public class BookEntity {
     @JsonManagedReference
     private List<BookFile> bookFileList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "book")
+    @JsonManagedReference
+    private List<BookRating> bookRatingList = new ArrayList<>();
+
     public StringBuilder getAuthors() {
         StringBuilder authors = new StringBuilder();
         for (int i = 0; i < authorList.size(); i++) {

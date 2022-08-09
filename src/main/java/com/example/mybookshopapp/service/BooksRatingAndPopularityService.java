@@ -1,14 +1,17 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.entity.book.BookRating;
 import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
 import com.example.mybookshopapp.repository.Book2UserRepository;
+import com.example.mybookshopapp.repository.BookRatingRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,11 +19,15 @@ public class BooksRatingAndPopularityService {
 
     private final Book2UserRepository book2UserRepository;
     private final BookRepository bookRepository;
+    private final BookRatingRepository bookRatingRepository;
 
     @Autowired
-    public BooksRatingAndPopularityService(Book2UserRepository book2UserRepository, BookRepository bookRepository) {
+    public BooksRatingAndPopularityService(Book2UserRepository book2UserRepository,
+                                           BookRepository bookRepository,
+                                           BookRatingRepository bookRatingRepository) {
         this.book2UserRepository = book2UserRepository;
         this.bookRepository = bookRepository;
+        this.bookRatingRepository = bookRatingRepository;
     }
 
     public Map<Integer, Double> getPopularity(Integer bookId) {
@@ -49,10 +56,29 @@ public class BooksRatingAndPopularityService {
                 book.setPopularity(isPopularity ? book.getPopularity() + 0.4 : book.getPopularity() - 0.4);
                 break;
             case ("cartContents"):
-                System.out.println(2+slug);
+                System.out.println(2 + slug);
                 book.setPopularity(isPopularity ? book.getPopularity() + 0.7 : book.getPopularity() - 0.7);
                 break;
         }
         bookRepository.save(book);
+    }
+
+    public int getRatingBook(int idBook, int value) {
+        Optional<BookEntity> book = bookRepository.findById(idBook);
+        return book.map(bookEntity -> bookEntity.getBookRatingList()
+                        .stream().filter(bookRating -> value == bookRating.getScore())
+                        .findFirst().map(BookRating::getNumberOfRatings)
+                        .orElse(0))
+                .orElse(0);
+    }
+
+    public void rateBook(int bookId, int value) {
+        Optional<BookEntity> book = bookRepository.findById(bookId);
+        if (book.isPresent()) {
+            book.get().getBookRatingList()
+                    .stream().filter(bookRating -> bookRating.getScore() == value)
+                    .forEach(bookRating -> bookRating.setNumberOfRatings(bookRating.getNumberOfRatings() + 1));
+            bookRepository.save(book.get());
+        }
     }
 }

@@ -21,7 +21,7 @@ public class BookShopService {
     }
 
     public void createCookie(String contents, String slug, HttpServletResponse response,
-                              String cookieName, Model model, String attributeName) {
+                             String cookieName, Model model, String attributeName) {
         if (contents == null || contents.equals("") && !slug.equals("1122")) {
             Cookie cookie = new Cookie(cookieName, slug);
             cookie.setPath("/books");
@@ -38,7 +38,7 @@ public class BookShopService {
     }
 
     public void removeCookie(String cookieContent, String slug, HttpServletResponse response, Model model,
-                              String cookieName, String attributeName) {
+                             String cookieName, String attributeName) {
         if (cookieContent != null && !cookieContent.equals("")) {
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cookieContent.split("/")));
             if (cookieBooks.contains(slug)) {

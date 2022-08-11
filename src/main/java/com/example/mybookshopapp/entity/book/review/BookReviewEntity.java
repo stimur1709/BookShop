@@ -48,4 +48,14 @@ public class BookReviewEntity {
 
     public BookReviewEntity() {
     }
+
+    public long getLikes() {
+        return getReviewLikeList().stream()
+                .filter(bookReviewLikeEntity -> bookReviewLikeEntity.getValue() == 1).count();
+    }
+
+    public long getDislikes() {
+        return getReviewLikeList().stream()
+                .filter(bookReviewLikeEntity -> bookReviewLikeEntity.getValue() == -1).count();
+    }
 }

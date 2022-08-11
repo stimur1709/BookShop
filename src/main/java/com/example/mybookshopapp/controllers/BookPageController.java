@@ -29,7 +29,8 @@ public class BookPageController {
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
-                              TagService tagService, ResourceStorage storage, BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService) {
+                              TagService tagService, ResourceStorage storage,
+                              BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
@@ -51,6 +52,7 @@ public class BookPageController {
         model.addAttribute("sizeOfScore3", ratingBook.getRatingBook(book.getId(), 3));
         model.addAttribute("sizeOfScore4", ratingBook.getRatingBook(book.getId(), 4));
         model.addAttribute("sizeOfScore5", ratingBook.getRatingBook(book.getId(), 5));
+        model.addAttribute("reviews", bookReviewService.getBookReview(book));
         return "books/slug";
     }
 

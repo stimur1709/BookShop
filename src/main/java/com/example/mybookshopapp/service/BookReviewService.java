@@ -9,6 +9,7 @@ import com.example.mybookshopapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +37,9 @@ public class BookReviewService {
             bookReviewRepository.save(bookReview);
             bookRepository.save(bookEntity.get());
         }
+    }
+
+    public List<BookReviewEntity> getBookReview(BookEntity book) {
+        return bookReviewRepository.getBookReviewEntitiesByBook(book);
     }
 }

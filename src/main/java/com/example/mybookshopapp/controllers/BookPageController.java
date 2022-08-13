@@ -26,17 +26,20 @@ public class BookPageController {
     private final ResourceStorage storage;
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
+    private final BookRateReviewService bookRateReviewService;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
                               TagService tagService, ResourceStorage storage,
-                              BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService) {
+                              BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
+                              BookRateReviewService bookRateReviewService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
         this.storage = storage;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
+        this.bookRateReviewService = bookRateReviewService;
     }
 
     @GetMapping("/books/{slug}")
@@ -53,6 +56,7 @@ public class BookPageController {
         model.addAttribute("sizeOfScore4", ratingBook.getRatingBook(book.getId(), 4));
         model.addAttribute("sizeOfScore5", ratingBook.getRatingBook(book.getId(), 5));
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
+        model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
         return "books/slug";
     }
 
@@ -89,5 +93,11 @@ public class BookPageController {
     public Boolean saveBookReview(@RequestParam("bookId") int bookId, @RequestParam("text") String text) {
         bookReviewService.saveBookReview(bookId, text);
         return true;
+    }
+
+    @PostMapping("/api/rateBookReview")
+    @ResponseBody
+    public Boolean rateBookReview(@RequestParam("reviewid") int reviewId, @RequestParam("value") short value) {
+        return bookRateReviewService.changeRateBookReview(reviewId, value);
     }
 }

@@ -34,4 +34,14 @@ public class BookReviewLikeEntity {
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
+
+    public BookReviewLikeEntity(BookReviewEntity bookReview, UserEntity user, short value) {
+        this.bookReview = bookReview;
+        this.user = user;
+        this.time = LocalDateTime.now();
+        this.value = value;
+    }
+
+    public BookReviewLikeEntity() {
+    }
 }

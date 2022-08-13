@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.book.review;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,10 +25,12 @@ public class BookReviewEntity {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id")
+    @JsonBackReference
     private BookEntity book;
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
+    @JsonBackReference
     private UserEntity user;
 
     @Column(columnDefinition = "DATE NOT NULL")
@@ -37,6 +40,7 @@ public class BookReviewEntity {
     private String text;
 
     @OneToMany(mappedBy = "bookReview")
+    @JsonBackReference
     private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
     public BookReviewEntity(BookEntity book, UserEntity user, String text) {

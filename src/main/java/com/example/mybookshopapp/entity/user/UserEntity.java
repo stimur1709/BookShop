@@ -7,6 +7,7 @@ import com.example.mybookshopapp.entity.book.review.BookReviewLikeEntity;
 import com.example.mybookshopapp.entity.book.review.MessageEntity;
 import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,12 +41,15 @@ public class UserEntity {
     private String name;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<BookReviewEntity> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")
+    @JsonManagedReference
     private UserContactEntity userContact;
 
     @ManyToMany(cascade = CascadeType.ALL)

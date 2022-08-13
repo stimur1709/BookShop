@@ -497,7 +497,8 @@
                 <div class="Product-comments">
                     <div class="Product-comments-header">
                         <h3 class="Product-comments-title">Отзывы
-                        </h3><span class="Rating"><span class="Rating-stars"><span class="Rating-star Rating-star_view">
+                        </h3><span class="Rating"><span class="Rating-stars"><span
+                            th:class="${rateReview >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -506,7 +507,8 @@
                           </path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:class="${rateReview >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -515,7 +517,8 @@
                           </path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:class="${rateReview >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -524,7 +527,8 @@
                           </path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:class="${rateReview >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -533,7 +537,8 @@
                           </path>
                         </g>
                       </g>
-                    </svg></span><span class="Rating-star Rating-star_view">
+                    </svg></span><span
+                            th:class="${rateReview >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                       <g>
                         <g>
@@ -542,7 +547,9 @@
                           </path>
                         </g>
                       </g>
-                    </svg></span></span><span class="Rating-title">567 отзывов</span></span>
+                    </svg></span></span>
+                        <span class="Rating-title" th:text="${reviews.size() + ' отзывов'}">567</span>
+                    </span>
                     </div>
                 </div>
                 <div class="Comments">
@@ -624,40 +631,25 @@
                                 </header>
                                 <div class="Comment-content">
                                     <div class="Spoiler">
-                                        <div class="Spoiler-visible">
-                                            <p th:text="${review.getText()}">Lorem ipsum dolor sit amet, consectetuer
-                                                adipiscing elit doli. Aenean
-                                                commodo
-                                                ligula eget dolor. Aenean massa. Cumtipsu sociis natoque penatibus et
-                                                magnis
-                                                dis parturient montesti, nascetur ridiculus mus. Donec quam felis,
-                                                ultricies
-                                                nec, pellentesque eutu, pretiumem. Nulla consequat massa quis enim.
-                                                Donec
-                                                pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                                                justotuio, rhoncus ut loret, imperdiet a, venenatis vitae, justo. Nullam
-                                                dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.
-                                                Vivamus element semper nisi. Aenean vulputate eleifend tellus. Aenean
-                                                leo
-                                                ligula, porttitor eu, consequat vitae.
-                                            </p>
-                                        </div>
-                                        <div class="Spoiler-hide">
-                                            <p>Первая книга - сборник повестей и рассказов "Большой поток" - посвящена
-                                                людям
-                                                леспромхоза. Автор книг "Рассказы" (1954), "Неразменное счастье. Повести
-                                                и
-                                                рассказы" (1962). Наиболее известная его повесть "Девчата" (1961)
-                                                переведена
-                                                на пятнадцать языков. По написанному им же сценарию был поставлен
-                                                одноименный фильм, до сих пор имеющий огромный успех.
-                                            </p>
+                                        <div style="display: inline-block">
+                                            <div class="Spoiler-visible" style="float: left">
+                                                <p th:if="${review.getText().length() < 100}"
+                                                   th:text="${review.getText()}">
+                                                    text</p>
+                                                <p th:if="${review.getText().length() >= 100}"
+                                                   th:text="${review.getText().substring(0, review.getText().indexOf('.') + 1)}"></p>
+                                            </div>
+                                            <div class="Spoiler-hide" style="float: left">
+                                                <p th:if="${review.getText().length() >= 100}"
+                                                   th:text="${review.getText().substring(review.getText().indexOf('.') + 1)}"></p>
+                                            </div>
                                         </div>
                                         <div class="Comment-footer">
                                             <div class="Comment-appeal">
                                                 <button class="btn btn_white btn_like" data-btntype="check"
                                                         data-check="false"
-                                                        data-btnradio="one1" data-likeid="222"><span
+                                                        data-btnradio="one1" data-likeid="222"
+                                                        th:attr="data-likeid = ${review.id}"><span
                                                         class="btn-icon"><img
                                                         src="/assets/img/icons/comment/like.svg"
                                                         alt="like.svg"/></span><span
@@ -666,7 +658,8 @@
                                                 </button>
                                                 <button class="btn btn_white btn_dislike" data-btntype="check"
                                                         data-check="false"
-                                                        data-btnradio="one1" data-likeid="222"><span
+                                                        data-btnradio="one1" data-likeid="222"
+                                                        th:attr="data-likeid = ${review.id}"><span
                                                         class="btn-icon"><img
                                                         src="/assets/img/icons/comment/dislike.svg"
                                                         alt="dislike.svg"/></span><span
@@ -676,7 +669,8 @@
                                             </div>
                                             <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
                                                     data-showtext="Свернуть отзыв"
-                                                    data-hidetext="Показать отзыв полностью">
+                                                    data-hidetext="Показать отзыв полностью"
+                                                    th:if="${review.getText().length() >= 100}">
                                             </button>
                                         </div>
                                     </div>

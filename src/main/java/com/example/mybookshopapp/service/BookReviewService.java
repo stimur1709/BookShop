@@ -4,6 +4,7 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
 import com.example.mybookshopapp.repository.BookRepository;
+import com.example.mybookshopapp.repository.BookReviewLikeRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

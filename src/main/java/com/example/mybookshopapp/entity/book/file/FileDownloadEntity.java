@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.book.file;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public class FileDownloadEntity {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id")
+    @JsonBackReference
     private BookEntity book;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 1")

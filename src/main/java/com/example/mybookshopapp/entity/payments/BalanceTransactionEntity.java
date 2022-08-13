@@ -2,6 +2,7 @@ package com.example.mybookshopapp.entity.payments;
 
 import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class BalanceTransactionEntity {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id")
+    @JsonBackReference
     private BookEntity book;
 
     @Column(columnDefinition = "TEXT NOT NULL")

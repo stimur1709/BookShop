@@ -80,12 +80,13 @@ public class BookEntity {
     private List<TagEntity> tagList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
+    @JsonManagedReference
     private List<BookReviewEntity> reviewList = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "book2genre",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+            joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id", referencedColumnName = "id")})
     @JsonManagedReference
     private List<GenreEntity> genreList = new ArrayList<>();
 
@@ -97,9 +98,11 @@ public class BookEntity {
     private List<UserEntity> userList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
+    @JsonManagedReference
     private List<BalanceTransactionEntity> transactionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
+    @JsonManagedReference
     private List<FileDownloadEntity> downloadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")

@@ -22,52 +22,58 @@
 </head>
 
 <body class="Site">
-    <header th:replace="~{fragments/header_fragment::headerFragment(authors)}"></header>
-    <div class="Middle">
-        <div class="wrap">
-            <main class="Middle-main">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
-                    </li>
-                    <li class="breadcrumbs-item"><a href="/genres/index.html" th:href="@{/genres}">Книги</a>
-                    </li>
-                    <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorSlug.name}">Борис
+<header th:replace="~{fragments/header_fragment::headerFragment(authors)}"></header>
+<div class="Middle">
+    <div class="wrap">
+        <main class="Middle-main">
+            <ul class="breadcrumbs">
+                <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
+                </li>
+                <li class="breadcrumbs-item"><a href="/genres/index.html" th:href="@{/genres}">Книги</a>
+                </li>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorSlug.name}">Борис
                             Васильевич Бедный</span>
-                    </li>
-                </ul>
-                <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
-                </h1>
-                <div class="Section">
-                    <div class="Cards Cards_refresh">
-                        <div class="Card" th:each="book : ${authorBooks}">
-                            <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
-                                        th:src="${book.image}" alt="card.jpg" /></a>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
-                                        th:text="${book.title}">Техника</a>
-                                </strong>
-                                <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
-                                    Петрович
-                                </div>
-                                <div class="Card-cost"><span class="Card-priceOld"
-                                        th:text="${book.price}">₽300.00</span>
-                                    <span class="Card-price" th:text="${book.discountPrice()}">₽190.00</span>
-                                </div>
-                            </div>
+                </li>
+            </ul>
+            <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
+            </h1>
+            <div class="Section">
+                <div class="Cards Cards_refresh">
+                    <div class="Card" th:each="book : ${authorBooks}">
+                        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
+                                th:src="${book.image}" alt="card.jpg"/></a>
                         </div>
-                        <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
-                                data-refreshshow="author" data-refreshoffset="0" data-refreshlimit="20"
-                                th:attr="data-refreshid=${authorSlug.id}" data-refreshid="10">Показать
-                                еще</a>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
+                                                          th:text="${book.title}">Техника</a>
+                            </strong>
+                            <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
+                                Петрович
+                            </div>
+                            <div class="Card-cost">
+                                            <span class="Card-priceOld" th:if="${book.discount != 0}"
+                                                  th:text="'₽' + ${book.price}">₽500.00</span>
+                                <span class="Card-price" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.discountPrice()}">₽390.00</span>
+                                <span class="Card-price" th:if="${book.discount == 0}"
+                                      th:text="'₽' + ${book.price}">₽390.00</span>
+                            </div>
                         </div>
                     </div>
+                    <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
+                                                                     data-refreshshow="author" data-refreshoffset="0"
+                                                                     data-refreshlimit="20"
+                                                                     th:attr="data-refreshid=${authorSlug.id}"
+                                                                     data-refreshid="10">Показать
+                        еще</a>
+                    </div>
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
-    <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
-    <script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</div>
+<footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
 </body>
 
 </html>

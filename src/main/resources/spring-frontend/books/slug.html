@@ -65,8 +65,8 @@
                             </div>
                             <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
                                 <button class="trigger trigger_dropdown" type="button">
-                                    <div class="Rating Rating_noStyleLink"><span class="Rating-stars"><span
-                                            class="Rating-star Rating-star_view">
+                                    <div class="Rating Rating_noStyleLink"><span class="Rating-stars">
+                                        <span th:class="${rateBook >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -75,7 +75,8 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star Rating-star_view">
+                          </svg></span>
+                                        <span th:class="${rateBook >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -84,7 +85,8 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star">
+                          </svg></span>
+                                        <span th:class="${rateBook >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -93,7 +95,8 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star">
+                          </svg></span>
+                                        <span th:class="${rateBook >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -102,7 +105,8 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star">
+                          </svg></span>
+                                        <span th:class="${rateBook >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -112,7 +116,7 @@
                               </g>
                             </g>
                           </svg></span></span><span class="Rating-title"
-                                                    th:text="${sizeOfScore1 + sizeOfScore2 + sizeOfScore3 + sizeOfScore4 + sizeOfScore5}">(567)</span>
+                                                    th:text="${numberOfRating}">(567)</span>
                                     </div>
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window"><a class="modal-close"
@@ -168,7 +172,7 @@
                                       </path>
                                     </g>
                                   </g>
-                                </svg></span></span><span class="Rating-title" th:text="${sizeOfScore5}">1</span>
+                                </svg></span></span><span class="Rating-title" th:text="${numberOfScore5}">1</span>
                           </span><br>
                                                 <span class="Rating"><span class="Rating-stars"><span
                                                         class="Rating-star Rating-star_view">
@@ -216,7 +220,8 @@
                                       </path>
                                     </g>
                                   </g>
-                                </svg></span></span><span class="Rating-title" th:text="${sizeOfScore4}">4</span></span><br>
+                                </svg></span></span><span class="Rating-title"
+                                                          th:text="${numberOfScore4}">4</span></span><br>
                                                 <span class="Rating"><span class="Rating-stars"><span
                                                         class="Rating-star Rating-star_view">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
@@ -263,7 +268,8 @@
                                       </path>
                                     </g>
                                   </g>
-                                </svg></span></span><span class="Rating-title" th:text="${sizeOfScore3}">0</span></span><br>
+                                </svg></span></span><span class="Rating-title"
+                                                          th:text="${numberOfScore3}">0</span></span><br>
                                                 <span class="Rating"><span class="Rating-stars"><span
                                                         class="Rating-star Rating-star_view">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
@@ -311,7 +317,7 @@
                                     </g>
                                   </g>
                                 </svg></span></span><span class="Rating-title"
-                                                          th:text="${sizeOfScore2}">10</span></span><br>
+                                                          th:text="${numberOfScore2}">10</span></span><br>
                                                 <span class="Rating"><span class="Rating-stars"><span
                                                         class="Rating-star Rating-star_view">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
@@ -358,7 +364,8 @@
                                       </path>
                                     </g>
                                   </g>
-                                </svg></span></span><span class="Rating-title" th:text="${sizeOfScore1}">3</span></span>
+                                </svg></span></span><span class="Rating-title"
+                                                          th:text="${numberOfScore1}">3</span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -430,8 +437,12 @@
                                 </div>
                             </div>
                             <div class="ProductCard-cost"><span class="ProductCard-titleProp">Цена:</span>
-                                <span class="ProductCard-priceOld" th:text="${slugBook.price}">₽300</span>
-                                <span class="ProductCard-price" th:text="${slugBook.discountPrice()}">₽180</span>
+                                <span class="ProductCard-priceOld" th:if="${slugBook.discount != 0}"
+                                      th:text="'₽' + ${slugBook.price}">₽300</span>
+                                <span class="ProductCard-price" th:if="${slugBook.discount != 0}"
+                                      th:text="'₽' + ${slugBook.discountPrice()}">₽180</span>
+                                <span class="ProductCard-price" th:if="${slugBook.discount == 0}"
+                                      th:text="'₽' + ${slugBook.discountPrice()}">₽180</span>
                             </div>
                         </div>
                         <div class="ProductCard-text">
@@ -631,15 +642,15 @@
                                 </header>
                                 <div class="Comment-content">
                                     <div class="Spoiler">
-                                        <div style="display: inline-block">
-                                            <div class="Spoiler-visible" style="float: left">
+                                        <div>
+                                            <div class="Spoiler-visible" style="display: inline-block">
                                                 <p th:if="${review.getText().length() < 100}"
                                                    th:text="${review.getText()}">
                                                     text</p>
                                                 <p th:if="${review.getText().length() >= 100}"
                                                    th:text="${review.getText().substring(0, review.getText().indexOf('.') + 1)}"></p>
                                             </div>
-                                            <div class="Spoiler-hide" style="float: left">
+                                            <div class="Spoiler-hide" style="display: inline-block">
                                                 <p th:if="${review.getText().length() >= 100}"
                                                    th:text="${review.getText().substring(review.getText().indexOf('.') + 1)}"></p>
                                             </div>

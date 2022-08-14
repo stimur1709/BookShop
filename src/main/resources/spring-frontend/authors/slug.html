@@ -22,89 +22,93 @@
 </head>
 
 <body class="Site">
-    <header th:replace="~{fragments/header_fragment::headerFragment(authors)}"></header>
-    <div class="Middle">
-        <div class="wrap">
-            <main class="Middle-main">
-                <ul class="breadcrumbs">
-                    <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
-                    </li>
-                    <li class="breadcrumbs-item"><a href="/authors/index.html" th:href="@{/authors}">Авторы</a>
-                    </li>
-                    <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorSlug.name}">Борис
+<header th:replace="~{fragments/header_fragment::headerFragment(authors)}"></header>
+<div class="Middle">
+    <div class="wrap">
+        <main class="Middle-main">
+            <ul class="breadcrumbs">
+                <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
+                </li>
+                <li class="breadcrumbs-item"><a href="/authors/index.html" th:href="@{/authors}">Авторы</a>
+                </li>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorSlug.name}">Борис
                             Васильевич Бедный</span>
-                    </li>
-                </ul>
-                <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
-                </h1>
-                <article class="Article">
-                    <div class="sdf">
-                    </div>
-                    <div class="Spoiler">
-                        <div class="Spoiler-visible">
-                            <div class="pict pict_left"><img th:src="${authorSlug.photo}" alt="card.jpg" />
-                            </div>
-                            <div>
-                                <h2>Биография
-                                </h2>
-                                <p th:text="${authorSlug.description.substring(0, authorSlug.description.length()/2)}">
-                                    Борис
-                                </p>
-                            </div>
+                </li>
+            </ul>
+            <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
+            </h1>
+            <article class="Article">
+                <div class="sdf">
+                </div>
+                <div class="Spoiler">
+                    <div class="Spoiler-visible">
+                        <div class="pict pict_left"><img th:src="${authorSlug.photo}" alt="card.jpg"/>
                         </div>
-                        <div class="Spoiler-hide">
-                            <p th:text="${authorSlug.description.substring(authorSlug.description.length()/2)}">"Писать
-                                он начал до войны, в академии,- рассказал о нем в предисловии к книге "Первое дело"
-                                поэт К.Ваншенкин.- Был участником литературных кружков и студий. Но всерьез вернулся к
-                                этому
-                                в сорок шестом, в далекой сплавконторе, на Трехозерной запани. Печатался в Коми
-                                республиканской газете "За новый Север" ("Красное знамя") и наконец решился вновь
-                                переломить
-                                судьбу, поступив в Литературный институт" в 1952г.
+                        <div>
+                            <h2>Биография
+                            </h2>
+                            <p th:text="${authorSlug.description.substring(0, authorSlug.description.length()/2)}">
+                                Борис
                             </p>
                         </div>
-                        <div class="Spoiler-footer">
-                            <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
+                    </div>
+                    <div class="Spoiler-hide">
+                        <p th:text="${authorSlug.description.substring(authorSlug.description.length()/2)}">"Писать
+                            он начал до войны, в академии,- рассказал о нем в предисловии к книге "Первое дело"
+                            поэт К.Ваншенкин.- Был участником литературных кружков и студий. Но всерьез вернулся к
+                            этому
+                            в сорок шестом, в далекой сплавконторе, на Трехозерной запани. Печатался в Коми
+                            республиканской газете "За новый Север" ("Красное знамя") и наконец решился вновь
+                            переломить
+                            судьбу, поступив в Литературный институт" в 1952г.
+                        </p>
+                    </div>
+                    <div class="Spoiler-footer">
+                        <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
                                 data-showtext="Свернуть" data-hidetext="Показать полностью">
-                            </button>
-                        </div>
+                        </button>
                     </div>
-                </article>
-                <div class="Section">
-                    <header class="Section-header">
-                        <h2 class="Section-title">Книги автора
-                        </h2>
-                    </header>
-                    <div class="Cards Cards_refresh">
-                        <div class="Card" th:each="book : ${authorBooks}">
-                            <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
-                                        th:src="${book.image}" alt="card.jpg" /></a>
-                            </div>
-                            <div class="Card-content">
-                                <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
-                                        th:text="${book.title}">Техника</a>
-                                </strong>
-                                <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
-                                    Петрович
-                                </div>
-                                <div class="Card-cost"><span class="Card-priceOld"
-                                        th:text="${book.price}">₽300.00</span>
-                                    <span class="Card-price" th:text="${book.discountPrice()}">₽190.00</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <footer class="Section-footer"><a class="Author-books" href="/books/author.html"
-                            th:href="'/books/author/' + ${authorSlug.slug}">Все книги
-                            автора<span class="Author-amount"
-                                th:text="${authorSlug.getBookList().size()}">(55)</span></a>
-                    </footer>
                 </div>
-            </main>
-        </div>
+            </article>
+            <div class="Section">
+                <header class="Section-header">
+                    <h2 class="Section-title">Книги автора
+                    </h2>
+                </header>
+                <div class="Cards Cards_refresh">
+                    <div class="Card" th:each="book : ${authorBooks}">
+                        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
+                                th:src="${book.image}" alt="card.jpg"/></a>
+                        </div>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
+                                                          th:text="${book.title}">Техника</a>
+                            </strong>
+                            <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
+                                Петрович
+                            </div>
+                            <div class="Card-cost">
+                                <span class="Card-priceOld" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.price}">₽300.00</span>
+                                <span class="Card-price" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.discountPrice()}">₽190.00</span>
+                                <span class="Card-price" th:if="${book.discount == 0}"
+                                      th:text="'₽' + ${book.price}">₽190.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="Section-footer"><a class="Author-books" href="/books/author.html"
+                                                  th:href="'/books/author/' + ${authorSlug.slug}">Все книги
+                    автора<span class="Author-amount"
+                                th:text="${authorSlug.getBookList().size()}">(55)</span></a>
+                </footer>
+            </div>
+        </main>
     </div>
-    <footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
-    <script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</div>
+<footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
 </body>
 
 </html>

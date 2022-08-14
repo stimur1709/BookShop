@@ -50,11 +50,13 @@ public class BookPageController {
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
-        model.addAttribute("sizeOfScore1", ratingBook.getRatingBook(book.getId(), 1));
-        model.addAttribute("sizeOfScore2", ratingBook.getRatingBook(book.getId(), 2));
-        model.addAttribute("sizeOfScore3", ratingBook.getRatingBook(book.getId(), 3));
-        model.addAttribute("sizeOfScore4", ratingBook.getRatingBook(book.getId(), 4));
-        model.addAttribute("sizeOfScore5", ratingBook.getRatingBook(book.getId(), 5));
+        model.addAttribute("numberOfScore1", (int) ratingBook.getSizeofRatingValue(book.getId(), 1));
+        model.addAttribute("numberOfScore2", (int) ratingBook.getSizeofRatingValue(book.getId(), 2));
+        model.addAttribute("numberOfScore3", (int) ratingBook.getSizeofRatingValue(book.getId(), 3));
+        model.addAttribute("numberOfScore4", (int) ratingBook.getSizeofRatingValue(book.getId(), 4));
+        model.addAttribute("numberOfScore5", (int) ratingBook.getSizeofRatingValue(book.getId(), 5));
+        model.addAttribute("numberOfRating", (int) ratingBook.numberOfRating(book.getId()));
+        model.addAttribute("rateBook", ratingBook.getRateBook(book.getId()));
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
         return "books/slug";
@@ -84,7 +86,7 @@ public class BookPageController {
     @PostMapping("/api/rateBook")
     @ResponseBody
     public Boolean rateBook(@RequestParam("bookId") int bookId, @RequestParam("value") int value) {
-        ratingBook.rateBook(bookId, value);
+        ratingBook.changeRateBook(bookId, value);
         return true;
     }
 

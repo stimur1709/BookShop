@@ -83,8 +83,8 @@ public class BooksRatingAndPopularityService {
         return IntStream.rangeClosed(1, 5).mapToDouble(i -> getSizeofRatingValue(idBook, i)).sum();
     }
 
-    public long getRateBook(int idBook) {
-        return Math.round(IntStream.rangeClosed(1, 5).mapToDouble(i -> getSizeofRatingValue(idBook, i) * i).sum()
-                / numberOfRating(idBook));
+    public double getRateBook(int idBook) {
+        return IntStream.rangeClosed(1, 5).mapToDouble(i -> getSizeofRatingValue(idBook, i) * i).sum()
+                / numberOfRating(idBook);
     }
 }

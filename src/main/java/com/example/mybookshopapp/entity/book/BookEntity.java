@@ -65,6 +65,10 @@ public class BookEntity {
     @Schema(example = "0.4")
     private Double popularity;
 
+    @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
+    @Schema(example = "15")
+    private double rate;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "book_id")},

@@ -56,7 +56,7 @@ public class BookPageController {
         model.addAttribute("numberOfScore4", (int) ratingBook.getSizeofRatingValue(book.getId(), 4));
         model.addAttribute("numberOfScore5", (int) ratingBook.getSizeofRatingValue(book.getId(), 5));
         model.addAttribute("numberOfRating", (int) ratingBook.numberOfRating(book.getId()));
-        model.addAttribute("rateBook", ratingBook.getRateBook(book.getId()));
+        model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
         return "books/slug";

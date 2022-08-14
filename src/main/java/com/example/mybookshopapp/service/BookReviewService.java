@@ -4,10 +4,10 @@ import com.example.mybookshopapp.entity.book.BookEntity;
 import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
 import com.example.mybookshopapp.entity.user.UserEntity;
 import com.example.mybookshopapp.repository.BookRepository;
-import com.example.mybookshopapp.repository.BookReviewLikeRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +41,6 @@ public class BookReviewService {
     }
 
     public List<BookReviewEntity> getBookReview(BookEntity book) {
-        return bookReviewRepository.getBookReviewEntitiesByBook(book);
+        return bookReviewRepository.getBookReviewEntitiesByBook(book, Sort.by(Sort.Direction.DESC, "rate"));
     }
 }

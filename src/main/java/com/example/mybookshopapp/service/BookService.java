@@ -2,7 +2,6 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.entity.author.Author;
 import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.BookRating;
 import com.example.mybookshopapp.entity.genre.GenreEntity;
 import com.example.mybookshopapp.entity.tag.TagEntity;
 import com.example.mybookshopapp.repository.BookRepository;
@@ -14,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -29,7 +27,8 @@ public class BookService {
     }
 
     public Page<BookEntity> getPageOfRecommendBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
+        addRate();
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "rate"));
         return bookRepository.findAll(nextPage);
     }
 
@@ -61,11 +60,18 @@ public class BookService {
         return bookRepository.findBookEntityByTitleContaining(wordSearch, nextPage);
     }
 
-    public void addPopularity() {
+    private void addPopularity() {
         List<BookEntity> bookList = bookRepository.findAll();
-        bookList.stream().filter(book ->
-                booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
+        bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
             book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
+            bookRepository.save(book);
+        });
+    }
+
+    private void addRate() {
+        bookRepository.findAll().forEach(book -> {
+            System.out.println(booksRatingAndPopularityService.getRateBook(book.getId()));
+            book.setRate(booksRatingAndPopularityService.getRateBook(book.getId()));
             bookRepository.save(book);
         });
     }
@@ -99,8 +105,7 @@ public class BookService {
 
     public List<BookEntity> getBooksFromCookie(String contents) {
         contents = contents.startsWith("/") ? contents.substring(1) : contents;
-        contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1)
-                : contents;
+        contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1) : contents;
         String[] cookieSlugs = contents.split("/");
         return bookRepository.findBookEntitiesBySlugIn(cookieSlugs);
     }

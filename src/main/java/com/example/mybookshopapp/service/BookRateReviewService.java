@@ -30,7 +30,9 @@ public class BookRateReviewService {
         if (value == 1 || value == -1) {
             BookReviewLikeEntity bookReviewLike = new BookReviewLikeEntity(review, userRepository.getById(1), value);
             review.getReviewLikeList().add(bookReviewLike);
+            review.setRate(review.getRate() + value);
             bookReviewLikeRepository.save(bookReviewLike);
+            bookReviewRepository.save(review);
             return true;
         }
         return false;

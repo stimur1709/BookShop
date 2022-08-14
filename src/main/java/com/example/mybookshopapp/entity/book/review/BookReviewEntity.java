@@ -43,6 +43,9 @@ public class BookReviewEntity {
     @JsonBackReference
     private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
+    private int rate;
+
     public BookReviewEntity(BookEntity book, UserEntity user, String text) {
         this.book = book;
         this.user = user;

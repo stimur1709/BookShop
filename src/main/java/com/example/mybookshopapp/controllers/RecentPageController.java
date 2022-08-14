@@ -31,7 +31,9 @@ public class RecentPageController {
     public BooksPageDto getRecentBooksPage(@RequestParam(value = "from", defaultValue = "16.06.2009") String from,
                                            @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
-                                           @RequestParam("limit") Integer limit) {
+                                           @RequestParam("limit") Integer limit, Model model) {
+        model.addAttribute("offset", bookService.getPageOfRecentBooks(offset, limit).getNumber());
+        model.addAttribute("limit", bookService.getPageOfRecentBooks(offset, limit).getTotalPages());
         return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit).getContent());
     }
 
@@ -40,6 +42,8 @@ public class RecentPageController {
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 20).getContent());
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
+        model.addAttribute("offset", bookService.getPageOfRecentBooks(0, 20).getNumber());
+        model.addAttribute("limit", bookService.getPageOfRecentBooks(0, 100).getTotalPages());
         return "books/recent";
     }
 }

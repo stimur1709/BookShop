@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class BooksRatingAndPopularityService {
@@ -59,7 +60,7 @@ public class BooksRatingAndPopularityService {
         bookRepository.save(book);
     }
 
-    public int getRatingBook(int idBook, int value) {
+    public double getSizeofRatingValue(int idBook, int value) {
         Optional<BookEntity> book = bookRepository.findById(idBook);
         return book.map(bookEntity -> bookEntity.getBookRatingList()
                         .stream().filter(bookRating -> value == bookRating.getScore())
@@ -68,7 +69,7 @@ public class BooksRatingAndPopularityService {
                 .orElse(0);
     }
 
-    public void rateBook(int bookId, int value) {
+    public void changeRateBook(int bookId, int value) {
         Optional<BookEntity> book = bookRepository.findById(bookId);
         if (book.isPresent()) {
             book.get().getBookRatingList()
@@ -76,5 +77,14 @@ public class BooksRatingAndPopularityService {
                     .forEach(bookRating -> bookRating.setNumberOfRatings(bookRating.getNumberOfRatings() + 1));
             bookRepository.save(book.get());
         }
+    }
+
+    public double numberOfRating(int idBook) {
+        return IntStream.rangeClosed(1, 5).mapToDouble(i -> getSizeofRatingValue(idBook, i)).sum();
+    }
+
+    public long getRateBook(int idBook) {
+        return Math.round(IntStream.rangeClosed(1, 5).mapToDouble(i -> getSizeofRatingValue(idBook, i) * i).sum()
+                / numberOfRating(idBook));
     }
 }

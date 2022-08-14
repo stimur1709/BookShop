@@ -1,6 +1,8 @@
 package com.example.mybookshopapp.entity.book.review;
 
 import com.example.mybookshopapp.entity.user.UserEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +25,12 @@ public class BookReviewLikeEntity {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "review_id")
+    @JsonManagedReference
     private BookReviewEntity bookReview;
 
     @ManyToOne
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
+    @JsonBackReference
     private UserEntity user;
 
     @Column(columnDefinition = "DATE NOT NULL")

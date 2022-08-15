@@ -31,14 +31,26 @@ public class UserEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
+    private String password;
+
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime regTime;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int balance;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    public UserEntity(String name, String password) {
+        this.hash = name.replace(" ", "");
+        this.password = password;
+        this.regTime = LocalDateTime.now();
+        this.name = name;
+    }
+
+    public UserEntity() {
+    }
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -48,9 +60,9 @@ public class UserEntity {
     @JsonManagedReference
     private List<BookReviewLikeEntity> reviewLikeList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private UserContactEntity userContact;
+    private List<UserContactEntity> userContact = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2User",

@@ -19,20 +19,20 @@ public class UserContact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
     private ContactType type;
 
-    @Column(columnDefinition = "SMALLINT NOT NULL")
+    @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private short approved;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String code;
 
-    @Column(columnDefinition = "INT")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int codeTrails;
 
     @Column(columnDefinition = "DATE")
@@ -40,4 +40,14 @@ public class UserContact {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
+
+    public UserContactEntity(UserEntity user, ContactType type, String contact) {
+        this.code = "1234";
+        this.user = user;
+        this.type = type;
+        this.contact = contact;
+    }
+
+    public UserContactEntity() {
+    }
 }

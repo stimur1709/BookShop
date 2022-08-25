@@ -1,11 +1,11 @@
-package com.example.mybookshopapp.model.user;
+package com.example.mybookshopapp.entity.user;
 
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.file.FileDownload;
-import com.example.mybookshopapp.model.book.review.BookReview;
-import com.example.mybookshopapp.model.book.review.BookReviewLike;
-import com.example.mybookshopapp.model.book.review.Message;
-import com.example.mybookshopapp.model.payments.BalanceTransaction;
+import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
+import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
+import com.example.mybookshopapp.entity.book.review.BookReviewLikeEntity;
+import com.example.mybookshopapp.entity.book.review.MessageEntity;
+import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,14 +31,26 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
+    private String password;
+
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime regTime;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int balance;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    public UserEntity(String name, String password) {
+        this.hash = name.replace(" ", "");
+        this.password = password;
+        this.regTime = LocalDateTime.now();
+        this.name = name;
+    }
+
+    public UserEntity() {
+    }
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -48,7 +60,7 @@ public class User {
     @JsonManagedReference
     private List<BookReviewLike> reviewLikeList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private UserContact userContact;
 

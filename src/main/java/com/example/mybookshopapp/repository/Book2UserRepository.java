@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
+import com.example.mybookshopapp.model.book.links.Book2User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface Book2UserRepository extends JpaRepository<Book2UserEntity, Integer> {
+public interface Book2UserRepository extends JpaRepository<Book2User, Integer> {
 
-    List<Book2UserEntity> findBook2UserEntitiesByBookId(Integer book);
+    List<Book2User> findBook2UserEntitiesByBookId(Integer book);
 }

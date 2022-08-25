@@ -2,8 +2,8 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.author.Author;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.author.Author;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,7 +69,7 @@ public class AuthorsPageController {
     }
 
     @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
+    public List<Book> searchResult() {
         return new ArrayList<>();
     }
 }

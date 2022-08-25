@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.book.file.BookFile;
+import com.example.mybookshopapp.model.book.file.BookFile;
 import com.example.mybookshopapp.repository.BookFileRepository;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;

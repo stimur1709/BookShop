@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
-import com.example.mybookshopapp.entity.user.UserEntity;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.review.BookReview;
+import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.repository.UserRepository;
@@ -29,10 +29,10 @@ public class BookReviewService {
     }
 
     public void saveBookReview(int bookId, String text) {
-        Optional<BookEntity> bookEntity = bookRepository.findById(bookId);
-        Optional<UserEntity> user = userRepository.findById(1);
+        Optional<Book> bookEntity = bookRepository.findById(bookId);
+        Optional<User> user = userRepository.findById(1);
         if (bookEntity.isPresent() && user.isPresent()) {
-            BookReviewEntity bookReview = new BookReviewEntity(bookEntity.get(), user.get(), text);
+            BookReview bookReview = new BookReview(bookEntity.get(), user.get(), text);
             bookEntity.get().getReviewList().add(bookReview);
 
             bookReviewRepository.save(bookReview);
@@ -40,7 +40,7 @@ public class BookReviewService {
         }
     }
 
-    public List<BookReviewEntity> getBookReview(BookEntity book) {
+    public List<BookReview> getBookReview(Book book) {
         return bookReviewRepository.getBookReviewEntitiesByBook(book, Sort.by(Sort.Direction.DESC, "rate"));
     }
 }

@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.BookRating;
-import com.example.mybookshopapp.entity.book.links.Book2UserEntity;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.BookRating;
+import com.example.mybookshopapp.model.book.links.Book2User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,25 +28,23 @@ public class BooksRatingAndPopularityService {
     }
 
     public Map<Integer, Double> getPopularity(Integer bookId) {
-        List<Book2UserEntity> bookList = book2UserRepository.findBook2UserEntitiesByBookId(bookId);
-        return bookList.stream().collect(Collectors.groupingBy((Book2UserEntity b) -> b.getBook().getId(),
-                Collectors.summingDouble(((Book2UserEntity b) -> {
-                    if (b.getType().getId() == 1) {
+        List<Book2User> bookList = book2UserRepository.findBook2UserEntitiesByBookId(bookId);
+        return bookList.stream().collect(Collectors.groupingBy((Book2User b) -> b.getBook().getId(),
+                Collectors.summingDouble(((Book2User b) -> {
+                    if (b.getType().getId() == 1)
                         return 0.4;
-                    }
-                    if (b.getType().getId() == 2) {
+                    if (b.getType().getId() == 2)
                         return 0.7;
-                    }
-                    if (b.getType().getId() == 3) {
+                    if (b.getType().getId() == 3)
                         return 1.0;
-                    } else {
+                    else
                         return 0.0;
-                    }
+
                 }))));
     }
 
     public void changePopularity(String slug, String cookieName, boolean isPopularity) {
-        BookEntity book = bookRepository.findBookEntityBySlug(slug);
+        Book book = bookRepository.findBookEntityBySlug(slug);
         switch (cookieName) {
             case ("keptContents"):
                 System.out.println(1 + slug);
@@ -61,7 +59,7 @@ public class BooksRatingAndPopularityService {
     }
 
     public double getSizeofRatingValue(int idBook, int value) {
-        Optional<BookEntity> book = bookRepository.findById(idBook);
+        Optional<Book> book = bookRepository.findById(idBook);
         return book.map(bookEntity -> bookEntity.getBookRatingList()
                         .stream().filter(bookRating -> value == bookRating.getScore())
                         .findFirst().map(BookRating::getNumberOfRatings)
@@ -70,7 +68,7 @@ public class BooksRatingAndPopularityService {
     }
 
     public void changeRateBook(int bookId, int value) {
-        Optional<BookEntity> book = bookRepository.findById(bookId);
+        Optional<Book> book = bookRepository.findById(bookId);
         if (book.isPresent()) {
             book.get().getBookRatingList()
                     .stream().filter(bookRating -> bookRating.getScore() == value)

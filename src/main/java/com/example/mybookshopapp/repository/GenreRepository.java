@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.entity.genre.GenreEntity;
+import com.example.mybookshopapp.model.genre.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GenreRepository extends JpaRepository<GenreEntity, Integer> {
+public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
-    GenreEntity findGenreEntityBySlug(String slug);
+    Genre findGenreEntityBySlug(String slug);
 
-    GenreEntity findGenreEntityById(Integer id);
+    Genre findGenreEntityById(Integer id);
 }

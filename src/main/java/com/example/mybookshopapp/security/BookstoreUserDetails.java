@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.security;
 
-import com.example.mybookshopapp.entity.user.UserEntity;
+import com.example.mybookshopapp.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class BookstoreUserDetails implements UserDetails {
 
-    private final UserEntity user;
+    private final User user;
 
-    public BookstoreUserDetails(UserEntity user) {
+    public BookstoreUserDetails(User user) {
         this.user = user;
     }
 

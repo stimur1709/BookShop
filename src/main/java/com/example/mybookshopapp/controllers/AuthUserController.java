@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.security.ContactConfirmationPayload;
 import com.example.mybookshopapp.security.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.RegistrationForm;
@@ -64,7 +64,7 @@ public class AuthUserController {
     }
 
     @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
+    public List<Book> searchResult() {
         return new ArrayList<>();
     }
 

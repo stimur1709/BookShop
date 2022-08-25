@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.enums.ContactType;
-import com.example.mybookshopapp.entity.user.UserContactEntity;
-import com.example.mybookshopapp.entity.user.UserEntity;
+import com.example.mybookshopapp.model.enums.ContactType;
+import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.ContactConfirmationPayload;
@@ -37,10 +37,10 @@ public class UserRegisterService {
     public void registerUser(RegistrationForm registrationForm) {
 
         if (!userContactRepository.findUserContactEntityByContact(registrationForm.getEmail()).isPresent()) {
-            UserEntity user = new UserEntity(registrationForm.getName(),
+            User user = new User(registrationForm.getName(),
                     passwordEncoder.encode(registrationForm.getPassword()));
-            UserContactEntity contactEmail = new UserContactEntity(user, ContactType.EMAIL, registrationForm.getEmail());
-            UserContactEntity contactPhone = new UserContactEntity(user, ContactType.PHONE, registrationForm.getPhone());
+            UserContact contactEmail = new UserContact(user, ContactType.EMAIL, registrationForm.getEmail());
+            UserContact contactPhone = new UserContact(user, ContactType.PHONE, registrationForm.getPhone());
 
             user.getUserContact().add(contactEmail);
             user.getUserContact().add(contactPhone);

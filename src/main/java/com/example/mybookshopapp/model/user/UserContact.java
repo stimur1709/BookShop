@@ -41,13 +41,13 @@ public class UserContact {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    public UserContactEntity(UserEntity user, ContactType type, String contact) {
+    public UserContact(User user, ContactType type, String contact) {
         this.code = "1234";
         this.user = user;
         this.type = type;
         this.contact = contact;
     }
 
-    public UserContactEntity() {
+    public UserContact() {
     }
 }

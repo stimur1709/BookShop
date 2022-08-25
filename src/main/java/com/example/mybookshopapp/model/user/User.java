@@ -1,11 +1,11 @@
-package com.example.mybookshopapp.entity.user;
+package com.example.mybookshopapp.model.user;
 
-import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.book.file.FileDownloadEntity;
-import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
-import com.example.mybookshopapp.entity.book.review.BookReviewLikeEntity;
-import com.example.mybookshopapp.entity.book.review.MessageEntity;
-import com.example.mybookshopapp.entity.payments.BalanceTransactionEntity;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.file.FileDownload;
+import com.example.mybookshopapp.model.book.review.BookReview;
+import com.example.mybookshopapp.model.book.review.BookReviewLike;
+import com.example.mybookshopapp.model.book.review.Message;
+import com.example.mybookshopapp.model.payments.BalanceTransaction;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,16 +42,6 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    public UserEntity(String name, String password) {
-        this.hash = name.replace(" ", "");
-        this.password = password;
-        this.regTime = LocalDateTime.now();
-        this.name = name;
-    }
-
-    public UserEntity() {
-    }
-
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<BookReview> reviewList = new ArrayList<>();
@@ -62,7 +52,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private UserContact userContact;
+    private List<UserContact> userContact = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2User",
@@ -72,13 +62,21 @@ public class User {
     private List<Book> bookList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<BalanceTransaction> transactionList = new ArrayList<>();
+    private List<BalanceTransaction> transactionList;
 
     @OneToMany(mappedBy = "user")
-    private List<FileDownload> downloadList = new ArrayList<>();
+    private List<FileDownload> downloadList;
 
     @OneToMany(mappedBy = "user")
-    private List<Message> messageList = new ArrayList<>();
+    private List<Message> messageList;
 
+    public User(String name, String password) {
+        this.hash = name.replace(" ", "");
+        this.password = password;
+        this.regTime = LocalDateTime.now();
+        this.name = name;
+    }
 
+    public User() {
+    }
 }

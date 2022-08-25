@@ -2,7 +2,7 @@ package com.example.mybookshopapp.model.book.links;
 
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.key.KeyBook2Tag;
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,5 +25,5 @@ public class Book2Tag {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tag_id", insertable = false, updatable = false)
-    private Tag tag;
+    private TagBook tag;
 }

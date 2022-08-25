@@ -72,7 +72,6 @@ public class BookShopController {
                                           HttpServletResponse response, Model model) {
         switch (status) {
             case ("KEPT"):
-                System.out.println(keptContents);
                 handlerRemoveBookFromCartRequest(slug, cartContents, response, model);
                 bookShopService.createCookie(keptContents, slug, response, "keptContents", model, "isKeptEmpty");
                 booksRatingAndPopularityService.changePopularity(slug, "keptContents", true);

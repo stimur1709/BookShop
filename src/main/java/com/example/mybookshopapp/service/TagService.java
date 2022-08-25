@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +22,24 @@ public class TagService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Tag> getPageOfTagsBooks() {
+    public List<TagBook> getPageOfTagsBooks() {
         addAmount();
         return tagRepository.findAll();
     }
 
-    public Tag getPageBySlug(String slug) {
+    public TagBook getPageBySlug(String slug) {
         return tagRepository.findTagEntityBySlug(slug);
     }
 
     public void addAmount() {
-        List<Tag> bookList = tagRepository.findAll();
+        List<TagBook> bookList = tagRepository.findAll();
         bookList.forEach(tagEntity -> {
             tagEntity.setAmount(tagEntity.getBookList().size());
             tagRepository.save(tagEntity);
         });
     }
 
-    public List<Tag> getTagsByBook(Integer id) {
+    public List<TagBook> getTagsByBook(Integer id) {
         return bookRepository.findById(id).map(Book::getTagList).orElse(Collections.emptyList());
     }
 }

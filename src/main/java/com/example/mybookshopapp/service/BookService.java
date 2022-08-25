@@ -3,7 +3,7 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.model.author.Author;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.genre.Genre;
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -70,25 +70,24 @@ public class BookService {
 
     private void addRate() {
         bookRepository.findAll().forEach(book -> {
-            System.out.println(booksRatingAndPopularityService.getRateBook(book.getId()));
             book.setRate(booksRatingAndPopularityService.getRateBook(book.getId()));
             bookRepository.save(book);
         });
     }
 
-    public Page<Book> getBooksForPageTage(Tag tag, Integer offset, Integer limit) {
+    public Page<Book> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByTag(tag.getSlug(), nextPage);
+        return bookRepository.findByTagList_Slug(tag.getSlug(), nextPage);
     }
 
     public Page<Book> getBooksForPageGenre(Genre genre, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByGenre(genre.getSlug(), nextPage);
+        return bookRepository.getByGenreList_Slug(genre.getSlug(), nextPage);
     }
 
     public Page<Book> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByAuthor(author.getId(), nextPage);
+        return bookRepository.getByAuthorList_Id(author.getId(), nextPage);
     }
 
     public Book getBookBySlug(String slug) {
@@ -107,6 +106,6 @@ public class BookService {
         contents = contents.startsWith("/") ? contents.substring(1) : contents;
         contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1) : contents;
         String[] cookieSlugs = contents.split("/");
-        return bookRepository.findBookEntitiesBySlugIn(cookieSlugs);
+        return bookRepository.findBookEntitiesBySlugIn(List.of(cookieSlugs));
     }
 }

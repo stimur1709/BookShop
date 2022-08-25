@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +28,8 @@ public class TagPageController {
 
     @GetMapping("/tags/{slug}")
     public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
-        Tag tag = tagService.getPageBySlug(slug);
-        model.addAttribute("tagPage" , tag);
+        TagBook tag = tagService.getPageBySlug(slug);
+        model.addAttribute("tagPage", tag);
         model.addAttribute("booksTag", bookService.getBooksForPageTage(tag, 0, 20));
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
@@ -40,9 +40,9 @@ public class TagPageController {
     @ResponseBody
     @Operation(summary = "Постраничный вывод книг")
     public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
-                                            @RequestParam("offset") Integer offset,
-                                            @RequestParam("limit") Integer limit) {
-        Tag tag = tagService.getPageBySlug(slug);
+                                     @RequestParam("offset") Integer offset,
+                                     @RequestParam("limit") Integer limit) {
+        TagBook tag = tagService.getPageBySlug(slug);
         return new BooksPageDto(bookService.getBooksForPageTage(tag, offset, limit).getContent());
     }
 }

@@ -1,9 +1,11 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TagRepository extends JpaRepository<Tag, Integer> {
+@Repository
+public interface TagRepository extends JpaRepository<TagBook, Integer> {
 
-    Tag findTagEntityBySlug(String slug);
+    TagBook findTagEntityBySlug(String slug);
 }

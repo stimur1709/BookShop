@@ -47,11 +47,9 @@ public class BooksRatingAndPopularityService {
         Book book = bookRepository.findBookEntityBySlug(slug);
         switch (cookieName) {
             case ("keptContents"):
-                System.out.println(1 + slug);
                 book.setPopularity(isPopularity ? book.getPopularity() + 0.4 : book.getPopularity() - 0.4);
                 break;
             case ("cartContents"):
-                System.out.println(2 + slug);
                 book.setPopularity(isPopularity ? book.getPopularity() + 0.7 : book.getPopularity() - 0.7);
                 break;
         }

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "tags")
 @Schema(description = "Сущность тэга")
-public class Tag {
+public class TagBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

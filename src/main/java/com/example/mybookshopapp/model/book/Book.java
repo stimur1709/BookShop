@@ -6,7 +6,7 @@ import com.example.mybookshopapp.model.book.file.FileDownload;
 import com.example.mybookshopapp.model.book.review.BookReview;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.model.payments.BalanceTransaction;
-import com.example.mybookshopapp.model.tag.Tag;
+import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.model.user.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -81,7 +81,7 @@ public class Book {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     @JsonManagedReference
-    private List<Tag> tagList = new ArrayList<>();
+    private List<TagBook> tagList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     @JsonManagedReference

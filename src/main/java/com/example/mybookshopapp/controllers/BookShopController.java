@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BooksRatingAndPopularityService;
@@ -30,7 +30,7 @@ public class BookShopController {
     }
 
     @ModelAttribute(name = "bookCart")
-    public List<BookEntity> bookCart() {
+    public List<Book> bookCart() {
         return new ArrayList<>();
     }
 
@@ -41,7 +41,7 @@ public class BookShopController {
             model.addAttribute("isCartEmpty", true);
             model.addAttribute("isCartSize", 0);
         } else {
-            List<BookEntity> bookList = bookService.getBooksFromCookie(cartContents);
+            List<Book> bookList = bookService.getBooksFromCookie(cartContents);
             model.addAttribute("isCartEmpty", false);
             model.addAttribute("bookCart", bookList);
             model.addAttribute("isCartSize", bookList.size());
@@ -56,7 +56,7 @@ public class BookShopController {
             model.addAttribute("isKeptEmpty", true);
             model.addAttribute("isKeptSize", 0);
         } else {
-            List<BookEntity> bookList = bookService.getBooksFromCookie(keptContents);
+            List<Book> bookList = bookService.getBooksFromCookie(keptContents);
             model.addAttribute("isKeptEmpty", false);
             model.addAttribute("bookKept", bookService.getBooksFromCookie(keptContents));
             model.addAttribute("isKeptSize", bookList.size());
@@ -72,7 +72,6 @@ public class BookShopController {
                                           HttpServletResponse response, Model model) {
         switch (status) {
             case ("KEPT"):
-                System.out.println(keptContents);
                 handlerRemoveBookFromCartRequest(slug, cartContents, response, model);
                 bookShopService.createCookie(keptContents, slug, response, "keptContents", model, "isKeptEmpty");
                 booksRatingAndPopularityService.changePopularity(slug, "keptContents", true);
@@ -108,7 +107,7 @@ public class BookShopController {
     }
 
     @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
+    public List<Book> searchResult() {
         return new ArrayList<>();
     }
 }

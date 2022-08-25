@@ -1,18 +1,11 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.entity.tag.TagEntity;
+import com.example.mybookshopapp.model.tag.TagBook;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository
+public interface TagRepository extends JpaRepository<TagBook, Integer> {
 
-public interface TagRepository extends JpaRepository<TagEntity, Integer> {
-
-    TagEntity findTagEntityBySlug(String slug);
-
-    @Query(value = "SELECT * FROM tags " +
-            "inner join book2tag on tags.id = book2tag.tag_id " +
-            "inner join books on books.id = book2tag.book_id " +
-            "where books.id = ?1", nativeQuery = true)
-    List<TagEntity> getBookByTag(Integer id);
+    TagBook findTagEntityBySlug(String slug);
 }

@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.entity.author.Author;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.author.Author;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class BooksRestApiController {
     }
 
     @GetMapping("/api/books1/author/{id}")
-    public ResponseEntity<List<BookEntity>> booksByAuthor(@PathVariable("id") Integer id, @RequestParam("offset") Integer offset,
-                                                          @RequestParam("limit") Integer limit) {
+    public ResponseEntity<List<Book>> booksByAuthor(@PathVariable("id") Integer id, @RequestParam("offset") Integer offset,
+                                                    @RequestParam("limit") Integer limit) {
         Author author = authorService.getAuthorsById(id);
         return ResponseEntity.ok(bookService.getBooksForPageAuthor(author, offset, limit).getContent());
     }

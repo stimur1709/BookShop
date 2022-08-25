@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.author.Author;
-import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.genre.GenreEntity;
-import com.example.mybookshopapp.entity.tag.TagEntity;
+import com.example.mybookshopapp.model.author.Author;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.genre.Genre;
+import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -26,18 +26,18 @@ public class BookService {
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
     }
 
-    public Page<BookEntity> getPageOfRecommendBooks(Integer offset, Integer limit) {
+    public Page<Book> getPageOfRecommendBooks(Integer offset, Integer limit) {
         addRate();
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "rate"));
         return bookRepository.findAll(nextPage);
     }
 
-    public Page<BookEntity> getPageOfRecentBooks(Integer offset, Integer limit) {
+    public Page<Book> getPageOfRecentBooks(Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
         return bookRepository.findAll(nextPage);
     }
 
-    public Page<BookEntity> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
+    public Page<Book> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pubDate"));
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
@@ -49,19 +49,19 @@ public class BookService {
         return null;
     }
 
-    public Page<BookEntity> getPageOfPopularBooks(Integer offset, Integer limit) {
+    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
         addPopularity();
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "popularity"));
         return bookRepository.findAll(nextPage);
     }
 
-    public Page<BookEntity> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
+    public Page<Book> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findBookEntityByTitleContaining(wordSearch, nextPage);
     }
 
     private void addPopularity() {
-        List<BookEntity> bookList = bookRepository.findAll();
+        List<Book> bookList = bookRepository.findAll();
         bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
             book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
             bookRepository.save(book);
@@ -70,43 +70,42 @@ public class BookService {
 
     private void addRate() {
         bookRepository.findAll().forEach(book -> {
-            System.out.println(booksRatingAndPopularityService.getRateBook(book.getId()));
             book.setRate(booksRatingAndPopularityService.getRateBook(book.getId()));
             bookRepository.save(book);
         });
     }
 
-    public Page<BookEntity> getBooksForPageTage(TagEntity tag, Integer offset, Integer limit) {
+    public Page<Book> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByTag(tag.getSlug(), nextPage);
+        return bookRepository.findByTagList_Slug(tag.getSlug(), nextPage);
     }
 
-    public Page<BookEntity> getBooksForPageGenre(GenreEntity genre, Integer offset, Integer limit) {
+    public Page<Book> getBooksForPageGenre(Genre genre, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByGenre(genre.getSlug(), nextPage);
+        return bookRepository.getByGenreList_Slug(genre.getSlug(), nextPage);
     }
 
-    public Page<BookEntity> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
+    public Page<Book> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.getBookByAuthor(author.getId(), nextPage);
+        return bookRepository.getByAuthorList_Id(author.getId(), nextPage);
     }
 
-    public BookEntity getBookBySlug(String slug) {
+    public Book getBookBySlug(String slug) {
         return bookRepository.findBookEntityBySlug(slug);
     }
 
-    public Integer getNumbersOffAllBooks() {
-        return bookRepository.getNumbersOffAllBooks();
+    public long getNumbersOffAllBooks() {
+        return bookRepository.count();
     }
 
-    public void save(BookEntity bookToUpdate) {
+    public void save(Book bookToUpdate) {
         bookRepository.save(bookToUpdate);
     }
 
-    public List<BookEntity> getBooksFromCookie(String contents) {
+    public List<Book> getBooksFromCookie(String contents) {
         contents = contents.startsWith("/") ? contents.substring(1) : contents;
         contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1) : contents;
         String[] cookieSlugs = contents.split("/");
-        return bookRepository.findBookEntitiesBySlugIn(cookieSlugs);
+        return bookRepository.findBookEntitiesBySlugIn(List.of(cookieSlugs));
     }
 }

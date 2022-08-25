@@ -2,13 +2,14 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.author.Author;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.author.Author;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,8 +49,9 @@ public class AuthorsPageController {
     @GetMapping("/books/author/{slug}")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
+        Page<Book> books = bookService.getBooksForPageAuthor(author, 0, 20);
         model.addAttribute("authorSlug", author);
-        model.addAttribute("authorBooks", bookService.getBooksForPageAuthor(author, 0, 20).getContent());
+        model.addAttribute("authorBooks", books.getContent());
         return "books/author";
     }
 
@@ -69,7 +71,7 @@ public class AuthorsPageController {
     }
 
     @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
+    public List<Book> searchResult() {
         return new ArrayList<>();
     }
 }

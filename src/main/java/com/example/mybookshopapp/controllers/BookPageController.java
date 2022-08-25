@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.book.BookEntity;
+import com.example.mybookshopapp.model.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +44,7 @@ public class BookPageController {
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
-        BookEntity book = bookService.getBookBySlug(slug);
+        Book book = bookService.getBookBySlug(slug);
         model.addAttribute("slugBook", book);
         model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
@@ -65,7 +65,7 @@ public class BookPageController {
     @PostMapping("/books/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
         String savePath = storage.saveNewBookImage(file, slug);
-        BookEntity bookToUpdate = bookService.getBookBySlug(slug);
+        Book bookToUpdate = bookService.getBookBySlug(slug);
         bookToUpdate.setImage(savePath);
         bookService.save(bookToUpdate);
         return "redirect:/books/" + slug;

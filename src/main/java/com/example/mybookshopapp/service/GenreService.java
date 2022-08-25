@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.genre.GenreEntity;
+import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -18,16 +18,16 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public Map<GenreEntity, Map<GenreEntity, List<GenreEntity>>> getGenreMap() {
+    public Map<Genre, Map<Genre, List<Genre>>> getGenreMap() {
 
-        Map<GenreEntity, Map<GenreEntity, List<GenreEntity>>> genreTreeList = new HashMap<>();
+        Map<Genre, Map<Genre, List<Genre>>> genreTreeList = new HashMap<>();
 
-        List<GenreEntity> genreList = genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
-        for (GenreEntity genreOne : genreList) {
-            Map<GenreEntity, List<GenreEntity>> genreTwoList = new HashMap<>();
-            for (GenreEntity genreTwo : genreList) {
-                List<GenreEntity> genreThreeList = new ArrayList<>();
-                for (GenreEntity genreThree : genreList) {
+        List<Genre> genreList = genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
+        for (Genre genreOne : genreList) {
+            Map<Genre, List<Genre>> genreTwoList = new HashMap<>();
+            for (Genre genreTwo : genreList) {
+                List<Genre> genreThreeList = new ArrayList<>();
+                for (Genre genreThree : genreList) {
                     if (genreThree.getParentId() == genreTwo.getId()) {
                         genreThreeList.add(genreThree);
                     }
@@ -43,16 +43,16 @@ public class GenreService {
         return genreTreeList;
     }
 
-    public GenreEntity getPageBySlug(String slug) {
+    public Genre getPageBySlug(String slug) {
         return genreRepository.findGenreEntityBySlug(slug);
     }
 
-    public GenreEntity getPageById(Integer id) {
+    public Genre getPageById(Integer id) {
         return genreRepository.findGenreEntityById(id);
     }
 
     public void addAmount() {
-        List<GenreEntity> bookList = genreRepository.findAll();
+        List<Genre> bookList = genreRepository.findAll();
         bookList.forEach(genre -> {
             genre.setAmount(genre.getBookList().size());
             genreRepository.save(genre);

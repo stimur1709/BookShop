@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.entity.book.review.BookReviewEntity;
-import com.example.mybookshopapp.entity.book.review.BookReviewLikeEntity;
+import com.example.mybookshopapp.model.book.review.BookReview;
+import com.example.mybookshopapp.model.book.review.BookReviewLike;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BookReviewLikeRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
@@ -26,9 +26,9 @@ public class BookRateReviewService {
     }
 
     public boolean changeRateBookReview(int idReview, short value) {
-        BookReviewEntity review = bookReviewRepository.getById(idReview);
+        BookReview review = bookReviewRepository.getById(idReview);
         if (value == 1 || value == -1) {
-            BookReviewLikeEntity bookReviewLike = new BookReviewLikeEntity(review, userRepository.getById(1), value);
+            BookReviewLike bookReviewLike = new BookReviewLike(review, userRepository.getById(1), value);
             review.getReviewLikeList().add(bookReviewLike);
             review.setRate(review.getRate() + value);
             bookReviewLikeRepository.save(bookReviewLike);
@@ -39,11 +39,11 @@ public class BookRateReviewService {
     }
 
     private long getLikesReviewsOfBook(int bookId) {
-        return bookRepository.getById(bookId).getReviewList().stream().mapToLong(BookReviewEntity::getLikes).sum();
+        return bookRepository.getById(bookId).getReviewList().stream().mapToLong(BookReview::getLikes).sum();
     }
 
     private long getDislikesReviewsOfBook(int bookId) {
-        return bookRepository.getById(bookId).getReviewList().stream().mapToLong(BookReviewEntity::getDislikes).sum();
+        return bookRepository.getById(bookId).getReviewList().stream().mapToLong(BookReview::getDislikes).sum();
     }
 
     private long differenceLikesAndDislikes(int bookId) {

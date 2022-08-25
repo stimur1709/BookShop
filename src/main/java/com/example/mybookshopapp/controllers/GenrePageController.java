@@ -2,8 +2,8 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.entity.book.BookEntity;
-import com.example.mybookshopapp.entity.genre.GenreEntity;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +37,7 @@ public class GenrePageController {
 
     @GetMapping("/genres/{slug}")
     public String genresSlugPage(@PathVariable("slug") String slug, Model model) {
-        GenreEntity genre = genreService.getPageBySlug(slug);
+        Genre genre = genreService.getPageBySlug(slug);
         model.addAttribute("genre", genre);
         model.addAttribute("parentGenre", genreService.getPageById(genre.getParentId()));
         model.addAttribute("booksGenre", bookService.getBooksForPageGenre(genre, 0, 20));
@@ -51,7 +51,7 @@ public class GenrePageController {
     public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
-        GenreEntity genre = genreService.getPageBySlug(slug);
+        Genre genre = genreService.getPageBySlug(slug);
         return new BooksPageDto(bookService.getBooksForPageGenre(genre, offset, limit).getContent());
     }
 
@@ -61,7 +61,7 @@ public class GenrePageController {
     }
 
     @ModelAttribute("searchResult")
-    public List<BookEntity> searchResult() {
+    public List<Book> searchResult() {
         return new ArrayList<>();
     }
 }

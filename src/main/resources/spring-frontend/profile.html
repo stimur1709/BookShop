@@ -35,11 +35,6 @@
             <h2 class="Middle-title">Мой профиль
             </h2>
             <div class="Tabs Tabs_default">
-                <!--+Tabs-links([-->
-                <!--    ['#basic', 'Основные сведения'],-->
-                <!--    ['#transactions','История транзакций'],-->
-                <!--    ['#topup','Пополнить счет']-->
-                <!--], 'text', 0)-->
                 <div class="Tabs-links"><a class="Tabs-link Tabs-link_ACTIVE" href="#basic">Основные сведения</a><a
                         class="Tabs-link" href="#transactions">История транзакций</a><a class="Tabs-link" href="#topup">Пополнить
                     счет</a>
@@ -53,13 +48,16 @@
                                         <div class="form-group">
                                             <label class="form-label" for="name">Имя
                                             </label>
-                                            <input class="form-input" id="name" name="name" type="text" value="Михаил"/>
+                                            <input class="form-input" id="name" name="name" type="text"
+                                                   th:value="${currentUser.name}"
+                                                   value="Михаил"/>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="mail">E-mail
                                             </label>
                                             <input class="form-input" id="mail" name="mail" type="text"
-                                                   value="addr@sait.com" data-validate="require mail"/>
+                                                   value="addr@sait.com" data-validate="require mail"
+                                                   th:value="${currentUser.mail}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary" type="button">Подтвердить
                                                 </button>
@@ -70,7 +68,7 @@
                                             </label>
                                             <input class="form-input" id="phone" name="phone" type="text"
                                                    value="+70000000000" data-mask="+7 (999) 999-99-99"
-                                                   data-validate="require"/>
+                                                   data-validate="require" th:value="${currentUser.phone}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary" type="button">Подтвердить
                                                 </button>

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class ContactConfirmationResponse {
 
-    private Boolean result;
+    private String result;
 }

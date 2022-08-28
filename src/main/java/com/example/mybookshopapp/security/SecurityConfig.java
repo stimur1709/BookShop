@@ -49,9 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
                 .loginPage("/signin").failureUrl("/signin")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/signin").deleteCookies("token");
-
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/signin").deleteCookies("token")
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 

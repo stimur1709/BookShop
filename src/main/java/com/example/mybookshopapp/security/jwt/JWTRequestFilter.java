@@ -2,6 +2,7 @@ package com.example.mybookshopapp.security.jwt;
 
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,22 +39,28 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    token = cookie.getValue();
-                    username = jwtUtil.extractUsername(token);
-                }
-
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    BookstoreUserDetails userDetails =
-                            (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                    if (jwtUtil.validateToken(token, userDetails)) {
-                        UsernamePasswordAuthenticationToken authenticationToken =
-                                new UsernamePasswordAuthenticationToken(
-                                        userDetails, null, userDetails.getAuthorities()
-                                );
-                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                try {
+                    if (cookie.getName().equals("token")) {
+                        token = cookie.getValue();
+                        username = jwtUtil.extractUsername(token);
                     }
+
+                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        BookstoreUserDetails userDetails =
+                                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
+                        if (jwtUtil.validateToken(token, userDetails)) {
+                            UsernamePasswordAuthenticationToken authenticationToken =
+                                    new UsernamePasswordAuthenticationToken(
+                                            userDetails, null, userDetails.getAuthorities()
+                                    );
+                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        }
+                    }
+                } catch (ExpiredJwtException ex) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                    System.out.println("Токен удален");
                 }
             }
         }

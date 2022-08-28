@@ -24,14 +24,14 @@ public class BookShopService {
                              String cookieName, Model model, String attributeName) {
         if (contents == null || contents.equals("") && !slug.equals("1122")) {
             Cookie cookie = new Cookie(cookieName, slug);
-            cookie.setPath("/books");
+            cookie.setPath("/");
             response.addCookie(cookie);
             model.addAttribute(attributeName, false);
         } else if (!slug.equals("1122") && !contents.contains(slug)) {
             StringJoiner stringJoiner = new StringJoiner("/");
             stringJoiner.add(contents).add(slug);
             Cookie cookie = new Cookie(cookieName, stringJoiner.toString());
-            cookie.setPath("/books");
+            cookie.setPath("/");
             response.addCookie(cookie);
             model.addAttribute(attributeName, false);
         }
@@ -44,7 +44,7 @@ public class BookShopService {
             if (cookieBooks.contains(slug)) {
                 cookieBooks.remove(slug);
                 Cookie cookie = new Cookie(cookieName, String.join("/", cookieBooks));
-                cookie.setPath("/books");
+                cookie.setPath("/");
                 response.addCookie(cookie);
                 model.addAttribute(attributeName, false);
                 booksRatingAndPopularityService.changePopularity(slug, cookieName, false);

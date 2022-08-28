@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/books")
 public class BookShopController {
 
     private final BookService bookService;
@@ -64,7 +63,7 @@ public class BookShopController {
         return "postponed";
     }
 
-    @PostMapping("/changeBookStatus/{slug}")
+    @PostMapping("/books/changeBookStatus/{slug}")
     public String handlerChangeBookStatus(@PathVariable("slug") String slug,
                                           @RequestParam(value = "status", required = false) String status,
                                           @CookieValue(name = "keptContents", required = false) String keptContents,
@@ -85,20 +84,20 @@ public class BookShopController {
         return "redirect:/books/" + slug;
     }
 
-    @PostMapping("/changeBookStatus/cart/remove/{slug}")
+    @PostMapping("/books/changeBookStatus/cart/remove/{slug}")
     public String handlerRemoveBookFromCartRequest(@PathVariable("slug") String slug,
                                                    @CookieValue(name = "cartContents", required = false) String cartContents,
                                                    HttpServletResponse response, Model model) {
         bookShopService.removeCookie(cartContents, slug, response, model, "cartContents", "isCartEmpty");
-        return "redirect:/books/cart";
+        return "redirect:/cart";
     }
 
-    @PostMapping("/changeBookStatus/kept/remove/{slug}")
+    @PostMapping("/books/changeBookStatus/kept/remove/{slug}")
     public String handlerRemoveBookFromKeptRequest(@PathVariable("slug") String slug,
                                                    @CookieValue(name = "keptContents", required = false) String keptContents,
                                                    HttpServletResponse response, Model model) {
         bookShopService.removeCookie(keptContents, slug, response, model, "keptContents", "isKeptEmpty");
-        return "redirect:/books/postponed";
+        return "redirect:/postponed";
     }
 
     @ModelAttribute("searchWordDto")

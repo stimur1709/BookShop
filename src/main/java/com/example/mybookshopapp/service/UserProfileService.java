@@ -22,7 +22,7 @@ public class UserProfileService {
     public UserDto getCurrentUser() {
         BookstoreUserDetails bookstoreUserDetails =
                 (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = bookstoreUserDetails.getUser();
+        User user = bookstoreUserDetails.getUserContact().getUser();
         String mail = "";
         String phone = "";
 

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.security;
+package com.example.mybookshopapp.security.model;
 
 import lombok.Getter;
 import lombok.Setter;

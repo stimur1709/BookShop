@@ -6,15 +6,13 @@ import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
-import com.example.mybookshopapp.security.ContactConfirmationPayload;
-import com.example.mybookshopapp.security.ContactConfirmationResponse;
-import com.example.mybookshopapp.security.RegistrationForm;
+import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
+import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
+import com.example.mybookshopapp.security.model.RegistrationForm;
 import com.example.mybookshopapp.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,30 +40,17 @@ public class UserRegisterService {
     }
 
     public void registerUser(RegistrationForm registrationForm) {
+        User user = new User(registrationForm.getName(),
+                passwordEncoder.encode(registrationForm.getPassword()));
+        UserContact contactEmail = new UserContact(user, ContactType.EMAIL, registrationForm.getEmail());
+        UserContact contactPhone = new UserContact(user, ContactType.PHONE, registrationForm.getPhone());
 
-        if (!userContactRepository.findUserContactEntityByContact(registrationForm.getEmail()).isPresent()) {
-            User user = new User(registrationForm.getName(),
-                    passwordEncoder.encode(registrationForm.getPassword()));
-            UserContact contactEmail = new UserContact(user, ContactType.EMAIL, registrationForm.getEmail());
-            UserContact contactPhone = new UserContact(user, ContactType.PHONE, registrationForm.getPhone());
+        user.getUserContact().add(contactEmail);
+        user.getUserContact().add(contactPhone);
 
-            user.getUserContact().add(contactEmail);
-            user.getUserContact().add(contactPhone);
-
-            userRepository.save(user);
-            userContactRepository.save(contactEmail);
-            userContactRepository.save(contactPhone);
-        }
-    }
-
-    public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                payload.getContact(), payload.getCode()
-        ));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
-        return response;
+        userRepository.save(user);
+        userContactRepository.save(contactEmail);
+        userContactRepository.save(contactPhone);
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {

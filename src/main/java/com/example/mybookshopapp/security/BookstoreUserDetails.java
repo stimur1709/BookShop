@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.security;
 
-import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.model.user.UserContact;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +14,10 @@ import java.util.List;
 @Setter
 public class BookstoreUserDetails implements UserDetails {
 
-    private final User user;
+    private final UserContact userContact;
 
-    public BookstoreUserDetails(User user) {
-        this.user = user;
+    public BookstoreUserDetails(UserContact userContact) {
+        this.userContact = userContact;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class BookstoreUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userContact.getUser().getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getHash();
+        return userContact.getContact();
     }
 
     @Override

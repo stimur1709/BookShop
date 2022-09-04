@@ -3,9 +3,8 @@
 <html class="ie8" lang="ru">
 <html class="ie9" lang="ru">
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{topbar.search}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -18,7 +17,6 @@
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=33498857">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=33498857">
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <script defer src="/assets/js/scripts.min.js?v=33498857"></script>
 </head>
 <body class="Site">
@@ -26,15 +24,16 @@
 <div class="Middle Middle_search">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Поиск
-            </h1>
+            <h1 class="Middle-title" th:text="#{topbar.search}">Поиск</h1>
             <div class="Section">
                 <div class="search">
                     <form class="form form_search" action="#" method="post" data-searchlimit="20">
                         <input class="search-input" id="querypage" name="querypage" type="text"
                                placeholder="Search over 30 million book titles" th:value="${searchWordDto.example}"
                                value="Техника"/>
-                        <button class="search-button" type="submit" name="searchpage" id="searchpage">Поиск
+                        <button class="search-button" type="submit" name="searchpage" id="searchpage"
+                                th:text="#{topbar.search}">
+                            Поиск
                         </button>
                     </form>
                 </div>
@@ -46,28 +45,13 @@
                     </h2>
                 </header>
                 <div class="Cards Cards_search Cards_refresh">
-                    <div class="Card" th:each="book : ${searchResult}">
-                        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
-                                th:src="${book.image}"
-                                alt="card.jpg"/></a>
-                        </div>
-                        <div class="Card-content">
-                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
-                                                          th:text="${book.title}">Техника</a>
-                            </strong>
-                            <div class="Card-description" th:text="${book.getAuthors()}">Кондратенко Александр Петрович
-                            </div>
-                            <div class="Card-cost"><span class="Card-priceOld" th:text="${book.price}">₽300.00</span>
-                                <span class="Card-price" th:text="${book.discountPrice()}">₽190.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
-                                                                     data-refreshshow="search" data-refreshoffset="0"
-                                                                     data-refreshlimit="5"
-                                                                     th:attr="data-refreshquery=${searchWordDto.example}"
-                                                                     data-refreshquery="Техника">Показать
-                        еще</a>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${searchResult})}"></div>
+                    <div class="Cards-footer Cards-footer_center">
+                        <a class="btn btn_primary" href="#"
+                           data-refreshshow="search" data-refreshoffset="0"
+                           data-refreshlimit="5"
+                           th:attr="data-refreshquery=${searchWordDto.example}"
+                           data-refreshquery="Техника">Показать еще</a>
                     </div>
                 </div>
             </div>

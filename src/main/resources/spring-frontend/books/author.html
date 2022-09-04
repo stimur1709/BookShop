@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Страница</title>
+    <title th:text="${authorSlug.name}">Страница</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -35,37 +35,17 @@
                             Васильевич Бедный</span>
                 </li>
             </ul>
-            <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
-            </h1>
+            <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный</h1>
             <div class="Section">
                 <div class="Cards Cards_refresh">
-                    <div class="Card" th:each="book : ${authorBooks}">
-                        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
-                                th:src="${book.image}" alt="card.jpg"/></a>
-                        </div>
-                        <div class="Card-content">
-                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
-                                                          th:text="${book.title}">Техника</a>
-                            </strong>
-                            <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
-                                Петрович
-                            </div>
-                            <div class="Card-cost">
-                                            <span class="Card-priceOld" th:if="${book.discount != 0}"
-                                                  th:text="'₽' + ${book.price}">₽500.00</span>
-                                <span class="Card-price" th:if="${book.discount != 0}"
-                                      th:text="'₽' + ${book.discountPrice()}">₽390.00</span>
-                                <span class="Card-price" th:if="${book.discount == 0}"
-                                      th:text="'₽' + ${book.price}">₽390.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
-                                                                     data-refreshshow="author" data-refreshoffset="0"
-                                                                     data-refreshlimit="20"
-                                                                     th:attr="data-refreshid=${authorSlug.id}"
-                                                                     data-refreshid="10">
-                        Показать еще</a>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${authorBooks})}"></div>
+                    <div class="Cards-footer Cards-footer_center">
+                        <a class="btn btn_primary" href="#"
+                           data-refreshshow="author" data-refreshoffset="0"
+                           data-refreshlimit="20"
+                           th:attr="data-refreshid=${authorSlug.id}"
+                           data-refreshid="10">
+                            Показать еще</a>
                     </div>
                 </div>
             </div>

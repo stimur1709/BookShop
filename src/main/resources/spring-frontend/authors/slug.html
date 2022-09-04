@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="${authorSlug.name}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -76,32 +76,14 @@
                     </h2>
                 </header>
                 <div class="Cards Cards_refresh">
-                    <div class="Card" th:each="book : ${authorBooks}">
-                        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img
-                                th:src="${book.image}" alt="card.jpg"/></a>
-                        </div>
-                        <div class="Card-content">
-                            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
-                                                          th:text="${book.title}">Техника</a>
-                            </strong>
-                            <div class="Card-description" th:text="${authorSlug.name}">Кондратенко Александр
-                                Петрович
-                            </div>
-                            <div class="Card-cost">
-                                <span class="Card-priceOld" th:if="${book.discount != 0}"
-                                      th:text="'₽' + ${book.price}">₽300.00</span>
-                                <span class="Card-price" th:if="${book.discount != 0}"
-                                      th:text="'₽' + ${book.discountPrice()}">₽190.00</span>
-                                <span class="Card-price" th:if="${book.discount == 0}"
-                                      th:text="'₽' + ${book.price}">₽190.00</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${authorBooks})}"></div>
+
                 </div>
-                <footer class="Section-footer"><a class="Author-books" href="/books/author.html"
-                                                  th:href="'/books/author/' + ${authorSlug.slug}">Все книги
-                    автора<span class="Author-amount"
-                                th:text="${authorSlug.getBookList().size()}">(55)</span></a>
+                <footer class="Section-footer">
+                    <a class="Author-books" href="/books/author.html" th:href="'/books/author/' + ${authorSlug.slug}">
+                        Все книги автора
+                        <span class="Author-amount" th:text="${authorSlug.getBookList().size()}">(55)</span>
+                    </a>
                 </footer>
             </div>
         </main>

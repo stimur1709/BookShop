@@ -117,15 +117,8 @@ public class Book {
     @JsonManagedReference
     private List<BookRating> bookRatingList = new ArrayList<>();
 
-    public StringBuilder getAuthors() {
-        StringBuilder authors = new StringBuilder();
-        for (int i = 0; i < authorList.size(); i++) {
-            authors.append(authorList.get(i).getName());
-            if (authorList.size() > 1 && i != authorList.size() - 1) {
-                authors.append(", ");
-            }
-        }
-        return authors;
+    public String getAuthors() {
+        return getAuthorList().size() > 1 ? getAuthorList().get(0).getName() + " и другие" : getAuthorList().get(0).getName();
     }
 
     public int discount() {

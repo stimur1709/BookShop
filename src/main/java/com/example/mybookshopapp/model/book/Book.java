@@ -128,7 +128,11 @@ public class Book {
         return authors;
     }
 
-    public Integer discountPrice() {
+    public int discount() {
+        return (int) (discount * 100);
+    }
+
+    public int discountPrice() {
         if (discount == 0) {
             return price;
         } else {

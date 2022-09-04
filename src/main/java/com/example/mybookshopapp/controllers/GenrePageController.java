@@ -6,6 +6,7 @@ import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
+import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,14 @@ import java.util.List;
 
 @Controller
 @Tag(name = "Страница жанров")
-public class GenrePageController {
+public class GenrePageController extends ModelAttributeController {
 
     private final GenreService genreService;
     private final BookService bookService;
 
     @Autowired
-    public GenrePageController(GenreService genreService, BookService bookService) {
+    public GenrePageController(GenreService genreService, BookService bookService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.genreService = genreService;
         this.bookService = bookService;
     }

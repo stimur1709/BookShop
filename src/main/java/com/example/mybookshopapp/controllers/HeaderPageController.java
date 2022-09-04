@@ -5,11 +5,13 @@ import com.example.mybookshopapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class HeaderPageController {
 
     private final BookService bookService;
@@ -19,7 +21,7 @@ public class HeaderPageController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/api/cartSize")
+    @GetMapping("/cartSize")
     public int getCartSize(@CookieValue(value = "cartContents", required = false) String cartContents) {
         List<Book> books = bookService.getBooksFromCookie(cartContents);
         if (books.isEmpty())
@@ -27,7 +29,7 @@ public class HeaderPageController {
         return books.size();
     }
 
-    @GetMapping("/api/keptSize")
+    @GetMapping("/keptSize")
     public int getKeptSize(@CookieValue(value = "keptContents", required = false) String keptContents) {
         List<Book> books = bookService.getBooksFromCookie(keptContents);
         if (books.isEmpty())

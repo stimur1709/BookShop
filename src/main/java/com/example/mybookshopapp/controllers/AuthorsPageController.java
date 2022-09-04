@@ -6,6 +6,7 @@ import com.example.mybookshopapp.model.author.Author;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,14 @@ import java.util.List;
 @Tag(name = "Страница авторов", description = "На странице размещается список ссылок на всех авторов, " +
         "отсортированный по алфавиту и сгруппированы по буквам алфавита. " +
         "Каждая ссылка ведет на страницу соответствующего автора.")
-public class AuthorsPageController {
+public class AuthorsPageController extends ModelAttributeController {
 
     private final AuthorService authorService;
     private final BookService bookService;
 
     @Autowired
-    public AuthorsPageController(AuthorService authorService, BookService bookService) {
+    public AuthorsPageController(AuthorService authorService, BookService bookService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.authorService = authorService;
         this.bookService = bookService;
     }

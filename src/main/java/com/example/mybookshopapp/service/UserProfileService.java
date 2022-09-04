@@ -20,8 +20,15 @@ public class UserProfileService {
     }
 
     public UserDto getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal.equals("anonymousUser"))
+            return new UserDto("anonymousUser");
+
         BookstoreUserDetails bookstoreUserDetails =
-                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                (BookstoreUserDetails) principal;
+
+
         User user = bookstoreUserDetails.getUserContact().getUser();
         String mail = "";
         String phone = "";
@@ -34,6 +41,10 @@ public class UserProfileService {
                 phone = contact.getContact();
         }
 
-        return new UserDto(user.getName(), mail, phone);
+        return new UserDto(user.getName(), mail, phone, user.getBalance());
+    }
+
+    public boolean isAuthenticatedUser() {
+        return !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser");
     }
 }

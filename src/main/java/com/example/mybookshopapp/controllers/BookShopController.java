@@ -5,6 +5,7 @@ import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BooksRatingAndPopularityService;
+import com.example.mybookshopapp.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class BookShopController {
+public class BookShopController extends ModelAttributeController {
 
     private final BookService bookService;
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
     private final BookShopService bookShopService;
 
     @Autowired
-    public BookShopController(BookService bookService, BooksRatingAndPopularityService booksRatingAndPopularityService, BookShopService bookShopService) {
+    public BookShopController(BookService bookService,
+                              BooksRatingAndPopularityService booksRatingAndPopularityService,
+                              BookShopService bookShopService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.bookService = bookService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.bookShopService = bookShopService;

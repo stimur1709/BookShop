@@ -18,7 +18,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 @Controller
-public class BookPageController {
+public class BookPageController extends ModelAttributeController {
 
     private final BookService bookService;
     private final AuthorService authorService;
@@ -32,7 +32,8 @@ public class BookPageController {
     public BookPageController(BookService bookService, AuthorService authorService,
                               TagService tagService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
-                              BookRateReviewService bookRateReviewService) {
+                              BookRateReviewService bookRateReviewService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;

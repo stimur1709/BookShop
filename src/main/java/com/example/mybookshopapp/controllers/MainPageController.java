@@ -7,6 +7,7 @@ import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
+import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
-public class MainPageController {
+public class MainPageController extends ModelAttributeController {
 
-    private final BookService bookService;
-    private final TagService tagService;
-    private final GenreService genreService;
+    protected final BookService bookService;
+    protected final TagService tagService;
+    protected final GenreService genreService;
 
     @Autowired
-    public MainPageController(BookService bookService, TagService tagService, GenreService genreService) {
+    public MainPageController(BookService bookService, TagService tagService,
+                              GenreService genreService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.bookService = bookService;
         this.tagService = tagService;
         this.genreService = genreService;
@@ -40,6 +40,7 @@ public class MainPageController {
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
+        model.addAttribute("isAuthenticatedUser", userProfileService.isAuthenticatedUser());
         return "index";
     }
 
@@ -101,15 +102,5 @@ public class MainPageController {
     @GetMapping("/faq")
     public String faqPage() {
         return "faq";
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<Book> searchResult() {
-        return new ArrayList<>();
     }
 }

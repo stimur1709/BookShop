@@ -21,18 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class AuthUserController {
+public class AuthUserController extends ModelAttributeController {
 
     private final UserRegisterService userRegister;
-    private final UserProfileService userProfileService;
     private final RegFormValidator userValidator;
 
     @Autowired
     public AuthUserController(UserRegisterService userRegister,
-                              UserProfileService userProfileService,
-                              RegFormValidator userValidator) {
+                              RegFormValidator userValidator, UserProfileService userProfileService) {
+        super(userProfileService);
         this.userRegister = userRegister;
-        this.userProfileService = userProfileService;
         this.userValidator = userValidator;
     }
 

@@ -5,6 +5,7 @@ import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.TagService;
+import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,14 @@ import java.util.ArrayList;
 
 @Controller
 @io.swagger.v3.oas.annotations.tags.Tag(name = "Страница тэга", description = "Выводит на странице список книг, привязанных к данному тэгу")
-public class TagPageController {
+public class TagPageController extends ModelAttributeController {
 
     private final TagService tagService;
     private final BookService bookService;
 
     @Autowired
-    public TagPageController(TagService tagService, BookService bookService) {
+    public TagPageController(TagService tagService, BookService bookService, UserProfileService userProfileService) {
+        super(userProfileService);
         this.tagService = tagService;
         this.bookService = bookService;
     }

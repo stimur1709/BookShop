@@ -7,10 +7,7 @@ import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,10 +22,9 @@ public class AuthorService {
         this.bookRepository = bookRepository;
     }
 
-    public Map<String, List<Author>> getAuthorsMap() {
-        return authorRepository.findAll().stream()
-                .sorted(Comparator.comparing(Author::getName))
-                .collect(Collectors.groupingBy((Author a) -> a.getName().substring(0, 1)));
+    public TreeMap<String, List<Author>> getAuthorsMap() {
+        return new TreeMap<>(authorRepository.findAll().stream()
+                .collect(Collectors.groupingBy((Author a) -> a.getName().substring(0, 1))));
     }
 
     public Author getAuthorsBySlug(String slug) {

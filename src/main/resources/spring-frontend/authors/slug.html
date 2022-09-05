@@ -27,12 +27,12 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
+                <li class="breadcrumbs-item"><a th:href="@{/}" th:text="#{topbar.main}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item"><a href="/authors/index.html" th:href="@{/authors}">Авторы</a>
+                <li class="breadcrumbs-item"><a th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${authorSlug.name}">Борис
-                            Васильевич Бедный</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current">
+                    <span th:text="${authorSlug.name}">БорисВасильевич Бедный</span>
                 </li>
             </ul>
             <h1 class="Middle-title" th:text="${authorSlug.name}">Борис Васильевич Бедный
@@ -42,11 +42,11 @@
                 </div>
                 <div class="Spoiler">
                     <div class="Spoiler-visible">
-                        <div class="pict pict_left"><img th:src="${authorSlug.photo}" alt="card.jpg"/>
+                        <div class="pict pict_left">
+                            <img th:src="${authorSlug.photo}" alt="card.jpg"/>
                         </div>
                         <div>
-                            <h2>Биография
-                            </h2>
+                            <h2>Биография</h2>
                             <p th:text="${authorSlug.description.substring(0, authorSlug.description.length()/2)}">
                                 Борис
                             </p>
@@ -72,15 +72,13 @@
             </article>
             <div class="Section">
                 <header class="Section-header">
-                    <h2 class="Section-title">Книги автора
-                    </h2>
+                    <h2 class="Section-title" th:text="#{message.authorBooks}">Книги автора</h2>
                 </header>
                 <div class="Cards Cards_refresh">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${authorBooks})}"></div>
-
                 </div>
                 <footer class="Section-footer">
-                    <a class="Author-books" href="/books/author.html" th:href="'/books/author/' + ${authorSlug.slug}">
+                    <a class="Author-books" th:href="'/books/author/' + ${authorSlug.slug}" th:text="#{message.allBooksAuthor}">
                         Все книги автора
                         <span class="Author-amount" th:text="${authorSlug.getBookList().size()}">(55)</span>
                     </a>

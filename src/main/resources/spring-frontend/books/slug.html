@@ -50,10 +50,9 @@
                     </div>
                     <div class="ProductCard-desc">
                         <div class="ProductCard-header">
-                            <h1 class="ProductCard-title" th:text="${slugBook.title}">Мара и морок
-                            </h1>
+                            <h1 class="ProductCard-title" th:text="${slugBook.title}">Мара и морок</h1>
                             <div class="ProductCard-author">
-                                <span class="ProductCard-titleProp">Автор:</span>&#32;
+                                <span class="ProductCard-titleProp" th:text="#{message.author} + ':'">Автор:</span>&#32;
                                 <div class="ProductCard-titleProp" th:each="author, i : ${authorsBook}">
                                     <a th:if="${i.count} < ${authorsBook.size()}" href="#"
                                        th:href="'/authors/' + ${author.slug}"
@@ -63,7 +62,7 @@
                                        th:text="${author.name}">Лия Арден</a>
                                 </div>
                             </div>
-                            <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
+                            <div class="ProductCard-rating"><span class="ProductCard-titleProp" th:text="#{message.rating} + ':'">Рейтинг:</span>
                                 <button class="trigger trigger_dropdown" type="button">
                                     <div class="Rating Rating_noStyleLink"><span class="Rating-stars">
                                         <span th:class="${rateBook >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
@@ -121,7 +120,7 @@
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window"><a class="modal-close"
                                                                      href="#"><span></span><span></span></a>
-                                            <strong class="modal-title">Распределение оценок
+                                            <strong class="modal-title" th:text="#{message.gradeDistribution}">Распределение оценок
                                             </strong>
                                             <div class="RatingGroup">
                           <span class="Rating">
@@ -372,7 +371,7 @@
                                 </button>
                             </div>
                             <div class="ProductCard-assessment"><span
-                                    class="ProductCard-titleProp">Оцените книгу:</span><span
+                                    class="ProductCard-titleProp" >Оцените книгу:</span><span
                                     class="Rating Rating_input" data-bookid="2121"
                                     th:attr="data-bookid = ${slugBook.id}"><span class="Rating-stars"><span
                                     class="Rating-star">

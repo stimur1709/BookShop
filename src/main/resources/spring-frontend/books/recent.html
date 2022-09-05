@@ -30,7 +30,8 @@
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/genres}">Книги</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{topbar.news}">Новинки</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current">
+                    <span th:text="#{topbar.news}">Новинки</span>
                 </li>
             </ul>
             <div class="Section">
@@ -62,7 +63,7 @@
                 <div class="Cards-footer Cards-footer_center">
                     <a class="btn btn_primary" href="#"
                        data-refreshshow="recent" data-refreshoffset="0"
-                       data-refreshlimit="20">Показать еще</a>
+                       data-refreshlimit="20" th:text="#{message.showMore}">Показать еще</a>
                 </div>
             </div>
         </main>

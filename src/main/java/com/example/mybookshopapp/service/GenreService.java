@@ -1,7 +1,9 @@
 package com.example.mybookshopapp.service;
 
+import com.example.mybookshopapp.dto.GenreDto;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -11,44 +13,47 @@ import java.util.*;
 @Service
 public class GenreService {
 
-    GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
+    private final ModelMapper modelMapper;
+
 
     @Autowired
-    public GenreService(GenreRepository genreRepository) {
+    public GenreService(GenreRepository genreRepository, ModelMapper modelMapper) {
         this.genreRepository = genreRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public Map<Genre, Map<Genre, List<Genre>>> getGenreMap() {
+    public Map<GenreDto, Map<GenreDto, List<GenreDto>>> getGenreMap() {
 
-        Map<Genre, Map<Genre, List<Genre>>> genreTreeList = new HashMap<>();
+        Map<GenreDto, Map<GenreDto, List<GenreDto>>> genreTreeList = new HashMap<>();
 
         List<Genre> genreList = genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
         for (Genre genreOne : genreList) {
-            Map<Genre, List<Genre>> genreTwoList = new HashMap<>();
+            Map<GenreDto, List<GenreDto>> genreTwoList = new HashMap<>();
             for (Genre genreTwo : genreList) {
-                List<Genre> genreThreeList = new ArrayList<>();
+                List<GenreDto> genreThreeList = new ArrayList<>();
                 for (Genre genreThree : genreList) {
                     if (genreThree.getParentId() == genreTwo.getId()) {
-                        genreThreeList.add(genreThree);
+                        genreThreeList.add(convertToGenreDto(genreThree));
                     }
                 }
                 if (genreTwo.getParentId() == genreOne.getId()) {
-                    genreTwoList.put(genreTwo, genreThreeList);
+                    genreTwoList.put(convertToGenreDto(genreTwo), genreThreeList);
                 }
             }
             if (genreOne.getParentId() == 0) {
-                genreTreeList.put(genreOne, genreTwoList);
+                genreTreeList.put(convertToGenreDto(genreOne), genreTwoList);
             }
         }
         return genreTreeList;
     }
 
-    public Genre getPageBySlug(String slug) {
-        return genreRepository.findGenreEntityBySlug(slug);
+    public GenreDto getPageBySlug(String slug) {
+        return convertToGenreDto(genreRepository.findGenreEntityBySlug(slug));
     }
 
-    public Genre getPageById(Integer id) {
-        return genreRepository.findGenreEntityById(id);
+    public GenreDto getPageById(String id) {
+        return convertToGenreDto(genreRepository.findGenreEntityBySlug(id));
     }
 
     public void addAmount() {
@@ -59,4 +64,7 @@ public class GenreService {
         });
     }
 
+    private GenreDto convertToGenreDto(Genre genre) {
+        return modelMapper.map(genre, GenreDto.class);
+    }
 }

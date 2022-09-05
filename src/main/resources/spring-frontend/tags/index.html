@@ -5,7 +5,7 @@
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="${tagPage.name}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -27,7 +27,7 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a href="/index.html" th:href="@{/}">Главная</a>
+                <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}">Главная</a>
                 </li>
                 <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tagPage.name}">
                     <span>Психологическая проза</span>
@@ -37,26 +37,30 @@
                 <div class="Section-header">
                     <h1 class="Section-title" th:text="${tagPage.name}">Психологическая проза
                     </h1>
-                    <div class="Section-header-links"><a class="Section-header-link" href="/index.html#tags"
-                                                         th:href="@{/#tags}">Все
-                        тэги</a>
+                    <div class="Section-header-links">
+                        <a class="Section-header-link" href="/index.html#tags"
+                           th:href="@{/#tags}">
+                            Все тэги
+                        </a>
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
                     <div class="Card" th:each="book : ${booksTag}">
-                        <div class="Card-picture"><a th:href="@{/books/{slug}(slug=${book.slug})}"><img
-                                th:src="${book.image}" alt="card.jpg"/></a>
+                        <div class="Card-picture"><a th:href="@{/books/{slug}(slug=${book.slug})}">
+                            <img h:src="${book.image}" alt="card.jpg"/></a>
                         </div>
                         <div class="Card-content">
-                            <strong class="Card-title"><a th:href="@{/books/{slug}(slug=${book.slug})}"
-                                                          th:text="${book.title}">Техника</a>
+                            <strong class="Card-title">
+                                <a th:href="@{/books/{slug}(slug=${book.slug})}"
+                                   th:text="${book.title}">Техника
+                                </a>
                             </strong>
                             <div class="Card-description" th:text="${book.getAuthors()}">Кондратенко Александр
                                 Петрович
                             </div>
                             <div class="Card-cost">
-                                            <span class="Card-priceOld" th:if="${book.discount != 0}"
-                                                  th:text="'₽' + ${book.price}">₽500.00</span>
+                                <span class="Card-priceOld" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.price}">₽500.00</span>
                                 <span class="Card-price" th:if="${book.discount != 0}"
                                       th:text="'₽' + ${book.discountPrice()}">₽390.00</span>
                                 <span class="Card-price" th:if="${book.discount == 0}"
@@ -64,12 +68,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#"
-                                                                     data-refreshshow="tag" data-refreshoffset="0"
-                                                                     data-refreshlimit="20"
-                                                                     th:attr="data-refreshid=${tagPage.slug}"
-                                                                     data-refreshid="10">Показать
-                        еще</a>
+                    <div class="Cards-footer Cards-footer_center">
+                        <a class="btn btn_primary" href="#"
+                           data-refreshshow="tag" data-refreshoffset="0"
+                           data-refreshlimit="20"
+                           th:attr="data-refreshid=${tagPage.slug}"
+                           data-refreshid="10" th:text="#{message.showMore}">
+                            Показать еще
+                        </a>
                     </div>
                 </div>
             </div>

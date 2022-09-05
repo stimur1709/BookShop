@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.myProfile}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=45744385">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=45744385">
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
     <script defer src="/assets/js/scripts.min.js?v=45744385"></script>
 </head>
 <body class="Site">
@@ -26,18 +25,19 @@
 <div class="Middle">
     <div class="Middle-top">
         <div class="wrap">
-            <h1 class="Middle-title">Личный кабинет
+            <h1 class="Middle-title" th:text="#{message.personalArea}">Личный кабинет
             </h1>
         </div>
     </div>
     <div class="wrap">
         <main class="Middle-main">
-            <h2 class="Middle-title">Мой профиль
+            <h2 class="Middle-title" th:text="#{bottomBar.myProfile}">Мой профиль
             </h2>
             <div class="Tabs Tabs_default">
-                <div class="Tabs-links"><a class="Tabs-link Tabs-link_ACTIVE" href="#basic">Основные сведения</a><a
-                        class="Tabs-link" href="#transactions">История транзакций</a><a class="Tabs-link" href="#topup">Пополнить
-                    счет</a>
+                <div class="Tabs-links">
+                    <a class="Tabs-link Tabs-link_ACTIVE" href="#basic" th:text="#{message.basicInformation}">Основные сведения</a>
+                    <a class="Tabs-link" href="#transactions" th:text="#{message.transactionHistory}">История транзакций</a>
+                    <a class="Tabs-link" href="#topup" th:text="#{message.topAccount}">Пополнить счет</a>
                 </div>
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
@@ -59,43 +59,43 @@
                                                    value="addr@sait.com" data-validate="require mail"
                                                    th:value="${currentUser.mail}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary" type="button">Подтвердить
+                                                <button class="btn btn_primary" type="button" th:text="#{message.confirm}">Подтвердить
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" for="phone">Телефон
+                                            <label class="form-label" for="phone" th:text="#{message.phone}">Телефон
                                             </label>
                                             <input class="form-input" id="phone" name="phone" type="text"
                                                    value="+70000000000" data-mask="+7 (999) 999-99-99"
                                                    data-validate="require" th:value="${currentUser.phone}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary" type="button">Подтвердить
+                                                <button class="btn btn_primary" type="button" th:text="#{message.confirm}">Подтвердить
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row-block">
                                         <div class="form-group">
-                                            <label class="form-label" for="password">Пароль
+                                            <label class="form-label" for="password" th:text="#{message.password}">Пароль
                                             </label>
                                             <input class="form-input" id="password" name="password" type="password"
                                                    placeholder="Тут можно изменить пароль"/>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" for="passwordReply">Подтверждение пароля
+                                            <label class="form-label" for="passwordReply" th:text="#{message.passwordConfirmation}">Подтверждение пароля
                                             </label>
                                             <input class="form-input" id="passwordReply" name="passwordReply"
                                                    type="password" placeholder="Введите пароль повторно"/>
                                         </div>
                                         <div class="form-group">
                                             <div class="Profile-btn">
-                                                <button class="btn btn_danger" type="button">Отменить
+                                                <button class="btn btn_danger" type="button" th:text="#{message.cancel}">Отменить
                                                 </button>
-                                                <button class="btn btn_primary" type="submit">Сохранить
+                                                <button class="btn btn_primary" type="submit" th:text="#{message.save}">Сохранить
                                                 </button>
                                             </div>
-                                            <div class="Profile-success">Профиль успешно сохранен
+                                            <div class="Profile-success" th:text="#{message.profileSave}">Профиль успешно сохранен
                                             </div>
                                         </div>
                                     </div>

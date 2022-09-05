@@ -62,7 +62,8 @@
                                        th:text="${author.name}">Лия Арден</a>
                                 </div>
                             </div>
-                            <div class="ProductCard-rating"><span class="ProductCard-titleProp" th:text="#{message.rating} + ':'">Рейтинг:</span>
+                            <div class="ProductCard-rating"><span class="ProductCard-titleProp"
+                                                                  th:text="#{message.rating} + ':'">Рейтинг:</span>
                                 <button class="trigger trigger_dropdown" type="button">
                                     <div class="Rating Rating_noStyleLink"><span class="Rating-stars">
                                         <span th:class="${rateBook >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
@@ -120,7 +121,8 @@
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window"><a class="modal-close"
                                                                      href="#"><span></span><span></span></a>
-                                            <strong class="modal-title" th:text="#{message.gradeDistribution}">Распределение оценок
+                                            <strong class="modal-title" th:text="#{message.gradeDistribution}">Распределение
+                                                оценок
                                             </strong>
                                             <div class="RatingGroup">
                           <span class="Rating">
@@ -371,7 +373,8 @@
                                 </button>
                             </div>
                             <div class="ProductCard-assessment"><span
-                                    class="ProductCard-titleProp" >Оцените книгу:</span><span
+                                    class="ProductCard-titleProp"
+                                    th:text="#{message.rateTheBook} + ':'">Оцените книгу:</span><span
                                     class="Rating Rating_input" data-bookid="2121"
                                     th:attr="data-bookid = ${slugBook.id}"><span class="Rating-stars"><span
                                     class="Rating-star">
@@ -427,7 +430,7 @@
                               <input name="rating" type="radio" value="5"/></span></span>
                             </div>
                             <div class="ProductCard-tags">
-                                <span class="ProductCard-titleProp">Тэги:</span>
+                                <span class="ProductCard-titleProp" th:text="#{message.tags} + ':'">Тэги:</span>
                                 <div class="ProductCard-titleProp" th:each="tag, i : ${tagsBook}">
                                     <a th:if="${i.count} < ${tagsBook.size()}" th:href="'/tags/' + ${tag.slug}"
                                        th:text="${tag.name} + ', '">Современные</a>&#32;
@@ -435,7 +438,8 @@
                                        th:text="${tag.name}">Современные</a>&#32;
                                 </div>
                             </div>
-                            <div class="ProductCard-cost"><span class="ProductCard-titleProp">Цена:</span>
+                            <div class="ProductCard-cost"><span class="ProductCard-titleProp"
+                                                                th:text="#{message.price} + ':'">Цена:</span>
                                 <span class="ProductCard-priceOld" th:if="${slugBook.discount != 0}"
                                       th:text="'₽' + ${slugBook.price}">₽300</span>
                                 <span class="ProductCard-price" th:if="${slugBook.discount != 0}"
@@ -477,10 +481,13 @@
                             </div>
                         </div>
                         <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement"><a class="btn btn_primary btn_outline" href="#"><span
-                                    class="btn-icon"><img src="/assets/img/icons/download.svg"
-                                                          alt="download.svg"/></span><span
-                                    class="btn-content">Скачать</span></a>
+                            <div class="ProductCard-cartElement">
+                                <a class="btn btn_primary btn_outline" href="#">
+                                    <span class="btn-icon">
+                                        <img src="/assets/img/icons/download.svg"
+                                             alt="download.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.download}">Скачать</span></a>
                             </div>
                             <div class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
@@ -494,7 +501,7 @@
                         </div>
 
                         <div id="myPopup">
-                            <p>Ссылки для скачивания</p>
+                            <p th:text="#{message.downloadLinks}">Ссылки для скачивания</p>
                             <div th:each="bookFile : ${slugBook.getBookFileList()}">
                                 <a href="#" th:href="${'/books/download/' + bookFile.hash}"
                                    th:text="${bookFile.getBookFileType().name}"></a>
@@ -506,7 +513,7 @@
                 </div>
                 <div class="Product-comments">
                     <div class="Product-comments-header">
-                        <h3 class="Product-comments-title">Отзывы
+                        <h3 class="Product-comments-title" th:text="#{message.reviews}">Отзывы
                         </h3><span class="Rating"><span class="Rating-stars"><span
                             th:class="${rateReview >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
@@ -563,7 +570,7 @@
                     </div>
                 </div>
                 <div class="Comments">
-                    <strong class="Comments-title">Написать отзыв
+                    <strong class="Comments-title" th:text="#{message.writeAReview}">Написать отзыв
                     </strong>
                     <div class="Comments-addComment">
                         <form class="form" action="#" method="post" data-bookid="1111"
@@ -573,7 +580,8 @@
                             data-validate="require"></textarea>
                             </div>
                             <div class="form-group Comments-sendReview">
-                                <button class="btn btn_warning" type="submit">Отправить отзыв
+                                <button class="btn btn_warning" type="submit" th:text="#{message.postAReview}">
+                                    Отправить отзыв
                                 </button>
                             </div>
                         </form>
@@ -588,9 +596,11 @@
                                 <header class="Comment-header">
                                     <div>
                                         <strong class="Comment-title" th:text="${review.getUser().getName()}">Дмитрий
-                                            Петров<span class="Comment-rating"><span
-                                                    class="Rating Rating_comment"><span class="Rating-stars"><span
-                                                    class="Rating-star Rating-star_view">
+                                            Петров
+                                            <span class="Comment-rating">
+                                                <span class="Rating Rating_comment">
+                                                    <span class="Rating-stars">
+                                                        <span class="Rating-star Rating-star_view">
                               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                 <g>
                                   <g>

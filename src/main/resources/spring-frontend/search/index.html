@@ -40,7 +40,7 @@
             </div>
             <div class="Section Section_close">
                 <header class="Section-header">
-                    <h2 class="Section-title Middle-searchHeader" th:text="${'Найдено книг: ' + searchResult.size()}">
+                    <h2 class="Section-title Middle-searchHeader" th:text="#{message.foundBooks}': ' + ${searchResult.size()}">
                         Найдено 40 книг
                     </h2>
                 </header>
@@ -51,7 +51,7 @@
                            data-refreshshow="search" data-refreshoffset="0"
                            data-refreshlimit="5"
                            th:attr="data-refreshquery=${searchWordDto.example}"
-                           data-refreshquery="Техника">Показать еще</a>
+                           data-refreshquery="Техника" th:text="#{message.showMore}">Показать еще</a>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.about}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -17,8 +17,7 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=74020866">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=74020866">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=74020866">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=74020866"></script>
 </head>
 
@@ -28,12 +27,13 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+                <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span>О компании</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current">
+                    <span th:text="#{bottomBar.about}">О компании</span>
                 </li>
             </ul>
-            <h1 class="Middle-title">О компании
+            <h1 class="Middle-title" th:text="#{bottomBar.about}">О компании
             </h1>
             <article class="Article">
                 <div class="sdf">

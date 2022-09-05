@@ -37,4 +37,12 @@ public class Genre {
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     @JsonBackReference
     private List<Book> bookList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "name='" + name + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

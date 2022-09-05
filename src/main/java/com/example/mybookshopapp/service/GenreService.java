@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -25,9 +26,9 @@ public class GenreService {
 
     public Map<GenreDto, Map<GenreDto, List<GenreDto>>> getGenreMap() {
 
-        Map<GenreDto, Map<GenreDto, List<GenreDto>>> genreTreeList = new HashMap<>();
+        Map<GenreDto, Map<GenreDto, List<GenreDto>>> genreTreeList = new TreeMap<>();
 
-        List<Genre> genreList = genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
+        List<Genre> genreList = genreRepository.findAll();
         for (Genre genreOne : genreList) {
             Map<GenreDto, List<GenreDto>> genreTwoList = new HashMap<>();
             for (Genre genreTwo : genreList) {
@@ -38,7 +39,9 @@ public class GenreService {
                     }
                 }
                 if (genreTwo.getParentId() == genreOne.getId()) {
-                    genreTwoList.put(convertToGenreDto(genreTwo), genreThreeList);
+                    genreTwoList.put(convertToGenreDto(genreTwo), genreThreeList.stream()
+                            .sorted(Comparator.comparing(GenreDto::getAmount, Comparator.reverseOrder()))
+                            .collect(Collectors.toList()));
                 }
             }
             if (genreOne.getParentId() == 0) {

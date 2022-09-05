@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Schema(description = "Модель жанра")
-public class GenreDto {
+public class GenreDto implements Comparable<GenreDto> {
 
     private int id;
 
@@ -24,4 +24,18 @@ public class GenreDto {
     private int amount;
 
     private List<Book> bookList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "GenreDto{" +
+                "name='" + name + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
+
+    @Override
+    public int compareTo(GenreDto o) {
+        return Integer.compare(o.getAmount(), this.getAmount());
+    }
+
 }

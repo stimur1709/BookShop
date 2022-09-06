@@ -524,7 +524,7 @@ values (1, 'legkoye_chteniye', 'Легкое чтение');
 insert into genre (id, parent_id, slug, name)
 values (2, 1, 'fantasy', 'Фантастика');
 insert into genre (id, parent_id, slug, name)
-values (3, 3, 'puteshestviye', 'Путешествие');
+values (3, 1, 'puteshestviye', 'Путешествие');
 insert into genre (id, parent_id, slug, name)
 values (4, 2, 'science_fantasy', 'Научная Фантастика');
 insert into genre (id, parent_id, slug, name)

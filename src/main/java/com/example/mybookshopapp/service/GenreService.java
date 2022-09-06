@@ -3,10 +3,10 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -19,31 +19,8 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public Map<Genre, Map<Genre, List<Genre>>> getGenreMap() {
-
-        Map<Genre, Map<Genre, List<Genre>>> genreTreeList = new TreeMap<>();
-
-        List<Genre> genreList = genreRepository.findAll();
-        for (Genre genreOne : genreList) {
-            Map<Genre, List<Genre>> genreTwoList = new HashMap<>();
-            for (Genre genreTwo : genreList) {
-                List<Genre> genreThreeList = new ArrayList<>();
-                for (Genre genreThree : genreList) {
-                    if (genreThree.getParentId() == genreTwo.getId()) {
-                        genreThreeList.add(genreThree);
-                    }
-                }
-                if (genreTwo.getParentId() == genreOne.getId()) {
-                    genreTwoList.put(genreTwo, genreThreeList.stream()
-                            .sorted(Comparator.comparing(Genre::getAmount, Comparator.reverseOrder()))
-                            .collect(Collectors.toList()));
-                }
-            }
-            if (genreOne.getParentId() == 0) {
-                genreTreeList.put(genreOne, genreTwoList);
-            }
-        }
-        return genreTreeList;
+    public List<Genre> getGenreList() {
+        return genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
     }
 
     public Genre getPageBySlug(String slug) {

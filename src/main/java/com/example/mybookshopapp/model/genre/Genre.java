@@ -19,8 +19,8 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
-    private int parentId;
+    @ManyToOne
+    private Genre parent;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
@@ -30,6 +30,10 @@ public class Genre {
 
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private int amount;
+
+    @OneToMany
+    @JoinColumn(name = "parent_id")
+    private List<Genre> childGenres;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2genre",

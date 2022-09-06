@@ -29,12 +29,12 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a th:href="@{/}">Главная</a>
+                <li class="breadcrumbs-item"><a th:href="@{/}" th:text="#{topbar.main}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item"><a th:href="@{/genres}">Книги</a>
+                <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{message.books}">Книги</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span
-                        th:text="${slugBook.title}">Мара и морок</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current">
+                    <span th:text="${slugBook.title}">Мара и морок</span>
                 </li>
             </ul>
             <div class="Product">
@@ -62,10 +62,11 @@
                                        th:text="${author.name}">Лия Арден</a>
                                 </div>
                             </div>
-                            <div class="ProductCard-rating"><span class="ProductCard-titleProp"
-                                                                  th:text="#{message.rating} + ':'">Рейтинг:</span>
+                            <div class="ProductCard-rating">
+                                <span class="ProductCard-titleProp" th:text="#{message.rating} + ':'">Рейтинг:</span>
                                 <button class="trigger trigger_dropdown" type="button">
-                                    <div class="Rating Rating_noStyleLink"><span class="Rating-stars">
+                                    <div class="Rating Rating_noStyleLink">
+                                        <span class="Rating-stars">
                                         <span th:class="${rateBook >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
@@ -75,7 +76,8 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span>
+                          </svg>
+                                        </span>
                                         <span th:class="${rateBook >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
@@ -115,14 +117,13 @@
                                 </path>
                               </g>
                             </g>
-                          </svg></span></span><span class="Rating-title"
-                                                    th:text="${numberOfRating}">(567)</span>
+                          </svg></span></span><span class="Rating-title" th:text="${numberOfRating}">(567)</span>
                                     </div>
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window"><a class="modal-close"
                                                                      href="#"><span></span><span></span></a>
-                                            <strong class="modal-title" th:text="#{message.gradeDistribution}">Распределение
-                                                оценок
+                                            <strong class="modal-title" th:text="#{message.gradeDistribution}">
+                                                Распределение оценок
                                             </strong>
                                             <div class="RatingGroup">
                           <span class="Rating">
@@ -223,8 +224,8 @@
                                   </g>
                                 </svg></span></span><span class="Rating-title"
                                                           th:text="${numberOfScore4}">4</span></span><br>
-                                                <span class="Rating"><span class="Rating-stars"><span
-                                                        class="Rating-star Rating-star_view">
+                                                <span class="Rating"><span class="Rating-stars">
+                                                    <span class="Rating-star Rating-star_view">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                                   <g>
                                     <g>
@@ -464,19 +465,26 @@
                                 <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
                                         th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
                                         data-btnradio="buyblock"
-                                        data-check="false" data-alttext="Отложена"><span class="btn-icon"><img
-                                        src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
-                                        class="btn-content">Отложить</span>
+                                        data-check="false" data-alttext="Отложена"
+                                        th:attr="data-alttext=#{message.postponed}">
+                                    <span class="btn-icon">
+                                        <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.postpone}">Отложить</span>
                                 </button>
                             </div>
                             <div class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
                                         th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
                                         data-btnradio="buyblock"
-                                        data-check="false" data-alttext="В корзине"><span class="btn-icon"><img
+                                        data-check="false" data-alttext="В корзине"
+                                        th:attr="data-alttext=#{message.inBasket}">
+                                    <span class="btn-icon">
+                                        <img
                                         src="/assets/img/icons/shopping-basket.svg"
-                                        alt="shopping-basket.svg"/></span><span
-                                        class="btn-content">Купить</span>
+                                        alt="shopping-basket.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.buy}">Купить</span>
                                 </button>
                             </div>
                         </div>
@@ -493,9 +501,14 @@
                                 <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
                                         data-bookid="[1111]"
                                         data-btntype="check" data-btnradio="buyblock" data-check="false"
-                                        data-alttext="Вернуть из архива"><span class="btn-icon"><img
+                                        data-alttext="Вернуть из архива"
+                                        th:attr="data-alttext=#{message.returnArc}">
+                                    <span class="btn-icon">
+                                        <img
                                         src="/assets/img/icons/archive.svg"
-                                        alt="archive.svg"/></span><span class="btn-content">В архив</span>
+                                        alt="archive.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.toArc}">В архив</span>
                                 </button>
                             </div>
                         </div>
@@ -576,7 +589,7 @@
                         <form class="form" action="#" method="post" data-bookid="1111"
                               th:attr="data-bookid = ${slugBook.id}">
                             <div class="form-group">
-                  <textarea class="form-textarea Comments-review" name="review" id="review" placeholder="Текст отзыва"
+                  <textarea class="form-textarea Comments-review" name="review" id="review" th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
                             data-validate="require"></textarea>
                             </div>
                             <div class="form-group Comments-sendReview">
@@ -595,8 +608,8 @@
                             <div class="Comment-column">
                                 <header class="Comment-header">
                                     <div>
-                                        <strong class="Comment-title" th:text="${review.getUser().getName()}">Дмитрий
-                                            Петров
+                                        <strong class="Comment-title" th:text="${review.getUser().getName()}">
+                                            Дмитрий Петров
                                             <span class="Comment-rating">
                                                 <span class="Rating Rating_comment">
                                                     <span class="Rating-stars">
@@ -690,6 +703,7 @@
                                             <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
                                                     data-showtext="Свернуть отзыв"
                                                     data-hidetext="Показать отзыв полностью"
+                                                    th:attr="data-showtext=#{message.collapseReview}, data-hidetext=#{message.fullReview}"
                                                     th:if="${review.getText().length() >= 100}">
                                             </button>
                                         </div>

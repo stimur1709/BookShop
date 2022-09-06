@@ -34,22 +34,26 @@
                             <div class="Tag">
                                 <a th:href="'/genres/' + ${genreOne.key.slug}"
                                    th:text="${genreOne.key.name} + ': (' + ${genreOne.key.amount} + ')'">
-                                Лёгкое чтение<span class="undefined-amount">(15638)</span></a>
+                                    Лёгкое чтение
+                                    <span class="undefined-amount">(15638)</span>
+                                </a>
                             </div>
                         </div>
                         <div class="Tags" th:each="genreTwo :${genreOne.value}">
                             <div class="Tags-title">
                                 <div class="Tag">
                                     <a th:href="'/genres/' + ${genreTwo.key.slug}"
-                                       th:text="${genreTwo.key.name} + ': (' + ${genreTwo.key.amount} + ')'">Детективы<span
-                                        class="undefined-amount">(10)</span></a>
+                                       th:text="${genreTwo.key.name} + ': (' + ${genreTwo.key.amount} + ')'">Детективы
+                                        <span class="undefined-amount">(10)</span>
+                                    </a>
                                 </div>
                             </div>
                             <div>
                                 <div class="Tag" th:each="genre : ${genreTwo.value}"><a
                                         th:href="'/genres/' + ${genre.slug}"
-                                        th:text="${genre.name} + ': (' + ${genre.amount} + ')'">Триллер<span
-                                        class="undefined-amount">(134)</span></a>
+                                        th:text="${genre.name} + ': (' + ${genre.amount} + ')'">Триллер
+                                    <span class="undefined-amount">(134)</span>
+                                </a>
                                 </div>
                             </div>
                         </div>

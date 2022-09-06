@@ -5,20 +5,19 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Тут название страницы написать</title>
-  <meta name="description" content="Описание страницы">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-  <link href="favicon.ico" rel="shortcut icon">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=04238027">
-  <link rel="stylesheet" href="/assets/css/basic.min.css?v=04238027">
-  <link rel="stylesheet" href="/assets/css/extra.min.css?v=04238027">
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+    <title th:text="#{bottomBar.postponed}">Тут название страницы написать</title>
+    <meta name="description" content="Описание страницы">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href="favicon.ico" rel="shortcut icon">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/fonts.min.css?v=04238027">
+    <link rel="stylesheet" href="/assets/css/basic.min.css?v=04238027">
+    <link rel="stylesheet" href="/assets/css/extra.min.css?v=04238027">
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=04238027"></script>
 </head>
 <body class="Site">
@@ -26,22 +25,27 @@
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Отложенное
+            <h1 class="Middle-title" th:text="#{bottomBar.postponed}">Отложенное
             </h1>
-            <h3 th:if="${isKeptEmpty}">Список пуст</h3>
+            <h3 th:if="${isKeptEmpty}" th:text="#{message.listIsEmpty}">Список пуст</h3>
             <form class="form Cart Cart_postponed" action="#" method="post">
                 <div class="Cart-product" th:each="book : ${bookKept}">
                     <div class="Cart-block Cart-block_row">
-                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img"
-                                                                                                   th:src="${book.image}"
-                                                                                                   src="/assets/img/content/main/card.jpg"
-                                                                                                   alt="card.jpg"/></a>
+                        <div class="Cart-block Cart-block_pict">
+                            <a class="Cart-pict" href="#">
+                                <img class="Cart-img"
+                                     th:src="${book.image}"
+                                     src="/assets/img/content/main/card.jpg"
+                                     alt="card.jpg"/>
+                            </a>
                         </div>
                         <div class="Cart-block Cart-block_row">
                             <div class="Cart-block Cart-block_info">
-                                <div class="Cart-author"><a th:text="${book.authors}">Борис Васильевич Бедный</a>
+                                <div class="Cart-author">
+                                    <a th:text="${book.authors}">Борис Васильевич Бедный</a>
                                 </div>
-                                <div class="Cart-title"><a th:href="@{/books/{slug}(slug=${book.slug})}" th:text="${book.title}">Жизнь</a>
+                                <div class="Cart-title">
+                                    <a th:href="@{/books/{slug}(slug=${book.slug})}" th:text="${book.title}">Жизнь</a>
                                 </div>
                                 <div class="Cart-rating"><span class="Rating"><span class="Rating-stars"><span
                                         class="Rating-star Rating-star_view">
@@ -92,7 +96,7 @@
                                                 th:attr="data-bookid = ${book.slug}"
                                                 data-bookid="[1122]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/shopping-basket.svg" alt="shopping-basket.svg"/></span><span
-                                                class="btn-content">Купить</span>
+                                                class="btn-content" th:text="#{message.buy}">Купить</span>
                                         </button>
                                     </div>
                                     <div class="Cart-btn">
@@ -100,13 +104,13 @@
                                                 th:attr="data-bookid = ${'kept/remove/' + book.slug}"
                                                 data-bookid="[1122]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
-                                                class="btn-content">Удалить</span>
+                                                class="btn-content" th:text="#{message.delete}">Удалить</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="Cart-block Cart-block_price">
-                                <div class="Cart-priceTitle">Цена:
+                                <div class="Cart-priceTitle" th:text="#{message.price}">Цена:
                                 </div>
                                 <div class="Cart-price Cart-price_old" th:if="${book.discount != 0}"
                                      th:text="${book.price}">254 р.
@@ -130,7 +134,7 @@
                     </div>
                     <div class="Cart-block">
                         <button class="btn btn_success btn_md Cart-buyAll" data-sendstatus="CART"
-                                data-bookid="[1111, 1122, 1133]">Купить все
+                                data-bookid="[1111, 1122, 1133]" th:text="#{message.buyAll}">Купить все
                         </button>
                     </div>
                 </div>

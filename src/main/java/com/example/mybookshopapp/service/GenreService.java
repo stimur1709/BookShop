@@ -3,15 +3,16 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
 
-    GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
+
 
     @Autowired
     public GenreService(GenreRepository genreRepository) {
@@ -20,9 +21,9 @@ public class GenreService {
 
     public Map<Genre, Map<Genre, List<Genre>>> getGenreMap() {
 
-        Map<Genre, Map<Genre, List<Genre>>> genreTreeList = new HashMap<>();
+        Map<Genre, Map<Genre, List<Genre>>> genreTreeList = new TreeMap<>();
 
-        List<Genre> genreList = genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
+        List<Genre> genreList = genreRepository.findAll();
         for (Genre genreOne : genreList) {
             Map<Genre, List<Genre>> genreTwoList = new HashMap<>();
             for (Genre genreTwo : genreList) {
@@ -33,7 +34,9 @@ public class GenreService {
                     }
                 }
                 if (genreTwo.getParentId() == genreOne.getId()) {
-                    genreTwoList.put(genreTwo, genreThreeList);
+                    genreTwoList.put(genreTwo, genreThreeList.stream()
+                            .sorted(Comparator.comparing(Genre::getAmount, Comparator.reverseOrder()))
+                            .collect(Collectors.toList()));
                 }
             }
             if (genreOne.getParentId() == 0) {
@@ -47,8 +50,8 @@ public class GenreService {
         return genreRepository.findGenreEntityBySlug(slug);
     }
 
-    public Genre getPageById(Integer id) {
-        return genreRepository.findGenreEntityById(id);
+    public Genre getPageById(String id) {
+        return genreRepository.findGenreEntityBySlug(id);
     }
 
     public void addAmount() {
@@ -58,5 +61,4 @@ public class GenreService {
             genreRepository.save(genre);
         });
     }
-
 }

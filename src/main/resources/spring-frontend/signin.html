@@ -3,9 +3,8 @@
 <html class="ie8" lang="ru">
 <html class="ie9" lang="ru">
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.signIn}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -26,7 +25,7 @@
 <div class="Middle Middle_form">
     <div class="Middle-top">
         <div class="wrap">
-            <h1 class="Middle-title">Вход
+            <h1 class="Middle-title" th:text="#{bottomBar.signIn}">Вход
             </h1>
         </div>
     </div>
@@ -36,9 +35,10 @@
                 <div class="Login-ins">
                     <div class="Login-step">
                         <div class="form-group">
-                            <label class="form-label Login-title">Введите e-mail или телефон
+                            <label class="form-label Login-title" th:text="#{message.enterMailPhone}">Введите e-mail или
+                                телефон
                                 <br>
-                                <span th:if="${regOk}">Регистрация прошла успешно!</span>
+                                <span th:if="${regOk}" th:text="#{message.registrationSuccessfully}">Регистрация прошла успешно!</span>
                             </label>
                         </div>
                         <div class="form-group">
@@ -47,7 +47,7 @@
                                     <label class="toggle Login-type">
                                         <input type="radio" name="typeauth" value="phonetype"
                                                checked="checked"/><span class="toggle-box"></span><span
-                                            class="toggle-text">Телефон</span>
+                                            class="toggle-text" th:text="#{message.phone}">Телефон</span>
                                     </label>
                                 </div>
                                 <div class="row-block">
@@ -67,15 +67,14 @@
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="sendauth" id="sendauth"
-                                    data-type="phone" data-send="">Далее
+                                    data-type="phone" data-send="" th:text="#{message.further}">Далее
                             </button>
                         </div>
                     </div>
                     <div class="Login-step Login-step_hide" data-type="phone">
                         <div class="form-group">
-                            <label class="form-label Login-title">На&nbsp;Ваш телефон отправлено сообщение
-                                с&nbsp;кодом
-                                для входа. Введите его:
+                            <label class="form-label Login-title" th:text="#{message.messageLogin}">
+                                На Ваш телефон отправлено сообщение с кодом для входа. Введите его:
                             </label>
                         </div>
                         <div class="form-group form-group_key">
@@ -90,7 +89,8 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="mail">
                         <div class="form-group">
-                            <label class="form-label Login-title">Введитепароль учетной записи или зарегистрируйтесь
+                            <label class="form-label Login-title" th:text="#{message.enterPassword}">
+                                Введите пароль учетной записи или зарегистрируйтесь
                             </label>
                         </div>
                         <div class="form-group form-group_key">
@@ -99,12 +99,12 @@
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="toComeInMail"
-                                    id="toComeInMail" data-send="">Войти
+                                    id="toComeInMail" data-send="" th:text="#{message.comeIn}">Войти
                             </button>
                         </div>
                     </div>
-                    <div class="form-group form-group_center"><a class="Login-reg" th:href="@{/signup}"
-                                                                 href="/signup.html">Зарегистрироваться</a>
+                    <div class="form-group form-group_center">
+                        <a class="Login-reg" th:href="@{/signup}" th:text="#{message.register}">Зарегистрироваться</a>
                     </div>
                 </div>
             </form>

@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.faq}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -17,8 +17,7 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=77124975">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=77124975">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=77124975">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=77124975"></script>
 </head>
 
@@ -28,15 +27,15 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+                <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Помощь</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{bottomBar.faq}">Помощь</span>
                 </li>
             </ul>
-            <h1 class="Middle-title">Помощь
+            <h1 class="Middle-title" th:text="#{bottomBar.faq}">Помощь
             </h1>
             <div class="FAQ">
-                <strong class="FAQ-title">Наиболее частые вопросы:
+                <strong class="FAQ-title" th:text="#{message.mostQuestions} + ':'">Наиболее частые вопросы:
                 </strong>
                 <div class="HideBlock FAQ-block">
                     <header class="HideBlock-header HideBlock-trigger">
@@ -101,7 +100,7 @@
                     </div>
                 </div>
                 <div class="FAQ-footer">
-                    <p class="FAQ-link">Или&#32;<a href="/contacts.html">свяжитесь с нами</a>
+                    <p class="FAQ-link">Или&#32;<a th:href="@{/contacts}" th:text="#{message.contactUs}">свяжитесь с нами</a>
                     </p>
                 </div>
             </div>

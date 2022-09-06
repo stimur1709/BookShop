@@ -5,11 +5,11 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.contacts}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="../favicon.ico" rel="shortcut icon">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -17,8 +17,7 @@
     <link rel="stylesheet" href="/assets/css/fonts.min.css?v=10496799">
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=10496799">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=10496799">
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=10496799"></script>
 </head>
 
@@ -27,22 +26,22 @@
     <div class="Middle">
         <div class="Middle-top">
             <div class="wrap">
-                <h1 class="Middle-title">Контакты
+                <h1 class="Middle-title" th:text="#{bottomBar.contacts}">Контакты
                 </h1>
             </div>
         </div>
         <div class="wrap">
             <main class="Middle-main">
                 <ul class="breadcrumbs">
-                    <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+                    <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}">Главная</a>
                     </li>
-                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Контакты</span>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{bottomBar.contacts}">Контакты</span>
                     </li>
                 </ul>
                 <div class="Contacts">
                     <div class="row">
                         <div class="row-block">
-                            <h2>Контакты
+                            <h2 th:text="#{bottomBar.contacts}">Контакты
                             </h2>
                             <div class="Contacts-prop">
                                 <strong class="Contacts-propTitle">Телефон:
@@ -59,7 +58,7 @@
                         </div>
                         <div class="row-block">
                             <div class="Contacts-form">
-                                <h2>Напишите нам:
+                                <h2 th:text="#{message.writeToUs} + ':'">Напишите нам:
                                 </h2>
                                 <form class="form" action="#" method="post">
                                     <div class="form-group">
@@ -80,7 +79,7 @@
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn_primary form-btn" type="submit" name="sendMessage"
-                                            id="sendMessage">Отправить
+                                            id="sendMessage" th:text="#{message.send}">Отправить
                                         </button>
                                     </div>
                                 </form>

@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{bottomBar.basket}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -27,27 +27,32 @@
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Корзина
+            <h1 class="Middle-title" th:text="#{bottomBar.basket}">Корзина
             </h1>
-            <h3 th:if="${isCartEmpty}">Корзина пуста</h3>
+            <h3 th:if="${isCartEmpty}" th:text="#{message.cartIsEmpty}">Корзина пуста</h3>
             <form class="form Cart" action="#" method="post">
                 <div class="Cart-product" th:each="book : ${bookCart}">
                     <div class="Cart-block Cart-block_row">
-                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img"
-                                                                                                   th:src="${book.image}"
-                                                                                                   src="/assets/img/content/main/card.jpg"
-                                                                                                   alt="card.jpg"/></a>
+                        <div class="Cart-block Cart-block_pict">
+                            <a class="Cart-pict" href="#">
+                                <img class="Cart-img"
+                                     th:src="${book.image}"
+                                     src="/assets/img/content/main/card.jpg"
+                                     alt="card.jpg"/></a>
                         </div>
                         <div class="Cart-block Cart-block_row">
                             <div class="Cart-block Cart-block_info">
-                                <div class="Cart-author"><a href="#" th:text="${book.getAuthors()}">Борис Васильевич
-                                    Бедный</a>
+                                <div class="Cart-author">
+                                    <a href="#" th:text="${book.getAuthors()}">Борис Васильевич Бедный
+                                    </a>
                                 </div>
-                                <div class="Cart-title"><a th:href="@{/books/{slug}(slug=${book.slug})}"
-                                                           th:text="${book.title}">Жизнь</a>
+                                <div class="Cart-title">
+                                    <a th:href="@{/books/{slug}(slug=${book.slug})}" th:text="${book.title}">Жизнь</a>
                                 </div>
-                                <div class="Cart-rating"><span class="Rating"><span class="Rating-stars"><span
-                                        class="Rating-star Rating-star_view">
+                                <div class="Cart-rating">
+                                    <span class="Rating">
+                                        <span class="Rating-stars">
+                                            <span class="Rating-star Rating-star_view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -55,7 +60,8 @@
                                       d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
                               </g>
                             </g>
-                          </svg></span><span class="Rating-star Rating-star_view">
+                          </svg>
+                                            </span><span class="Rating-star Rating-star_view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                             <g>
                               <g>
@@ -95,7 +101,7 @@
                                                 th:attr="data-bookid = ${book.slug}"
                                                 data-bookid="[1122]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
-                                                class="btn-content">Отложить</span>
+                                                class="btn-content" th:text="#{message.postpone}">Отложить</span>
                                         </button>
                                     </div>
                                     <div class="Cart-btn">
@@ -103,13 +109,13 @@
                                                 th:attr="data-bookid = ${'cart/remove/' + book.slug}"
                                                 data-bookid="[1122]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
-                                                class="btn-content">Удалить</span>
+                                                class="btn-content" th:text="#{message.delete}">Удалить</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="Cart-block Cart-block_price">
-                                <div class="Cart-priceTitle">Цена:
+                                <div class="Cart-priceTitle" th:text="#{message.price}">Цена:
                                 </div>
                                 <div class="Cart-price Cart-price_old" th:if="${book.discount != 0}"
                                      th:text="${book.price}">254 р.
@@ -129,10 +135,11 @@
                 </div>
                 <div class="Cart-total">
                     <div class="Cart-block Cart-block_total">
-                        <strong class="Cart-title">Итого:
+                        <strong class="Cart-title" th:text="#{message.total} + ':'">Итого:
                         </strong><span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
                     </div>
-                    <div class="Cart-block"><a class="btn btn_success btn_md" href="/order.html">Купить</a>
+                    <div class="Cart-block">
+                        <a class="btn btn_success btn_md" th:text="#{message.buy}" href="/order.html">Купить</a>
                     </div>
                 </div>
             </form>

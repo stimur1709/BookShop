@@ -39,4 +39,11 @@ public class Author {
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     @JsonBackReference
     private List<Book> bookList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

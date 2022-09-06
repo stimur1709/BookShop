@@ -31,10 +31,11 @@
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                 </li>
-                <li class="breadcrumbs-item"><a th:if="${genre.parentId} != 0"
-                                                th:href="'/genres/' + ${parentGenre.slug}"
-                                                th:text="${parentGenre.name}">
-                    Легкое чтение</a>
+                <li class="breadcrumbs-item">
+                    <a th:if="${genre.parentId} != 0"
+                       th:href="'/genres/' + ${parentGenre.slug}"
+                       th:text="${parentGenre.name}">
+                        Легкое чтение</a>
                 </li>
                 <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="${genre.name}">Детективы</span>
                 </li>
@@ -51,7 +52,7 @@
                            data-refreshshow="genre" data-refreshoffset="0"
                            data-refreshlimit="20"
                            th:attr="data-refreshid=${genre.slug}"
-                           data-refreshid="1020">Показать еще</a>
+                           data-refreshid="1020" th:text="#{message.showMore}">Показать еще</a>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.GenreDto;
 import com.example.mybookshopapp.model.author.Author;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +81,7 @@ public class BookService {
         return bookRepository.findByTagList_Slug(tag.getSlug(), nextPage);
     }
 
-    public Page<Book> getBooksForPageGenre(GenreDto genre, Integer offset, Integer limit) {
+    public Page<Book> getBooksForPageGenre(Genre genre, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.getByGenreList_Slug(genre.getSlug(), nextPage);
     }

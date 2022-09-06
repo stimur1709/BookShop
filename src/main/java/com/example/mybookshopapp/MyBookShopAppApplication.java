@@ -11,9 +11,4 @@ public class MyBookShopAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(MyBookShopAppApplication.class, args);
     }
-
-    @Bean
-    public ModelMapper getModelMapper() {
-        return new ModelMapper();
-    }
 }

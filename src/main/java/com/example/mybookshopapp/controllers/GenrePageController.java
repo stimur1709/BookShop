@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
-import com.example.mybookshopapp.dto.GenreDto;
+import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.UserProfileService;
@@ -36,7 +36,7 @@ public class GenrePageController extends ModelAttributeController {
 
     @GetMapping("/genres/{slug}")
     public String genresSlugPage(@PathVariable("slug") String slug, Model model) {
-        GenreDto genre = genreService.getPageBySlug(slug);
+        Genre genre = genreService.getPageBySlug(slug);
         model.addAttribute("genre", genre);
         model.addAttribute("parentGenre", genreService.getPageById(genre.getSlug()));
         model.addAttribute("booksGenre", bookService.getBooksForPageGenre(genre, 0, 20));
@@ -50,7 +50,7 @@ public class GenrePageController extends ModelAttributeController {
     public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
-        GenreDto genre = genreService.getPageBySlug(slug);
+        Genre genre = genreService.getPageBySlug(slug);
         return new BooksPageDto(bookService.getBooksForPageGenre(genre, offset, limit).getContent());
     }
 }

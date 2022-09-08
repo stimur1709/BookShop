@@ -65,14 +65,16 @@ public class BooksRatingAndPopularityService {
                 .orElse(0);
     }
 
-    public void changeRateBook(int bookId, int value) {
+    public boolean changeRateBook(int bookId, int value) {
         Optional<Book> book = bookRepository.findById(bookId);
         if (book.isPresent()) {
             book.get().getBookRatingList()
                     .stream().filter(bookRating -> bookRating.getScore() == value)
                     .forEach(bookRating -> bookRating.setNumberOfRatings(bookRating.getNumberOfRatings() + 1));
             bookRepository.save(book.get());
+            return true;
         }
+        return false;
     }
 
     public double numberOfRating(int idBook) {

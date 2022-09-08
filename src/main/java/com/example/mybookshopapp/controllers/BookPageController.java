@@ -1,5 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.dto.BookRateRequestDto;
+import com.example.mybookshopapp.dto.BookReviewRequestDto;
+import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.model.book.Book;
@@ -84,18 +87,20 @@ public class BookPageController extends ModelAttributeController {
                 .body(new ByteArrayResource(data));
     }
 
-    @PostMapping("/api/rateBook")
+    @PostMapping(value = "/api/rateBook")
     @ResponseBody
-    public Boolean rateBook(@RequestParam("bookId") int bookId, @RequestParam("value") int value) {
-        ratingBook.changeRateBook(bookId, value);
-        return true;
+    public ResponseResultDto rateBook(@RequestBody BookRateRequestDto rate) {
+        boolean result = ratingBook.changeRateBook(rate.getBookId(), rate.getValue());
+        return new ResponseResultDto(result);
     }
 
     @PostMapping("/api/bookReview")
     @ResponseBody
-    public Boolean saveBookReview(@RequestParam("bookId") int bookId, @RequestParam("text") String text) {
-        bookReviewService.saveBookReview(bookId, text);
-        return true;
+    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review) {
+        if (bookReviewService.saveBookReview(review.getBookId(), review.getText()))
+            return new ResponseResultDto(true);
+        else return new ResponseResultDto(false,
+                "Отзыв слишком короткий. Напишите, пожалуйста, более развёрнутый отзыв");
     }
 
     @PostMapping("/api/rateBookReview")

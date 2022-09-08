@@ -463,10 +463,10 @@
                         <div class="ProductCard-cart">
                             <div class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
-                                        th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postponed}"
+                                        data-btntype="check"
                                         data-btnradio="buyblock"
-                                        data-check="false" data-alttext="Отложена"
-                                        th:attr="data-alttext=#{message.postponed}">
+                                        data-check="false" data-alttext="Отложена">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
@@ -475,14 +475,13 @@
                             </div>
                             <div class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
-                                        th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.inBasket}"
+                                        data-btntype="check"
                                         data-btnradio="buyblock"
-                                        data-check="false" data-alttext="В корзине"
-                                        th:attr="data-alttext=#{message.inBasket}">
+                                        data-check="false" data-alttext="В корзине">
                                     <span class="btn-icon">
-                                        <img
-                                        src="/assets/img/icons/shopping-basket.svg"
-                                        alt="shopping-basket.svg"/>
+                                        <img src="/assets/img/icons/shopping-basket.svg"
+                                             alt="shopping-basket.svg"/>
                                     </span>
                                     <span class="btn-content" th:text="#{message.buy}">Купить</span>
                                 </button>
@@ -504,9 +503,8 @@
                                         data-alttext="Вернуть из архива"
                                         th:attr="data-alttext=#{message.returnArc}">
                                     <span class="btn-icon">
-                                        <img
-                                        src="/assets/img/icons/archive.svg"
-                                        alt="archive.svg"/>
+                                        <img src="/assets/img/icons/archive.svg"
+                                             alt="archive.svg"/>
                                     </span>
                                     <span class="btn-content" th:text="#{message.toArc}">В архив</span>
                                 </button>
@@ -589,7 +587,8 @@
                         <form class="form" action="#" method="post" data-bookid="1111"
                               th:attr="data-bookid = ${slugBook.id}">
                             <div class="form-group">
-                  <textarea class="form-textarea Comments-review" name="review" id="review" th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
+                  <textarea class="form-textarea Comments-review" name="review" id="review"
+                            th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
                             data-validate="require"></textarea>
                             </div>
                             <div class="form-group Comments-sendReview">

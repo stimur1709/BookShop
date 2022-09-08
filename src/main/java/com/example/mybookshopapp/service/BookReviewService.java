@@ -28,7 +28,7 @@ public class BookReviewService {
         this.bookReviewRepository = bookReviewRepository;
     }
 
-    public void saveBookReview(int bookId, String text) {
+    public boolean saveBookReview(int bookId, String text) {
         Optional<Book> bookEntity = bookRepository.findById(bookId);
         Optional<User> user = userRepository.findById(1);
         if (bookEntity.isPresent() && user.isPresent()) {
@@ -37,7 +37,9 @@ public class BookReviewService {
 
             bookReviewRepository.save(bookReview);
             bookRepository.save(bookEntity.get());
+            return true;
         }
+        return false;
     }
 
     public List<BookReview> getBookReview(Book book) {

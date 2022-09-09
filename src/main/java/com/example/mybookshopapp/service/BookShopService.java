@@ -1,23 +1,38 @@
 package com.example.mybookshopapp.service;
 
+import com.example.mybookshopapp.dto.BooksStatusRequestDto;
+import com.example.mybookshopapp.dto.ResponseResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
 
 @Service
 public class BookShopService {
 
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
+    private final CookieService cookieService;
 
     @Autowired
-    public BookShopService(BooksRatingAndPopularityService booksRatingAndPopularityService) {
+    public BookShopService(BooksRatingAndPopularityService booksRatingAndPopularityService, CookieService cookieService) {
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
+        this.cookieService = cookieService;
+    }
+
+    public ResponseResultDto changeBookStatus(HttpServletResponse response, HttpServletRequest request,
+                                              BooksStatusRequestDto dto) {
+        return cookieService.changeBookStatus(response, request.getCookies(), dto);
+    }
+
+    public List<String> getBooksFromCookie(String cookie) {
+        return cookieService.getBooksFromCookie(cookie);
     }
 
     public void createCookie(String contents, String slug, HttpServletResponse response,

@@ -95,14 +95,4 @@ public class AuthUserController extends ModelAttributeController {
         httpServletResponse.addCookie(cookie);
         return loginResponse;
     }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<Book> searchResult() {
-        return new ArrayList<>();
-    }
 }

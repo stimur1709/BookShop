@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.SearchWordDto;
+import com.example.mybookshopapp.dto.BooksStatusRequestDto;
+import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -11,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BookShopController extends ModelAttributeController {
@@ -32,19 +36,14 @@ public class BookShopController extends ModelAttributeController {
         this.bookShopService = bookShopService;
     }
 
-    @ModelAttribute(name = "bookCart")
-    public List<Book> bookCart() {
-        return new ArrayList<>();
-    }
-
     @GetMapping("/cart")
-    public String handlerCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
-                                     Model model) {
-        if (cartContents == null || cartContents.equals("")) {
+    public String handlerCartRequest(Model model) {
+        List<String> cartContents = bookShopService.getBooksFromCookie("cartContents");
+        if (cartContents == null || cartContents.isEmpty()) {
             model.addAttribute("isCartEmpty", true);
             model.addAttribute("isCartSize", 0);
         } else {
-            List<Book> bookList = bookService.getBooksFromCookie(cartContents);
+            List<Book> bookList = bookService.getBooksFromCookie(cartContents.toString());
             model.addAttribute("isCartEmpty", false);
             model.addAttribute("bookCart", bookList);
             model.addAttribute("isCartSize", bookList.size());
@@ -53,64 +52,62 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @GetMapping("/postponed")
-    public String postponedPage(@CookieValue(value = "keptContents", required = false) String keptContents,
-                                Model model) {
-        if (keptContents == null || keptContents.equals("")) {
+    public String postponedPage(Model model) {
+        List<String> keptContents = bookShopService.getBooksFromCookie("keptContents");
+
+        if (keptContents == null || keptContents.isEmpty()) {
             model.addAttribute("isKeptEmpty", true);
             model.addAttribute("isKeptSize", 0);
         } else {
-            List<Book> bookList = bookService.getBooksFromCookie(keptContents);
+            List<Book> bookList = bookService.getBooksFromCookie(keptContents.toString());
             model.addAttribute("isKeptEmpty", false);
-            model.addAttribute("bookKept", bookService.getBooksFromCookie(keptContents));
+            model.addAttribute("bookKept", bookList);
             model.addAttribute("isKeptSize", bookList.size());
         }
         return "postponed";
     }
 
-    @PostMapping("/books/changeBookStatus/{slug}")
-    public String handlerChangeBookStatus(@PathVariable("slug") String slug,
-                                          @RequestParam(value = "status", required = false) String status,
-                                          @CookieValue(name = "keptContents", required = false) String keptContents,
-                                          @CookieValue(name = "cartContents", required = false) String cartContents,
-                                          HttpServletResponse response, Model model) {
-        switch (status) {
-            case ("KEPT"):
-                handlerRemoveBookFromCartRequest(slug, cartContents, response, model);
-                bookShopService.createCookie(keptContents, slug, response, "keptContents", model, "isKeptEmpty");
-                booksRatingAndPopularityService.changePopularity(slug, "keptContents", true);
-                break;
-            case ("CART"):
-                handlerRemoveBookFromKeptRequest(slug, keptContents, response, model);
-                bookShopService.createCookie(cartContents, slug, response, "cartContents", model, "isCartEmpty");
-                booksRatingAndPopularityService.changePopularity(slug, "cartContents", true);
-                break;
+    @PostMapping("/books/changeBookStatus")
+    @ResponseBody
+    public ResponseResultDto handlerChangeBookStatus(@RequestBody BooksStatusRequestDto dto,
+                                                     HttpServletRequest request,
+                                                     HttpServletResponse response) {
+
+        for (Cookie cookie : Arrays.stream(request.getCookies()).collect(Collectors.toList())) {
+            System.out.println(cookie.getName() + cookie.getValue());
         }
-        return "redirect:/books/" + slug;
+
+
+//        switch (booksStatusRequestDto.getStatus()) {
+//            case KEPT:
+//                handlerRemoveBookFromCartRequest(booksStatusRequestDto.getBooksIds(), cartContents, response, model);
+//                bookShopService.createCookie(keptContents, booksStatusRequestDto.getBooksIds(), response, "keptContents", model, "isKeptEmpty");
+//                booksRatingAndPopularityService.changePopularity(booksStatusRequestDto.getBooksIds(), "keptContents", true);
+//                break;
+//            case CART:
+//                handlerRemoveBookFromKeptRequest(booksStatusRequestDto.getBooksIds(), keptContents, response, model);
+//                bookShopService.createCookie(cartContents, booksStatusRequestDto.getBooksIds(), response, "cartContents", model, "isCartEmpty");
+//                booksRatingAndPopularityService.changePopularity(booksStatusRequestDto.getBooksIds(), "cartContents", true);
+//                break;
+//            case UNLINK:
+//                break;
+//            default:
+//                return new ResponseResultDto(false, "Нельзя отложить купленную книгу");
+//        }
+        return bookShopService.changeBookStatus(response, request, dto);
     }
 
-    @PostMapping("/books/changeBookStatus/cart/remove/{slug}")
-    public String handlerRemoveBookFromCartRequest(@PathVariable("slug") String slug,
-                                                   @CookieValue(name = "cartContents", required = false) String cartContents,
-                                                   HttpServletResponse response, Model model) {
-        bookShopService.removeCookie(cartContents, slug, response, model, "cartContents", "isCartEmpty");
-        return "redirect:/cart";
-    }
-
-    @PostMapping("/books/changeBookStatus/kept/remove/{slug}")
-    public String handlerRemoveBookFromKeptRequest(@PathVariable("slug") String slug,
-                                                   @CookieValue(name = "keptContents", required = false) String keptContents,
-                                                   HttpServletResponse response, Model model) {
-        bookShopService.removeCookie(keptContents, slug, response, model, "keptContents", "isKeptEmpty");
-        return "redirect:/postponed";
-    }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<Book> searchResult() {
-        return new ArrayList<>();
-    }
+//    @PostMapping("/books/changeBookStatus/cart/remove/{slug}")
+//    public void handlerRemoveBookFromCartRequest(@PathVariable("slug") String slug,
+//                                                 @CookieValue(name = "cartContents", required = false) String cartContents,
+//                                                 HttpServletResponse response, Model model) {
+//        bookShopService.removeCookie(cartContents, slug, response, model, "cartContents", "isCartEmpty");
+//    }
+//
+//    @PostMapping("/books/changeBookStatus/kept/remove/{slug}")
+//    public void handlerRemoveBookFromKeptRequest(@PathVariable("slug") String slug,
+//                                                 @CookieValue(name = "keptContents", required = false) String keptContents,
+//                                                 HttpServletResponse response, Model model) {
+//        bookShopService.removeCookie(keptContents, slug, response, model, "keptContents", "isKeptEmpty");
+//    }
 }

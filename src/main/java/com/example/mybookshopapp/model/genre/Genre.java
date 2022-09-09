@@ -2,6 +2,7 @@ package com.example.mybookshopapp.model.genre;
 
 import com.example.mybookshopapp.model.book.Book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class Genre {
     private int id;
 
     @ManyToOne
+    @JsonManagedReference
     private Genre parent;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -33,6 +35,7 @@ public class Genre {
 
     @OneToMany
     @JoinColumn(name = "parent_id")
+    @JsonBackReference
     private List<Genre> childGenres;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -41,12 +44,4 @@ public class Genre {
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     @JsonBackReference
     private List<Book> bookList = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "Genre{" +
-                "name='" + name + '\'' +
-                ", amount=" + amount +
-                '}';
-    }
 }

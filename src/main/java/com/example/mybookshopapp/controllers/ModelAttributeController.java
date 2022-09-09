@@ -38,4 +38,10 @@ public class ModelAttributeController {
     public List<Book> searchResult() {
         return new ArrayList<>();
     }
+
+
+    @ModelAttribute(name = "bookCart")
+    public List<Book> bookCart() {
+        return new ArrayList<>();
+    }
 }

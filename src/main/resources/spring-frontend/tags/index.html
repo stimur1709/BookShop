@@ -45,29 +45,7 @@
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
-                    <div class="Card" th:each="book : ${booksTag}">
-                        <div class="Card-picture"><a th:href="@{/books/{slug}(slug=${book.slug})}">
-                            <img h:src="${book.image}" alt="card.jpg"/></a>
-                        </div>
-                        <div class="Card-content">
-                            <strong class="Card-title">
-                                <a th:href="@{/books/{slug}(slug=${book.slug})}"
-                                   th:text="${book.title}">Техника
-                                </a>
-                            </strong>
-                            <div class="Card-description" th:text="${book.getAuthors()}">Кондратенко Александр
-                                Петрович
-                            </div>
-                            <div class="Card-cost">
-                                <span class="Card-priceOld" th:if="${book.discount != 0}"
-                                      th:text="'₽' + ${book.price}">₽500.00</span>
-                                <span class="Card-price" th:if="${book.discount != 0}"
-                                      th:text="'₽' + ${book.discountPrice()}">₽390.00</span>
-                                <span class="Card-price" th:if="${book.discount == 0}"
-                                      th:text="'₽' + ${book.price}">₽390.00</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${booksTag})}"></div>
                     <div class="Cards-footer Cards-footer_center">
                         <a class="btn btn_primary" href="#"
                            data-refreshshow="tag" data-refreshoffset="0"

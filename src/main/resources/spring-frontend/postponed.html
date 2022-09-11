@@ -93,18 +93,21 @@
                                 <div class="Cart-buttons">
                                     <div class="Cart-btn">
                                         <button class="btn btn_primary btn_outline" data-sendstatus="CART"
-                                                th:attr="data-bookid = ${book.slug}"
-                                                data-bookid="[1122]"><span class="btn-icon"><img
-                                                src="/assets/img/icons/shopping-basket.svg" alt="shopping-basket.svg"/></span><span
-                                                class="btn-content" th:text="#{message.buy}">Купить</span>
+                                                th:attr="data-bookid = ${book.slug}">
+                                            <span class="btn-icon">
+                                                <img src="/assets/img/icons/shopping-basket.svg"
+                                                     alt="shopping-basket.svg"/>
+                                            </span>
+                                            <span class="btn-content" th:text="#{message.buy}">Купить</span>
                                         </button>
                                     </div>
                                     <div class="Cart-btn">
                                         <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK"
-                                                th:attr="data-bookid = ${'kept/remove/' + book.slug}"
-                                                data-bookid="[1122]"><span class="btn-icon"><img
-                                                src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
-                                                class="btn-content" th:text="#{message.delete}">Удалить</span>
+                                                th:attr="data-bookid = ${book.slug}">
+                                            <span class="btn-icon">
+                                                <img src="/assets/img/icons/trash.svg" alt="trash.svg"/>
+                                            </span>
+                                            <span class="btn-content" th:text="#{message.delete}">Удалить</span>
                                         </button>
                                     </div>
                                 </div>

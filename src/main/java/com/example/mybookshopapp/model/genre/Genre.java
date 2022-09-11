@@ -30,9 +30,6 @@ public class Genre {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
-    private int amount;
-
     @OneToMany
     @JoinColumn(name = "parent_id")
     @JsonBackReference

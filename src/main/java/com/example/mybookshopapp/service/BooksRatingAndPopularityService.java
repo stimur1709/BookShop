@@ -43,16 +43,9 @@ public class BooksRatingAndPopularityService {
                 }))));
     }
 
-    public void changePopularity(String slug, String cookieName, boolean isPopularity) {
+    public void changePopularity(String slug, Double value) {
         Book book = bookRepository.findBookEntityBySlug(slug);
-        switch (cookieName) {
-            case ("keptContents"):
-                book.setPopularity(isPopularity ? book.getPopularity() + 0.4 : book.getPopularity() - 0.4);
-                break;
-            case ("cartContents"):
-                book.setPopularity(isPopularity ? book.getPopularity() + 0.7 : book.getPopularity() - 0.7);
-                break;
-        }
+        book.setPopularity(book.getPopularity() + value);
         bookRepository.save(book);
     }
 

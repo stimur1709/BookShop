@@ -13,14 +13,13 @@ public class GenreService {
 
     private final GenreRepository genreRepository;
 
-
     @Autowired
     public GenreService(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
     }
 
     public List<Genre> getGenreList() {
-        return genreRepository.findAll(Sort.by(Sort.Direction.DESC, "amount"));
+        return genreRepository.findAll();
     }
 
     public Genre getPageBySlug(String slug) {
@@ -29,13 +28,5 @@ public class GenreService {
 
     public Genre getPageById(String id) {
         return genreRepository.findGenreEntityBySlug(id);
-    }
-
-    public void addAmount() {
-        List<Genre> bookList = genreRepository.findAll();
-        bookList.forEach(genre -> {
-            genre.setAmount(genre.getBookList().size());
-            genreRepository.save(genre);
-        });
     }
 }

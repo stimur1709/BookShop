@@ -1043,14 +1043,14 @@ values (9, 7);
 insert into book2genre (book_id, genre_id)
 values (9, 9);
 
-insert into book2user_type (id, code, name)
-values (1, 'Отложена', 'KEPT');
-insert into book2user_type (id, code, name)
-values (2, 'В корзине', 'CART');
-insert into book2user_type (id, code, name)
-values (3, 'Куплена', 'PAID');
-insert into book2user_type (id, code, name)
-values (4, 'В архиве', 'ARCHIVED');
+insert into book2user_type (code, name)
+values ('KEPT', 'Отложена');
+insert into book2user_type (code, name)
+values ('CART', 'В корзине');
+insert into book2user_type (code, name)
+values ('PAID', 'Куплена');
+insert into book2user_type (code, name)
+values ('ARCHIVED', 'В архиве');
 
 
 insert into tags (id, name, slug)

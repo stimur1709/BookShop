@@ -9,11 +9,8 @@ public class BooksStatusRequestDto {
     private String booksIds;
     private Status status;
 
-    @Override
-    public String toString() {
-        return "BooksStatusRequestDto{" +
-                "booksIds='" + booksIds + '\'' +
-                ", status=" + status +
-                '}';
+    public BooksStatusRequestDto(String booksIds, Status status) {
+        this.booksIds = booksIds;
+        this.status = status;
     }
 }

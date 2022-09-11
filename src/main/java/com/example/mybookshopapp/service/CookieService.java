@@ -2,6 +2,8 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.dto.BooksStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
+import com.example.mybookshopapp.dto.Status;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -12,6 +14,85 @@ import java.util.*;
 public class CookieService {
     private static final String CART_COOKIE_NAME = "cartContent";
     private static final String KEPT_COOKIE_NAME = "keptContent";
+
+    private final BooksRatingAndPopularityService booksRatingAndPopularityService;
+
+    @Autowired
+    public CookieService(BooksRatingAndPopularityService booksRatingAndPopularityService) {
+        this.booksRatingAndPopularityService = booksRatingAndPopularityService;
+    }
+
+    public ResponseResultDto changeBookStatus(HttpServletResponse response, Cookie[] cookies, BooksStatusRequestDto dto) {
+        Cookie cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
+        Cookie keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
+
+        String slug = dto.getBooksIds();
+
+        switch (dto.getStatus()) {
+            case CART: {
+                addBookToCookie(slug, cartCookie);
+                booksRatingAndPopularityService.changePopularity(slug, 0.7);
+                removeBookFromCookie(slug, keptCookie, -0.4);
+                break;
+            }
+            case KEPT: {
+                addBookToCookie(slug, keptCookie);
+                booksRatingAndPopularityService.changePopularity(slug, 0.4);
+                removeBookFromCookie(slug, cartCookie, -0.7);
+                break;
+            }
+            case UNLINK: {
+                removeBookFromCookie(slug, cartCookie, -0.7);
+                removeBookFromCookie(slug, keptCookie, -0.4);
+                break;
+            }
+            default:
+                return new ResponseResultDto(false);
+        }
+
+        response.addCookie(keptCookie);
+        response.addCookie(cartCookie);
+
+        return new ResponseResultDto(true);
+    }
+
+    public Status getBookStatus(String slug, Cookie[] cookies) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+                    List<String> slugList = getBooksFromCookie(cookie.getValue());
+                    if (slugList.contains(slug))
+                        return cookie.getName().equals("cartContent") ? Status.CART : Status.KEPT;
+                }
+            }
+        }
+        return Status.UNLINK;
+    }
+
+    private void removeBookFromCookie(String slug, Cookie cookie, Double value) {
+        if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+            List<String> slugList = getBooksFromCookie(cookie.getValue());
+            if (slugList.remove(slug))
+                booksRatingAndPopularityService.changePopularity(slug, value);
+            cookie.setValue(String.join("/", slugList));
+        }
+    }
+
+    public List<String> getBooksFromCookie(String cookie) {
+        return cookie == null || cookie.isEmpty()
+                ? Collections.emptyList() : new ArrayList<>(Arrays.asList(cookie.split("/")));
+    }
+
+    private void addBookToCookie(String slug, Cookie cookie) {
+        if (cookie.getValue() == null || cookie.getValue().isEmpty()) {
+            cookie.setPath("/");
+            cookie.setValue(slug);
+        } else if (!cookie.getValue().contains(slug)) {
+            StringJoiner stringJoiner = new StringJoiner("/");
+            stringJoiner.add(cookie.getValue()).add(slug);
+            cookie.setValue(stringJoiner.toString());
+        }
+    }
 
     private Cookie createCookie(String name) {
         Cookie cookie = new Cookie(name, "");
@@ -30,60 +111,5 @@ public class CookieService {
             }
         }
         return createCookie(name);
-    }
-
-    public ResponseResultDto changeBookStatus(HttpServletResponse response, Cookie[] cookies, BooksStatusRequestDto dto) {
-        Cookie cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
-        Cookie keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
-        String slug = dto.getBooksIds();
-
-        switch (dto.getStatus()) {
-            case CART: {
-                addBookToCookie(slug, cartCookie);
-                removeBookFromCookie(slug, keptCookie);
-                response.addCookie(cartCookie);
-                break;
-            }
-            case KEPT: {
-                addBookToCookie(slug, keptCookie);
-                removeBookFromCookie(slug, cartCookie);
-                response.addCookie(keptCookie);
-                break;
-            }
-            case UNLINK: {
-                removeBookFromCookie(slug, cartCookie);
-                removeBookFromCookie(slug, keptCookie);
-                break;
-            }
-            default:
-                System.out.println(3);
-                return new ResponseResultDto(false);
-        }
-        return new ResponseResultDto(true);
-    }
-
-    private void removeBookFromCookie(String slug, Cookie cookie) {
-        if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
-            List<String> slugList = getBooksFromCookie(cookie.getValue());
-            slugList.remove(slug);
-            cookie.setValue(String.join("/", slugList));
-        }
-    }
-
-    public List<String> getBooksFromCookie(String cookie) {
-        if (cookie == null || cookie.isEmpty())
-            return Collections.emptyList();
-        else
-            return new ArrayList<>(Arrays.asList(cookie.split("/")));
-    }
-
-    private void addBookToCookie(String slug, Cookie cookie) {
-        if (cookie.getValue() == null || cookie.getValue().isEmpty())
-            cookie.setValue(slug);
-        else if (!cookie.getValue().contains(slug)) {
-            StringJoiner stringJoiner = new StringJoiner("/");
-            stringJoiner.add(cookie.getValue()).add(slug);
-            cookie.setValue(stringJoiner.toString());
-        }
     }
 }

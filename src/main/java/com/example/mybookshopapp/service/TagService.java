@@ -23,20 +23,11 @@ public class TagService {
     }
 
     public List<TagBook> getPageOfTagsBooks() {
-        addAmount();
         return tagRepository.findAll();
     }
 
     public TagBook getPageBySlug(String slug) {
         return tagRepository.findTagEntityBySlug(slug);
-    }
-
-    public void addAmount() {
-        List<TagBook> bookList = tagRepository.findAll();
-        bookList.forEach(tagEntity -> {
-            tagEntity.setAmount(tagEntity.getBookList().size());
-            tagRepository.save(tagEntity);
-        });
     }
 
     public List<TagBook> getTagsByBook(Integer id) {

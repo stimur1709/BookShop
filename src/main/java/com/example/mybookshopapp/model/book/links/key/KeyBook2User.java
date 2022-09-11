@@ -15,4 +15,13 @@ public class KeyBook2User implements Serializable {
 
     @Column(name = "user_id")
     private int userId;
+
+    public KeyBook2User(int bookId, int userId) {
+        this.bookId = bookId;
+        this.userId = userId;
+    }
+
+    public KeyBook2User() {
+        
+    }
 }

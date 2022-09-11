@@ -41,16 +41,20 @@
                 </div>
                 <div th:replace="~{fragments/book_fragment::bookSlider(${popularBooks})}"></div>
             </div>
-            <h2 class="Middle-title"  th:text="#{message.booksByTags}">Книги по тегам</h2>
+            <h2 class="Middle-title" th:text="#{message.booksByTags}">Книги по тегам</h2>
             <div class="Tags" id="tags">
                 <div class="Tag" th:each="tag : ${tagsBooks}">
-                    <a th:if="${tag.amount < sizeBooks*0.25}" th:class="Tag_xs" th:href="'/tags/' + ${tag.slug}"
+                    <a th:if="${tag.getBookList().size() < sizeBooks*0.25}" th:class="Tag_xs"
+                       th:href="'/tags/' + ${tag.slug}"
                        th:text="${tag.name}">тэг</a>
-                    <a th:if="${tag.amount >= sizeBooks*0.25 and tag.amount < sizeBooks*0.5}" th:class="Tag_sm"
+                    <a th:if="${tag.getBookList().size() >= sizeBooks*0.25 and tag.getBookList().size() < sizeBooks*0.5}"
+                       th:class="Tag_sm"
                        th:href="'/tags/' + ${tag.slug}" th:text="${tag.name}">тэг</a>
-                    <a th:if="${tag.amount >= sizeBooks*0.5 and tag.amount < sizeBooks*0.75}" th:class="Tag_lg"
+                    <a th:if="${tag.getBookList().size() >= sizeBooks*0.5 and tag.getBookList().size() < sizeBooks*0.75}"
+                       th:class="Tag_lg"
                        th:href="'/tags/' + ${tag.slug}" th:text="${tag.name}">тэг</a>
-                    <a th:if="${tag.amount >= sizeBooks*0.75}" th:class="Tag_md" th:href="'/tags/' + ${tag.slug}"
+                    <a th:if="${tag.getBookList().size() >= sizeBooks*0.75}" th:class="Tag_md"
+                       th:href="'/tags/' + ${tag.slug}"
                        th:text="${tag.name}">тэг</a>
                 </div>
             </div>

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -101,15 +100,5 @@ public class BookService {
 
     public void save(Book bookToUpdate) {
         bookRepository.save(bookToUpdate);
-    }
-
-    public List<Book> getBooksFromCookie(String contents) {
-        if (contents != null) {
-            contents = contents.startsWith("/") ? contents.substring(1) : contents;
-            contents = contents.endsWith("/") ? contents.substring(0, contents.length() - 1) : contents;
-            String[] cookieSlugs = contents.split("/");
-            return bookRepository.findBookEntitiesBySlugIn(List.of(cookieSlugs));
-        }
-        return Collections.emptyList();
     }
 }

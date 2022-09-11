@@ -4,7 +4,6 @@ import com.example.mybookshopapp.dto.BookRateRequestDto;
 import com.example.mybookshopapp.dto.BookReviewRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.service.*;
-import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.model.book.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,9 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 @Controller
 public class BookPageController extends ModelAttributeController {
@@ -30,12 +29,14 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
+    private final BookShopService bookShopService;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
                               TagService tagService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
-                              BookRateReviewService bookRateReviewService, UserProfileService userProfileService) {
+                              BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
+                              BookShopService bookShopService) {
         super(userProfileService);
         this.bookService = bookService;
         this.authorService = authorService;
@@ -44,16 +45,15 @@ public class BookPageController extends ModelAttributeController {
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
+        this.bookShopService = bookShopService;
     }
 
     @GetMapping("/books/{slug}")
-    public String bookPage(@PathVariable("slug") String slug, Model model) {
+    public String bookPage(@PathVariable("slug") String slug, Model model, HttpServletRequest request) {
         Book book = bookService.getBookBySlug(slug);
         model.addAttribute("slugBook", book);
         model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
-        model.addAttribute("searchWordDto", new SearchWordDto());
-        model.addAttribute("searchResult", new ArrayList<>());
         model.addAttribute("numberOfScore1", (int) ratingBook.getSizeofRatingValue(book.getId(), 1));
         model.addAttribute("numberOfScore2", (int) ratingBook.getSizeofRatingValue(book.getId(), 2));
         model.addAttribute("numberOfScore3", (int) ratingBook.getSizeofRatingValue(book.getId(), 3));
@@ -63,6 +63,7 @@ public class BookPageController extends ModelAttributeController {
         model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
+        model.addAttribute("status", bookShopService.getBookStatus(request, slug));
         return "books/slug";
     }
 

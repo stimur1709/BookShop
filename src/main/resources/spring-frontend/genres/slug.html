@@ -32,7 +32,8 @@
                 <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                 </li>
                 <li class="breadcrumbs-item">
-                    <a th:if="${genre.parentId} != 0" th:href="'/genres/' + ${parentGenre.slug}" th:text="${parentGenre.name}">
+                    <a th:if="${genre.getParent()} != null" th:href="'/genres/' + ${genre.getParent().slug}"
+                       th:text="${genre.getParent().name}">
                         Легкое чтение
                     </a>
                 </li>

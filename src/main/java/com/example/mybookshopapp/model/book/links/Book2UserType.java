@@ -27,4 +27,14 @@ public class Book2UserType {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     @JsonBackReference
     private List<Book2User> book2UserList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Book2UserType{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", book2UserList=" + book2UserList +
+                '}';
+    }
 }

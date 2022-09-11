@@ -33,7 +33,6 @@ public class MainPageController extends ModelAttributeController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        genreService.addAmount();
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());

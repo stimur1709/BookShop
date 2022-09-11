@@ -27,9 +27,6 @@ public class TagBook {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
-    @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
-    private int amount;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2tag",
             joinColumns = {@JoinColumn(name = "tag_id")},

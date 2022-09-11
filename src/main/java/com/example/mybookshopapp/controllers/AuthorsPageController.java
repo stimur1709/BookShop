@@ -66,14 +66,4 @@ public class AuthorsPageController extends ModelAttributeController {
         Author author = authorService.getAuthorsById(id);
         return new BooksPageDto(bookService.getBooksForPageAuthor(author, offset, limit).getContent());
     }
-
-    @ModelAttribute("searchWordDto")
-    public SearchWordDto searchWordDto() {
-        return new SearchWordDto();
-    }
-
-    @ModelAttribute("searchResult")
-    public List<Book> searchResult() {
-        return new ArrayList<>();
-    }
 }

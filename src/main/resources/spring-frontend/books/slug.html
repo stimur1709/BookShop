@@ -462,28 +462,47 @@
                         </div>
                         <div class="ProductCard-cart">
                             <div class="ProductCard-cartElement">
-                                <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
+                                <button class="btn btn_primary btn_outline" th:if="${!status.equals(status.KEPT)}"
                                         th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postponed}"
-                                        data-btntype="check"
-                                        data-btnradio="buyblock"
-                                        data-check="false" data-alttext="Отложена">
+                                        data-sendstatus="KEPT" data-btntype="check"
+                                        data-btnradio="buyblock" data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
                                     <span class="btn-content" th:text="#{message.postpone}">Отложить</span>
                                 </button>
+                                <button class="btn btn_primary btn_outline btn_check"
+                                        th:if="${status.equals(status.KEPT)}"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postpone}"
+                                        data-sendstatus="KEPT" data-btntype="check"
+                                        data-btnradio="buyblock" data-check="false">
+                                    <span class="btn-icon">
+                                        <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.postponed}">Отложить</span>
+                                </button>
                             </div>
                             <div class="ProductCard-cartElement">
-                                <button class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
+                                <button class="btn btn_primary btn_outline" th:if="${!status.equals(status.CART)}"
                                         th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.inBasket}"
-                                        data-btntype="check"
-                                        data-btnradio="buyblock"
-                                        data-check="false" data-alttext="В корзине">
+                                        data-sendstatus="CART" data-btntype="check"
+                                        data-btnradio="buyblock" data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/shopping-basket.svg"
                                              alt="shopping-basket.svg"/>
                                     </span>
                                     <span class="btn-content" th:text="#{message.buy}">Купить</span>
+                                </button>
+                                <button class="btn btn_primary btn_outline btn_check"
+                                        th:if="${status.equals(status.CART)}"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.buy}"
+                                        data-sendstatus="CART" data-btntype="check"
+                                        data-btnradio="buyblock" data-check="false">
+                                    <span class="btn-icon">
+                                        <img src="/assets/img/icons/shopping-basket.svg"
+                                             alt="shopping-basket.svg"/>
+                                    </span>
+                                    <span class="btn-content" th:text="#{message.inBasket}">Купить</span>
                                 </button>
                             </div>
                         </div>

@@ -38,4 +38,15 @@ public class Book2User {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonIgnore
     private User user;
+
+    public Book2User(Book book, User user, Book2UserType type) {
+        this.id = new KeyBook2User(book.getId(), user.getId());
+        this.time = LocalDateTime.now();
+        this.type = type;
+        this.book = book;
+        this.user = user;
+    }
+
+    public Book2User() {
+    }
 }

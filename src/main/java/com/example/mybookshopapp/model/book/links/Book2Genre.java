@@ -18,10 +18,10 @@ public class Book2Genre {
     private KeyBook2Genre id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    @JoinColumn(name = "book_id", nullable = false, insertable = false, updatable = false)
     private Book book;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    @JoinColumn(name = "genre_id", nullable = false, insertable = false, updatable = false)
     private Genre genre;
 }

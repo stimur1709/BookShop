@@ -20,4 +20,8 @@ public class UserContactService {
     public Optional<UserContact> checkUserExistsByContact(String contact) {
         return userContactRepository.findUserContactEntityByContact(contact);
     }
+
+    public UserContact getUserContact(String contact) {
+        return userContactRepository.findUserContactEntityByContact(contact).orElse(null);
+    }
 }

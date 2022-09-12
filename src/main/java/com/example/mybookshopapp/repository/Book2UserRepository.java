@@ -14,5 +14,5 @@ public interface Book2UserRepository extends JpaRepository<Book2User, Integer> {
 
     List<Book2User> findBook2UserEntitiesByBookId(Integer book);
 
-    Optional<Book2User> findByUserAndBook(User user, Book book);
+    Optional<Book2User> findByUserIdAndBookId(Integer user, Integer book);
 }

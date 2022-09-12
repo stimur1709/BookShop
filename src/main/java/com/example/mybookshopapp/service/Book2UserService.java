@@ -20,7 +20,7 @@ public class Book2UserService {
     }
 
     public Optional<Book2User> getBook2User(Book book, User user) {
-        return book2UserRepository.findByUserAndBook(user, book);
+        return book2UserRepository.findByUserIdAndBookId(user.getId(), book.getId());
     }
 
     public void save(Book2User book2User) {

@@ -79,4 +79,23 @@ public class User {
 
     public User() {
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", hash='" + hash + '\'' +
+                ", password='" + password + '\'' +
+                ", regTime=" + regTime +
+                ", balance=" + balance +
+                ", name='" + name + '\'' +
+                ", reviewList=" + reviewList +
+                ", reviewLikeList=" + reviewLikeList +
+                ", userContact=" + userContact +
+                ", bookList=" + bookList +
+                ", transactionList=" + transactionList +
+                ", downloadList=" + downloadList +
+                ", messageList=" + messageList +
+                '}';
+    }
 }

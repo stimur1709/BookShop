@@ -24,17 +24,7 @@ public class Book2UserType {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
     @JsonBackReference
     private List<Book2User> book2UserList = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "Book2UserType{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", book2UserList=" + book2UserList +
-                '}';
-    }
 }

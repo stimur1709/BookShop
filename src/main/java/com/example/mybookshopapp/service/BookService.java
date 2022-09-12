@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class BookService {
@@ -50,7 +49,6 @@ public class BookService {
     }
 
     public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
-        addPopularity();
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "popularity"));
         return bookRepository.findAll(nextPage);
     }
@@ -60,13 +58,13 @@ public class BookService {
         return bookRepository.findBookEntityByTitleContaining(wordSearch, nextPage);
     }
 
-    private void addPopularity() {
-        List<Book> bookList = bookRepository.findAll();
-        bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
-            book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
-            bookRepository.save(book);
-        });
-    }
+//    private void addPopularity() {
+//        List<Book> bookList = bookRepository.findAll();
+//        bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
+//            book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
+//            bookRepository.save(book);
+//        });
+//    }
 
     private void addRate() {
         bookRepository.findAll().forEach(book -> {

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface Book2UserTypeRepository extends JpaRepository<Book2UserType, Integer> {
 
     Book2UserType findByCode(String code);
+
 }

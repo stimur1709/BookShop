@@ -2,16 +2,12 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.BookRating;
-import com.example.mybookshopapp.model.book.links.Book2User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -27,20 +23,25 @@ public class BooksRatingAndPopularityService {
         this.bookRepository = bookRepository;
     }
 
-    public Map<Integer, Double> getPopularity(Integer bookId) {
-        List<Book2User> bookList = book2UserRepository.findBook2UserEntitiesByBookId(bookId);
-        return bookList.stream().collect(Collectors.groupingBy((Book2User b) -> b.getBook().getId(),
-                Collectors.summingDouble(((Book2User b) -> {
-                    if (b.getType().getId() == 1)
-                        return 0.4;
-                    if (b.getType().getId() == 2)
-                        return 0.7;
-                    if (b.getType().getId() == 3)
-                        return 1.0;
-                    else
-                        return 0.0;
+//    public Map<Integer, Double> getPopularity(Integer bookId) {
+//        List<Book2User> bookList = book2UserRepository.findBook2UserEntitiesByBookId(bookId);
+//        return bookList.stream().collect(Collectors.groupingBy((Book2User b) -> b.getBook().getId(),
+//                Collectors.summingDouble(((Book2User b) -> {
+//                    if (b.getType().getId() == 1)
+//                        return 0.4;
+//                    if (b.getType().getId() == 2)
+//                        return 0.7;
+//                    if (b.getType().getId() == 3)
+//                        return 1.0;
+//                    else
+//                        return 0.0;
+//
+//                }))));
+//    }
 
-                }))));
+    public void changePopularity(Book book, Double value) {
+        book.setPopularity(book.getPopularity() + value);
+        bookRepository.save(book);
     }
 
     public void changePopularity(String slug, Double value) {

@@ -1,10 +1,5 @@
 package com.example.mybookshopapp.model.book.links;
 
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.links.key.KeyBook2User;
-import com.example.mybookshopapp.model.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,34 +12,28 @@ import java.time.LocalDateTime;
 @Table(name = "book2user")
 public class Book2User {
 
-    @EmbeddedId
-    private KeyBook2User id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "type_id", insertable = false, updatable = false)
-    @JsonManagedReference
-    @JsonIgnore
-    private Book2UserType type;
+    @Column(name = "type_id", columnDefinition = "INT NOT NULL")
+    private Integer typeId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private Book book;
+    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
+    private Integer bookId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @JsonIgnore
-    private User user;
+    @Column(name = "user_id", columnDefinition = "INT NOT NULL")
+    private Integer userId;
 
-    public Book2User(Book book, User user, Book2UserType type) {
-        this.id = new KeyBook2User(book.getId(), user.getId());
+    public Book2User(Integer typeId, Integer bookId, Integer userId) {
         this.time = LocalDateTime.now();
-        this.type = type;
-        this.book = book;
-        this.user = user;
+        this.typeId = typeId;
+        this.bookId = bookId;
+        this.userId = userId;
     }
 
     public Book2User() {

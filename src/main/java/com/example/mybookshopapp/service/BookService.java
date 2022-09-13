@@ -59,7 +59,7 @@ public class BookService {
     }
 
 //    private void addPopularity() {
-//        List<Book> bookList = bookRepository.findAll();
+//        List<Book> bookList = bookRepository.f indAll();
 //        bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
 //            book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
 //            bookRepository.save(book);

@@ -18,8 +18,9 @@ public class Book2UserType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String code;
+    private BookCodeType code;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;

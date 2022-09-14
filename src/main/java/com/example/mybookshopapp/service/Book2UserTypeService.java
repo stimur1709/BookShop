@@ -64,20 +64,17 @@ public class Book2UserTypeService {
     }
 
     private void changeTypeBook2User(Book book, User user, BookCodeType status) {
-        Optional<Book2User> book2User = book2UserService.getBook2User(book, user);
-        Book2User newBook2User;
-        if (!book2User.isPresent()) {
-            newBook2User =
-                    new Book2User(book2UserTypeRepository.findByCode(status).getId(), book.getId(), user.getId());
-            book2UserService.save(newBook2User);
+        Optional<Book2User> optionalBook2User = book2UserService.getBook2User(book, user);
+        Book2User book2User;
+        if (!optionalBook2User.isPresent()) {
+            book2User = new Book2User(book2UserTypeRepository.findByCode(status), book, user);
+            book2UserService.save(book2User);
 
         } else {
-            newBook2User = book2User.get();
-            BookCodeType codeOld = book2UserTypeRepository.getById(newBook2User.getTypeId()).getCode();
-            newBook2User.setTypeId(book2UserTypeRepository.findByCode(status).getId());
-            booksRatingAndPopularityService.changePopularity(book, getValue(codeOld));
-            book2UserService.save(newBook2User);
-
+            book2User = optionalBook2User.get();
+            booksRatingAndPopularityService.changePopularity(book, getValue(book2User.getType().getCode()));
+            book2User.setType(book2UserTypeRepository.findByCode(status));
+            book2UserService.save(book2User);
         }
     }
 
@@ -87,9 +84,6 @@ public class Book2UserTypeService {
 
     private double getValue(User user, Book book) {
         Optional<Book2User> book2User = book2UserService.getBook2User(book, user);
-
-        return book2User.map(value ->
-                        book2UserTypeRepository.getById(value.getTypeId()).getCode().equals(BookCodeType.CART) ? -0.7 : -0.4)
-                .orElse(0.0);
+        return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
     }
 }

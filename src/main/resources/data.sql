@@ -2457,4 +2457,4 @@ values ('k-zapadu-ot-oktyabrya-epub', 73, 3, '/book.epub');
 insert into book_file (hash, book_id, type_id, path)
 values ('v-mgnovene-oka-epub', 74, 3, '/book.epub');
 insert into book_file (hash, book_id, type_id, path)
-values ('nadvigaetsya-beda-epub', 75, 3, '/book.epub') on d;
+values ('nadvigaetsya-beda-epub', 75, 3, '/book.epub');

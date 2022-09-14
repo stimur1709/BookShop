@@ -25,7 +25,7 @@ public class Book2UserType {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     @JsonBackReference
     private List<Book2User> book2UserList = new ArrayList<>();
 }

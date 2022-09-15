@@ -6,11 +6,15 @@ import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.Book2User;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.Book2UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Book2UserTypeService {
@@ -21,18 +25,21 @@ public class Book2UserTypeService {
     private final UserContactService userContactService;
     private final Book2UserService book2UserService;
     private final Book2UserTypeRepository book2UserTypeRepository;
+    private final Book2UserRepository book2UserRepository;
 
     @Autowired
     public Book2UserTypeService(BookService bookService,
                                 BooksRatingAndPopularityService booksRatingAndPopularityService,
                                 UserProfileService userProfileService, UserContactService userContactService,
-                                Book2UserService book2UserService, Book2UserTypeRepository book2UserTypeRepository) {
+                                Book2UserService book2UserService, Book2UserTypeRepository book2UserTypeRepository,
+                                Book2UserRepository book2UserRepository) {
         this.bookService = bookService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.userProfileService = userProfileService;
         this.userContactService = userContactService;
         this.book2UserService = book2UserService;
         this.book2UserTypeRepository = book2UserTypeRepository;
+        this.book2UserRepository = book2UserRepository;
     }
 
     public ResponseResultDto changeBookStatus(BooksStatusRequestDto dto) {
@@ -76,6 +83,13 @@ public class Book2UserTypeService {
             book2User.setType(book2UserTypeRepository.findByCode(status));
             book2UserService.save(book2User);
         }
+    }
+
+    public List<Book> getBooksUser(BookCodeType status) {
+        List<Book2User> book2Users =
+                book2UserRepository.findByType_CodeAndUser_Id(status, userProfileService.getCurrentUser().getId());
+        return !book2Users.isEmpty()
+                ? book2Users.stream().map(Book2User::getBook).collect(Collectors.toList()) : Collections.emptyList();
     }
 
     private double getValue(BookCodeType status) {

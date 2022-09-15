@@ -3,12 +3,15 @@ package com.example.mybookshopapp.model.book.links;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.key.KeyBook2User;
 import com.example.mybookshopapp.model.user.User;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "book2user")
 public class Book2User {

@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -23,7 +24,7 @@ public class HeaderPageController {
 
     @GetMapping("/cartSize")
     public int getCartSize(@CookieValue(name = "cartContent", required = false) String cartContents) {
-        List<Book> books = bookShopService.getBooksFromCookie(cartContents);
+        List<Book> books = bookShopService.getBooksUser(cartContents, BookCodeType.CART);
         if (books.isEmpty())
             return 0;
         return books.size();
@@ -31,7 +32,7 @@ public class HeaderPageController {
 
     @GetMapping("/keptSize")
     public int getKeptSize(@CookieValue(name = "keptContent", required = false) String keptContents) {
-        List<Book> books = bookShopService.getBooksFromCookie(keptContents);
+        List<Book> books = bookShopService.getBooksUser(keptContents, BookCodeType.KEPT);
         if (books.isEmpty())
             return 0;
         return books.size();

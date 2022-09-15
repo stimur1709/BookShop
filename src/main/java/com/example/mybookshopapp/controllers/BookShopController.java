@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @GetMapping("/cart")
-    public String handlerCartRequest(@CookieValue(name = "cartContent", required = false) String cartContent,
-                                     Model model) {
-        List<Book> bookList = bookShopService.getBooksFromCookie(cartContent);
+    public String cartPage(@CookieValue(name = "cartContent", required = false) String cartContent,
+                           Model model) {
+
+        List<Book> bookList = bookShopService.getBooksUser(cartContent, BookCodeType.CART);
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("isCartEmpty", true);
@@ -44,7 +46,7 @@ public class BookShopController extends ModelAttributeController {
     @GetMapping("/postponed")
     public String postponedPage(@CookieValue(name = "keptContent", required = false) String keptContents,
                                 Model model) {
-        List<Book> bookList = bookShopService.getBooksFromCookie(keptContents);
+        List<Book> bookList = bookShopService.getBooksUser(keptContents, BookCodeType.KEPT);
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("isKeptEmpty", true);

@@ -40,7 +40,7 @@ public class UserProfileService {
                 phone = contact.getContact();
         }
 
-        return new UserDto(user.getName(), mail, phone, user.getBalance());
+        return new UserDto(user.getId(), user.getName(), mail, phone, user.getBalance());
     }
 
     public boolean isAuthenticatedUser() {

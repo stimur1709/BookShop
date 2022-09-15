@@ -4,6 +4,7 @@ import com.example.mybookshopapp.dto.BooksStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.dto.Status;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,14 @@ public class BookShopService {
         return cookieService.getBookStatus(slug, request.getCookies());
     }
 
-    public List<Book> getBooksFromCookie(String cookie) {
+    public List<Book> getBooksUser(String cookie, BookCodeType status) {
+        if (userProfileService.isAuthenticatedUser()) {
+            return book2UserTypeService.getBooksUser(status);
+        }
+        return getBooksFromCookie(cookie);
+    }
+
+    private List<Book> getBooksFromCookie(String cookie) {
         if (cookie != null) {
             return bookRepository.findBookEntitiesBySlugIn(cookieService.getBooksFromCookie(cookie));
         }

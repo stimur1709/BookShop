@@ -26,37 +26,31 @@ public class BookShopController extends ModelAttributeController {
         this.bookShopService = bookShopService;
     }
 
-    @GetMapping("/cart")
+    @GetMapping(value = {"/cart", "/postponed"})
     public String cartPage(@CookieValue(name = "cartContent", required = false) String cartContent,
-                           Model model) {
+                           @CookieValue(name = "keptContent", required = false) String keptContents,
+                           Model model, HttpServletRequest request) {
 
-        List<Book> bookList = bookShopService.getBooksUser(cartContent, BookCodeType.CART);
+        String url = getUrl(request);
+        List<Book> bookList = getBooks(cartContent, keptContents, request);
 
         if (bookList == null || bookList.isEmpty()) {
-            model.addAttribute("isCartEmpty", true);
-            model.addAttribute("isCartSize", 0);
+            model.addAttribute("emptyList", true);
         } else {
-            model.addAttribute("isCartEmpty", false);
-            model.addAttribute("bookCart", bookList);
-            model.addAttribute("isCartSize", bookList.size());
+            model.addAttribute("empty", false);
+            model.addAttribute("books", bookList);
         }
-        return "cart";
+
+        return url;
     }
 
-    @GetMapping("/postponed")
-    public String postponedPage(@CookieValue(name = "keptContent", required = false) String keptContents,
-                                Model model) {
-        List<Book> bookList = bookShopService.getBooksUser(keptContents, BookCodeType.KEPT);
-
-        if (bookList == null || bookList.isEmpty()) {
-            model.addAttribute("isKeptEmpty", true);
-            model.addAttribute("isKeptSize", 0);
-        } else {
-            model.addAttribute("isKeptEmpty", false);
-            model.addAttribute("bookKept", bookList);
-            model.addAttribute("isKeptSize", bookList.size());
-        }
-        return "postponed";
+    @GetMapping(value = {"/api/cartSize", "/api/keptSize"})
+    @ResponseBody
+    public int getCartSize(@CookieValue(name = "cartContent", required = false) String cartContents,
+                           @CookieValue(name = "keptContent", required = false) String keptContents,
+                           HttpServletRequest request) {
+        List<Book> bookList = getBooks(cartContents, keptContents, request);
+        return bookList.isEmpty() ? 0 : bookList.size();
     }
 
     @PostMapping("/books/changeBookStatus")
@@ -66,4 +60,17 @@ public class BookShopController extends ModelAttributeController {
                                                      HttpServletResponse response) {
         return bookShopService.changeBookStatus(response, request, dto);
     }
+
+    private String getUrl(HttpServletRequest request) {
+        return request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+    }
+
+    private List<Book> getBooks(@CookieValue(name = "cartContent", required = false) String cartContent,
+                                @CookieValue(name = "keptContent", required = false) String keptContents,
+                                HttpServletRequest request) {
+        BookCodeType status = getUrl(request).equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
+        return status.equals(BookCodeType.CART)
+                ? bookShopService.getBooksUser(cartContent, status) : bookShopService.getBooksUser(keptContents, status);
+    }
+
 }

@@ -1,7 +1,5 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
 import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.model.RegistrationForm;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AuthUserController extends ModelAttributeController {
@@ -63,8 +59,7 @@ public class AuthUserController extends ModelAttributeController {
 
     @PostMapping("/registration")
     public String registrationNewUser(@ModelAttribute("regForm") @Valid RegistrationForm registrationForm,
-                                      BindingResult bindingResult,
-                                      Model model) {
+                                      BindingResult bindingResult, Model model) {
         userValidator.validate(registrationForm, bindingResult);
 
         if (bindingResult.hasErrors())

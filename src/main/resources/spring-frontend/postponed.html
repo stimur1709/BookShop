@@ -27,9 +27,9 @@
         <main class="Middle-main">
             <h1 class="Middle-title" th:text="#{bottomBar.postponed}">Отложенное
             </h1>
-            <h3 th:if="${isKeptEmpty}" th:text="#{message.listIsEmpty}">Список пуст</h3>
+            <h3 th:if="${emptyList}" th:text="#{message.listIsEmpty}">Список пуст</h3>
             <form class="form Cart Cart_postponed" action="#" method="post">
-                <div class="Cart-product" th:each="book : ${bookKept}">
+                <div class="Cart-product" th:each="book : ${books}">
                     <div class="Cart-block Cart-block_row">
                         <div class="Cart-block Cart-block_pict">
                             <a class="Cart-pict" href="#">

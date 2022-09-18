@@ -59,7 +59,6 @@ public class Book2UserTypeService {
             }
             case UNLINK: {
                 booksRatingAndPopularityService.changePopularity(book, getValue(user, book));
-                changeTypeBook2User(book, user, BookCodeType.UNLINK);
                 break;
             }
             default:

@@ -55,7 +55,7 @@ public class BookService {
 
     public Page<Book> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findBookEntityByTitleContaining(wordSearch, nextPage);
+        return bookRepository.findBookEntityByTitleContainingAllIgnoreCase(wordSearch, nextPage);
     }
 
 //    private void addPopularity() {

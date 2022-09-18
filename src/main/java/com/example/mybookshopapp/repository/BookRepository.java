@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    Page<Book> findBookEntityByTitleContaining(String bookTitle, Pageable nextPage);
+    Page<Book> findBookEntityByTitleContainingAllIgnoreCase(String bookTitle, Pageable nextPage);
 
     Page<Book> findBookEntityByPubDateBetween(Date from, Date to, Pageable nextPage);
 

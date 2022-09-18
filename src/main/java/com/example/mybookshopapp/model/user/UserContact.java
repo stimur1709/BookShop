@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.model.user;
 
 import com.example.mybookshopapp.model.enums.ContactType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class UserContact {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Enumerated(EnumType.STRING)

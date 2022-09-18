@@ -29,7 +29,7 @@
         <main class="Middle-main">
             <h1 class="Middle-title" th:text="#{bottomBar.basket}">Корзина
             </h1>
-            <h3 th:if="${emptyList}" th:text="#{message.cartIsEmpty}">Корзина пуста</h3>
+            <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.cartIsEmpty}">Корзина пуста</div>
             <form class="form Cart" action="#" method="post">
                 <div class="Cart-product" th:each="book : ${books}">
                     <div class="Cart-block Cart-block_row">
@@ -133,13 +133,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="Cart-total">
+                <div class="Cart-total" th:if="!${emptyList}">
                     <div class="Cart-block Cart-block_total">
                         <strong class="Cart-title" th:text="#{message.total} + ':'">Итого:
-                        </strong><span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
+                        </strong>
+                        <span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
                     </div>
                     <div class="Cart-block">
                         <a class="btn btn_success btn_md" th:text="#{message.buy}" href="/order.html">Купить</a>
+                    </div>
+                </div>
+                <div class="Cart-total" th:if="${emptyList}">
+                    <div class="Cart-block Cart-block_total">
+                        <strong class="Cart-title" th:text="#{message.total} + ':'">Итого:
+                        </strong>
+                        <span class="Cart-price">0 р.</span><span class="Cart-price_old">0 р.</span>
+                    </div>
+                    <div class="Cart-block">
+                        <a class="btn btn_success btn_md" th:text="#{message.buy}" href="/order.html"
+                           disabled="disabled">Купить</a>
                     </div>
                 </div>
             </form>

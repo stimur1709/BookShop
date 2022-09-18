@@ -68,7 +68,10 @@ public class BookShopController extends ModelAttributeController {
     private List<Book> getBooks(@CookieValue(name = "cartContent", required = false) String cartContent,
                                 @CookieValue(name = "keptContent", required = false) String keptContents,
                                 HttpServletRequest request) {
-        BookCodeType status = getUrl(request).equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
+        BookCodeType status = getUrl(request).equals("cartSize") || getUrl(request).equals("cart")
+                ? BookCodeType.CART : BookCodeType.KEPT;
+        System.out.println(getUrl(request));
+        System.out.println(status + " !!!!!!!");
         return status.equals(BookCodeType.CART)
                 ? bookShopService.getBooksUser(cartContent, status) : bookShopService.getBooksUser(keptContents, status);
     }

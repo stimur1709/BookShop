@@ -3,10 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.errors.EmptySearchException;
-import com.example.mybookshopapp.service.BookService;
-import com.example.mybookshopapp.service.GenreService;
-import com.example.mybookshopapp.service.TagService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,9 @@ public class MainPageController extends ModelAttributeController {
 
     @Autowired
     public MainPageController(BookService bookService, TagService tagService,
-                              GenreService genreService, UserProfileService userProfileService) {
-        super(userProfileService);
+                              GenreService genreService, UserProfileService userProfileService,
+                              BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.bookService = bookService;
         this.tagService = tagService;
         this.genreService = genreService;
@@ -38,7 +36,7 @@ public class MainPageController extends ModelAttributeController {
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
-        model.addAttribute("isAuthenticatedUser", userProfileService.isAuthenticatedUser());
+        model.addAttribute("isAuthenticatedUser", getUserProfileService().isAuthenticatedUser());
         return "index";
     }
 

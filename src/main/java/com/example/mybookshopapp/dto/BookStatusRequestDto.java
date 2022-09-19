@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BooksStatusRequestDto {
+public class BookStatusRequestDto {
     private String booksIds;
     private BookCodeType status;
 
-    public BooksStatusRequestDto(String booksIds, BookCodeType status) {
+    public BookStatusRequestDto(String booksIds, BookCodeType status) {
         this.booksIds = booksIds;
         this.status = status;
     }

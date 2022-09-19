@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BooksStatusRequestDto;
+import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.Book2User;
@@ -11,9 +11,7 @@ import com.example.mybookshopapp.repository.Book2UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,13 +24,14 @@ public class Book2UserTypeService {
     private final Book2UserService book2UserService;
     private final Book2UserTypeRepository book2UserTypeRepository;
     private final Book2UserRepository book2UserRepository;
+    private final CookieService cookieService;
 
     @Autowired
     public Book2UserTypeService(BookService bookService,
                                 BooksRatingAndPopularityService booksRatingAndPopularityService,
                                 UserProfileService userProfileService, UserContactService userContactService,
                                 Book2UserService book2UserService, Book2UserTypeRepository book2UserTypeRepository,
-                                Book2UserRepository book2UserRepository) {
+                                Book2UserRepository book2UserRepository, CookieService cookieService) {
         this.bookService = bookService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.userProfileService = userProfileService;
@@ -40,9 +39,10 @@ public class Book2UserTypeService {
         this.book2UserService = book2UserService;
         this.book2UserTypeRepository = book2UserTypeRepository;
         this.book2UserRepository = book2UserRepository;
+        this.cookieService = cookieService;
     }
 
-    public ResponseResultDto changeBookStatus(BooksStatusRequestDto dto) {
+    public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
         Book book = bookService.getBookBySlug(dto.getBooksIds());
         User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
 
@@ -64,7 +64,6 @@ public class Book2UserTypeService {
             default:
                 return new ResponseResultDto(false);
         }
-
 
         return new ResponseResultDto(true);
     }
@@ -98,5 +97,9 @@ public class Book2UserTypeService {
     private double getValue(User user, Book book) {
         Optional<Book2User> book2User = book2UserService.getBook2User(book, user);
         return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
+    }
+
+    private void addBooksTypeUserFromCookie() {
+        //TODO Реализовать перенос кукис в бд
     }
 }

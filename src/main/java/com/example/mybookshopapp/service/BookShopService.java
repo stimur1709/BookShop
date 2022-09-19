@@ -1,11 +1,10 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BooksStatusRequestDto;
+import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.dto.Status;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
-import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +16,19 @@ import java.util.*;
 public class BookShopService {
 
     private final CookieService cookieService;
-    private final BookRepository bookRepository;
     private final UserProfileService userProfileService;
     private final Book2UserTypeService book2UserTypeService;
 
     @Autowired
-    public BookShopService(CookieService cookieService, BookRepository bookRepository,
+    public BookShopService(CookieService cookieService,
                            UserProfileService userProfileService, Book2UserTypeService book2UserTypeService) {
         this.cookieService = cookieService;
-        this.bookRepository = bookRepository;
         this.userProfileService = userProfileService;
         this.book2UserTypeService = book2UserTypeService;
     }
 
     public ResponseResultDto changeBookStatus(HttpServletResponse response, HttpServletRequest request,
-                                              BooksStatusRequestDto dto) {
+                                              BookStatusRequestDto dto) {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.changeBookStatus(dto);
         }
@@ -47,13 +44,7 @@ public class BookShopService {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.getBooksUser(status);
         }
-        return getBooksFromCookie(cookie);
+        return cookieService.getBooksFromCookie(cookie);
     }
 
-    private List<Book> getBooksFromCookie(String cookie) {
-        if (cookie != null) {
-            return bookRepository.findBookEntitiesBySlugIn(cookieService.getBooksFromCookie(cookie));
-        }
-        return Collections.emptyList();
-    }
 }

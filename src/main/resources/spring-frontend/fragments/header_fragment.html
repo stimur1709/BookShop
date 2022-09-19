@@ -72,7 +72,7 @@
                                     </g>
                                 </g>
                             </svg>
-                            <span class="CartBlock-amount" id="keptt">0</span>
+                            <span class="CartBlock-amount" id="keptt" th:text="${keptSize}">0</span>
                         </a>
                         <a class="CartBlock-block" href="/cart.html" th:href="@{/cart}">
                             <svg class="CartBlock-img" xmlns="http://www.w3.org/2000/svg" width="30" height="23"
@@ -84,7 +84,7 @@
                                     </g>
                                 </g>
                             </svg>
-                            <span class="CartBlock-amount" id="cartt">0</span>
+                            <span class="CartBlock-amount" id="cartt" th:text="${cartSize}">0</span>
                         </a>
                         <a class="CartBlock-block CartBlock-block_text" th:if="${isAuthenticatedUser}"
                            th:href="@{/profile}">

@@ -4,6 +4,7 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.TagService;
 import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,8 +23,9 @@ public class TagPageController extends ModelAttributeController {
     private final BookService bookService;
 
     @Autowired
-    public TagPageController(TagService tagService, BookService bookService, UserProfileService userProfileService) {
-        super(userProfileService);
+    public TagPageController(TagService tagService, BookService bookService,
+                             UserProfileService userProfileService, BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.tagService = tagService;
         this.bookService = bookService;
     }

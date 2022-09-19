@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
-import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.model.author.Author;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,9 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @Tag(name = "Страница авторов", description = "На странице размещается список ссылок на всех авторов, " +
@@ -28,8 +25,9 @@ public class AuthorsPageController extends ModelAttributeController {
     private final BookService bookService;
 
     @Autowired
-    public AuthorsPageController(AuthorService authorService, BookService bookService, UserProfileService userProfileService) {
-        super(userProfileService);
+    public AuthorsPageController(AuthorService authorService, BookService bookService,
+                                 UserProfileService userProfileService, BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.authorService = authorService;
         this.bookService = bookService;
     }

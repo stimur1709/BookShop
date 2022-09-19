@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +23,9 @@ public class RecentPageController extends ModelAttributeController {
     private final BookService bookService;
 
     @Autowired
-    public RecentPageController(BookService bookService, UserProfileService userProfileService) {
-        super(userProfileService);
+    public RecentPageController(BookService bookService, UserProfileService userProfileService,
+                                BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.bookService = bookService;
     }
 

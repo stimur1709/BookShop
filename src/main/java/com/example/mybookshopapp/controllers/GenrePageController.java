@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,8 +23,8 @@ public class GenrePageController extends ModelAttributeController {
     @Autowired
     public GenrePageController(GenreService genreService,
                                BookService bookService,
-                               UserProfileService userProfileService) {
-        super(userProfileService);
+                               UserProfileService userProfileService, BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.genreService = genreService;
         this.bookService = bookService;
     }

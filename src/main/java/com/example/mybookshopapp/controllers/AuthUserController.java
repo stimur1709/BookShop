@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
 import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.model.RegistrationForm;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.service.UserRegisterService;
 import com.example.mybookshopapp.util.RegFormValidator;
@@ -23,9 +24,9 @@ public class AuthUserController extends ModelAttributeController {
     private final RegFormValidator userValidator;
 
     @Autowired
-    public AuthUserController(UserRegisterService userRegister,
-                              RegFormValidator userValidator, UserProfileService userProfileService) {
-        super(userProfileService);
+    public AuthUserController(UserRegisterService userRegister, RegFormValidator userValidator,
+                              UserProfileService userProfileService, BookShopService bookShopService) {
+        super(userProfileService, bookShopService);
         this.userRegister = userRegister;
         this.userValidator = userValidator;
     }
@@ -77,7 +78,7 @@ public class AuthUserController extends ModelAttributeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model) {
-        model.addAttribute("currentUser", userProfileService.getCurrentUser());
+        model.addAttribute("currentUser", getUserProfileService().getCurrentUser());
         return "profile";
     }
 

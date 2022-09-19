@@ -1,8 +1,11 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BooksStatusRequestDto;
+import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.dto.Status;
+import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.model.book.links.BookCodeType;
+import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +19,15 @@ public class CookieService {
     private static final String KEPT_COOKIE_NAME = "keptContent";
 
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public CookieService(BooksRatingAndPopularityService booksRatingAndPopularityService) {
+    public CookieService(BooksRatingAndPopularityService booksRatingAndPopularityService, BookRepository bookRepository) {
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
+        this.bookRepository = bookRepository;
     }
 
-    public ResponseResultDto changeBookStatus(HttpServletResponse response, Cookie[] cookies, BooksStatusRequestDto dto) {
+    public ResponseResultDto changeBookStatus(HttpServletResponse response, Cookie[] cookies, BookStatusRequestDto dto) {
         Cookie cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
         Cookie keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
 
@@ -60,7 +65,7 @@ public class CookieService {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
-                    List<String> slugList = getBooksFromCookie(cookie.getValue());
+                    List<String> slugList = getSlugBooksFromCookie(cookie.getValue());
                     if (slugList.contains(slug))
                         return cookie.getName().equals("cartContent") ? Status.CART : Status.KEPT;
                 }
@@ -71,16 +76,21 @@ public class CookieService {
 
     private void removeBookFromCookie(String slug, Cookie cookie, Double value) {
         if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
-            List<String> slugList = getBooksFromCookie(cookie.getValue());
+            List<String> slugList = getSlugBooksFromCookie(cookie.getValue());
             if (slugList.remove(slug))
                 booksRatingAndPopularityService.changePopularity(slug, value);
             cookie.setValue(String.join("/", slugList));
         }
     }
 
-    public List<String> getBooksFromCookie(String cookie) {
+    public List<String> getSlugBooksFromCookie(String cookie) {
         return cookie == null || cookie.isEmpty()
                 ? Collections.emptyList() : new ArrayList<>(Arrays.asList(cookie.split("/")));
+    }
+
+    public List<Book> getBooksFromCookie(String cookie) {
+        return cookie == null || cookie.isEmpty()
+                ? Collections.emptyList() : bookRepository.findBookEntitiesBySlugIn(Arrays.asList(cookie.split("/")));
     }
 
     private void addBookToCookie(String slug, Cookie cookie) {
@@ -111,5 +121,12 @@ public class CookieService {
             }
         }
         return createCookie(name);
+    }
+
+    public Map<BookCodeType, List<Book>> getBooksFromCookies(String cartContent, String keptContent) {
+        Map<BookCodeType, List<Book>> books = new HashMap<>();
+        books.put(BookCodeType.CART, getBooksFromCookie(cartContent));
+        books.put(BookCodeType.KEPT, getBooksFromCookie(keptContent));
+        return books;
     }
 }

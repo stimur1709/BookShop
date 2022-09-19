@@ -29,7 +29,6 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
-    private final BookShopService bookShopService;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
@@ -37,7 +36,7 @@ public class BookPageController extends ModelAttributeController {
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
                               BookShopService bookShopService) {
-        super(userProfileService);
+        super(userProfileService, bookShopService);
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
@@ -45,7 +44,6 @@ public class BookPageController extends ModelAttributeController {
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
-        this.bookShopService = bookShopService;
     }
 
     @GetMapping("/books/{slug}")
@@ -63,7 +61,7 @@ public class BookPageController extends ModelAttributeController {
         model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
-        model.addAttribute("status", bookShopService.getBookStatus(request, slug));
+        model.addAttribute("status", getBookShopService().getBookStatus(request, slug));
         return "books/slug";
     }
 

@@ -25,21 +25,24 @@ public class UserRegisterService {
     private final AuthenticationManager authenticationManager;
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTUtil jwtUtil;
+    private final Book2UserTypeService book2UserTypeService;
 
     @Autowired
     public UserRegisterService(UserRepository userRepository,
                                UserContactRepository userContactRepository,
                                PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-                               BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil) {
+                               BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil,
+                               Book2UserTypeService book2UserTypeService) {
         this.userRepository = userRepository;
         this.userContactRepository = userContactRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.jwtUtil = jwtUtil;
+        this.book2UserTypeService = book2UserTypeService;
     }
 
-    public void registerUser(RegistrationForm registrationForm) {
+    public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
         User user = new User(registrationForm.getName(),
                 passwordEncoder.encode(registrationForm.getPassword()));
         UserContact contactEmail = new UserContact(user, ContactType.EMAIL, registrationForm.getEmail());
@@ -51,6 +54,8 @@ public class UserRegisterService {
         userRepository.save(user);
         userContactRepository.save(contactEmail);
         userContactRepository.save(contactPhone);
+
+        book2UserTypeService.addBooksTypeUserFromCookie(cartContent, keptContent, user);
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {

@@ -24,4 +24,14 @@ public class BookRating {
     @JoinColumn(name = "book_id", referencedColumnName = "id", columnDefinition = "INT NOT NULL")
     @JsonBackReference
     private Book book;
+
+    public BookRating(int score, Book book) {
+        this.score = score;
+        this.numberOfRatings = 1;
+        this.book = book;
+    }
+
+    public BookRating() {
+
+    }
 }

@@ -2,7 +2,6 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
-import com.example.mybookshopapp.dto.Status;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.repository.BookRepository;
@@ -61,17 +60,17 @@ public class CookieService {
         return new ResponseResultDto(true);
     }
 
-    public Status getBookStatus(String slug, Cookie[] cookies) {
+    public BookCodeType getBookStatus(String slug, Cookie[] cookies) {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
                     List<String> slugList = getSlugBooksFromCookie(cookie.getValue());
                     if (slugList.contains(slug))
-                        return cookie.getName().equals("cartContent") ? Status.CART : Status.KEPT;
+                        return cookie.getName().equals("cartContent") ? BookCodeType.CART : BookCodeType.KEPT;
                 }
             }
         }
-        return Status.UNLINK;
+        return BookCodeType.UNLINK;
     }
 
     private void removeBookFromCookie(String slug, Cookie cookie, Double value) {

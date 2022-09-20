@@ -61,7 +61,7 @@ public class BookPageController extends ModelAttributeController {
         model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
-        model.addAttribute("status", getBookShopService().getBookStatus(request, slug));
+        model.addAttribute("status", getBookShopService().getBookStatus(request, book));
         return "books/slug";
     }
 

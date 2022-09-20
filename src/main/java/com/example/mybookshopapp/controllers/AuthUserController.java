@@ -60,13 +60,15 @@ public class AuthUserController extends ModelAttributeController {
 
     @PostMapping("/registration")
     public String registrationNewUser(@ModelAttribute("regForm") @Valid RegistrationForm registrationForm,
-                                      BindingResult bindingResult, Model model) {
+                                      BindingResult bindingResult, Model model,
+                                      @CookieValue(name = "cartContent", required = false) String cartContent,
+                                      @CookieValue(name = "keptContent", required = false) String keptContent) {
         userValidator.validate(registrationForm, bindingResult);
 
         if (bindingResult.hasErrors())
             return "/signup";
 
-        userRegister.registerUser(registrationForm);
+        userRegister.registerUser(registrationForm, cartContent, keptContent);
         model.addAttribute("regOk", true);
         return "signin";
     }

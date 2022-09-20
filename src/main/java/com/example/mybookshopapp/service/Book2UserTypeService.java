@@ -4,6 +4,7 @@ import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.Book2User;
+import com.example.mybookshopapp.model.book.links.Book2UserType;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
@@ -48,12 +49,12 @@ public class Book2UserTypeService {
 
         switch (dto.getStatus()) {
             case CART: {
-                changeTypeBook2User(book, user, BookCodeType.CART);
+                changeTypeBook2User(book, user, BookCodeType.CART, true);
                 booksRatingAndPopularityService.changePopularity(book, 0.7);
                 break;
             }
             case KEPT: {
-                changeTypeBook2User(book, user, BookCodeType.KEPT);
+                changeTypeBook2User(book, user, BookCodeType.KEPT, true);
                 booksRatingAndPopularityService.changePopularity(book, 0.4);
                 break;
             }
@@ -68,16 +69,18 @@ public class Book2UserTypeService {
         return new ResponseResultDto(true);
     }
 
-    private void changeTypeBook2User(Book book, User user, BookCodeType status) {
+    private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserService.getBook2User(book, user);
         Book2User book2User;
         if (!optionalBook2User.isPresent()) {
-            book2User = new Book2User(book2UserTypeRepository.findByCode(status), book, user);
+            Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
+            book2User = new Book2User(book2UserType, book, user);
             book2UserService.save(book2User);
 
         } else {
             book2User = optionalBook2User.get();
-            booksRatingAndPopularityService.changePopularity(book, getValue(book2User.getType().getCode()));
+            if (rating)
+                booksRatingAndPopularityService.changePopularity(book, getValue(book2User.getType().getCode()));
             book2User.setType(book2UserTypeRepository.findByCode(status));
             book2UserService.save(book2User);
         }
@@ -90,6 +93,12 @@ public class Book2UserTypeService {
                 ? book2Users.stream().map(Book2User::getBook).collect(Collectors.toList()) : Collections.emptyList();
     }
 
+    public BookCodeType getBookStatus(Book book) {
+        User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
+
+        return book2UserRepository.findByUserAndBook(user, book).map(value -> value.getType().getCode()).orElse(BookCodeType.UNLINK);
+    }
+
     private double getValue(BookCodeType status) {
         return status.equals(BookCodeType.CART) ? -0.7 : -0.4;
     }
@@ -99,7 +108,8 @@ public class Book2UserTypeService {
         return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
     }
 
-    private void addBooksTypeUserFromCookie() {
-        //TODO Реализовать перенос кукис в бд
+    public void addBooksTypeUserFromCookie(String cartContent, String keptContent, User user) {
+        Map<BookCodeType, List<Book>> books = cookieService.getBooksFromCookies(cartContent, keptContent);
+        books.forEach((key, value) -> value.forEach(book -> changeTypeBook2User(book, user, key, false)));
     }
 }

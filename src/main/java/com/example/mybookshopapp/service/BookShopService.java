@@ -2,7 +2,6 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
-import com.example.mybookshopapp.dto.Status;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,8 @@ public class BookShopService {
     private final Book2UserTypeService book2UserTypeService;
 
     @Autowired
-    public BookShopService(CookieService cookieService,
-                           UserProfileService userProfileService, Book2UserTypeService book2UserTypeService) {
+    public BookShopService(CookieService cookieService, UserProfileService userProfileService,
+                           Book2UserTypeService book2UserTypeService) {
         this.cookieService = cookieService;
         this.userProfileService = userProfileService;
         this.book2UserTypeService = book2UserTypeService;
@@ -36,8 +35,12 @@ public class BookShopService {
         return cookieService.changeBookStatus(response, request.getCookies(), dto);
     }
 
-    public Status getBookStatus(HttpServletRequest request, String slug) {
-        return cookieService.getBookStatus(slug, request.getCookies());
+    public BookCodeType getBookStatus(HttpServletRequest request, Book book) {
+        if (userProfileService.isAuthenticatedUser()) {
+            return book2UserTypeService.getBookStatus(book);
+        }
+
+        return cookieService.getBookStatus(book.getSlug(), request.getCookies());
     }
 
     public List<Book> getBooksUser(String cookie, BookCodeType status) {

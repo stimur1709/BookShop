@@ -2,7 +2,7 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.BookRating;
-import com.example.mybookshopapp.repository.Book2UserRepository;
+import com.example.mybookshopapp.repository.BookRatingRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,13 @@ import java.util.stream.IntStream;
 @Service
 public class BooksRatingAndPopularityService {
 
-    private final Book2UserRepository book2UserRepository;
+    private final BookRatingRepository bookRatingRepository;
     private final BookRepository bookRepository;
 
     @Autowired
-    public BooksRatingAndPopularityService(Book2UserRepository book2UserRepository,
+    public BooksRatingAndPopularityService(BookRatingRepository bookRatingRepository,
                                            BookRepository bookRepository) {
-        this.book2UserRepository = book2UserRepository;
+        this.bookRatingRepository = bookRatingRepository;
         this.bookRepository = bookRepository;
     }
 
@@ -60,15 +60,15 @@ public class BooksRatingAndPopularityService {
     }
 
     public boolean changeRateBook(int bookId, int value) {
-        Optional<Book> book = bookRepository.findById(bookId);
-        if (book.isPresent()) {
-            book.get().getBookRatingList()
-                    .stream().filter(bookRating -> bookRating.getScore() == value)
-                    .forEach(bookRating -> bookRating.setNumberOfRatings(bookRating.getNumberOfRatings() + 1));
-            bookRepository.save(book.get());
-            return true;
+        Book book = bookRepository.getById(bookId);
+        Optional<BookRating> bookRating = bookRatingRepository.findByBook_IdAndScore(bookId, value);
+        if (bookRating.isPresent()) {
+            bookRating.get().setNumberOfRatings(bookRating.get().getNumberOfRatings() + 1);
+            bookRatingRepository.save(bookRating.get());
+        } else {
+            bookRatingRepository.save(new BookRating(value, book));
         }
-        return false;
+        return true;
     }
 
     public double numberOfRating(int idBook) {

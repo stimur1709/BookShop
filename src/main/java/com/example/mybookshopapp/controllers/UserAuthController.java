@@ -56,9 +56,7 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/approveContact")
     @ResponseBody
     public ContactConfirmationResponse handleApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
-        return response;
+        return new ContactConfirmationResponse(true);
     }
 
     @PostMapping("/registration")
@@ -92,8 +90,10 @@ public class UserAuthController extends ModelAttributeController {
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
                                                    HttpServletResponse httpServletResponse) {
         ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
-        Cookie cookie = new Cookie("token", loginResponse.getResult());
-        httpServletResponse.addCookie(cookie);
+        if (loginResponse.isResult() && loginResponse.getError() == null) {
+            Cookie cookie = new Cookie("token", loginResponse.getToken());
+            httpServletResponse.addCookie(cookie);
+        }
         return loginResponse;
     }
 }

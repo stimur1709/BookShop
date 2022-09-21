@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -37,13 +37,14 @@ public class UserContact {
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int codeTrails;
 
-    @Column(columnDefinition = "DATE")
-    private LocalDateTime codeTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date codeTime;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
     public UserContact(User user, ContactType type, String contact) {
+        this.codeTime = new Date();
         this.code = "1234";
         this.user = user;
         this.type = type;
@@ -51,5 +52,19 @@ public class UserContact {
     }
 
     public UserContact() {
+    }
+
+    @Override
+    public String toString() {
+        return "UserContact{" +
+                "id=" + id +
+                ", user=" + user +
+                ", type=" + type +
+                ", approved=" + approved +
+                ", code='" + code + '\'' +
+                ", codeTrails=" + codeTrails +
+                ", codeTime=" + codeTime +
+                ", contact='" + contact + '\'' +
+                '}';
     }
 }

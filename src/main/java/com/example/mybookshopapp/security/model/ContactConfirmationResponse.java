@@ -7,19 +7,28 @@ import lombok.Setter;
 @Setter
 public class ContactConfirmationResponse {
 
-    private String result;
+    private boolean result;
+    private String token;
+    private String error;
 
-    public ContactConfirmationResponse() {
+    public ContactConfirmationResponse(boolean result) {
+        this.result = result;
     }
 
-    public ContactConfirmationResponse(String result) {
+    public ContactConfirmationResponse(boolean result, String text) {
         this.result = result;
+        if (result)
+            this.token = text;
+        else
+            this.error = text;
     }
 
     @Override
     public String toString() {
         return "ContactConfirmationResponse{" +
-                "result='" + result + '\'' +
+                "result=" + result +
+                ", token='" + token + '\'' +
+                ", error='" + error + '\'' +
                 '}';
     }
 }

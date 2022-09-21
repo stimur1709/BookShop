@@ -4,6 +4,7 @@ import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
 import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.model.RegistrationForm;
 import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.UserAuthService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.service.UserRegisterService;
 import com.example.mybookshopapp.util.RegFormValidator;
@@ -18,17 +19,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
-public class AuthUserController extends ModelAttributeController {
+public class UserAuthController extends ModelAttributeController {
 
     private final UserRegisterService userRegister;
     private final RegFormValidator userValidator;
+    private final UserAuthService userAuthService;
 
     @Autowired
-    public AuthUserController(UserRegisterService userRegister, RegFormValidator userValidator,
-                              UserProfileService userProfileService, BookShopService bookShopService) {
+    public UserAuthController(UserRegisterService userRegister, RegFormValidator userValidator,
+                              UserProfileService userProfileService, BookShopService bookShopService,
+                              UserAuthService userAuthService) {
         super(userProfileService, bookShopService);
         this.userRegister = userRegister;
         this.userValidator = userValidator;
+        this.userAuthService = userAuthService;
     }
 
     @GetMapping("/signin")
@@ -45,9 +49,8 @@ public class AuthUserController extends ModelAttributeController {
     @PostMapping("/requestContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
-        ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
-        return response;
+        //TODO реализовать отправку кода на телефон
+        return userAuthService.handleRequestContactConfirmation(payload);
     }
 
     @PostMapping("/approveContact")
@@ -88,7 +91,7 @@ public class AuthUserController extends ModelAttributeController {
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
                                                    HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse loginResponse = userRegister.jwtLogin(payload);
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
         Cookie cookie = new Cookie("token", loginResponse.getResult());
         httpServletResponse.addCookie(cookie);
         return loginResponse;

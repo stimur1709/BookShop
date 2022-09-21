@@ -8,4 +8,18 @@ import lombok.Setter;
 public class ContactConfirmationResponse {
 
     private String result;
+
+    public ContactConfirmationResponse() {
+    }
+
+    public ContactConfirmationResponse(String result) {
+        this.result = result;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactConfirmationResponse{" +
+                "result='" + result + '\'' +
+                '}';
+    }
 }

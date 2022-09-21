@@ -33,7 +33,7 @@ public class UserProfileService {
         String phone = "";
 
         for (UserContact contact : userRepository.getById(user.getId()).getUserContact()) {
-            if (contact.getType() == ContactType.EMAIL)
+            if (contact.getType() == ContactType.MAIL)
                 mail = contact.getContact();
 
             if (contact.getType() == ContactType.PHONE)

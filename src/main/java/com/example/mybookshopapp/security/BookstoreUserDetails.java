@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.security;
 
+import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class BookstoreUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userContact.getUser().getPassword();
+        return userContact.getType().equals(ContactType.MAIL) ? userContact.getUser().getPassword() : userContact.getCode();
     }
 
     @Override

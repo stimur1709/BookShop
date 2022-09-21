@@ -24,4 +24,8 @@ public class UserContactService {
     public UserContact getUserContact(String contact) {
         return userContactRepository.findUserContactEntityByContact(contact).orElse(null);
     }
+
+    public void save(UserContact userContact) {
+        userContactRepository.save(userContact);
+    }
 }

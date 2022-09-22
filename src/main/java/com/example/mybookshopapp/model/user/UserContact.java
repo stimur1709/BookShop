@@ -20,8 +20,8 @@ public class UserContact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "user_id", columnDefinition = "INT")
     @JsonBackReference
     private User user;
 
@@ -43,28 +43,14 @@ public class UserContact {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    public UserContact(User user, ContactType type, String contact) {
-        this.codeTime = new Date();
-        this.code = "1234";
-        this.user = user;
+    public UserContact(ContactType type, String contact,  String code) {
         this.type = type;
+        this.code = code;
         this.contact = contact;
+        this.codeTime = new Date();
     }
 
     public UserContact() {
     }
 
-    @Override
-    public String toString() {
-        return "UserContact{" +
-                "id=" + id +
-                ", user=" + user +
-                ", type=" + type +
-                ", approved=" + approved +
-                ", code='" + code + '\'' +
-                ", codeTrails=" + codeTrails +
-                ", codeTime=" + codeTime +
-                ", contact='" + contact + '\'' +
-                '}';
-    }
 }

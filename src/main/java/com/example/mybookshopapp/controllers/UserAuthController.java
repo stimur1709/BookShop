@@ -7,31 +7,25 @@ import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserAuthService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.service.UserRegisterService;
-import com.example.mybookshopapp.util.RegFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @Controller
 public class UserAuthController extends ModelAttributeController {
 
     private final UserRegisterService userRegister;
-    private final RegFormValidator userValidator;
     private final UserAuthService userAuthService;
 
     @Autowired
-    public UserAuthController(UserRegisterService userRegister, RegFormValidator userValidator,
-                              UserProfileService userProfileService, BookShopService bookShopService,
-                              UserAuthService userAuthService) {
+    public UserAuthController(UserRegisterService userRegister, UserProfileService userProfileService,
+                              BookShopService bookShopService, UserAuthService userAuthService) {
         super(userProfileService, bookShopService);
         this.userRegister = userRegister;
-        this.userValidator = userValidator;
         this.userAuthService = userAuthService;
     }
 
@@ -46,29 +40,30 @@ public class UserAuthController extends ModelAttributeController {
         return "signup";
     }
 
-    @PostMapping("/requestContactConfirmation")
+    @PostMapping("/api/requestContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
         //TODO реализовать отправку кода на телефон
-        return userAuthService.handleRequestContactConfirmation(payload);
+        return userAuthService.handlerRequestContactConfirmation(payload);
     }
 
-    @PostMapping("/approveContact")
+    @PostMapping("/api/requestNewContactConfirmation")
     @ResponseBody
-    public ContactConfirmationResponse handleApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        return new ContactConfirmationResponse(true);
+    public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
+        //TODO реализовать отправку кода на телефон
+        return userRegister.handlerRequestNewContactConfirmation(payload);
+    }
+
+    @PostMapping("/api/approveContact")
+    @ResponseBody
+    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
+        return userRegister.handlerApproveContact(payload);
     }
 
     @PostMapping("/registration")
-    public String registrationNewUser(@ModelAttribute("regForm") @Valid RegistrationForm registrationForm,
-                                      BindingResult bindingResult, Model model,
+    public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model,
                                       @CookieValue(name = "cartContent", required = false) String cartContent,
                                       @CookieValue(name = "keptContent", required = false) String keptContent) {
-        userValidator.validate(registrationForm, bindingResult);
-
-        if (bindingResult.hasErrors())
-            return "/signup";
-
         userRegister.registerUser(registrationForm, cartContent, keptContent);
         model.addAttribute("regOk", true);
         return "signin";

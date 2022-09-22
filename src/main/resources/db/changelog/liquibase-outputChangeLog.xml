@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet author="Admin (generated)" id="1663170679804-1">
+    <changeSet author="safin (generated)" id="1663752657624-1">
         <createSequence sequenceName="authors_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-2">
+    <changeSet author="safin (generated)" id="1663752657624-2">
         <createSequence sequenceName="balance_transaction_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-3">
+    <changeSet author="safin (generated)" id="1663752657624-3">
         <createSequence sequenceName="book2user_type_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-4">
+    <changeSet author="safin (generated)" id="1663752657624-4">
         <createSequence sequenceName="book_file_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-5">
+    <changeSet author="safin (generated)" id="1663752657624-5">
         <createSequence sequenceName="book_file_type_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-6">
+    <changeSet author="safin (generated)" id="1663752657624-6">
         <createSequence sequenceName="book_rating_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-7">
+    <changeSet author="safin (generated)" id="1663752657624-7">
         <createSequence sequenceName="book_review_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-8">
+    <changeSet author="safin (generated)" id="1663752657624-8">
         <createSequence sequenceName="book_review_like_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-9">
+    <changeSet author="safin (generated)" id="1663752657624-9">
         <createSequence sequenceName="books_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-10">
+    <changeSet author="safin (generated)" id="1663752657624-10">
         <createSequence sequenceName="document_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-11">
+    <changeSet author="safin (generated)" id="1663752657624-11">
         <createSequence sequenceName="faq_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-12">
+    <changeSet author="safin (generated)" id="1663752657624-12">
         <createSequence sequenceName="file_download_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-13">
+    <changeSet author="safin (generated)" id="1663752657624-13">
         <createSequence sequenceName="genre_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-14">
+    <changeSet author="safin (generated)" id="1663752657624-14">
         <createSequence sequenceName="message_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-15">
+    <changeSet author="safin (generated)" id="1663752657624-15">
         <createSequence sequenceName="tags_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-16">
+    <changeSet author="safin (generated)" id="1663752657624-16">
         <createSequence sequenceName="user_contact_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-17">
+    <changeSet author="safin (generated)" id="1663752657624-17">
         <createSequence sequenceName="users_id_seq"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-18">
+    <changeSet author="safin (generated)" id="1663752657624-18">
         <createTable tableName="authors">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="authors_pkey"/>
@@ -68,7 +68,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-19">
+    <changeSet author="safin (generated)" id="1663752657624-19">
         <createTable tableName="balance_transaction">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
@@ -90,7 +90,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-20">
+    <changeSet author="safin (generated)" id="1663752657624-20">
         <createTable tableName="book2author">
             <column name="author_id" type="INT">
                 <constraints nullable="false"/>
@@ -103,7 +103,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-21">
+    <changeSet author="safin (generated)" id="1663752657624-21">
         <createTable tableName="book2genre">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -113,7 +113,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-22">
+    <changeSet author="safin (generated)" id="1663752657624-22">
         <createTable tableName="book2tag">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -123,7 +123,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-23">
+    <changeSet author="safin (generated)" id="1663752657624-23">
         <createTable tableName="book2user">
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
@@ -137,7 +137,7 @@
             <column name="type_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-24">
+    <changeSet author="safin (generated)" id="1663752657624-24">
         <createTable tableName="book2user_type">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book2user_type_pkey"/>
@@ -150,7 +150,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-25">
+    <changeSet author="safin (generated)" id="1663752657624-25">
         <createTable tableName="book_file">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_file_pkey"/>
@@ -167,7 +167,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-26">
+    <changeSet author="safin (generated)" id="1663752657624-26">
         <createTable tableName="book_file_type">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_file_type_pkey"/>
@@ -178,7 +178,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-27">
+    <changeSet author="safin (generated)" id="1663752657624-27">
         <createTable tableName="book_rating">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_rating_pkey"/>
@@ -194,7 +194,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-28">
+    <changeSet author="safin (generated)" id="1663752657624-28">
         <createTable tableName="book_review">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
@@ -216,7 +216,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-29">
+    <changeSet author="safin (generated)" id="1663752657624-29">
         <createTable tableName="book_review_like">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
@@ -235,7 +235,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-30">
+    <changeSet author="safin (generated)" id="1663752657624-30">
         <createTable tableName="books">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="books_pkey"/>
@@ -270,7 +270,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-31">
+    <changeSet author="safin (generated)" id="1663752657624-31">
         <createTable tableName="document">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="document_pkey"/>
@@ -289,7 +289,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-32">
+    <changeSet author="safin (generated)" id="1663752657624-32">
         <createTable tableName="faq">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="faq_pkey"/>
@@ -305,7 +305,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-33">
+    <changeSet author="safin (generated)" id="1663752657624-33">
         <createTable tableName="file_download">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
@@ -321,7 +321,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-34">
+    <changeSet author="safin (generated)" id="1663752657624-34">
         <createTable tableName="genre">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="genre_pkey"/>
@@ -335,7 +335,7 @@
             <column name="parent_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-35">
+    <changeSet author="safin (generated)" id="1663752657624-35">
         <createTable tableName="message">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="message_pkey"/>
@@ -354,7 +354,7 @@
             <column name="user_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-36">
+    <changeSet author="safin (generated)" id="1663752657624-36">
         <createTable tableName="tags">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="tags_pkey"/>
@@ -367,7 +367,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-37">
+    <changeSet author="safin (generated)" id="1663752657624-37">
         <createTable tableName="user_contact">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="user_contact_pkey"/>
@@ -378,7 +378,7 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="code_time" type="date"/>
+            <column name="code_time" type="TIMESTAMP(0) WITHOUT TIME ZONE"/>
             <column defaultValueNumeric="0" name="code_trails" type="INT">
                 <constraints nullable="false"/>
             </column>
@@ -391,7 +391,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-38">
+    <changeSet author="safin (generated)" id="1663752657624-38">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="users_pkey"/>
@@ -411,85 +411,85 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-39">
+    <changeSet author="safin (generated)" id="1663752657624-39">
         <addPrimaryKey columnNames="author_id, book_id" constraintName="book2author_pkey" tableName="book2author"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-40">
+    <changeSet author="safin (generated)" id="1663752657624-40">
         <addPrimaryKey columnNames="book_id, genre_id" constraintName="book2genre_pkey" tableName="book2genre"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-41">
+    <changeSet author="safin (generated)" id="1663752657624-41">
         <addPrimaryKey columnNames="book_id, tag_id" constraintName="book2tag_pkey" tableName="book2tag"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-42">
+    <changeSet author="safin (generated)" id="1663752657624-42">
         <addPrimaryKey columnNames="book_id, user_id" constraintName="book2user_pkey" tableName="book2user"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-43">
+    <changeSet author="safin (generated)" id="1663752657624-43">
         <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="genre" constraintName="fk19g7t6b636h69dufjf98ofc0x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-44">
+    <changeSet author="safin (generated)" id="1663752657624-44">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user" constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-45">
+    <changeSet author="safin (generated)" id="1663752657624-45">
         <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author" constraintName="fk3hyom3yo5q6nfo9ytqofqil37" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-46">
+    <changeSet author="safin (generated)" id="1663752657624-46">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author" constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-47">
+    <changeSet author="safin (generated)" id="1663752657624-47">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book_file" constraintName="fkab7ynoex2ahy28trbmkk9uxu4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_file_type"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-48">
+    <changeSet author="safin (generated)" id="1663752657624-48">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like" constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-49">
+    <changeSet author="safin (generated)" id="1663752657624-49">
         <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag" constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tags"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-50">
+    <changeSet author="safin (generated)" id="1663752657624-50">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre" constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-51">
+    <changeSet author="safin (generated)" id="1663752657624-51">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user" constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-52">
+    <changeSet author="safin (generated)" id="1663752657624-52">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction" constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-53">
+    <changeSet author="safin (generated)" id="1663752657624-53">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download" constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-54">
+    <changeSet author="safin (generated)" id="1663752657624-54">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_rating" constraintName="fkg6p9bhsx856y3gj39utdc7udf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-55">
+    <changeSet author="safin (generated)" id="1663752657624-55">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_file" constraintName="fkg7meofferi2glg6uwj2yhfmp9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-56">
+    <changeSet author="safin (generated)" id="1663752657624-56">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review" constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-57">
+    <changeSet author="safin (generated)" id="1663752657624-57">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="book2user" constraintName="fkgshsph8qmeq54ntxrfcodb94" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book2user_type"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-58">
+    <changeSet author="safin (generated)" id="1663752657624-58">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact" constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-59">
+    <changeSet author="safin (generated)" id="1663752657624-59">
         <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre" constraintName="fkkdc8kcprnkl4ygg2f0v9588wi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="genre"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-60">
+    <changeSet author="safin (generated)" id="1663752657624-60">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag" constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-61">
+    <changeSet author="safin (generated)" id="1663752657624-61">
         <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like" constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="book_review"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-62">
+    <changeSet author="safin (generated)" id="1663752657624-62">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction" constraintName="fkndi1dijwreoyd8stngrabtx8m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-63">
+    <changeSet author="safin (generated)" id="1663752657624-63">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review" constraintName="fkntncp0b191bex8jkm3vy3l13x" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-64">
+    <changeSet author="safin (generated)" id="1663752657624-64">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message" constraintName="fkpdrb79dg3bgym7pydlf9k3p1n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Admin (generated)" id="1663170679804-65">
+    <changeSet author="safin (generated)" id="1663752657624-65">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download" constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
 </databaseChangeLog>

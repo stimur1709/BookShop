@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BookShopController extends ModelAttributeController {
@@ -42,6 +43,9 @@ public class BookShopController extends ModelAttributeController {
         } else {
             model.addAttribute("emptyList", false);
             model.addAttribute("books", bookList);
+            model.addAttribute("booksSlug", bookList.stream().map(Book::getSlug).collect(Collectors.toList()));
+            model.addAttribute("priceAll", bookList.stream().mapToInt(Book::discountPrice).sum());
+            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(Book::getPrice).sum());
         }
 
         return url;
@@ -52,6 +56,7 @@ public class BookShopController extends ModelAttributeController {
     public ResponseResultDto handlerChangeBookStatus(@RequestBody BookStatusRequestDto dto,
                                                      HttpServletRequest request,
                                                      HttpServletResponse response) {
+        System.out.println(dto.getBooksIds());
         return getBookShopService().changeBookStatus(response, request, dto);
     }
 }

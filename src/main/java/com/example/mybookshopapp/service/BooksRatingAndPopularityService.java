@@ -68,6 +68,8 @@ public class BooksRatingAndPopularityService {
         } else {
             bookRatingRepository.save(new BookRating(value, book));
         }
+        book.setRate(getRateBook(bookId));
+        bookRepository.save(book);
         return true;
     }
 

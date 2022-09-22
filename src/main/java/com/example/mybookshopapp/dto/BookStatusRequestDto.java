@@ -14,4 +14,6 @@ public class BookStatusRequestDto {
         this.booksIds = booksIds;
         this.status = status;
     }
+
+
 }

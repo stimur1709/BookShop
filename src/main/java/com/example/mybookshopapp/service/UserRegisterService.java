@@ -7,7 +7,7 @@ import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
 import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.model.RegistrationForm;
-import com.example.mybookshopapp.util.SecretCode;
+import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,17 +21,17 @@ public class UserRegisterService {
     private final PasswordEncoder passwordEncoder;
     private final Book2UserTypeService book2UserTypeService;
     private final UserContactService userContactService;
-    private final SecretCode secretCode;
+    private final Generator generator;
 
     @Autowired
     public UserRegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                                Book2UserTypeService book2UserTypeService,
-                               UserContactService userContactService, SecretCode secretCode) {
+                               UserContactService userContactService, Generator generator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.book2UserTypeService = book2UserTypeService;
         this.userContactService = userContactService;
-        this.secretCode = secretCode;
+        this.generator = generator;
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
@@ -62,13 +62,20 @@ public class UserRegisterService {
             return new ContactConfirmationResponse(false, error);
         }
         if (userContact != null && userContact.getApproved() == (short) 0) {
-            userContact.setCode(secretCode.getSecretCode());
+
+            long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
+
+            if (userContact.getCodeTrails() >= 2 && dif < 300000) {
+                return blockContact(dif);
+            }
+
+            userContact.setCode(generator.getSecretCode());
             userContact.setCodeTime(new Date());
             userContact.setCodeTrails(0);
             userContactService.save(userContact);
 
         } else {
-            UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), secretCode.getSecretCode());
+            UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), generator.getSecretCode());
             userContactService.save(contact);
 
         }
@@ -77,8 +84,16 @@ public class UserRegisterService {
 
     public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
-        if (userContact.getCodeTrails() >= 2)
-            return blockContact();
+        long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
+
+        if (userContact.getCodeTrails() >= 2 && dif < 300000) {
+            return blockContact(dif);
+        }
+
+        if (dif > 1000000) {
+            return new ContactConfirmationResponse(false, "Код подтверждения устарел. Запросите новый");
+        }
+
         if (!userContact.getCode().equals(payload.getCode())) {
             userContact.setCodeTrails(userContact.getCodeTrails() + 1);
             userContactService.save(userContact);
@@ -90,19 +105,14 @@ public class UserRegisterService {
         return new ContactConfirmationResponse(true);
     }
 
-    private ContactConfirmationResponse blockContact() {
-//        ContactConfirmationResponse response = ;
-//        response.setError("Число попыток подтверждения превышено, повторите попытку через 5 минут");
-        return new ContactConfirmationResponse(false, "Число попыток подтверждения превышено, повторите попытку через 5 минут");
+    private ContactConfirmationResponse blockContact(long time) {
+        return new ContactConfirmationResponse(false,
+                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
     }
 
     private ContactConfirmationResponse badContact(int result, ContactType type) {
-        int count = 3 - result;
         ContactConfirmationResponse response = new ContactConfirmationResponse(true);
-        String pass = type.equals(ContactType.PHONE) ? "Код подтверждения" : "Пароль";
-        String text = count == 1 ? pass + " введён неверно. У вас осталось " + count + " попытка"
-                : pass + " введён неверно. У вас осталось " + count + " попытки";
-        response.setError(text);
+        response.setError(generator.generatorTextBadContact(type, result));
         return response;
     }
 }

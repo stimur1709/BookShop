@@ -44,26 +44,30 @@ public class Book2UserTypeService {
     }
 
     public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
-        Book book = bookService.getBookBySlug(dto.getBooksIds());
-        User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
+        String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
 
-        switch (dto.getStatus()) {
-            case CART: {
-                changeTypeBook2User(book, user, BookCodeType.CART, true);
-                booksRatingAndPopularityService.changePopularity(book, 0.7);
-                break;
+        for (String slug : slugs) {
+            Book book = bookService.getBookBySlug(slug);
+            User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
+
+            switch (dto.getStatus()) {
+                case CART: {
+                    changeTypeBook2User(book, user, BookCodeType.CART, true);
+                    booksRatingAndPopularityService.changePopularity(book, 0.7);
+                    break;
+                }
+                case KEPT: {
+                    changeTypeBook2User(book, user, BookCodeType.KEPT, true);
+                    booksRatingAndPopularityService.changePopularity(book, 0.4);
+                    break;
+                }
+                case UNLINK: {
+                    booksRatingAndPopularityService.changePopularity(book, getValue(user, book));
+                    break;
+                }
+                default:
+                    break;
             }
-            case KEPT: {
-                changeTypeBook2User(book, user, BookCodeType.KEPT, true);
-                booksRatingAndPopularityService.changePopularity(book, 0.4);
-                break;
-            }
-            case UNLINK: {
-                booksRatingAndPopularityService.changePopularity(book, getValue(user, book));
-                break;
-            }
-            default:
-                return new ResponseResultDto(false);
         }
 
         return new ResponseResultDto(true);

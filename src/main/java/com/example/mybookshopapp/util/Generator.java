@@ -1,12 +1,14 @@
 package com.example.mybookshopapp.util;
 
 import com.example.mybookshopapp.model.enums.ContactType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
 @Component
+@Slf4j
 public class Generator {
 
     private final Random random;
@@ -18,7 +20,7 @@ public class Generator {
 
     public String getSecretCode() {
         String code = 100 + random.nextInt(999 - 100 + 1) + " " + (100 + random.nextInt(999 - 100 + 1));
-        System.out.println(code);
+        log.info("Generation code " + code);
         return code;
     }
 

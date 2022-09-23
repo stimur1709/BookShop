@@ -30,28 +30,30 @@ public class CookieService {
         Cookie cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
         Cookie keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
 
-        String slug = dto.getBooksIds();
+        String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
 
-        switch (dto.getStatus()) {
-            case CART: {
-                addBookToCookie(slug, cartCookie);
-                booksRatingAndPopularityService.changePopularity(slug, 0.7);
-                removeBookFromCookie(slug, keptCookie, -0.4);
-                break;
+        for (String slug : slugs) {
+            switch (dto.getStatus()) {
+                case CART: {
+                    addBookToCookie(slug, cartCookie);
+                    booksRatingAndPopularityService.changePopularity(slug, 0.7);
+                    removeBookFromCookie(slug, keptCookie, -0.4);
+                    break;
+                }
+                case KEPT: {
+                    addBookToCookie(slug, keptCookie);
+                    booksRatingAndPopularityService.changePopularity(slug, 0.4);
+                    removeBookFromCookie(slug, cartCookie, -0.7);
+                    break;
+                }
+                case UNLINK: {
+                    removeBookFromCookie(slug, cartCookie, -0.7);
+                    removeBookFromCookie(slug, keptCookie, -0.4);
+                    break;
+                }
+                default:
+                    break;
             }
-            case KEPT: {
-                addBookToCookie(slug, keptCookie);
-                booksRatingAndPopularityService.changePopularity(slug, 0.4);
-                removeBookFromCookie(slug, cartCookie, -0.7);
-                break;
-            }
-            case UNLINK: {
-                removeBookFromCookie(slug, cartCookie, -0.7);
-                removeBookFromCookie(slug, keptCookie, -0.4);
-                break;
-            }
-            default:
-                return new ResponseResultDto(false);
         }
 
         response.addCookie(keptCookie);

@@ -31,12 +31,7 @@ public class BookShopController extends ModelAttributeController {
                            @CookieValue(name = "keptContent", required = false) String keptContent,
                            Model model, HttpServletRequest request) {
 
-        String url = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        BookCodeType status = url.equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
-
-        List<Book> bookList = status.equals(BookCodeType.CART)
-                ? getBookShopService().getBooksUser(cartContent, status)
-                : getBookShopService().getBooksUser(keptContent, status);
+        List<Book> bookList = getBooksUser(cartContent, keptContent, request);
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
@@ -48,7 +43,15 @@ public class BookShopController extends ModelAttributeController {
             model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(Book::getPrice).sum());
         }
 
-        return url;
+        return getUrl(request);
+    }
+
+    @GetMapping(value = {"/api/size/cart", "/api/size/kept"})
+    @ResponseBody
+    public int getSize(@CookieValue(name = "cartContent", required = false) String cartContent,
+                       @CookieValue(name = "keptContent", required = false) String keptContent,
+                       HttpServletRequest request) {
+        return getBooksUser(cartContent, keptContent, request).size();
     }
 
     @PostMapping("/books/changeBookStatus")
@@ -56,7 +59,21 @@ public class BookShopController extends ModelAttributeController {
     public ResponseResultDto handlerChangeBookStatus(@RequestBody BookStatusRequestDto dto,
                                                      HttpServletRequest request,
                                                      HttpServletResponse response) {
-        System.out.println(dto.getBooksIds());
         return getBookShopService().changeBookStatus(response, request, dto);
+    }
+
+    private List<Book> getBooksUser(@CookieValue(name = "cartContent", required = false) String cartContent,
+                                    @CookieValue(name = "keptContent", required = false) String keptContent,
+                                    HttpServletRequest request) {
+        String url = getUrl(request);
+        BookCodeType status = url.equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
+
+        return status.equals(BookCodeType.CART)
+                ? getBookShopService().getBooksUser(cartContent, status)
+                : getBookShopService().getBooksUser(keptContent, status);
+    }
+
+    private String getUrl(HttpServletRequest request) {
+        return request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
     }
 }

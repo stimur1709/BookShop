@@ -54,6 +54,13 @@ public class UserAuthController extends ModelAttributeController {
         return userRegister.handlerRequestNewContactConfirmation(payload);
     }
 
+    @PostMapping("/api/requestChangeContactConfirmation")
+    @ResponseBody
+    public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
+        //TODO реализовать отправку кода на телефон
+        return userRegister.handlerRequestChangeContactConfirmation(payload);
+    }
+
     @PostMapping("/api/approveContact")
     @ResponseBody
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {

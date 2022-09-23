@@ -11,5 +11,5 @@ public class ContactConfirmationPayload {
     private String contact;
     private ContactType contactType;
     private String code;
-
+    private String oldContact;
 }

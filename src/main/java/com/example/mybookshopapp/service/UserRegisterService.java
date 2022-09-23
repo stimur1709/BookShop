@@ -69,16 +69,31 @@ public class UserRegisterService {
                 return blockContact(dif);
             }
 
-            userContact.setCode(generator.getSecretCode());
-            userContact.setCodeTime(new Date());
-            userContact.setCodeTrails(0);
-            userContactService.save(userContact);
+            userContactService.changeContact(userContact);
 
         } else {
             UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), generator.getSecretCode());
             userContactService.save(contact);
 
         }
+        return new ContactConfirmationResponse(true);
+    }
+
+    public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
+        UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
+        if (userContactService.checkUserExistsByContact(payload.getContact()).isPresent()) {
+            UserContact userNewContact = userContactService.getUserContact(payload.getContact());
+
+            if (userNewContact.getApproved() == (short) 1) {
+                String error = userOldContact.getType().equals(ContactType.PHONE)
+                        ? "Указанный номер телефона уже привязан к другому пользователю, введите другой"
+                        : "Указанная почта уже привязана к другому пользователю, введите другую";
+                return new ContactConfirmationResponse(false, error);
+            }
+        }
+
+        userOldContact.setContact(payload.getContact());
+        userContactService.changeContact(userOldContact);
         return new ContactConfirmationResponse(true);
     }
 
@@ -115,4 +130,5 @@ public class UserRegisterService {
         response.setError(generator.generatorTextBadContact(type, result));
         return response;
     }
+
 }

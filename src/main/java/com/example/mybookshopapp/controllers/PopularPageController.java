@@ -1,20 +1,19 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.BooksPageDto;
-import com.example.mybookshopapp.dto.SearchWordDto;
+import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.ArrayList;
 
 @Controller
 @Tag(name = "Страница популярное", description = "Выводит на странице книги в порядке убывания популярности")
@@ -38,9 +37,10 @@ public class PopularPageController extends ModelAttributeController {
 
     @GetMapping("/books/popular")
     public String popularPage(Model model) {
-        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 20).getContent());
-        model.addAttribute("searchWordDto", new SearchWordDto());
-        model.addAttribute("searchResult", new ArrayList<>());
+        Page<Book> books = bookService.getPageOfPopularBooks(0, 20);
+        model.addAttribute("popularBooks", books.getContent());
+        model.addAttribute("show", books.getNumber() + 1 != books.getTotalPages());
+        model.addAttribute("totalPages", books.getTotalPages());
         return "books/popular";
     }
 }

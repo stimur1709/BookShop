@@ -47,11 +47,11 @@
             <div class="Section">
                 <div class="Cards Cards_refresh">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${booksGenre})}"></div>
-                    <div class="Cards-footer Cards-footer_center">
+                    <div class="Cards-footer Cards-footer_center" th:if="${show}">
                         <a class="btn btn_primary" href="#"
                            data-refreshshow="genre" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${genre.slug}"
+                           th:attr="data-refreshid=${genre.slug}, data-total = ${totalPages}"
                            data-refreshid="1020" th:text="#{message.showMore}">Показать еще</a>
                     </div>
                 </div>

@@ -38,19 +38,18 @@
                     <h1 class="Section-title" th:text="${tagPage.name}">Психологическая проза
                     </h1>
                     <div class="Section-header-links">
-                        <a class="Section-header-link" href="/index.html#tags"
-                           th:href="@{/#tags}">
-                            Все тэги
+                        <a class="Section-header-link" th:href="@{/#tags}">
+                            Все теги
                         </a>
                     </div>
                 </div>
                 <div class="Cards Cards_refresh">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${booksTag})}"></div>
                     <div class="Cards-footer Cards-footer_center">
-                        <a class="btn btn_primary" href="#"
+                        <a class="btn btn_primary" href="#" th:if="${show}"
                            data-refreshshow="tag" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${tagPage.slug}"
+                           th:attr="data-refreshid=${tagPage.slug}, data-total = ${totalPages}"
                            data-refreshid="10" th:text="#{message.showMore}">
                             Показать еще
                         </a>

@@ -50,8 +50,11 @@ public class AuthorsPageController extends ModelAttributeController {
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
         Page<Book> books = bookService.getBooksForPageAuthor(author, 0, 20);
-        model.addAttribute("authorSlug", author);
-        model.addAttribute("authorBooks", books.getContent());
+        model.addAttribute("author", author);
+        model.addAttribute("books", books.getContent());
+        model.addAttribute("show", books.getNumber() + 1 != books.getTotalPages());
+        model.addAttribute("totalPages", books.getTotalPages());
+
         return "books/author";
     }
 

@@ -60,9 +60,10 @@
                 <div class="Cards Cards_refresh">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${recentBooks})}"></div>
                 </div>
-                <div class="Cards-footer Cards-footer_center">
+                <div class="Cards-footer Cards-footer_center" th:if="${show}">
                     <a class="btn btn_primary" href="#"
                        data-refreshshow="recent" data-refreshoffset="0"
+                       th:attr="data-total = ${totalPages}"
                        data-refreshlimit="20" th:text="#{message.showMore}">Показать еще</a>
                 </div>
             </div>

@@ -47,7 +47,7 @@ public class GenrePageController extends ModelAttributeController {
         model.addAttribute("genre", genre);
         model.addAttribute("parentGenre", genreService.getPageById(genre.getSlug()));
         model.addAttribute("booksGenre", books.getContent());
-        model.addAttribute("show", books.getNumber() + 1 != books.getTotalPages());
+        model.addAttribute("show",books.getTotalPages() != 0);
         model.addAttribute("totalPages", books.getTotalPages());
 
         return "genres/slug";

@@ -44,7 +44,7 @@ public class TagPageController extends ModelAttributeController {
         model.addAttribute("booksTag", books);
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
-        model.addAttribute("show", books.getNumber() + 1 != books.getTotalPages());
+        model.addAttribute("show",books.getTotalPages() != 0);
         model.addAttribute("totalPages", books.getTotalPages());
         return "tags/index";
     }

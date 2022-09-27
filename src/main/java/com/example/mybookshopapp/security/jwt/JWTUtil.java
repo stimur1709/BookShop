@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JWTUtil {
 
-    @Value("${auth.secret}")
+    @Value("${jwt.key}")
     private String secret;
 
     private String createToken(Map<String, Object> claims, String username) {

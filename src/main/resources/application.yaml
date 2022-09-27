@@ -1,0 +1,52 @@
+server:
+  port: 8085
+  servlet:
+    session:
+      tracking-modes: cookie
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 2400024
+    driver-class-name: org.postgresql.Driver
+
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+  web:
+    resources:
+      static-locations: classpath:/spring-frontend/
+
+  thymeleaf:
+    prefix: classpath:/spring-frontend/
+
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/db:changelog-master:xml
+
+  sql:
+    init:
+      mode: embedded
+
+  messages:
+    basename: lang.messages
+
+upload:
+  path: src/main/resources/img
+
+download:
+  path: src/main/resources/book-files
+
+jwt:
+  key: t911ur00
+  duration: 30

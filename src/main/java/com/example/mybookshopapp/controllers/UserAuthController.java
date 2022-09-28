@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.security.model.ContactConfirmationPayload;
-import com.example.mybookshopapp.security.model.ContactConfirmationResponse;
-import com.example.mybookshopapp.security.model.RegistrationForm;
+import com.example.mybookshopapp.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.dto.RegistrationForm;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserAuthService;
 import com.example.mybookshopapp.service.UserProfileService;

@@ -4,6 +4,8 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.repository.BlacklistRepository;
+import com.example.mybookshopapp.model.redis.Blacklist;
 import com.example.mybookshopapp.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
@@ -23,25 +28,36 @@ public class MainPageController extends ModelAttributeController {
     protected final BookService bookService;
     protected final TagService tagService;
     protected final GenreService genreService;
+    private final BlacklistRepository blacklistRepository;
+
 
     @Autowired
     public MainPageController(BookService bookService, TagService tagService,
                               GenreService genreService, UserProfileService userProfileService,
-                              BookShopService bookShopService) {
+                              BookShopService bookShopService,
+                              BlacklistRepository blacklistRepository) {
         super(userProfileService, bookShopService);
         this.bookService = bookService;
         this.tagService = tagService;
         this.genreService = genreService;
+        this.blacklistRepository = blacklistRepository;
     }
 
     @GetMapping("/")
-    public String mainPage(Model model) {
+    public String mainPage(Model model, HttpServletRequest request) {
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
         model.addAttribute("isAuthenticatedUser", getUserProfileService().isAuthenticatedUser());
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("token"))
+                blacklistRepository.save(new Blacklist(cookie.getValue()));
+        }
+
+        System.out.println(blacklistRepository.findAll());
+
         return "index";
     }
 
@@ -69,7 +85,7 @@ public class MainPageController extends ModelAttributeController {
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResult", books.getContent());
             model.addAttribute("totalElement", books.getTotalElements());
-            model.addAttribute("show",books.getTotalPages() != 0);
+            model.addAttribute("show", books.getTotalPages() != 0);
             model.addAttribute("totalPages", books.getTotalPages());
             return "search/index";
         } else {
@@ -83,7 +99,7 @@ public class MainPageController extends ModelAttributeController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
-                                                  SearchWordDto searchWordDto) {
+                                          SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 

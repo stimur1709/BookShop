@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.util;
 
-import com.example.mybookshopapp.security.model.RegistrationForm;
+import com.example.mybookshopapp.dto.RegistrationForm;
 import com.example.mybookshopapp.service.UserContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

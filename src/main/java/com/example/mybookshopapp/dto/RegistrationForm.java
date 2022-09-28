@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.security.model;
+package com.example.mybookshopapp.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -5,24 +5,17 @@ import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Id;
 
-@RedisHash("Blacklist")
 @Data
+@RedisHash("blacklist")
 public class Blacklist {
 
-    private Integer id;
-
     @Id
+    private String id;
+
     public String token;
 
-    public Blacklist(String token) {
+    public Blacklist(String id, String token) {
+        this.id = id;
         this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "Blacklist{" +
-                "id=" + id +
-                ", token='" + token + '\'' +
-                '}';
     }
 }

@@ -3,10 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.genre.Genre;
-import com.example.mybookshopapp.service.BookService;
-import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.GenreService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +15,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Tag(name = "Страница жанров")
 public class GenrePageController extends ModelAttributeController {
 
     private final GenreService genreService;
     private final BookService bookService;
+    private final BlacklistService blacklistService;
 
     @Autowired
     public GenrePageController(GenreService genreService, BookService bookService,
-                               UserProfileService userProfileService, BookShopService bookShopService) {
+                               UserProfileService userProfileService, BookShopService bookShopService, BlacklistService blacklistService) {
         super(userProfileService, bookShopService);
         this.genreService = genreService;
         this.bookService = bookService;
+        this.blacklistService = blacklistService;
     }
 
     @GetMapping("/genres")
-    public String genresPage(Model model) {
+    public String genresPage(Model model, HttpServletRequest request) {
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("token")) {
+                blacklistService.add(cookie);
+            }
+        }
         model.addAttribute("genres", genreService.getGenreList());
         return "genres/index";
     }

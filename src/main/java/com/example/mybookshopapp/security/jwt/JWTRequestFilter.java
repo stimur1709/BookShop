@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.security.jwt;
 
 import com.example.mybookshopapp.security.BookstoreUserDetails;
+import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,14 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTUtil jwtUtil;
+    private final BlacklistService blacklistService;
 
     @Autowired
-    public JWTRequestFilter(BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil) {
+    public JWTRequestFilter(BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil,
+                            BlacklistService blacklistService) {
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.jwtUtil = jwtUtil;
+        this.blacklistService = blacklistService;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         BookstoreUserDetails userDetails =
                                 (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                        if (jwtUtil.validateToken(token, userDetails)) {
+                        if (jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
                             UsernamePasswordAuthenticationToken authenticationToken =
                                     new UsernamePasswordAuthenticationToken(
                                             userDetails, null, userDetails.getAuthorities()

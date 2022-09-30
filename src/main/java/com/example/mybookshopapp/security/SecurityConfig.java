@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.security;
 
 import com.example.mybookshopapp.security.jwt.JWTRequestFilter;
+import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -21,11 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTRequestFilter filter;
+    private final BlacklistService blacklistService;
 
     @Autowired
-    public SecurityConfig(BookStoreUserDetailsService bookStoreUserDetailsService, JWTRequestFilter filter) {
+    public SecurityConfig(BookStoreUserDetailsService bookStoreUserDetailsService, JWTRequestFilter filter,
+                          BlacklistService blacklistService) {
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.filter = filter;
+        this.blacklistService = blacklistService;
     }
 
     @Bean
@@ -49,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
                 .loginPage("/signin").failureUrl("/signin")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/signin").deleteCookies("token")
+                .and().logout().logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("token")
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
@@ -60,5 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler(blacklistService);
     }
 }

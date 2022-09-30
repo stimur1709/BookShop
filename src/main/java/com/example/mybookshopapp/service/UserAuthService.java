@@ -24,16 +24,19 @@ public class UserAuthService {
     private final Generator generator;
     private final UserContactService userContactService;
     private final PasswordEncoder passwordEncoder;
+    private final BlacklistService blacklistService;
 
     @Autowired
     public UserAuthService(AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           JWTUtil jwtUtil, Generator generator, UserContactService userContactService, PasswordEncoder passwordEncoder) {
+                           JWTUtil jwtUtil, Generator generator, UserContactService userContactService, PasswordEncoder passwordEncoder,
+                           BlacklistService blacklistService) {
         this.authenticationManager = authenticationManager;
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.jwtUtil = jwtUtil;
         this.generator = generator;
         this.userContactService = userContactService;
         this.passwordEncoder = passwordEncoder;
+        this.blacklistService = blacklistService;
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
@@ -47,6 +50,7 @@ public class UserAuthService {
             BookstoreUserDetails userDetails =
                     (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(payload.getContact());
             String jwtToken = jwtUtil.generateToken(userDetails);
+            blacklistService.delete(jwtToken);
             return new ContactConfirmationResponse(true, jwtToken);
         } catch (Exception e) {
 

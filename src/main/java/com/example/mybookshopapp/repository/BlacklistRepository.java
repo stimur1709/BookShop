@@ -1,7 +1,12 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.redis.Blacklist;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Set;
 
-public interface BlacklistRepository extends CrudRepository<Blacklist, String> {
+public interface BlacklistRepository {
+
+    Set<String> findToken(String key);
+
+    void add(String key, long time);
+
+    void delete(String userContact);
 }

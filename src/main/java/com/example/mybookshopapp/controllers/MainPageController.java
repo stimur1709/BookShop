@@ -4,8 +4,6 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.repository.BlacklistRepository;
-import com.example.mybookshopapp.model.redis.Blacklist;
 import com.example.mybookshopapp.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,36 +26,26 @@ public class MainPageController extends ModelAttributeController {
     protected final BookService bookService;
     protected final TagService tagService;
     protected final GenreService genreService;
-    private final BlacklistRepository blacklistRepository;
-
 
     @Autowired
     public MainPageController(BookService bookService, TagService tagService,
                               GenreService genreService, UserProfileService userProfileService,
                               BookShopService bookShopService,
-                              BlacklistRepository blacklistRepository) {
+                              BlacklistService blacklistService) {
         super(userProfileService, bookShopService);
         this.bookService = bookService;
         this.tagService = tagService;
         this.genreService = genreService;
-        this.blacklistRepository = blacklistRepository;
     }
 
     @GetMapping("/")
-    public String mainPage(Model model, HttpServletRequest request) {
+    public String mainPage(Model model) {
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
         model.addAttribute("isAuthenticatedUser", getUserProfileService().isAuthenticatedUser());
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("token"))
-                blacklistRepository.save(new Blacklist(cookie.getValue()));
-        }
-
-        System.out.println(blacklistRepository.findAll());
-
         return "index";
     }
 
@@ -99,7 +87,7 @@ public class MainPageController extends ModelAttributeController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
-                                          SearchWordDto searchWordDto) {
+                                                  SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 

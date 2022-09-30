@@ -24,24 +24,17 @@ public class GenrePageController extends ModelAttributeController {
 
     private final GenreService genreService;
     private final BookService bookService;
-    private final BlacklistService blacklistService;
 
     @Autowired
     public GenrePageController(GenreService genreService, BookService bookService,
-                               UserProfileService userProfileService, BookShopService bookShopService, BlacklistService blacklistService) {
+                               UserProfileService userProfileService, BookShopService bookShopService) {
         super(userProfileService, bookShopService);
         this.genreService = genreService;
         this.bookService = bookService;
-        this.blacklistService = blacklistService;
     }
 
     @GetMapping("/genres")
-    public String genresPage(Model model, HttpServletRequest request) {
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("token")) {
-                blacklistService.add(cookie);
-            }
-        }
+    public String genresPage(Model model) {
         model.addAttribute("genres", genreService.getGenreList());
         return "genres/index";
     }

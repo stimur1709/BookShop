@@ -13,8 +13,6 @@ public class BlacklistService {
     private final BlacklistRepository blacklistRepository;
     private final JWTUtil jwtUtil;
 
-
-
     @Autowired
     public BlacklistService(BlacklistRepository blacklistRepository, JWTUtil jwtUtil) {
         this.blacklistRepository = blacklistRepository;
@@ -32,7 +30,6 @@ public class BlacklistService {
     }
 
     public void delete(String token) {
-        System.out.println("Удален " + jwtUtil.extractUsername(token));
         blacklistRepository.delete(jwtUtil.extractUsername(token));
     }
 }

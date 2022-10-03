@@ -3,7 +3,6 @@ package com.example.mybookshopapp.security.jwt;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,7 +60,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                         }
                     }
-                } catch (ExpiredJwtException ex) {
+                } catch (Exception ex) {
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
                     System.out.println("Токен удален");

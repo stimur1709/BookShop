@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.redis.Blacklist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,7 +10,7 @@ import java.time.Duration;
 import java.util.Set;
 
 @Repository
-public class BlacklistRepositoryImpl implements BlacklistRepository{
+public class BlacklistRepositoryImpl implements BlacklistRepository {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations<String, Object, Object> hashOperations;

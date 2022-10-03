@@ -23,12 +23,4 @@ public class ContactConfirmationResponse {
             this.error = text;
     }
 
-    @Override
-    public String toString() {
-        return "ContactConfirmationResponse{" +
-                "result=" + result +
-                ", token='" + token + '\'' +
-                ", error='" + error + '\'' +
-                '}';
-    }
 }

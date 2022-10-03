@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
@@ -30,8 +27,7 @@ public class MainPageController extends ModelAttributeController {
     @Autowired
     public MainPageController(BookService bookService, TagService tagService,
                               GenreService genreService, UserProfileService userProfileService,
-                              BookShopService bookShopService,
-                              BlacklistService blacklistService) {
+                              BookShopService bookShopService) {
         super(userProfileService, bookShopService);
         this.bookService = bookService;
         this.tagService = tagService;
@@ -87,7 +83,7 @@ public class MainPageController extends ModelAttributeController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
-                                                  SearchWordDto searchWordDto) {
+                                          SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 

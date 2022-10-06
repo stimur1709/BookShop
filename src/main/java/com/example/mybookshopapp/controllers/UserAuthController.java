@@ -4,6 +4,10 @@ import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
 import com.example.mybookshopapp.service.*;
+import com.example.mybookshopapp.service.userService.UserAuthService;
+import com.example.mybookshopapp.service.userService.UserChangeService;
+import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class UserAuthController extends ModelAttributeController {
 
-    private final UserRegisterService userRegister;
+    private final UserRegisterService userRegisterService;
     private final UserAuthService userAuthService;
+    private final UserChangeService userChangeService;
 
     @Autowired
-    public UserAuthController(UserRegisterService userRegister, UserProfileService userProfileService,
-                              BookShopService bookShopService, UserAuthService userAuthService) {
+    public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
+                              BookShopService bookShopService, UserAuthService userAuthService,
+                              UserChangeService userChangeService) {
         super(userProfileService, bookShopService);
-        this.userRegister = userRegister;
+        this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
+        this.userChangeService = userChangeService;
     }
 
     @GetMapping("/signin")
@@ -48,27 +55,27 @@ public class UserAuthController extends ModelAttributeController {
     @ResponseBody
     public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
         //TODO реализовать отправку кода на телефон
-        return userRegister.handlerRequestNewContactConfirmation(payload);
+        return userRegisterService.handlerRequestNewContactConfirmation(payload);
     }
 
     @PostMapping("/api/requestChangeContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
         //TODO реализовать отправку кода на телефон
-        return userRegister.handlerRequestChangeContactConfirmation(payload);
+        return userChangeService.handlerRequestChangeContactConfirmation(payload);
     }
 
     @PostMapping("/api/approveContact")
     @ResponseBody
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        return userRegister.handlerApproveContact(payload);
+        return userRegisterService.handlerApproveContact(payload);
     }
 
     @PostMapping("/registration")
     public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model,
                                       @CookieValue(name = "cartContent", required = false) String cartContent,
                                       @CookieValue(name = "keptContent", required = false) String keptContent) {
-        userRegister.registerUser(registrationForm, cartContent, keptContent);
+        userRegisterService.registerUser(registrationForm, cartContent, keptContent);
         model.addAttribute("regOk", true);
         return "signin";
     }

@@ -42,7 +42,7 @@ public class RecentPageController extends ModelAttributeController {
     public String recentPage(Model model) {
         Page<Book> books = bookService.getPageOfRecentBooks(0, 20);
         model.addAttribute("recentBooks", books.getContent());
-        model.addAttribute("show",books.getTotalPages() != 0);
+        model.addAttribute("show", books.getTotalPages() != 0);
         model.addAttribute("totalPages", books.getTotalPages());
 
         return "books/recent";

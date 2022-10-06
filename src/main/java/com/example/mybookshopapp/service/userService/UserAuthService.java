@@ -1,11 +1,16 @@
-package com.example.mybookshopapp.service;
+package com.example.mybookshopapp.service.userService;
 
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.security.jwt.JWTUtil;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.service.BlacklistService;
+import com.example.mybookshopapp.service.Book2UserTypeService;
+import com.example.mybookshopapp.service.BookStoreUserDetailsService;
+import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,28 +21,26 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class UserAuthService {
+public class UserAuthService extends UserService {
 
     private final AuthenticationManager authenticationManager;
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTUtil jwtUtil;
-    private final Generator generator;
-    private final UserContactService userContactService;
-    private final PasswordEncoder passwordEncoder;
     private final BlacklistService blacklistService;
 
     @Autowired
-    public UserAuthService(AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           JWTUtil jwtUtil, Generator generator, UserContactService userContactService, PasswordEncoder passwordEncoder,
+    public UserAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                           Book2UserTypeService book2UserTypeService, UserContactService userContactService,
+                           Generator generator, AuthenticationManager authenticationManager,
+                           BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil,
                            BlacklistService blacklistService) {
+        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator);
         this.authenticationManager = authenticationManager;
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.jwtUtil = jwtUtil;
-        this.generator = generator;
-        this.userContactService = userContactService;
-        this.passwordEncoder = passwordEncoder;
         this.blacklistService = blacklistService;
     }
+
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
@@ -70,7 +73,7 @@ public class UserAuthService {
         if (userContact != null) {
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
-            if (userContact.getCodeTrails() >= 2 && dif < 300000) {
+            if (userContact.getCodeTrails() > 2 && dif < 300000) {
                 return blockContact(false, payload.getContactType(), dif);
             }
 

@@ -5,6 +5,7 @@ import com.example.mybookshopapp.dto.BookReviewRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;

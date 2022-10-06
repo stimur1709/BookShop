@@ -12,4 +12,14 @@ public class ContactConfirmationPayload {
     private ContactType contactType;
     private String code;
     private String oldContact;
+
+    @Override
+    public String toString() {
+        return "ContactConfirmationPayload{" +
+                "contact='" + contact + '\'' +
+                ", contactType=" + contactType +
+                ", code='" + code + '\'' +
+                ", oldContact='" + oldContact + '\'' +
+                '}';
+    }
 }

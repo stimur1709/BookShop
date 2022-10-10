@@ -70,7 +70,7 @@ public class MainPageController extends ModelAttributeController {
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResult", books.getContent());
             model.addAttribute("totalElement", books.getTotalElements());
-            model.addAttribute("show", books.getTotalPages() != 0);
+            model.addAttribute("show", books.getTotalPages() > 1);
             model.addAttribute("totalPages", books.getTotalPages());
             return "search/index";
         } else {

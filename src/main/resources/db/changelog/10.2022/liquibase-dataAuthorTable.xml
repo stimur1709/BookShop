@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="S Timur" author="49">
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="lev_tolstoy"/>
+            <column name="name" value="Лев Толстой"/>
+            <column name="description" value="Лев Толстой"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="fyodor_dostoevskiy"/>
+            <column name="name" value="Федор Достаевский"/>
+            <column name="description" value="Федор Достаевский"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="mikhail_bulgakov"/>
+            <column name="name" value="Михаил Булгаков"/>
+            <column name="description" value="Михаил Булгаков"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="nikolay_vasilevich_gogol"/>
+            <column name="name" value="Николай Гоголь"/>
+            <column name="description" value="Николай Гоголь"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="aleksandr_pushkin"/>
+            <column name="name" value="Александр Пушкин"/>
+            <column name="description" value="Александр Пушкин"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="ivan_sergeevich_turgenev"/>
+            <column name="name" value="Иван Тургенев"/>
+            <column name="description" value="Иван Тургенев"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="anton_pavlovich_chekhov"/>
+            <column name="name" value="Антон Чехов"/>
+            <column name="description" value="Антон Чехов"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="aleksandr_griboedov"/>
+            <column name="name" value="Александр Грибоедов"/>
+            <column name="description" value="Александр Грибоедов"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="ilya_ilf"/>
+            <column name="name" value="Илья Ильф"/>
+            <column name="description" value="Илья Ильф"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="evgeniy_petrov"/>
+            <column name="name" value="Евгений Петров"/>
+            <column name="description" value="Евгений Петров"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzhoan_k_rouling"/>
+            <column name="name" value="Джоан Роулинг"/>
+            <column name="description" value="Джоан Роулинг"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzhon_ronald_ruel_tolkin"/>
+            <column name="name" value="Джон Рональд Руэл Толкин"/>
+            <column name="description" value="Джон Рональд Руэл Толкин"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzhordzh_oruell"/>
+            <column name="name" value="Джордж Оруэлл"/>
+            <column name="description" value="Джордж Оруэлл"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="gregori_devid_roberts"/>
+            <column name="name" value="Грегори Дэвид Робертс"/>
+            <column name="description" value="Грегори Дэвид Робертс"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="erikh_mariya_remark"/>
+            <column name="name" value="Эрих Мария Ремарк"/>
+            <column name="description" value="Эрих Мария Ремарк"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="deniel_kiz"/>
+            <column name="name" value="Дэниел Киз"/>
+            <column name="description" value="Дэниел Киз"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="oskar_uayld"/>
+            <column name="name" value="Оскар Уайльд"/>
+            <column name="description" value="Оскар Уайльд"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="antuan_de_sent_ekzyuperi"/>
+            <column name="name" value="Антуан де Сент-Экзюпери"/>
+            <column name="description" value="Антуан де Сент-Экзюпери"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzherom_d_selindzher"/>
+            <column name="name" value="Джером Д. Сэлинджер"/>
+            <column name="description" value="Джером Д. Сэлинджер"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="rey_bredberi"/>
+            <column name="name" value="Рэй Брэдбери"/>
+            <column name="description"
+                    value="Рэй Брэдбери — американский писатель. Рэй Дуглас Брэдбери родом из городка Уокиган, штат Иллинойс. Он появился на свет в августе 1920 года. По отцу у автора английские корни, а по матери — шведские. В семье появилось ещё трое детей, однако пережил младенчество лишь его брат Леонард. Раннее знакомство со смертью оставило глубокий след в душе Брэдбери, что нашло отражение в его творчестве. В доме любили искусство, особенно новую диковинку века — кинематограф. Великая депрессия привела родителей Брэдбери на заработки в Лос-Анджелес. После школы парень начал зарабатывать, продавая газеты. Семья не могла дать денег сыновьям на колледж, потому Рэй так и не получил высшего образования. Он сам занялся своим просвещением, посещая библиотеки. Так он познакомился с трудами Достоевского, чьё творчество, по мнению американца, сильно на него повлияло. Брэдбери с 12 лет мечтал писать. Тогда он попробовал сочинить продолжение «Великого воина Марса» Берроуза. Через 5 лет юноша стал членом американского сообщества молодых авторов — «Лиги научных фантастов» Лос-Анджелеса. Рэй писал рассказы, выходившие в дешёвых литературных журналах. Зарабатывать только творчеством было тяжело, но он не сдавался. В 1947-ом вышел первый сборник его рассказов «Тёмный карнавал», встреченный, увы, прохладно. В 1949 году молодой человек перебрался из провинции в Нью-Йорк. Он предложил свои произведения двенадцати издательствам, но везде получил отказ. Лишь одно из них заинтересовалось его текстами. Автору выдвинули условие: для публикации его рассказы должны быть объединены в роман. За ночь Рэй набросал концепцию будущего произведения в виде эссе, содержащее первые наброски будущих «Марсианских хроник». После выхода в свет они в корне изменили представление о жанре научной фантастики. Эту работу её создатель считал лучшей у себя. Всемирная известность настигла автора в 1953-ем после публикации романа «451 градус по Фаренгейту». Впервые он вышел частями в журнале Playboy, который только начал набирать популярность. Главный герой романа Гай Монтэг живёт в тоталитарном обществе потребления. Он работает пожарным, чья задача сжигать книги. Гай считает, что дело пожарных правое и нужное. После встречи с загадочной девушкой его взгляды меняются. Роман долгое время издавался с серьёзными поправками из-за жёсткой цензуры издательства. Однако в 1980-ом Брэдбери удалось отвоевать каждый выкинутый кусок своего детища. В будущем текст «451 градус по Фаренгейту» выходил без сокращений. Автора окрестили «мэтром фантастики». Правда, он никогда не ограничивался рамками этого жанра. Так в 1957-ом мир увидел «Вино из одуванчиков» — отчасти биографическую повесть Рэя. В центре сюжета живущие в маленьком городке братья Том и Дуглас Сполдинги (их фамилия — второе имя отца Брэдбери). Дуглас — альтер-эго самого писателя в детстве. Изначально рукопись тянула на полноценный роман, однако издатель потребовал разделить её на две части. «Лето, прощай!», вторая половинка той истории, вышла спустя полвека. Это произведение стало последней прижизненной публикацией Брэдбери. Самое передаваемое произведение фантаста — «И грянул гром», в основе которого лежит «теория хаоса», более известная под названием «эффект бабочки». Он о том, что равновесие в природе хрупко. Сюжет рассказа послужил основой для нескольких фильмов и сериалов. Творческая деятельность Рэя также распространялась на кино и театр. Он писал сценарии, был автором и ведущим нескольких телепередач. Писатель не раз получал награды в области фантастической литературы, в том числе премии «Небьюла» и «Хьюго», Американской академии и Пулитцеровской премии. Со своей единственной супругой Маргарет Маклюр Рэй познакомился в сентябре 1947 года в книжном магазине, где девушка работала продавцом. Первые годы брака она тянула всю семью, ведь Брэдбери не удавалось хорошо заработать творчеством. Он ласково назвал супругу Мэгги и прожил с ней вместе вплоть до её смерти в 2003-ем. Именно Маргаретт автор посвятил «Марсианские хроники». У супругов было четверо дочерей — Сьюзен, Рамона, Александра и Беттина. Жизнь Рэя была полностью посвящена литературе до самых последних дней. Его утро неизменно начиналось за рабочим столом. Фантаст верил, что творчество продлевает ему жизнь. После инсульта в 1999 году Брэдбери уже не вставал с инвалидного кресла. Знаменитый фантаст умер на 91 году жизни 5 июня 2012-го в Лос-Анджелесе."/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="rend_ayn"/>
+            <column name="name" value="Рэнд Айн"/>
+            <column name="description" value="Рэнд Айн"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="kharper_li"/>
+            <column name="name" value="Харпер Ли"/>
+            <column name="description" value="Харпер Ли"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="gabriel_garsia_markes"/>
+            <column name="name" value="Габриэль Гарсиа Маркес"/>
+            <column name="description" value="Габриэль Гарсиа Маркес"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="ernest_kheminguey"/>
+            <column name="name" value="Эрнест Хемингуэй"/>
+            <column name="description" value="Эрнест Хемингуэй"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="aleksandr_dyuma"/>
+            <column name="name" value="Александр Дюма"/>
+            <column name="description" value="Александр Дюма"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="frensis_skott_fitsdzherald"/>
+            <column name="name" value="Фрэнсис Скотт Фицджеральд"/>
+            <column name="description" value="Фрэнсис Скотт Фицджеральд"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzheyn_ostin"/>
+            <column name="name" value="Джейн Остин"/>
+            <column name="description" value="Джейн Остин"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="chak_palanik"/>
+            <column name="name" value="Чак Паланик"/>
+            <column name="description" value="Чак Паланик"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="markus_zusak"/>
+            <column name="name" value="Маркус Зусак"/>
+            <column name="description" value="Маркус Зусак"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="stiven_king"/>
+            <column name="name" value="Стивен Кинг"/>
+            <column name="description" value="Стивен Кинг"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="oldos_khaksli"/>
+            <column name="name" value="Олдос Хаксли"/>
+            <column name="description" value="Олдос Хаксли"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="mikhail_lermontov"/>
+            <column name="name" value="Михаил Лермонтов"/>
+            <column name="description" value="Михаил Лермонтов"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="endi_veyer"/>
+            <column name="name" value="Энди Вейер"/>
+            <column name="description" value="Энди Вейер"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="margaret_mitchell"/>
+            <column name="name" value="Маргарет Митчелл"/>
+            <column name="description" value="Маргарет Митчелл"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="mariam_petrosyan"/>
+            <column name="name" value="Мариам Петросян"/>
+            <column name="description" value="Мариам Петросян"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="arkadiy_strugatskiy"/>
+            <column name="name" value="Аркадий Стругацкий"/>
+            <column name="description" value="Аркадий Стругацкий"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="boris_strugatskiy"/>
+            <column name="name" value="Борис Стругацкий"/>
+            <column name="description" value="Борис Стругацкий"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="paulo_koelo"/>
+            <column name="name" value="Пауло Коэльо"/>
+            <column name="description" value="Пауло Коэльо"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="dzhordzh_r_r_martin"/>
+            <column name="name" value="Джордж Р. Р. Мартин"/>
+            <column name="description" value="Джордж Р. Р. Мартин"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
+            <column name="slug" value="yanush_vishnevskiy"/>
+            <column name="name" value="Януш Вишневский"/>
+            <column name="description" value="Януш Вишневский"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

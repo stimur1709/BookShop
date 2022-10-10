@@ -52,7 +52,7 @@ public class AuthorsPageController extends ModelAttributeController {
         Page<Book> books = bookService.getBooksForPageAuthor(author, 0, 20);
         model.addAttribute("author", author);
         model.addAttribute("books", books.getContent());
-        model.addAttribute("show", books.getTotalPages() != 0);
+        model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
 
         return "books/author";

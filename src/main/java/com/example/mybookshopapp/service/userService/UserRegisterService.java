@@ -72,8 +72,7 @@ public class UserRegisterService extends UserService {
         return new ContactConfirmationResponse(true);
     }
 
-    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload) {
-        UserContact userContact = userContactService.getUserContact(payload.getContact());
+    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload, UserContact userContact) {
         long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
         if (userContact.getCodeTrails() > 2 && dif < 300000) {

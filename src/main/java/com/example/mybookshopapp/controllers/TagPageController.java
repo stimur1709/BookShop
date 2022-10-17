@@ -44,7 +44,7 @@ public class TagPageController extends ModelAttributeController {
         model.addAttribute("booksTag", books);
         model.addAttribute("searchWordDto", new SearchWordDto());
         model.addAttribute("searchResult", new ArrayList<>());
-        model.addAttribute("show", books.getTotalPages() != 0);
+        model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
         return "tags/index";
     }
@@ -54,7 +54,7 @@ public class TagPageController extends ModelAttributeController {
     @Operation(summary = "Постраничный вывод книг")
     public BooksPageDto getBooksPage(@PathVariable(value = "slug") String slug,
                                      @RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit, RedirectAttributes redirectAttributes) {
+                                     @RequestParam("limit") Integer limit) {
         TagBook tag = tagService.getPageBySlug(slug);
         Page<Book> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
         return new BooksPageDto(tagBooks.getContent());

@@ -3,12 +3,14 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.BookRateRequestDto;
 import com.example.mybookshopapp.dto.BookReviewRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
+import com.example.mybookshopapp.dto.ReviewLikeDto;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
 
 @Controller
 public class BookPageController extends ModelAttributeController {
@@ -105,7 +108,7 @@ public class BookPageController extends ModelAttributeController {
 
     @PostMapping("/api/rateBookReview")
     @ResponseBody
-    public Boolean rateBookReview(@RequestParam("reviewid") int reviewId, @RequestParam("value") short value) {
-        return bookRateReviewService.changeRateBookReview(reviewId, value);
+    public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
+        return new ResponseEntity<>(Map.of("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue())), HttpStatus.OK);
     }
 }

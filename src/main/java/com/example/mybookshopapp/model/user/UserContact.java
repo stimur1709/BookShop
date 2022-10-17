@@ -43,7 +43,7 @@ public class UserContact {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    public UserContact(ContactType type, String contact,  String code) {
+    public UserContact(ContactType type, String contact, String code) {
         this.type = type;
         this.code = code;
         this.contact = contact;
@@ -53,4 +53,18 @@ public class UserContact {
     public UserContact() {
     }
 
+
+    @Override
+    public String toString() {
+        return "UserContact{" +
+                "id=" + id +
+                ", user=" + user +
+                ", type=" + type +
+                ", approved=" + approved +
+                ", code='" + code + '\'' +
+                ", codeTrails=" + codeTrails +
+                ", codeTime=" + codeTime +
+                ", contact='" + contact + '\'' +
+                '}';
+    }
 }

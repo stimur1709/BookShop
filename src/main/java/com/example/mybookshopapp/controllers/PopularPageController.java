@@ -39,7 +39,7 @@ public class PopularPageController extends ModelAttributeController {
     public String popularPage(Model model) {
         Page<Book> books = bookService.getPageOfPopularBooks(0, 20);
         model.addAttribute("popularBooks", books.getContent());
-        model.addAttribute("show", books.getTotalPages() != 0);
+        model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
         return "books/popular";
     }

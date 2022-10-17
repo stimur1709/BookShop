@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
+import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
@@ -22,15 +23,17 @@ public class UserAuthController extends ModelAttributeController {
     private final UserRegisterService userRegisterService;
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
+    private final UserContactService userContactService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService) {
+                              UserChangeService userChangeService, UserContactService userContactService) {
         super(userProfileService, bookShopService);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
+        this.userContactService = userContactService;
     }
 
     @GetMapping("/signin")
@@ -68,7 +71,10 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/api/approveContact")
     @ResponseBody
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        return userRegisterService.handlerApproveContact(payload);
+        UserContact userContact = userContactService.getUserContact(payload.getContact());
+        if (userContact != null)
+            return userRegisterService.handlerApproveContact(payload, userContact);
+        else return userChangeService.handlerApproveContact(payload);
     }
 
     @PostMapping("/registration")

@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8080
   servlet:
     session:
       tracking-modes: cookie
@@ -8,8 +8,6 @@ spring:
   jpa:
     database: POSTGRESQL
     show-sql: false
-    hibernate:
-      ddl-auto: update
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
@@ -30,12 +28,8 @@ spring:
     prefix: classpath:/spring-frontend/
 
   liquibase:
-    enabled: false
-    change-log: classpath:/db/changelog/db:changelog-master:xml
-
-  sql:
-    init:
-      mode: embedded
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
 
   messages:
     basename: lang.messages

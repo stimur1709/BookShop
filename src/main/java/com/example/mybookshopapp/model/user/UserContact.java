@@ -31,7 +31,7 @@ public class UserContact {
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private short approved;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String code;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
@@ -50,9 +50,15 @@ public class UserContact {
         this.codeTime = new Date();
     }
 
-    public UserContact() {
+    public UserContact(ContactType type, String contact) {
+        this.type = type;
+        this.approved = 1;
+        this.contact = contact;
+        this.codeTime = new Date();
     }
 
+    public UserContact() {
+    }
 
     @Override
     public String toString() {

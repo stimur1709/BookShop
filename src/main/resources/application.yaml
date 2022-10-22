@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8085
   servlet:
     session:
       tracking-modes: cookie
@@ -33,6 +33,24 @@ spring:
 
   messages:
     basename: lang.messages
+
+  security:
+    oauth2:
+      client:
+        registration:
+          vk:
+            client-id: 51411687
+            client-secret: x38uaMtZ89FSSDBoPf91
+            redirect-uri: http://localhost:8085/login/oauth2/code/vk
+            client-authentication-method: post
+            scope: email
+            authorization-grant-type: authorization_code
+        provider:
+          vk:
+            authorization-uri: https://oauth.vk.com/authorize
+            tokenUri: https://oauth.vk.com/access_token
+            userInfoUri: https://api.vk.com/method/users.get?v=5.131
+            userNameAttribute: id
 
 upload:
   path: src/main/resources/img

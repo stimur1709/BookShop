@@ -20,6 +20,8 @@ public class UserProfileService {
 
     public UserDto getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(SecurityContextHolder.getContext().getAuthentication() + " !!!");
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal() + " !!!");
 
         if (principal.equals("anonymousUser"))
             return new UserDto("anonymousUser");
@@ -40,7 +42,7 @@ public class UserProfileService {
                 phone = contact.getContact();
         }
 
-        return new UserDto(user.getId(), user.getName(), mail, phone, user.getBalance());
+        return new UserDto(user.getId(), user.getLastname(), mail, phone, user.getBalance());
     }
 
     public boolean isAuthenticatedUser() {

@@ -40,7 +40,10 @@ public class User {
     private int balance;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String name;
+    private String firstname;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String lastname;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -70,11 +73,19 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Message> messageList;
 
-    public User(String name, String password) {
-        this.hash = name.replace(" ", "");
+    public User(String firstname, String lastname, String password) {
+        this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
         this.password = password;
         this.regTime = LocalDateTime.now();
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
+
+    public User(String firstname, String lastname) {
+        this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
+        this.regTime = LocalDateTime.now();
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public User() {

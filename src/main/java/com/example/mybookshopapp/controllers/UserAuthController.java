@@ -108,4 +108,14 @@ public class UserAuthController extends ModelAttributeController {
         }
         return loginResponse;
     }
+
+    @GetMapping("/login/oauth2/code/vk")
+    @RequestMapping
+    public String oauth2vk(@RequestParam("code") String code,
+                           @RequestParam("state") String state) {
+        System.out.println(code);
+        System.out.println(state);
+        return ",soamf";
+    }
+
 }

@@ -95,8 +95,7 @@ public class UserAuthService extends UserService {
         return response;
     }
 
-    private ContactConfirmationResponse badContact(int result, ContactType type) {
+    protected ContactConfirmationResponse badContact(int result, ContactType type) {
         return new ContactConfirmationResponse(false, generator.generatorTextBadContact(type, result));
     }
-
 }

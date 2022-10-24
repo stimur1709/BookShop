@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Service
-public class CookieService {
+public class CookieBooksService {
     private static final String CART_COOKIE_NAME = "cartContent";
     private static final String KEPT_COOKIE_NAME = "keptContent";
 
@@ -21,7 +21,7 @@ public class CookieService {
     private final BookRepository bookRepository;
 
     @Autowired
-    public CookieService(BooksRatingAndPopularityService booksRatingAndPopularityService, BookRepository bookRepository) {
+    public CookieBooksService(BooksRatingAndPopularityService booksRatingAndPopularityService, BookRepository bookRepository) {
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.bookRepository = bookRepository;
     }

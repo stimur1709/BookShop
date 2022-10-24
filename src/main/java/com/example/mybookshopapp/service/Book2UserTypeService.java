@@ -21,26 +21,24 @@ public class Book2UserTypeService {
     private final BookService bookService;
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
     private final UserProfileService userProfileService;
-    private final UserContactService userContactService;
     private final Book2UserService book2UserService;
     private final Book2UserTypeRepository book2UserTypeRepository;
     private final Book2UserRepository book2UserRepository;
-    private final CookieService cookieService;
+    private final CookieBooksService cookieBooksService;
 
     @Autowired
     public Book2UserTypeService(BookService bookService,
                                 BooksRatingAndPopularityService booksRatingAndPopularityService,
-                                UserProfileService userProfileService, UserContactService userContactService,
-                                Book2UserService book2UserService, Book2UserTypeRepository book2UserTypeRepository,
-                                Book2UserRepository book2UserRepository, CookieService cookieService) {
+                                UserProfileService userProfileService, Book2UserService book2UserService,
+                                Book2UserTypeRepository book2UserTypeRepository, Book2UserRepository book2UserRepository,
+                                CookieBooksService cookieBooksService) {
         this.bookService = bookService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.userProfileService = userProfileService;
-        this.userContactService = userContactService;
         this.book2UserService = book2UserService;
         this.book2UserTypeRepository = book2UserTypeRepository;
         this.book2UserRepository = book2UserRepository;
-        this.cookieService = cookieService;
+        this.cookieBooksService = cookieBooksService;
     }
 
     public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
@@ -48,7 +46,7 @@ public class Book2UserTypeService {
 
         for (String slug : slugs) {
             Book book = bookService.getBookBySlug(slug);
-            User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
+            User user = userProfileService.getCurrentUser();
 
             switch (dto.getStatus()) {
                 case CART: {
@@ -76,7 +74,7 @@ public class Book2UserTypeService {
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserService.getBook2User(book, user);
         Book2User book2User;
-        if (!optionalBook2User.isPresent()) {
+        if (optionalBook2User.isEmpty()) {
             Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
             book2User = new Book2User(book2UserType, book, user);
             book2UserService.save(book2User);
@@ -98,7 +96,7 @@ public class Book2UserTypeService {
     }
 
     public BookCodeType getBookStatus(Book book) {
-        User user = userContactService.getUserContact(userProfileService.getCurrentUser().getMail()).getUser();
+        User user = userProfileService.getCurrentUser();
 
         return book2UserRepository.findByUserAndBook(user, book).map(value -> value.getType().getCode()).orElse(BookCodeType.UNLINK);
     }
@@ -113,7 +111,7 @@ public class Book2UserTypeService {
     }
 
     public void addBooksTypeUserFromCookie(String cartContent, String keptContent, User user) {
-        Map<BookCodeType, List<Book>> books = cookieService.getBooksFromCookies(cartContent, keptContent);
+        Map<BookCodeType, List<Book>> books = cookieBooksService.getBooksFromCookies(cartContent, keptContent);
         books.forEach((key, value) -> value.forEach(book -> changeTypeBook2User(book, user, key, false)));
     }
 }

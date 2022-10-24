@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.util;
+package com.example.mybookshopapp.security.token;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -13,7 +13,6 @@ public class CustomTokenResponseConverter implements Converter<Map<String, Strin
     @Override
     public OAuth2AccessTokenResponse convert(Map<String, String> tokenResponseParameters) {
         String accessToken = tokenResponseParameters.get(OAuth2ParameterNames.ACCESS_TOKEN);
-        System.out.println(accessToken);
         OAuth2AccessToken.TokenType accessTokenType = OAuth2AccessToken.TokenType.BEARER;
         Map<String, Object> additionalParameters = new HashMap<>(tokenResponseParameters);
         return OAuth2AccessTokenResponse.withToken(accessToken)

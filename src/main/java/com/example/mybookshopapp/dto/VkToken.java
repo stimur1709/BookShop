@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.security.jwt;
+package com.example.mybookshopapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

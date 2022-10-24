@@ -22,23 +22,26 @@ public class UserChangeService extends UserService {
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
-        UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
+        System.out.println(payload.getContactType());
         if (userContactService.checkUserExistsByContact(payload.getContact()).isPresent()) {
             UserContact userNewContact = userContactService.getUserContact(payload.getContact());
 
             if (userNewContact.getApproved() == (short) 1) {
-                String error = userOldContact.getType().equals(ContactType.PHONE)
+                String error = payload.getContactType().equals(ContactType.PHONE)
                         ? "Указанный номер телефона уже привязан к другому пользователю, введите другой"
                         : "Указанная почта уже привязана к другому пользователю, введите другую";
                 return new ContactConfirmationResponse(false, error);
             }
         }
-
+        UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
+        UserContact userContact = new UserContact(payload.getContactType(), payload.getContact(), payload.getCode());
+        //todo
         return new ContactConfirmationResponse(true);
+
     }
 
     public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload) {
-        UserContact userContact = new UserContact(payload.getContactType(), payload.getContact(), payload.getCode());
+        UserContact userContact = userContactService.getUserContact(payload.getContact());
         return super.handlerApproveContact(payload, userContact);
     }
 }

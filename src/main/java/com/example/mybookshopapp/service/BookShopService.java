@@ -14,14 +14,14 @@ import java.util.*;
 @Service
 public class BookShopService {
 
-    private final CookieService cookieService;
+    private final CookieBooksService cookieBooksService;
     private final UserProfileService userProfileService;
     private final Book2UserTypeService book2UserTypeService;
 
     @Autowired
-    public BookShopService(CookieService cookieService, UserProfileService userProfileService,
+    public BookShopService(CookieBooksService cookieBooksService, UserProfileService userProfileService,
                            Book2UserTypeService book2UserTypeService) {
-        this.cookieService = cookieService;
+        this.cookieBooksService = cookieBooksService;
         this.userProfileService = userProfileService;
         this.book2UserTypeService = book2UserTypeService;
     }
@@ -32,7 +32,7 @@ public class BookShopService {
             return book2UserTypeService.changeBookStatus(dto);
         }
 
-        return cookieService.changeBookStatus(response, request.getCookies(), dto);
+        return cookieBooksService.changeBookStatus(response, request.getCookies(), dto);
     }
 
     public BookCodeType getBookStatus(HttpServletRequest request, Book book) {
@@ -40,14 +40,14 @@ public class BookShopService {
             return book2UserTypeService.getBookStatus(book);
         }
 
-        return cookieService.getBookStatus(book.getSlug(), request.getCookies());
+        return cookieBooksService.getBookStatus(book.getSlug(), request.getCookies());
     }
 
     public List<Book> getBooksUser(String cookie, BookCodeType status) {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.getBooksUser(status);
         }
-        return cookieService.getBooksFromCookie(cookie);
+        return cookieBooksService.getBooksFromCookie(cookie);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.security.jwt;
+package com.example.mybookshopapp.security.token;
 
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BlacklistService;

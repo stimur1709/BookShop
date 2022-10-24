@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.security;
 
-import com.example.mybookshopapp.security.jwt.JWTRequestFilter;
+import com.example.mybookshopapp.security.token.JWTRequestFilter;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.CustomOAuth2UserService;
-import com.example.mybookshopapp.util.CustomTokenResponseConverter;
+import com.example.mybookshopapp.security.token.CustomTokenResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,10 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("token")
                 .and().sessionManagement()
                 .and().oauth2Login()
-                //Access token Endpoint
                 .tokenEndpoint()
                 .accessTokenResponseClient(accessTokenResponseClient())
-                //Userinfo endpoint
                 .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);

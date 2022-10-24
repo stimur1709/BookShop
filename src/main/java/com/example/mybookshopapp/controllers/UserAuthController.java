@@ -93,7 +93,7 @@ public class UserAuthController extends ModelAttributeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model) {
-        model.addAttribute("currentUser", getUserProfileService().getCurrentUser());
+        model.addAttribute("currentUser", getUserProfileService().getCurrentUserDTO());
         return "profile";
     }
 
@@ -108,14 +108,4 @@ public class UserAuthController extends ModelAttributeController {
         }
         return loginResponse;
     }
-
-    @GetMapping("/login/oauth2/code/vk")
-    @RequestMapping
-    public String oauth2vk(@RequestParam("code") String code,
-                           @RequestParam("state") String state) {
-        System.out.println(code);
-        System.out.println(state);
-        return ",soamf";
-    }
-
 }

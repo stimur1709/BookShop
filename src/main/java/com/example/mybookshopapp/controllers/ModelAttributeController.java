@@ -30,7 +30,7 @@ public class ModelAttributeController {
 
     @ModelAttribute("getUser")
     public UserDto getUserDTO() {
-        return userProfileService.getCurrentUser();
+        return userProfileService.getCurrentUserDTO();
     }
 
     @ModelAttribute("isAuthenticatedUser")

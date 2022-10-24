@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.repository.BlacklistRepository;
-import com.example.mybookshopapp.security.jwt.JWTUtil;
+import com.example.mybookshopapp.security.token.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class BlacklistService {
         blacklistRepository.add(key, exp);
     }
 
-    public boolean findToken(String key){
+    public boolean findToken(String key) {
         return blacklistRepository.findToken(key).isEmpty();
     }
 

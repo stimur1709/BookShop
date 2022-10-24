@@ -4,7 +4,7 @@ import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
-import com.example.mybookshopapp.security.jwt.JWTUtil;
+import com.example.mybookshopapp.security.token.JWTUtil;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.service.BlacklistService;
@@ -95,8 +95,7 @@ public class UserAuthService extends UserService {
         return response;
     }
 
-    private ContactConfirmationResponse badContact(int result, ContactType type) {
+    protected ContactConfirmationResponse badContact(int result, ContactType type) {
         return new ContactConfirmationResponse(false, generator.generatorTextBadContact(type, result));
     }
-
 }

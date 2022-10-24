@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -33,8 +33,9 @@ public class User {
 
     private String password;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition = "DATE NOT NULL")
-    private LocalDateTime regTime;
+    private Date regTime;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int balance;
@@ -76,14 +77,14 @@ public class User {
     public User(String firstname, String lastname, String password) {
         this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
         this.password = password;
-        this.regTime = LocalDateTime.now();
+        this.regTime = new Date();
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
     public User(String firstname, String lastname) {
         this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
-        this.regTime = LocalDateTime.now();
+        this.regTime = new Date();
         this.firstname = firstname;
         this.lastname = lastname;
     }

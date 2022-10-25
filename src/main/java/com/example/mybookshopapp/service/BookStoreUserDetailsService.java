@@ -23,7 +23,7 @@ public class BookStoreUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserContact> userContact = userContactRepository.findUserContactEntityByContact(username);
+        Optional<UserContact> userContact = userContactRepository.findByContactIgnoreCase(username);
         if (userContact.isPresent())
             return new BookstoreUserDetails(userContact.get());
         else

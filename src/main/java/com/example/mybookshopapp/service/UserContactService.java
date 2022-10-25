@@ -22,11 +22,11 @@ public class UserContactService {
     }
 
     public Optional<UserContact> checkUserExistsByContact(String contact) {
-        return userContactRepository.findUserContactEntityByContact(contact);
+        return userContactRepository.findByContactIgnoreCase(contact);
     }
 
     public UserContact getUserContact(String contact) {
-        return userContactRepository.findUserContactEntityByContact(contact).orElse(null);
+        return userContactRepository.findByContactIgnoreCase(contact).orElse(null);
     }
 
     public UserContact save(UserContact userContact) {

@@ -2,12 +2,12 @@ package com.example.mybookshopapp.model.user;
 
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class UserContact {
     @JsonBackReference
     private User user;
 
-    @ManyToOne
-    @JsonManagedReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "parent_id")
     private UserContact userContact;
 
     @Enumerated(EnumType.STRING)
@@ -37,7 +37,7 @@ public class UserContact {
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private short approved;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String code;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
@@ -49,10 +49,8 @@ public class UserContact {
     @Column(unique = true, columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    @OneToMany
-    @JoinColumn(name = "parent_id")
-    @JsonBackReference
-    private List<UserContact> childUserContact;
+    @OneToMany(mappedBy = "userContact")
+    private List<UserContact> userContacts = new ArrayList<>();
 
     public UserContact(ContactType type, String contact, String code) {
         this.type = type;

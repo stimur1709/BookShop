@@ -22,7 +22,6 @@ public class UserChangeService extends UserService {
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
-        System.out.println(payload.getContactType());
         if (userContactService.checkUserExistsByContact(payload.getContact()).isPresent()) {
             UserContact userNewContact = userContactService.getUserContact(payload.getContact());
 

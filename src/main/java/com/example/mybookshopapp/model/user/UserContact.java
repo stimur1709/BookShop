@@ -27,8 +27,8 @@ public class UserContact {
     @JsonBackReference
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parent_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "parent_id", columnDefinition = "INT")
     private UserContact userContact;
 
     @Enumerated(EnumType.STRING)
@@ -67,6 +67,25 @@ public class UserContact {
     }
 
     public UserContact() {
+    }
+
+    public UserContact(User user, UserContact userContact, ContactType type, String code, String contact) {
+        this.type = type;
+        this.code = code;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.user = user;
+        this.userContact = userContact;
+        this.code = code;
+    }
+
+    public UserContact(User user, ContactType type, String code, String contact) {
+        this.type = type;
+        this.code = code;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.user = user;
+        this.code = code;
     }
 
     @Override

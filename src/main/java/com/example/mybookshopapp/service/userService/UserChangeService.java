@@ -41,11 +41,10 @@ public class UserChangeService extends UserService {
         UserContact userNewContact;
         if (payload.getOldContact() != null) {
             UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
-            userNewContact = new UserContact(userOldContact.getUser(), userOldContact.getUserContact(),
+            userNewContact = new UserContact(userOldContact.getUser(), userOldContact.getParentUserContact(),
                     payload.getContactType(), generator.getSecretCode(), payload.getContact());
-            userOldContact.getUserContacts().add(userNewContact);
+            userOldContact.setParentUserContact(userNewContact);
             userContactService.save(userOldContact);
-            userContactService.save(userNewContact);
 
         } else {
             userNewContact = new UserContact(userProfileService.getCurrentUser(),

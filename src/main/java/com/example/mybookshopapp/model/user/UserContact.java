@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -27,9 +25,9 @@ public class UserContact {
     @JsonBackReference
     private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "parent_id", columnDefinition = "INT")
-    private UserContact userContact;
+    private UserContact parentUserContact;
 
     @Enumerated(EnumType.STRING)
     private ContactType type;
@@ -49,8 +47,8 @@ public class UserContact {
     @Column(unique = true, columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    @OneToMany(mappedBy = "userContact")
-    private List<UserContact> userContacts = new ArrayList<>();
+    @OneToOne(mappedBy = "parentUserContact")
+    private UserContact childUserContact;
 
     public UserContact(ContactType type, String contact, String code) {
         this.type = type;
@@ -75,7 +73,7 @@ public class UserContact {
         this.contact = contact;
         this.codeTime = new Date();
         this.user = user;
-        this.userContact = userContact;
+        this.parentUserContact = userContact;
         this.code = code;
     }
 

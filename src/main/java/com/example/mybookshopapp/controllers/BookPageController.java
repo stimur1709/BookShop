@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -109,6 +110,8 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping("/api/rateBookReview")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-        return new ResponseEntity<>(Map.of("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue())), HttpStatus.OK);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue()));
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }

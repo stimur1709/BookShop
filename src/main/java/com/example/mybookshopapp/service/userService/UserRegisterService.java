@@ -19,7 +19,6 @@ import java.util.Date;
 @Service
 public class UserRegisterService extends UserService {
 
-
     @Autowired
     public UserRegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                                Book2UserTypeService book2UserTypeService, UserContactService userContactService,
@@ -28,7 +27,7 @@ public class UserRegisterService extends UserService {
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
-        User user = new User(registrationForm.getName(),
+        User user = new User(registrationForm.getName(), registrationForm.getName(),
                 passwordEncoder.encode(registrationForm.getPassword()));
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getEmail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
@@ -71,38 +70,4 @@ public class UserRegisterService extends UserService {
         }
         return new ContactConfirmationResponse(true);
     }
-
-    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload, UserContact userContact) {
-        long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
-
-        if (userContact.getCodeTrails() > 2 && dif < 300000) {
-            return blockContact(dif);
-        }
-
-        if (dif > 1000000) {
-            return new ContactConfirmationResponse(false, "Код подтверждения устарел. Запросите новый");
-        }
-
-        if (!userContact.getCode().equals(payload.getCode())) {
-            userContact.setCodeTrails(userContact.getCodeTrails() + 1);
-            userContactService.save(userContact);
-            return badContact(userContact.getCodeTrails(), userContact.getType());
-        }
-
-        userContact.setApproved((short) 1);
-        userContactService.save(userContact);
-        return new ContactConfirmationResponse(true);
-    }
-
-    private ContactConfirmationResponse blockContact(long time) {
-        return new ContactConfirmationResponse(false,
-                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
-    }
-
-    private ContactConfirmationResponse badContact(int result, ContactType type) {
-        ContactConfirmationResponse response = new ContactConfirmationResponse(true);
-        response.setError(generator.generatorTextBadContact(type, result));
-        return response;
-    }
-
 }

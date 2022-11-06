@@ -4,46 +4,49 @@ import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
-import com.example.mybookshopapp.repository.UserRepository;
-import com.example.mybookshopapp.security.BookstoreUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserProfileService {
 
-    private final UserRepository userRepository;
+    private final UserContactService userContactService;
 
-    public UserProfileService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserProfileService(UserContactService userContactService) {
+        this.userContactService = userContactService;
     }
 
-    public UserDto getCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public UserDto getCurrentUserDTO() {
 
-        if (principal.equals("anonymousUser"))
-            return new UserDto("anonymousUser");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        BookstoreUserDetails bookstoreUserDetails =
-                (BookstoreUserDetails) principal;
+        if (!username.equals("anonymousUser")) {
+            User user = userContactService.getUserContact(username).getUser();
+            String mail = "";
+            String phone = "";
 
+            for (UserContact contact : user.getUserContact()) {
+                if (contact.getType() == ContactType.MAIL)
+                    mail = contact.getContact();
 
-        User user = bookstoreUserDetails.getUserContact().getUser();
-        String mail = "";
-        String phone = "";
+                if (contact.getType() == ContactType.PHONE)
+                    phone = contact.getContact();
+            }
 
-        for (UserContact contact : userRepository.getById(user.getId()).getUserContact()) {
-            if (contact.getType() == ContactType.MAIL)
-                mail = contact.getContact();
-
-            if (contact.getType() == ContactType.PHONE)
-                phone = contact.getContact();
+            return new UserDto(user.getId(), user.getLastname(), mail, phone, user.getBalance());
         }
+        return null;
+    }
 
-        return new UserDto(user.getId(), user.getName(), mail, phone, user.getBalance());
+    public User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return userContactService.getUserContact(username).getUser();
     }
 
     public boolean isAuthenticatedUser() {
-        return !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return !username.equals("anonymousUser");
     }
 }

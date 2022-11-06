@@ -1,11 +1,17 @@
 package com.example.mybookshopapp.service.userService;
 
+import com.example.mybookshopapp.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.model.enums.ContactType;
+import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.service.Book2UserTypeService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserService {
@@ -24,4 +30,38 @@ public class UserService {
         this.userContactService = userContactService;
         this.generator = generator;
     }
+
+    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload, UserContact userContact) {
+        long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
+
+        if (userContact.getCodeTrails() > 2 && dif < 300000) {
+            return blockContact(dif);
+        }
+
+        if (dif > 1000000) {
+            return new ContactConfirmationResponse(false, "Код подтверждения устарел. Запросите новый");
+        }
+
+        if (!userContact.getCode().equals(payload.getCode())) {
+            userContact.setCodeTrails(userContact.getCodeTrails() + 1);
+            userContactService.save(userContact);
+            return badContact(userContact.getCodeTrails(), userContact.getType());
+        }
+
+        userContact.setApproved((short) 1);
+        userContactService.save(userContact);
+        return new ContactConfirmationResponse(true);
+    }
+
+    protected ContactConfirmationResponse blockContact(long time) {
+        return new ContactConfirmationResponse(false,
+                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
+    }
+
+    protected ContactConfirmationResponse badContact(int result, ContactType type) {
+        ContactConfirmationResponse response = new ContactConfirmationResponse(true);
+        response.setError(generator.generatorTextBadContact(type, result));
+        return response;
+    }
+
 }

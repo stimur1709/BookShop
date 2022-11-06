@@ -29,8 +29,8 @@ public class UserContactService {
         return userContactRepository.findUserContactEntityByContact(contact).orElse(null);
     }
 
-    public void save(UserContact userContact) {
-        userContactRepository.save(userContact);
+    public UserContact save(UserContact userContact) {
+        return userContactRepository.save(userContact);
     }
 
     public void changeContact(UserContact userContact) {

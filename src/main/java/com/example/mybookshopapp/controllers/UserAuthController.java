@@ -93,7 +93,7 @@ public class UserAuthController extends ModelAttributeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model) {
-        model.addAttribute("currentUser", getUserProfileService().getCurrentUser());
+        model.addAttribute("currentUser", getUserProfileService().getCurrentUserDTO());
         return "profile";
     }
 

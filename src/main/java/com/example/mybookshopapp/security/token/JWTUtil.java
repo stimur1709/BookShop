@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.security.jwt;
+package com.example.mybookshopapp.security.token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -58,4 +58,5 @@ public class JWTUtil {
         String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
 }

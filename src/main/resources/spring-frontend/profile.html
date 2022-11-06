@@ -44,7 +44,8 @@
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
                         <div class="Profile">
-                            <form class="form Login Login_registration" action="#" method="post"
+                            <form class="form Login Login_registration" th:action="@{/profile/save}"
+                                  th:object="${currentUser}" th:method="POST"
                                   style="padding: 0px; box-shadow: 0 0 0px rgb(0 0 0 / 10%)">
                                 <div class="row">
                                     <div class="row-block">
@@ -52,7 +53,7 @@
                                             <label class="form-label" for="name">Имя
                                             </label>
                                             <input class="form-input" id="name" name="name" type="text"
-                                                   th:value="${currentUser.name}"
+                                                   th:value="${currentUser.name}" th:field="*{name}"
                                                    value="Михаил"/>
                                         </div>
                                         <div class="form-group form-group_mail">
@@ -61,7 +62,7 @@
                                             </label>
                                             <input class="form-input form-input_mail" id="mail" name="mail" type="text"
                                                    value="addr@sait.com" data-validate="require mail"
-                                                   th:value="${currentUser.mail}"/>
+                                                   th:value="${currentUser.mail}" th:field="*{mail}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
                                                         id="submitChangeMail"
@@ -84,7 +85,8 @@
                                             </label>
                                             <input class="form-input form-input_phone" id="phone" name="phone"
                                                    type="text" value="+70000000000" data-mask="+7 (999) 999-99-99"
-                                                   data-validate="require" th:value="${currentUser.phone}"/>
+                                                   data-validate="require" th:value="${currentUser.phone}"
+                                                   th:field="*{phone}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
                                                         id="submitChangePhone"
@@ -119,9 +121,8 @@
                                                 <button class="btn btn_danger" type="button"
                                                         th:text="#{message.cancel}">Отменить
                                                 </button>
-                                                <button class="btn btn_primary" type="submit" th:text="#{message.save}">
-                                                    Сохранить
-                                                </button>
+                                                <input class="btn btn_primary" type="submit"
+                                                       th:value="#{message.save}">
                                             </div>
                                             <div class="Profile-success" th:text="#{message.profileSave}">Профиль
                                                 успешно сохранен

@@ -20,10 +20,14 @@ public class UserContact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", columnDefinition = "INT")
     @JsonBackReference
     private User user;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "parent_id", columnDefinition = "INT")
+    private UserContact parentUserContact;
 
     @Enumerated(EnumType.STRING)
     private ContactType type;
@@ -40,8 +44,11 @@ public class UserContact {
     @Temporal(TemporalType.TIMESTAMP)
     private Date codeTime;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(unique = true, columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
+
+    @OneToOne(mappedBy = "parentUserContact")
+    private UserContact childUserContact;
 
     public UserContact(ContactType type, String contact, String code) {
         this.type = type;
@@ -58,6 +65,25 @@ public class UserContact {
     }
 
     public UserContact() {
+    }
+
+    public UserContact(User user, UserContact userContact, ContactType type, String code, String contact) {
+        this.type = type;
+        this.code = code;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.user = user;
+        this.parentUserContact = userContact;
+        this.code = code;
+    }
+
+    public UserContact(User user, ContactType type, String code, String contact) {
+        this.type = type;
+        this.code = code;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.user = user;
+        this.code = code;
     }
 
     @Override

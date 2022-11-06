@@ -327,15 +327,13 @@
             <column defaultValueNumeric="0" name="approved" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="code" type="VARCHAR(255)"/>
             <column name="code_time" type="TIMESTAMP(0) WITHOUT TIME ZONE"/>
             <column defaultValueNumeric="0" name="code_trails" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="contact" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="type" type="VARCHAR(255)"/>
             <column name="user_id" type="INT"/>
@@ -352,11 +350,14 @@
             <column name="hash" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="password" type="VARCHAR(255)"/>
-            <column name="reg_time" type="date">
+            <column name="reg_time" type="TIMESTAMP(0) WITHOUT TIME ZONE">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -6131,9 +6132,38 @@
         </addColumn>
     </changeSet>
     <changeSet id="60" author="S Timur">
-        <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="user_contact"
-                                 constraintName="fksgdsibr0mrua60wbmgdslfyo" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="genre"/>
+        <addForeignKeyConstraint baseTableName="user_contact" baseColumnNames="parent_id"
+                                 referencedTableName="user_contact" referencedColumnNames="id"
+                                 constraintName="fuebssuojn2i1nk" onDelete="SET NULL"/>
+    </changeSet>
+    <changeSet id="61" author="S Timur">
+        <createSequence sequenceName="hibernate_sequence" startValue="2" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="62" author="S Timur">
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="firstname" value="Сафин"/>
+            <column name="lastname" value="Тимур"/>
+            <column name="hash" value="stimur"/>
+            <column name="password" value="$2a$10$ZI8MbOn9QVkao.jvFP7LleMJRsUMUjk1KtXKY0mOJ4YI/hDq3jyoy"/>
+            <column name="balance" value="5000"/>
+            <column name="reg_time" value="24.10.2022 20:00:01"/>
+        </insert>
+        <insert tableName="user_contact">
+            <column name="type" value="MAIL"/>
+            <column name="user_id" value="1"/>
+            <column name="approved" value="1"/>
+            <column name="contact" value="stimur1709@mail.ru"/>
+            <column name="code" value="111 111"/>
+            <column name="code_time" value="24.10.2022 20:00:01"/>
+        </insert>
+        <insert tableName="user_contact">
+            <column name="type" value="PHONE"/>
+            <column name="user_id" value="1"/>
+            <column name="approved" value="1"/>
+            <column name="contact" value="+7 (999) 999-99-99"/>
+            <column name="code" value="111 111"/>
+            <column name="code_time" value="24.10.2022 20:00:01"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

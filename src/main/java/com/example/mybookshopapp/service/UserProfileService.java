@@ -4,6 +4,7 @@ import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class UserProfileService {
 
     private final UserContactService userContactService;
 
+    @Autowired
     public UserProfileService(UserContactService userContactService) {
         this.userContactService = userContactService;
     }
@@ -41,7 +43,6 @@ public class UserProfileService {
 
     public User getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
         return userContactService.getUserContact(username).getUser();
     }
 

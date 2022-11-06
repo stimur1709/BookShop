@@ -3,6 +3,7 @@ package com.example.mybookshopapp.util;
 import com.example.mybookshopapp.dto.RegistrationForm;
 import com.example.mybookshopapp.service.UserContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -18,14 +19,14 @@ public class RegFormValidator implements Validator {
     }
 
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(@NonNull Class<?> clazz) {
         return RegistrationForm.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NonNull Object target, @NonNull Errors errors) {
         RegistrationForm registrationForm = (RegistrationForm) target;
-        if (userContactService.checkUserExistsByContact(registrationForm.getEmail()).isPresent())
+        if (userContactService.checkUserExistsByContact(registrationForm.getMail()).isPresent())
             errors.rejectValue("email", "", "Пользователь с таким email уже существует");
         if (userContactService.checkUserExistsByContact(registrationForm.getPhone()).isPresent())
             errors.rejectValue("phone", "", "Пользователь с таким номером" +

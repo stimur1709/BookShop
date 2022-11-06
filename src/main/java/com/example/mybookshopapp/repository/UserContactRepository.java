@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserContactRepository extends JpaRepository<UserContact, Integer> {
 
-    Optional<UserContact> findUserContactEntityByContact(String email);
+    Optional<UserContact> findByContactIgnoreCase(String contact);
+
 }

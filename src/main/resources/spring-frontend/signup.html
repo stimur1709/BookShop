@@ -64,9 +64,9 @@
                         <div class="form-group form-group_row">
                             <div class="form-group">
                                 <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                       th:field="*{email}" placeholder="Введите e-mail" data-validate="mail require"
+                                       th:field="*{getMail}" placeholder="Введите e-mail" data-validate="mail require"
                                        autocomplete="new-email"/>
-                                <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{getMail}">
                                     Error
                                 </div>
                             </div>

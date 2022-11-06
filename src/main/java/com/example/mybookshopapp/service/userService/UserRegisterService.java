@@ -7,10 +7,13 @@ import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
+import com.example.mybookshopapp.security.token.JWTUtil;
 import com.example.mybookshopapp.service.Book2UserTypeService;
+import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +25,15 @@ public class UserRegisterService extends UserService {
     @Autowired
     public UserRegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder,
                                Book2UserTypeService book2UserTypeService, UserContactService userContactService,
-                               Generator generator) {
-        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator);
+                               Generator generator, JWTUtil jwtUtil, AuthenticationManager authenticationManager,
+                               BookStoreUserDetailsService bookStoreUserDetailsService) {
+        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator, jwtUtil, authenticationManager, bookStoreUserDetailsService);
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
         User user = new User(registrationForm.getName(), registrationForm.getName(),
                 passwordEncoder.encode(registrationForm.getPassword()));
-        UserContact contactEmail = userContactService.getUserContact(registrationForm.getEmail());
+        UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
 
         contactEmail.setUser(user);

@@ -3,7 +3,6 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
-import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -23,17 +23,15 @@ public class UserAuthController extends ModelAttributeController {
     private final UserRegisterService userRegisterService;
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
-    private final UserContactService userContactService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService, UserContactService userContactService) {
+                              UserChangeService userChangeService) {
         super(userProfileService, bookShopService);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
-        this.userContactService = userContactService;
     }
 
     @GetMapping("/signin")
@@ -70,11 +68,18 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/api/approveContact")
     @ResponseBody
-    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        UserContact userContact = userContactService.getUserContact(payload.getContact());
-        if (userContact != null)
-            return userRegisterService.handlerApproveContact(payload, userContact);
-        else return userChangeService.handlerApproveContact(payload);
+    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
+                                                             HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
+        if (response.getToken() != null) {
+            for (Cookie cookie : httpServletRequest.getCookies())
+                if (cookie.getName().equals("token")) {
+                    cookie.setValue(response.getToken());
+                    cookie.setPath("/");
+                    httpServletResponse.addCookie(cookie);
+                }
+        }
+        return response;
     }
 
     @PostMapping("/registration")
@@ -108,4 +113,16 @@ public class UserAuthController extends ModelAttributeController {
         }
         return loginResponse;
     }
+
+    @PostMapping("/profile/save")
+    public String saveProfile(/*@ModelAttribute("currentUser") RegistrationForm registrationForm*/) {
+        System.out.println(123);
+        return "profile";
+    }
+
+    @PostMapping("/profile/cancel")
+    public String cancelProfile() {
+        return "profile";
+    }
+
 }

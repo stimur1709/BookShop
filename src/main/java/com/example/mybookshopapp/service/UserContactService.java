@@ -40,4 +40,8 @@ public class UserContactService {
         userContact.setCodeTrails(0);
         save(userContact);
     }
+
+    public void delete(UserContact userContact) {
+        userContactRepository.delete(userContact);
+    }
 }

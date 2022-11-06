@@ -5,11 +5,14 @@ import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
+import com.example.mybookshopapp.security.token.JWTUtil;
 import com.example.mybookshopapp.service.Book2UserTypeService;
+import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +25,10 @@ public class UserChangeService extends UserService {
 
     @Autowired
     public UserChangeService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             Book2UserTypeService book2UserTypeService, UserContactService userContactService, Generator generator, UserProfileService userProfileService) {
-        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator);
+                             Book2UserTypeService book2UserTypeService, UserContactService userContactService,
+                             Generator generator, UserProfileService userProfileService, JWTUtil jwtUtil,
+                             AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService) {
+        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator, jwtUtil, authenticationManager, bookStoreUserDetailsService);
         this.userProfileService = userProfileService;
     }
 
@@ -42,8 +47,9 @@ public class UserChangeService extends UserService {
         if (payload.getOldContact() != null) {
             UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
             userNewContact = new UserContact(userOldContact.getUser(), userOldContact.getParentUserContact(),
-                    payload.getContactType(), generator.getSecretCode(), payload.getContact());
-            userOldContact.setParentUserContact(userNewContact);
+                    payload.getContactType(), passwordEncoder.encode(generator.getSecretCode()), payload.getContact());
+            userNewContact.setParentUserContact(userOldContact);
+            userContactService.save(userNewContact);
             userContactService.save(userOldContact);
 
         } else {
@@ -52,15 +58,7 @@ public class UserChangeService extends UserService {
             userContactService.save(userNewContact);
         }
 
-
-        //todo
         return new ContactConfirmationResponse(true);
-
-    }
-
-    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload) {
-        UserContact userContact = userContactService.getUserContact(payload.getContact());
-        return super.handlerApproveContact(payload, userContact);
     }
 }
 

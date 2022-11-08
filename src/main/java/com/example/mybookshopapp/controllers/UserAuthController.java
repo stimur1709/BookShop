@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.dto.ChangeProfileForm;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
@@ -8,14 +9,22 @@ import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.service.userService.UserRegisterService;
+import com.example.mybookshopapp.util.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UserAuthController extends ModelAttributeController {
@@ -23,15 +32,17 @@ public class UserAuthController extends ModelAttributeController {
     private final UserRegisterService userRegisterService;
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
+    private final FormValidator formValidator;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService) {
+                              UserChangeService userChangeService, FormValidator formValidator) {
         super(userProfileService, bookShopService);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
+        this.formValidator = formValidator;
     }
 
     @GetMapping("/signin")
@@ -114,13 +125,22 @@ public class UserAuthController extends ModelAttributeController {
         return loginResponse;
     }
 
-    @PostMapping("/profile/save")
-    public String saveProfile(/*@ModelAttribute("currentUser") RegistrationForm registrationForm*/) {
-        System.out.println(123);
-        return "profile";
+    @PostMapping("/api/profile/save")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
+                                                           BindingResult bindingResult) {
+        formValidator.validate(changeProfileForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, Object> response = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors())
+                response.put(fieldError.getField(), fieldError.getDefaultMessage());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        //todo написать логику в сервисе
+        return new ResponseEntity<>(Map.of("message", "Профиль успешно сохранен"), HttpStatus.OK);
     }
 
-    @PostMapping("/profile/cancel")
+    @PostMapping("/api/profile/cancel")
     public String cancelProfile() {
         return "profile";
     }

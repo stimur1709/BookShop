@@ -7,27 +7,32 @@ import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.dto.RegistrationForm;
-import com.example.mybookshopapp.security.token.JWTUtil;
 import com.example.mybookshopapp.service.Book2UserTypeService;
-import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Service
-public class UserRegisterService extends UserService {
+public class UserRegisterService {
+
+    private final UserContactService userContactService;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final Generator generator;
+    private final Book2UserTypeService book2UserTypeService;
 
     @Autowired
-    public UserRegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                               Book2UserTypeService book2UserTypeService, UserContactService userContactService,
-                               Generator generator, JWTUtil jwtUtil, AuthenticationManager authenticationManager,
-                               BookStoreUserDetailsService bookStoreUserDetailsService) {
-        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator, jwtUtil, authenticationManager, bookStoreUserDetailsService);
+    public UserRegisterService(UserContactService userContactService, PasswordEncoder passwordEncoder,
+                               UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService) {
+        this.userContactService = userContactService;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.generator = generator;
+        this.book2UserTypeService = book2UserTypeService;
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
@@ -73,5 +78,10 @@ public class UserRegisterService extends UserService {
 
         }
         return new ContactConfirmationResponse(true);
+    }
+
+    protected ContactConfirmationResponse blockContact(long time) {
+        return new ContactConfirmationResponse(false,
+                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
     }
 }

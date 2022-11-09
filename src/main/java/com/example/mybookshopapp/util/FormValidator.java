@@ -26,10 +26,14 @@ public class FormValidator implements Validator {
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
         ChangeProfileForm changeProfileForm = (ChangeProfileForm) target;
-        if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent())
-            errors.rejectValue("email", "", "Указанная почта уже привязана к другому пользователю, введите другую");
-        if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent())
-            errors.rejectValue("phone", "", "Указанный номер телефона уже привязан к другому пользователю, введите другой");
+        if (!changeProfileForm.getEmail().equals(changeProfileForm.getOldEmail())) {
+            if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent())
+                errors.rejectValue("email", "", "Указанная почта уже привязана к другому пользователю, введите другую");
+        }
+        if (!changeProfileForm.getPhone().equals(changeProfileForm.getOldPhone())) {
+            if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent())
+                errors.rejectValue("phone", "", "Указанный номер телефона уже привязан к другому пользователю, введите другой");
+        }
         if (!changeProfileForm.getPassword().isEmpty()) {
             if (changeProfileForm.getPassword().length() < 5 || changeProfileForm.getPassword().length() > 100)
                 errors.rejectValue("password", "", "Пароль должен быть от 5 до 100 символов длиной");

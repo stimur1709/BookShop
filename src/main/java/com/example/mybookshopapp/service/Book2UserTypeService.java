@@ -21,7 +21,6 @@ public class Book2UserTypeService {
     private final BookService bookService;
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
     private final UserProfileService userProfileService;
-    private final Book2UserService book2UserService;
     private final Book2UserTypeRepository book2UserTypeRepository;
     private final Book2UserRepository book2UserRepository;
     private final CookieBooksService cookieBooksService;
@@ -29,13 +28,11 @@ public class Book2UserTypeService {
     @Autowired
     public Book2UserTypeService(BookService bookService,
                                 BooksRatingAndPopularityService booksRatingAndPopularityService,
-                                UserProfileService userProfileService, Book2UserService book2UserService,
-                                Book2UserTypeRepository book2UserTypeRepository, Book2UserRepository book2UserRepository,
-                                CookieBooksService cookieBooksService) {
+                                UserProfileService userProfileService, Book2UserTypeRepository book2UserTypeRepository,
+                                Book2UserRepository book2UserRepository, CookieBooksService cookieBooksService) {
         this.bookService = bookService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.userProfileService = userProfileService;
-        this.book2UserService = book2UserService;
         this.book2UserTypeRepository = book2UserTypeRepository;
         this.book2UserRepository = book2UserRepository;
         this.cookieBooksService = cookieBooksService;
@@ -72,19 +69,19 @@ public class Book2UserTypeService {
     }
 
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
-        Optional<Book2User> optionalBook2User = book2UserService.getBook2User(book, user);
+        Optional<Book2User> optionalBook2User = book2UserRepository.findByUserAndBook(user, book);
         Book2User book2User;
         if (optionalBook2User.isEmpty()) {
             Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
             book2User = new Book2User(book2UserType, book, user);
-            book2UserService.save(book2User);
+            book2UserRepository.save(book2User);
 
         } else {
             book2User = optionalBook2User.get();
             if (rating)
                 booksRatingAndPopularityService.changePopularity(book, getValue(book2User.getType().getCode()));
             book2User.setType(book2UserTypeRepository.findByCode(status));
-            book2UserService.save(book2User);
+            book2UserRepository.save(book2User);
         }
     }
 
@@ -106,7 +103,7 @@ public class Book2UserTypeService {
     }
 
     private double getValue(User user, Book book) {
-        Optional<Book2User> book2User = book2UserService.getBook2User(book, user);
+        Optional<Book2User> book2User = book2UserRepository.findByUserAndBook(user, book);
         return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
     }
 

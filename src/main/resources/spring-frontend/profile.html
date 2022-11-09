@@ -54,7 +54,7 @@
                                             <input class="form-input form-input_name" id="name" name="name" type="text"
                                                    th:value="${currentUser.name}"
                                                    value="Михаил"/>
-                                            <span class="fieldError" id="nameError"></span>
+                                            <label class="fieldError" id="nameError"></label>
                                         </div>
                                         <div class="form-group form-group_mail">
                                             <label class="form-label" for="mail">
@@ -63,7 +63,6 @@
                                             <input class="form-input form-input_mail" id="mail" name="mail" type="text"
                                                    value="addr@sait.com" data-validate="require mail"
                                                    th:value="${currentUser.mail}"/>
-                                            <span class="fieldError" id="emailError"></span>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
                                                         id="submitChangeMail"
@@ -72,6 +71,7 @@
                                                     Подтвердить
                                                 </button>
                                             </div>
+                                            <label class="fieldError" id="emailError"></label>
                                             <div class="form-group form-group_key"
                                                  style="margin-right: revert">
                                                 <input class="form-input form-input_code" id="mailCode" name="mailCode"
@@ -87,7 +87,6 @@
                                             <input class="form-input form-input_phone" id="phone" name="phone"
                                                    type="text" value="+70000000000" data-mask="+7 (999) 999-99-99"
                                                    data-validate="require" th:value="${currentUser.phone}"/>
-                                            <span class="fieldError" id="phoneError"></span>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
                                                         id="submitChangePhone"
@@ -95,6 +94,7 @@
                                                         th:text="#{message.confirm}">Подтвердить
                                                 </button>
                                             </div>
+                                            <label class="fieldError" id="phoneError"></label>
                                             <div class="form-group form-group_key">
                                                 <input class="form-input form-input_code" id="phoneCode"
                                                        name="phoneCode"
@@ -109,7 +109,7 @@
                                             </label>
                                             <input class="form-input_password" id="password" name="password"
                                                    type="password" placeholder="Тут можно изменить пароль"/>
-                                            <span class="fieldError" id="passwordError"></span>
+                                            <label class="fieldError" id="passwordError"></label>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="passwordReply"
@@ -118,8 +118,7 @@
                                             <input class="form-input_password_repeat" id="passwordReply"
                                                    name="passwordReply"
                                                    type="password" placeholder="Введите пароль повторно"/>
-                                            <span class="fieldError"
-                                                  id="passwordRepeatError"></span>
+                                            <label class="fieldError" id="passwordRepeatError"></label>
                                         </div>
                                         <div class="form-group">
                                             <div class="Profile-btn">

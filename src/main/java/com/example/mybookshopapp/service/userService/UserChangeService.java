@@ -4,32 +4,30 @@ import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
-import com.example.mybookshopapp.repository.UserRepository;
-import com.example.mybookshopapp.security.token.JWTUtil;
-import com.example.mybookshopapp.service.Book2UserTypeService;
-import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserChangeService extends UserService {
+public class UserChangeService {
 
     private final UserProfileService userProfileService;
+    private final UserContactService userContactService;
+    private final Generator generator;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserChangeService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                             Book2UserTypeService book2UserTypeService, UserContactService userContactService,
-                             Generator generator, UserProfileService userProfileService, JWTUtil jwtUtil,
-                             AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService) {
-        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator, jwtUtil, authenticationManager, bookStoreUserDetailsService);
+    public UserChangeService(UserProfileService userProfileService, UserContactService userContactService,
+                             Generator generator, PasswordEncoder passwordEncoder) {
         this.userProfileService = userProfileService;
+        this.userContactService = userContactService;
+        this.generator = generator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {

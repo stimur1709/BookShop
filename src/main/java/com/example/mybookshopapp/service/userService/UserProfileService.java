@@ -1,9 +1,10 @@
-package com.example.mybookshopapp.service;
+package com.example.mybookshopapp.service.userService;
 
 import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.service.UserContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class UserProfileService {
                     phone = contact.getContact();
             }
 
-            return new UserDto(user.getId(), user.getLastname(), mail, phone, user.getBalance());
+            return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), mail, phone, user.getBalance());
         }
         return null;
     }

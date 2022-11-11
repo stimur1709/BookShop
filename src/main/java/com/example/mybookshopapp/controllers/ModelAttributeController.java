@@ -5,7 +5,7 @@ import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

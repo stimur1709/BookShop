@@ -1,11 +1,13 @@
 package com.example.mybookshopapp.service.userService;
 
+import com.example.mybookshopapp.dto.ChangeProfileForm;
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.model.enums.ContactType;
+import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.service.UserContactService;
-import com.example.mybookshopapp.service.UserProfileService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,14 +22,16 @@ public class UserChangeService {
     private final UserContactService userContactService;
     private final Generator generator;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserChangeService(UserProfileService userProfileService, UserContactService userContactService,
-                             Generator generator, PasswordEncoder passwordEncoder) {
+                             Generator generator, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.userProfileService = userProfileService;
         this.userContactService = userContactService;
         this.generator = generator;
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
@@ -57,6 +61,16 @@ public class UserChangeService {
         }
 
         return new ContactConfirmationResponse(true);
+    }
+
+    public void updateUser(ChangeProfileForm changeProfileForm) {
+        User user = userProfileService.getCurrentUser();
+        user.setFirstname(changeProfileForm.getFirstname());
+        user.setLastname(changeProfileForm.getLastname());
+        user.setPassword(passwordEncoder.encode(changeProfileForm.getPassword()));
+
+        userRepository.save(user);
+
     }
 }
 

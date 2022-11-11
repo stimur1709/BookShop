@@ -7,7 +7,7 @@ import com.example.mybookshopapp.dto.RegistrationForm;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.service.userService.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +82,8 @@ public class UserAuthController extends ModelAttributeController {
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
                                                              HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
+        System.out.println(response);
+
         if (response.getToken() != null) {
             for (Cookie cookie : httpServletRequest.getCookies())
                 if (cookie.getName().equals("token")) {
@@ -90,6 +92,7 @@ public class UserAuthController extends ModelAttributeController {
                     httpServletResponse.addCookie(cookie);
                 }
         }
+        System.out.println(response);
         return response;
     }
 
@@ -129,6 +132,7 @@ public class UserAuthController extends ModelAttributeController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
                                                            BindingResult bindingResult) {
+        System.out.println(changeProfileForm);
         formValidator.validate(changeProfileForm, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, Object> response = new HashMap<>();
@@ -137,7 +141,11 @@ public class UserAuthController extends ModelAttributeController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         //todo написать логику в сервисе
-        return new ResponseEntity<>(Map.of("message", "Профиль успешно сохранен"), HttpStatus.OK);
+
+        userChangeService.updateUser(changeProfileForm);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Профиль успешно сохранен");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/api/profile/cancel")

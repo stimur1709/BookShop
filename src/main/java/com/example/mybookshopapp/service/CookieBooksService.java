@@ -14,6 +14,7 @@ import java.util.*;
 
 @Service
 public class CookieBooksService {
+
     private static final String CART_COOKIE_NAME = "cartContent";
     private static final String KEPT_COOKIE_NAME = "keptContent";
 

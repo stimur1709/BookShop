@@ -6,7 +6,7 @@ import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.dto.ReviewLikeDto;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -109,6 +110,8 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping("/api/rateBookReview")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-        return new ResponseEntity<>(Map.of("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue())), HttpStatus.OK);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue()));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -91,12 +91,15 @@ public class UserAuthService {
         userContactService.save(userContact);
 
         ContactConfirmationResponse response = new ContactConfirmationResponse(true);
+        System.out.println(response + "21");
+
         if (userContact.getParentUserContact() != null) {
             auth(payload);
             response.setToken(jwtUtil.generateToken(userContact.getContact()));
             userContactService.delete(userContact.getParentUserContact());
         }
 
+        System.out.println(response);
         return response;
     }
 
@@ -133,7 +136,10 @@ public class UserAuthService {
     }
 
     private ContactConfirmationResponse badContact(int result, ContactType type) {
-        return new ContactConfirmationResponse(false, generator.generatorTextBadContact(type, result));
+        ContactConfirmationResponse contactConfirmationResponse = new ContactConfirmationResponse();
+        contactConfirmationResponse.setResult(true);
+        contactConfirmationResponse.setError(generator.generatorTextBadContact(type, result));
+        return contactConfirmationResponse;
     }
 
 

@@ -49,12 +49,20 @@
                                 <div class="row">
                                     <div class="row-block">
                                         <div class="form-group">
+                                            <label class="form-label" for="name">Фамилия
+                                            </label>
+                                            <input class="form-input form-input_firstname" name="name" type="text"
+                                                   th:value="${currentUser.getFirstname}"
+                                                   value="Михаил"/>
+                                            <label class="fieldError" id="firstnameError"></label>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="form-label" for="name">Имя
                                             </label>
-                                            <input class="form-input form-input_name" id="name" name="name" type="text"
-                                                   th:value="${currentUser.name}"
+                                            <input class="form-input form-input_lastname" id="name" name="name" type="text"
+                                                   th:value="${currentUser.getLastname}"
                                                    value="Михаил"/>
-                                            <label class="fieldError" id="nameError"></label>
+                                            <label class="fieldError" id="lastnameError"></label>
                                         </div>
                                         <div class="form-group form-group_mail">
                                             <label class="form-label" for="mail">

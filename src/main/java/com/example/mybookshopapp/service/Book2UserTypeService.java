@@ -9,6 +9,7 @@ import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.Book2UserTypeRepository;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,7 @@ public class Book2UserTypeService {
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserRepository.findByUserAndBook(user, book);
         Book2User book2User;
-        if (optionalBook2User.isEmpty()) {
+        if (!optionalBook2User.isPresent()) {
             Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
             book2User = new Book2User(book2UserType, book, user);
             book2UserRepository.save(book2User);

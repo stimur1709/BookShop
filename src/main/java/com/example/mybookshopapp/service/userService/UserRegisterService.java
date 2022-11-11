@@ -36,7 +36,7 @@ public class UserRegisterService {
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
-        User user = new User(registrationForm.getName(), registrationForm.getName(),
+        User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
                 passwordEncoder.encode(registrationForm.getPassword()));
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
@@ -73,7 +73,7 @@ public class UserRegisterService {
             userContactService.changeContact(userContact);
 
         } else {
-            UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), generator.getSecretCode());
+            UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), passwordEncoder.encode(generator.getSecretCode()));
             userContactService.save(contact);
 
         }

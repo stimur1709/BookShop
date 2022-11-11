@@ -15,7 +15,10 @@ import javax.validation.constraints.Size;
 public class ChangeProfileForm {
 
     @Size(min = 2, max = 100, message = "Имя должно быть от 2 до 100 символов длиной")
-    private String name;
+    private String firstname;
+
+    @Size(min = 2, max = 100, message = "Имя должно быть от 2 до 100 символов длиной")
+    private String lastname;
 
     @NotEmpty(message = "Email не должен быть пустым")
     @Email(message = "Email должен быть в формате *****@***.**")

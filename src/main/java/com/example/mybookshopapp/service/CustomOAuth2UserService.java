@@ -44,7 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private static final String INVALID_USER_INFO_RESPONSE_ERROR_CODE = "invalid_user_info_response";
 
     private static final ParameterizedTypeReference<Map<String, Object>> PARAMETERIZED_RESPONSE_TYPE =
-            new ParameterizedTypeReference<>() {
+            new ParameterizedTypeReference<Map<String, Object>>() {
             };
 
     @Autowired
@@ -121,11 +121,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         authorities.add(new OAuth2UserAuthority(userAttributes));
 
         ObjectMapper mapper = new ObjectMapper();
-        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<>() {
+        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<List<VkToken>>() {
         });
         VkToken vkToken = vkTokenList.get(0);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
-        if (userContact.isEmpty()) {
+        if (!userContact.isPresent()) {
             UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
             User user = new User(vkToken.getFirstname(), vkToken.getLastname());
             contact.setUser(user);

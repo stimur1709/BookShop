@@ -74,7 +74,7 @@ public class Book2UserTypeService {
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserService.getBook2User(book, user);
         Book2User book2User;
-        if (optionalBook2User.isEmpty()) {
+        if (!optionalBook2User.isPresent()) {
             Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
             book2User = new Book2User(book2UserType, book, user);
             book2UserService.save(book2User);

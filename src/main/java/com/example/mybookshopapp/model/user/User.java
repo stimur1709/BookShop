@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -55,6 +57,7 @@ public class User {
     private List<BookReviewLike> reviewLikeList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @NotFound(action = NotFoundAction.IGNORE)
     @JsonManagedReference
     private List<UserContact> userContact = new ArrayList<>();
 

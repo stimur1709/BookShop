@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.security;
 
-import com.example.mybookshopapp.model.enums.ContactType;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.model.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +13,10 @@ import java.util.*;
 @Setter
 public class BookstoreUserDetails implements UserDetails {
 
-    private final UserContact userContact;
+    private final User user;
 
-    public BookstoreUserDetails(UserContact userContact) {
-        this.userContact = userContact;
+    public BookstoreUserDetails(User user) {
+        this.user = user;
     }
 
     @Override
@@ -27,12 +26,12 @@ public class BookstoreUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userContact.getType().equals(ContactType.MAIL) ? userContact.getUser().getPassword() : userContact.getCode();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userContact.getContact();
+        return user.getHash();
     }
 
     @Override

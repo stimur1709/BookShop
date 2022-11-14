@@ -24,4 +24,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Book findBookEntityBySlug(String slug);
 
     List<Book> findBookEntitiesBySlugIn(Collection<String> slug);
+
+    
 }

@@ -77,13 +77,10 @@ public class UserContact {
         this.code = code;
     }
 
-    public UserContact(User user, ContactType type, String code, String contact) {
-        this.type = type;
-        this.code = code;
-        this.contact = contact;
-        this.codeTime = new Date();
+    public UserContact(User user, ContactType contactType, String contact) {
         this.user = user;
-        this.code = code;
+        this.type = contactType;
+        this.contact = contact;
     }
 
     @Override

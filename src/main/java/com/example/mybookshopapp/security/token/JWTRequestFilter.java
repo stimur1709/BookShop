@@ -4,6 +4,7 @@ import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -34,8 +35,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
         String token = null;
         String username = null;
         Cookie[] cookies = request.getCookies();
@@ -47,7 +48,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                         token = cookie.getValue();
                         username = jwtUtil.extractUsername(token);
                     }
-
                     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                         BookstoreUserDetails userDetails =
                                 (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);

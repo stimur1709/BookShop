@@ -4,7 +4,7 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.service.*;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

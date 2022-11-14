@@ -2,9 +2,11 @@ package com.example.mybookshopapp.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class ContactConfirmationResponse {
 
     private boolean result;
@@ -23,4 +25,6 @@ public class ContactConfirmationResponse {
             this.error = text;
     }
 
+    public ContactConfirmationResponse() {
+    }
 }

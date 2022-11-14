@@ -6134,7 +6134,7 @@
     <changeSet id="60" author="S Timur">
         <addForeignKeyConstraint baseTableName="user_contact" baseColumnNames="parent_id"
                                  referencedTableName="user_contact" referencedColumnNames="id"
-                                 constraintName="fuebssuojn2i1nk"/>
+                                 constraintName="fuebssuojn2i1nk" onDelete="SET NULL"/>
     </changeSet>
     <changeSet id="61" author="S Timur">
         <createSequence sequenceName="hibernate_sequence" startValue="2" incrementBy="1"/>

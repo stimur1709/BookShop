@@ -14,7 +14,6 @@ import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,6 @@ import java.util.Date;
 @Service
 public class UserAuthService extends UserService {
 
-    private final AuthenticationManager authenticationManager;
-    private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTUtil jwtUtil;
     private final BlacklistService blacklistService;
 
@@ -35,9 +32,7 @@ public class UserAuthService extends UserService {
                            Generator generator, AuthenticationManager authenticationManager,
                            BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil,
                            BlacklistService blacklistService) {
-        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator);
-        this.authenticationManager = authenticationManager;
-        this.bookStoreUserDetailsService = bookStoreUserDetailsService;
+        super(userRepository, passwordEncoder, book2UserTypeService, userContactService, generator, jwtUtil, authenticationManager, bookStoreUserDetailsService);
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
     }
@@ -49,10 +44,7 @@ public class UserAuthService extends UserService {
             return new ContactConfirmationResponse(false, "Пользователь не найден");
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
-                    payload.getCode()));
-            BookstoreUserDetails userDetails =
-                    (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(payload.getContact());
+            BookstoreUserDetails userDetails = auth(payload);
             String jwtToken = jwtUtil.generateToken(userDetails);
             blacklistService.delete(jwtToken);
             return new ContactConfirmationResponse(true, jwtToken);

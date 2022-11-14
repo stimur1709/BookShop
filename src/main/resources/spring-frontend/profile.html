@@ -59,7 +59,8 @@
                                         <div class="form-group">
                                             <label class="form-label" for="name">Имя
                                             </label>
-                                            <input class="form-input form-input_lastname" id="name" name="name" type="text"
+                                            <input class="form-input form-input_lastname" id="name" name="name"
+                                                   type="text"
                                                    th:value="${currentUser.getLastname}"
                                                    value="Михаил"/>
                                             <label class="fieldError" id="lastnameError"></label>
@@ -73,9 +74,9 @@
                                                    th:value="${currentUser.mail}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
-                                                        id="submitChangeMail"
-                                                        th:text="#{message.confirm}"
-                                                        th:attr="data-mail = ${currentUser.mail}" data-mail="1">
+                                                        id="submitChangeMail" th:text="#{message.confirm}"
+                                                        th:attr="data-mail = ${currentUser.mail}, data-approved = ${currentUser.approvedMail}"
+                                                        data-mail="1">
                                                     Подтвердить
                                                 </button>
                                             </div>
@@ -98,17 +99,17 @@
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
                                                         id="submitChangePhone"
-                                                        th:attr="data-phone = ${currentUser.phone}"
+                                                        th:attr="data-phone = ${currentUser.phone}, data-approved = ${currentUser.approvedPhone}"
                                                         th:text="#{message.confirm}">Подтвердить
                                                 </button>
                                             </div>
-                                            <label class="fieldError" id="phoneError"></label>
                                             <div class="form-group form-group_key">
                                                 <input class="form-input form-input_code" id="phoneCode"
                                                        name="phoneCode"
                                                        type="text" placeholder="Код из СМС" data-mask="999 999"
                                                        data-validate="require key" autocomplete="new-phoneCode"/>
                                             </div>
+                                            <label class="fieldError" id="phoneError"></label>
                                         </div>
                                     </div>
                                     <div class="row-block">
@@ -137,8 +138,7 @@
                                                        th:value="#{message.save}">
                                             </div>
                                             <div class="Profile-success" id="message" th:text="#{message.profileSave}">
-                                                Профиль
-                                                успешно сохранен
+                                                Профиль успешно сохранен
                                             </div>
                                         </div>
                                     </div>

@@ -1,9 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.ChangeProfileForm;
-import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.dto.ContactConfirmationResponse;
-import com.example.mybookshopapp.dto.RegistrationForm;
+import com.example.mybookshopapp.dto.*;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
@@ -82,7 +79,6 @@ public class UserAuthController extends ModelAttributeController {
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
                                                              HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
-        System.out.println(response);
 
         if (response.getToken() != null) {
             for (Cookie cookie : httpServletRequest.getCookies())
@@ -92,7 +88,6 @@ public class UserAuthController extends ModelAttributeController {
                     httpServletResponse.addCookie(cookie);
                 }
         }
-        System.out.println(response);
         return response;
     }
 
@@ -112,7 +107,7 @@ public class UserAuthController extends ModelAttributeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model) {
-        model.addAttribute("currentUser", getUserProfileService().getCurrentUserDTO());
+        model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
         return "profile";
     }
 
@@ -140,17 +135,20 @@ public class UserAuthController extends ModelAttributeController {
                 response.put(fieldError.getField(), fieldError.getDefaultMessage());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        //todo написать логику в сервисе
 
-        userChangeService.updateUser(changeProfileForm);
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Профиль успешно сохранен");
+        Map<String, Object> response = userChangeService.updateUser(changeProfileForm);
+
+        if(response.isEmpty())
+            response.put("message", "Профиль сохранен");
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/api/profile/cancel")
-    public String cancelProfile() {
-        return "profile";
+    @GetMapping("/api/profile/cancel")
+    @ResponseBody
+    public ResponseEntity<UserDto> cancelProfile() {
+        //TODO реализовать удаление неподтвержденной почты и номера телефона
+        return new ResponseEntity<>(userProfileService.getCurrentUserDTO(), HttpStatus.OK);
     }
 
 }

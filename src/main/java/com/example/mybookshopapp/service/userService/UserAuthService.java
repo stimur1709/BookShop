@@ -52,7 +52,10 @@ public class UserAuthService {
             return new ContactConfirmationResponse(false, "Пользователь не найден");
 
         try {
-            BookstoreUserDetails userDetails = auth(payload);
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userContact.getUser().getHash(),
+                    payload.getCode()));
+            SecurityContextHolder.getContext().setAuthentication(authenticate);
+            BookstoreUserDetails userDetails = (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(userContact.getUser().getHash());
             String jwtToken = jwtUtil.generateToken(userDetails);
             blacklistService.delete(jwtToken);
             return new ContactConfirmationResponse(true, jwtToken);
@@ -91,15 +94,11 @@ public class UserAuthService {
         userContactService.save(userContact);
 
         ContactConfirmationResponse response = new ContactConfirmationResponse(true);
-        System.out.println(response + "21");
 
         if (userContact.getParentUserContact() != null) {
-            auth(payload);
-            response.setToken(jwtUtil.generateToken(userContact.getContact()));
             userContactService.delete(userContact.getParentUserContact());
         }
 
-        System.out.println(response);
         return response;
     }
 
@@ -112,10 +111,9 @@ public class UserAuthService {
                 return blockContact(false, payload.getContactType(), dif);
             }
 
-            String res = generator.getSecretCode();
             userContact.setCodeTrails(0);
             userContact.setCodeTime(new Date());
-            userContact.setCode(passwordEncoder.encode(res));
+            userContact.setCode(passwordEncoder.encode(generator.getSecretCode()));
             userContactService.save(userContact);
             return new ContactConfirmationResponse(true);
         }

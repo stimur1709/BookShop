@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -44,6 +47,14 @@ public class UserChangeService {
                         : "Указанная почта уже привязана к другому пользователю, введите другую";
                 return new ContactConfirmationResponse(false, error);
             }
+
+            if (payload.getContact().equals(payload.getOldContact())) {
+                long dif = Math.abs(userContact.get().getCodeTime().getTime() - new Date().getTime());
+                if (dif > 300000) {
+                    userContactService.changeContact(userContact.get());
+                }
+                return new ContactConfirmationResponse(true);
+            }
         }
         UserContact userNewContact;
         if (payload.getOldContact() != null) {
@@ -56,21 +67,37 @@ public class UserChangeService {
 
         } else {
             userNewContact = new UserContact(userProfileService.getCurrentUser(),
-                    payload.getContactType(), generator.getSecretCode(), payload.getContact());
+                    payload.getContactType(), payload.getContact());
             userContactService.save(userNewContact);
         }
 
         return new ContactConfirmationResponse(true);
     }
 
-    public void updateUser(ChangeProfileForm changeProfileForm) {
+    public Map<String, Object> updateUser(ChangeProfileForm changeProfileForm) {
+        Map<String, Object> response = new HashMap<>();
         User user = userProfileService.getCurrentUser();
         user.setFirstname(changeProfileForm.getFirstname());
         user.setLastname(changeProfileForm.getLastname());
         user.setPassword(passwordEncoder.encode(changeProfileForm.getPassword()));
 
-        userRepository.save(user);
+        if (!changeProfileForm.getEmail().equals(changeProfileForm.getOldEmail())) {
+            if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent()) {
+                response.put("email", "Указанная почта уже привязана к другому пользователю, введите другую");
+            } else {
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail()), changeProfileForm.getOldEmail(), user));
+            }
+        }
+        if (!changeProfileForm.getPhone().equals(changeProfileForm.getOldPhone())) {
+            if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent()) {
+                response.put("phone", "Указанный номер телефона уже привязан к другому пользователю, введите другой");
+            } else {
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone()), changeProfileForm.getOldPhone(), user));
+            }
+        }
 
+        userRepository.save(user);
+        return response;
     }
 }
 

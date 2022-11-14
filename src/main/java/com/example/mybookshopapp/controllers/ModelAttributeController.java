@@ -19,8 +19,8 @@ import java.util.List;
 @Setter
 public class ModelAttributeController {
 
-    private final UserProfileService userProfileService;
-    private final BookShopService bookShopService;
+    protected final UserProfileService userProfileService;
+    protected final BookShopService bookShopService;
 
     @Autowired
     public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService) {

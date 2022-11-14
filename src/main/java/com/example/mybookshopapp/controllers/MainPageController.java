@@ -42,7 +42,7 @@ public class MainPageController extends ModelAttributeController {
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
-        model.addAttribute("isAuthenticatedUser", getUserProfileService().isAuthenticatedUser());
+        model.addAttribute("isAuthenticatedUser", userProfileService.isAuthenticatedUser());
         return "index";
     }
 

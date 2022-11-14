@@ -74,7 +74,7 @@ public class UserRegisterService {
 
         } else {
             UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), passwordEncoder.encode(generator.getSecretCode()));
-            userContactService.save(contact);
+            userContactService.changeContact(contact);
 
         }
         return new ContactConfirmationResponse(true);

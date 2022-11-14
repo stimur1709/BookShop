@@ -33,11 +33,6 @@ public class JWTUtil {
         return createToken(claims, userDetails.getUsername());
     }
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
-    }
-
     public <T> T extractClaim(String token, Function<Claims, T> claimsTFunction) {
         Claims claims = extractAllClaims(token);
         return claimsTFunction.apply(claims);

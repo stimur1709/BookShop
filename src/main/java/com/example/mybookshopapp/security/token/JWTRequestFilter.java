@@ -58,6 +58,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                                     );
                             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                           //TODO  UserLoginHistory userLoginHistory = new UserLoginHistory(System.getProperty("os.name"), request.getRemoteAddr(), userRepository.);
+
                         }
                     }
                 } catch (Exception ex) {

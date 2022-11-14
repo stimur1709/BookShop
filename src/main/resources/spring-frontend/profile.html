@@ -40,7 +40,7 @@
                     <a class="Tabs-link" href="#transactions" th:text="#{message.transactionHistory}">История
                         транзакций</a>
                     <a class="Tabs-link" href="#topup" th:text="#{message.topAccount}">Пополнить счет</a>
-                    <a class="Tabs-link" href="#history" th:text="#{message.topAccount}">История входа</a>
+                    <a class="Tabs-link" href="#history" th:text="#{message.loginHistory}">История входа</a>
                 </div>
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
@@ -229,7 +229,7 @@
                         </form>
                     </div>
                     <div class="Tabs-block" id="history">
-                        <form class="form Topup" action="#" method="post" data-sendHash="34534535">
+                        <form class="form Topup" style="flex-direction: column" action="#" method="post" data-sendHash="34534535">
                             <div class="Transactions">
                                 <div class="tableWrap">
                                     <table class="table table_noMargin">
@@ -245,7 +245,8 @@
                                             <td>15 мая 2017 10:03</td>
                                             <td>
                                                 <span class="Transactions_textSuccess">
-                                                    <strong>+500 р.</strong></span>
+                                                    <strong>+500 р.</strong>
+                                                </span>
                                             </td>
                                             <td>Пополнение счета</td>
                                         </tr>

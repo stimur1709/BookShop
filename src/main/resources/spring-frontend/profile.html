@@ -40,6 +40,7 @@
                     <a class="Tabs-link" href="#transactions" th:text="#{message.transactionHistory}">История
                         транзакций</a>
                     <a class="Tabs-link" href="#topup" th:text="#{message.topAccount}">Пополнить счет</a>
+                    <a class="Tabs-link" href="#history" th:text="#{message.topAccount}">История входа</a>
                 </div>
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
@@ -223,6 +224,37 @@
                                         <button class="btn btn_primary">Пополнить
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="Tabs-block" id="history">
+                        <form class="form Topup" action="#" method="post" data-sendHash="34534535">
+                            <div class="Transactions">
+                                <div class="tableWrap">
+                                    <table class="table table_noMargin">
+                                        <thead>
+                                        <tr>
+                                            <th>Дата и время</th>
+                                            <th>Устройство</th>
+                                            <th>Ip адрес</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>15 мая 2017 10:03</td>
+                                            <td>
+                                                <span class="Transactions_textSuccess">
+                                                    <strong>+500 р.</strong></span>
+                                            </td>
+                                            <td>Пополнение счета</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="Transactions-footer Transactions-footer_center"><a
+                                        class="btn btn_primary History-get" href="#" data-transactionoffset="4"
+                                        data-transactionlimit="10" data-transactionsort="asc">Показать еще</a>
                                 </div>
                             </div>
                         </form>

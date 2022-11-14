@@ -110,8 +110,9 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping("/api/rateBookReview")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-        Map<String, Boolean> response = new HashMap<>();
+Map<String, Boolean> response = new HashMap<>();
         response.put("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue()));
         return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 }

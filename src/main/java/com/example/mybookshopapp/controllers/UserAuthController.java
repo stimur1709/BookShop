@@ -114,8 +114,8 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/login")
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
-                                                   HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
+                                                   HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload, httpServletRequest);
         if (loginResponse.isResult() && loginResponse.getError() == null) {
             Cookie cookie = new Cookie("token", loginResponse.getToken());
             httpServletResponse.addCookie(cookie);

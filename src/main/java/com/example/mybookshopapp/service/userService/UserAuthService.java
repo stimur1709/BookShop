@@ -2,7 +2,6 @@ package com.example.mybookshopapp.service.userService;
 
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
-import com.example.mybookshopapp.model.user.UserLoginHistory;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.security.token.JWTUtil;
@@ -16,7 +15,6 @@ import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +55,6 @@ public class UserAuthService extends UserService {
                     (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(payload.getContact());
             String jwtToken = jwtUtil.generateToken(userDetails);
             blacklistService.delete(jwtToken);
-            UserLoginHistory userLoginHistory =
-                    new UserLoginHistory(System.getProperty("os.name"), request.getRemoteAddr(), userRepository.);
             return new ContactConfirmationResponse(true, jwtToken);
         } catch (Exception e) {
 

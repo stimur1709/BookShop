@@ -5,7 +5,7 @@ import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ import java.util.List;
 @Setter
 public class ModelAttributeController {
 
-    private final UserProfileService userProfileService;
-    private final BookShopService bookShopService;
+    protected final UserProfileService userProfileService;
+    protected final BookShopService bookShopService;
 
     @Autowired
     public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService) {

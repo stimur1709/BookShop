@@ -35,8 +35,7 @@
                 <div class="Login-ins">
                     <div class="Login-step">
                         <div class="form-group">
-                            <label class="form-label Login-title" th:text="#{message.enterMailPhone}">Введите e-mail или
-                                телефон
+                            <label class="form-label Login-title" th:text="#{message.enterMailPhone}">Введите e-mail или телефон
                                 <br>
                                 <span th:if="${regOk}" th:text="#{message.registrationSuccessfully}">Регистрация прошла успешно!</span>
                             </label>
@@ -73,13 +72,13 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="phone">
                         <div class="form-group">
-                            <label class="form-label Login-title" th:text="#{message.messageLogin}">
+                            <label class="form-label Login-title" th:text="#{message.enterPassword}">
                                 На Ваш телефон отправлено сообщение с кодом для входа. Введите его:
                             </label>
                         </div>
                         <div class="form-group form-group_key">
-                            <input class="form-input" id="phonecode" name="phonecode" type="text" placeholder="Код"
-                                   data-validate="key require" data-mask="999 999"/>
+                            <input class="form-input" name="mailcode" type="text" placeholder="Код"
+                                   data-validate="key require"/>
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="toComeInPhone"

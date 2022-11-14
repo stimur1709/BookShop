@@ -85,19 +85,25 @@ public class UserChangeService {
             if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent()) {
                 response.put("email", "Указанная почта уже привязана к другому пользователю, введите другую");
             } else {
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail()), changeProfileForm.getOldEmail(), user));
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail()), user));
             }
         }
         if (!changeProfileForm.getPhone().equals(changeProfileForm.getOldPhone())) {
             if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent()) {
                 response.put("phone", "Указанный номер телефона уже привязан к другому пользователю, введите другой");
             } else {
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone()), changeProfileForm.getOldPhone(), user));
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone()), user));
             }
         }
 
         userRepository.save(user);
         return response;
     }
+
+    public void resumedUser() {
+        User user = userProfileService.getCurrentUser();
+        userContactService.deleteAllNoApprovedUserContactByUser(user);
+    }
+
 }
 

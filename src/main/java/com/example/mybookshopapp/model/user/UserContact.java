@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "user_contact")
 @Schema(description = "Сущность контакта пользователя")
+@ToString
 public class UserContact {
 
     @Id
@@ -83,17 +85,4 @@ public class UserContact {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "UserContact{" +
-                "id=" + id +
-                ", user=" + user +
-                ", type=" + type +
-                ", approved=" + approved +
-                ", code='" + code + '\'' +
-                ", codeTrails=" + codeTrails +
-                ", codeTime=" + codeTime +
-                ", contact='" + contact + '\'' +
-                '}';
-    }
 }

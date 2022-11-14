@@ -8,6 +8,7 @@ import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.service.userService.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -30,16 +32,20 @@ public class UserAuthController extends ModelAttributeController {
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
     private final FormValidator formValidator;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService, FormValidator formValidator) {
+                              UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource, LocaleResolver localeResolver) {
         super(userProfileService, bookShopService);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
         this.formValidator = formValidator;
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
     @GetMapping("/signin")
@@ -76,19 +82,8 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/api/approveContact")
     @ResponseBody
-    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
-                                                             HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
-
-        if (response.getToken() != null) {
-            for (Cookie cookie : httpServletRequest.getCookies())
-                if (cookie.getName().equals("token")) {
-                    cookie.setValue(response.getToken());
-                    cookie.setPath("/");
-                    httpServletResponse.addCookie(cookie);
-                }
-        }
-        return response;
+    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
+        return userAuthService.handlerApproveContact(payload);
     }
 
     @PostMapping("/registration")
@@ -114,8 +109,8 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/login")
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
-                                                   HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
-        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload, httpServletRequest);
+                                                   HttpServletResponse httpServletResponse) {
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
         if (loginResponse.isResult() && loginResponse.getError() == null) {
             Cookie cookie = new Cookie("token", loginResponse.getToken());
             httpServletResponse.addCookie(cookie);
@@ -125,7 +120,8 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/api/profile/save")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
+    public ResponseEntity<Map<String, Object>> saveProfile(HttpServletRequest request,
+                                                           @RequestBody @Valid ChangeProfileForm changeProfileForm,
                                                            BindingResult bindingResult) {
         System.out.println(changeProfileForm);
         formValidator.validate(changeProfileForm, bindingResult);
@@ -138,17 +134,21 @@ public class UserAuthController extends ModelAttributeController {
 
         Map<String, Object> response = userChangeService.updateUser(changeProfileForm);
 
-        if(response.isEmpty())
-            response.put("message", "Профиль сохранен");
+        if (response.isEmpty())
+            response.put("message", messageSource.getMessage("message.profileSave", null, localeResolver.resolveLocale(request)));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/api/profile/cancel")
     @ResponseBody
-    public ResponseEntity<UserDto> cancelProfile() {
+    public ResponseEntity<Map<String, Object>> cancelProfile(HttpServletRequest request) {
         //TODO реализовать удаление неподтвержденной почты и номера телефона
-        return new ResponseEntity<>(userProfileService.getCurrentUserDTO(), HttpStatus.OK);
+        userChangeService.resumedUser();
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", userProfileService.getCurrentUserDTO());
+        response.put("message", messageSource.getMessage("message.dataResumed", null, localeResolver.resolveLocale(request)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

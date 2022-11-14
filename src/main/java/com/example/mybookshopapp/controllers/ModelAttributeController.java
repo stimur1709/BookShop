@@ -22,6 +22,7 @@ public class ModelAttributeController {
     protected final UserProfileService userProfileService;
     protected final BookShopService bookShopService;
 
+
     @Autowired
     public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService) {
         this.userProfileService = userProfileService;

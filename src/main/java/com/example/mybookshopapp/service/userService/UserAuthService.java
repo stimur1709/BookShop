@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
@@ -47,7 +46,7 @@ public class UserAuthService {
     }
 
 
-    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload, HttpServletRequest request) {
+    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact == null)
             return new ContactConfirmationResponse(false, "Пользователь не найден");
@@ -141,11 +140,4 @@ public class UserAuthService {
         return contactConfirmationResponse;
     }
 
-
-    private BookstoreUserDetails auth(ContactConfirmationPayload payload) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
-                payload.getCode()));
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        return (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(payload.getContact());
-    }
 }

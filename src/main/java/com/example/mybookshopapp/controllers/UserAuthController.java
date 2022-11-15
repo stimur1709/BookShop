@@ -32,8 +32,7 @@ public class UserAuthController extends ModelAttributeController {
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
     private final FormValidator formValidator;
-    private final MessageSource messageSource;
-    private final LocaleResolver localeResolver;
+
     private final UserContactService userContactService;
 
     @Autowired
@@ -41,13 +40,11 @@ public class UserAuthController extends ModelAttributeController {
                               BookShopService bookShopService, UserAuthService userAuthService,
                               UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
                               LocaleResolver localeResolver, UserContactService userContactService) {
-        super(userProfileService, bookShopService);
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
         this.formValidator = formValidator;
-        this.messageSource = messageSource;
-        this.localeResolver = localeResolver;
         this.userContactService = userContactService;
     }
 
@@ -64,29 +61,33 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/api/requestContactConfirmation")
     @ResponseBody
-    public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload,
+                                                                        HttpServletRequest request) {
         //TODO реализовать отправку кода на телефон
-        return userAuthService.handlerRequestContactConfirmation(payload);
+        return userAuthService.handlerRequestContactConfirmation(payload, request);
     }
 
     @PostMapping("/api/requestNewContactConfirmation")
     @ResponseBody
-    public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload,
+                                                                           HttpServletRequest request) {
         //TODO реализовать отправку кода на телефон
-        return userRegisterService.handlerRequestNewContactConfirmation(payload);
+        return userRegisterService.handlerRequestNewContactConfirmation(payload, request);
     }
 
     @PostMapping("/api/requestChangeContactConfirmation")
     @ResponseBody
-    public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload,
+                                                                              HttpServletRequest request) {
         //TODO реализовать отправку кода на телефон
-        return userChangeService.handlerRequestChangeContactConfirmation(payload);
+        return userChangeService.handlerRequestChangeContactConfirmation(payload, request);
     }
 
     @PostMapping("/api/approveContact")
     @ResponseBody
-    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
-        return userAuthService.handlerApproveContact(payload);
+    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
+                                                             HttpServletRequest request) {
+        return userAuthService.handlerApproveContact(payload, request);
     }
 
     @PostMapping("/registration")
@@ -112,9 +113,8 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/login")
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
-                                                   HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
-        System.out.println(loginResponse);
+                                                   HttpServletResponse httpServletResponse, HttpServletRequest request) {
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload, request);
         if (loginResponse.isResult() && loginResponse.getError() == null) {
             Cookie cookie = new Cookie("token", loginResponse.getToken());
             httpServletResponse.addCookie(cookie);
@@ -127,7 +127,6 @@ public class UserAuthController extends ModelAttributeController {
     public ResponseEntity<Map<String, Object>> saveProfile(HttpServletRequest request,
                                                            @RequestBody @Valid ChangeProfileForm changeProfileForm,
                                                            BindingResult bindingResult) {
-        System.out.println(changeProfileForm);
         formValidator.validate(changeProfileForm, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, Object> response = new HashMap<>();
@@ -136,7 +135,7 @@ public class UserAuthController extends ModelAttributeController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        Map<String, Object> response = userChangeService.updateUser(changeProfileForm);
+        Map<String, Object> response = userChangeService.updateUser(changeProfileForm, request);
 
         if (response.isEmpty())
             response.put("message", messageSource.getMessage("message.profileSave", null, localeResolver.resolveLocale(request)));
@@ -150,7 +149,6 @@ public class UserAuthController extends ModelAttributeController {
         //TODO реализовать удаление неподтвержденной почты и номера телефона
         Map<String, Object> response = new HashMap<>();
         UserDto userDto = userContactService.deleteAllNoApprovedUserContactByUser();
-        System.out.println(userDto);
         response.put("user", userDto);
         response.put("message", messageSource.getMessage("message.dataResumed", null, localeResolver.resolveLocale(request)));
         return new ResponseEntity<>(response, HttpStatus.OK);

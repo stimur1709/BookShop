@@ -11,9 +11,12 @@ import com.example.mybookshopapp.service.Book2UserTypeService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
@@ -24,20 +27,25 @@ public class UserRegisterService {
     private final UserRepository userRepository;
     private final Generator generator;
     private final Book2UserTypeService book2UserTypeService;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @Autowired
     public UserRegisterService(UserContactService userContactService, PasswordEncoder passwordEncoder,
-                               UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService) {
+                               UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService,
+                               MessageSource messageSource, LocaleResolver localeResolver) {
         this.userContactService = userContactService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.generator = generator;
         this.book2UserTypeService = book2UserTypeService;
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
-                passwordEncoder.encode(registrationForm.getPassword()));
+                passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
 
@@ -54,21 +62,22 @@ public class UserRegisterService {
         book2UserTypeService.addBooksTypeUserFromCookie(cartContent, keptContent, user);
     }
 
-    public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload,
+                                                                            HttpServletRequest request) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact != null && userContact.getApproved() == (short) 1) {
+            String messagePhone = messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request));
+            String messageMail = messageSource.getMessage("message.mailBusy", null, localeResolver.resolveLocale(request));
             String error = userContact.getType().equals(ContactType.PHONE)
-                    ? "Указанный номер телефона уже привязан к другому пользователю, введите другой"
-                    : "Указанная почта уже привязана к другому пользователю, введите другую";
+                    ? messagePhone
+                    : messageMail;
             return new ContactConfirmationResponse(false, error);
         }
         if (userContact != null && userContact.getApproved() == (short) 0) {
 
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
-            System.out.println(userContact.getCodeTrails());
-            System.out.println(dif < 300000);
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
-                return blockContact(dif);
+                return blockContact(dif, request);
             }
 
             userContactService.changeContact(userContact);
@@ -81,8 +90,9 @@ public class UserRegisterService {
         return new ContactConfirmationResponse(true);
     }
 
-    protected ContactConfirmationResponse blockContact(long time) {
+    protected ContactConfirmationResponse blockContact(long time, HttpServletRequest request) {
+        String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
         return new ContactConfirmationResponse(false,
-                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
+                generator.generatorTextBlockContact(time, message, request));
     }
 }

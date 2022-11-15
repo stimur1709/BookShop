@@ -65,7 +65,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 } catch (Exception ex) {
                     cookie.setMaxAge(0);
                     response.addCookie(cookie);
-                    System.out.println("Токен удален");
                 }
             }
         }

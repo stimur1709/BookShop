@@ -11,13 +11,16 @@ import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
@@ -30,12 +33,14 @@ public class UserAuthService {
     private final AuthenticationManager authenticationManager;
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @Autowired
     public UserAuthService(JWTUtil jwtUtil, BlacklistService blacklistService,
                            UserContactService userContactService, Generator generator,
                            AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver) {
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
         this.userContactService = userContactService;
@@ -43,13 +48,17 @@ public class UserAuthService {
         this.authenticationManager = authenticationManager;
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
 
-    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload, HttpServletRequest request) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
-        if (userContact == null)
-            return new ContactConfirmationResponse(false, "Пользователь не найден");
+        if (userContact == null) {
+            String message = messageSource.getMessage("message.userNotFound", null, localeResolver.resolveLocale(request));
+            return new ContactConfirmationResponse(false, message);
+        }
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userContact.getUser().getHash(),
                     payload.getCode()));
@@ -62,31 +71,31 @@ public class UserAuthService {
 
             if (userContact.getCodeTrails() >= 2) {
                 long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
-                return blockContact(userContact.getType(), dif);
+                return blockContact(userContact.getType(), dif, request);
             }
 
             userContact.setCodeTrails(userContact.getCodeTrails() + 1);
             userContactService.save(userContact);
-            return badContact(userContact.getCodeTrails(), userContact.getType());
+            return badContact(userContact.getCodeTrails(), request);
         }
     }
 
-    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handlerApproveContact(ContactConfirmationPayload payload, HttpServletRequest request) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
         if (!passwordEncoder.matches(payload.getCode(), userContact.getCode())) {
             userContact.setCodeTrails(userContact.getCodeTrails() + 1);
-            System.out.println(userContact.getCodeTrails());
             userContactService.save(userContact);
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
-                return blockContact(dif);
+                return blockContact(dif, request);
             }
-            return badContact(userContact.getCodeTrails(), userContact.getType());
+            return badContact(userContact.getCodeTrails(), request);
         }
 
         if (dif > 1000000) {
-            return new ContactConfirmationResponse(false, "Код подтверждения устарел. Запросите новый");
+            String message = messageSource.getMessage("message.newCode", null, localeResolver.resolveLocale(request));
+            return new ContactConfirmationResponse(false, message);
         }
 
         userContact.setApproved((short) 1);
@@ -101,41 +110,43 @@ public class UserAuthService {
         return response;
     }
 
-    public ContactConfirmationResponse handlerRequestContactConfirmation(ContactConfirmationPayload payload) {
+    public ContactConfirmationResponse handlerRequestContactConfirmation(ContactConfirmationPayload payload, HttpServletRequest request) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact != null) {
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
-            if (userContact.getCodeTrails() > 2 && dif < 300000) {
-                return blockContact(payload.getContactType(), dif);
+            if (userContact.getCodeTrails() >= 2 && dif < 300000) {
+                return blockContact(payload.getContactType(), dif, request);
             }
 
             userContact.setCodeTrails(0);
             userContact.setCodeTime(new Date());
-            userContact.setCode(passwordEncoder.encode(generator.getSecretCode()));
             userContactService.save(userContact);
             return new ContactConfirmationResponse(true);
         }
         return new ContactConfirmationResponse(true);
     }
 
-    private ContactConfirmationResponse blockContact(ContactType type, long time) {
+    private ContactConfirmationResponse blockContact(ContactType type, long time, HttpServletRequest request) {
         ContactConfirmationResponse response = new ContactConfirmationResponse(false);
+        String messagePhone = messageSource.getMessage("message.blockContactPhone", null, localeResolver.resolveLocale(request));
+        String messageMail = messageSource.getMessage("message.blockContactMail", null, localeResolver.resolveLocale(request));
         response.setError(type.equals(ContactType.PHONE)
-                ? generator.generatorTextBlockContact(time, "Количество попыток входа по телефону исчерпано, попробуйте войти по e-mail или повторить вход по телефону через ")
-                : generator.generatorTextBlockContact(time, "Количество попыток входа по e-mail исчерпано, попробуйте войти по телефону или повторить вход по e-mail через "));
+                ? generator.generatorTextBlockContact(time, messagePhone, request)
+                : generator.generatorTextBlockContact(time, messageMail, request));
         return response;
     }
 
-    private ContactConfirmationResponse blockContact(long time) {
+    private ContactConfirmationResponse blockContact(long time, HttpServletRequest request) {
+        String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
         return new ContactConfirmationResponse(false,
-                generator.generatorTextBlockContact(time, "Число попыток подтверждения превышено, повторите попытку через "));
+                generator.generatorTextBlockContact(time, message, request));
     }
 
-    private ContactConfirmationResponse badContact(int result, ContactType type) {
+    private ContactConfirmationResponse badContact(int result, HttpServletRequest request) {
         ContactConfirmationResponse contactConfirmationResponse = new ContactConfirmationResponse();
         contactConfirmationResponse.setResult(true);
-        contactConfirmationResponse.setError(generator.generatorTextBadContact(type, result));
+        contactConfirmationResponse.setError(generator.generatorTextBadContact(result, request));
         return contactConfirmationResponse;
     }
 

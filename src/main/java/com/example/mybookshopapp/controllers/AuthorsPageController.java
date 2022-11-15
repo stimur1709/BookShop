@@ -10,10 +10,12 @@ import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 
 @Controller
 @Tag(name = "Страница авторов", description = "На странице размещается список ссылок на всех авторов, " +
@@ -26,8 +28,9 @@ public class AuthorsPageController extends ModelAttributeController {
 
     @Autowired
     public AuthorsPageController(AuthorService authorService, BookService bookService,
-                                 UserProfileService userProfileService, BookShopService bookShopService) {
-        super(userProfileService, bookShopService);
+                                 UserProfileService userProfileService, BookShopService bookShopService,
+                                 MessageSource messageSource, LocaleResolver localeResolver) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.authorService = authorService;
         this.bookService = bookService;
     }

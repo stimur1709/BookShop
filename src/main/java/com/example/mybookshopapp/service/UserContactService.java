@@ -9,6 +9,7 @@ import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -65,10 +66,10 @@ public class UserContactService {
         userContactRepository.delete(userContact);
     }
 
+    @Transactional
     public UserDto deleteAllNoApprovedUserContactByUser() {
         User user = userProfileService.getCurrentUser();
         List<UserContact> userContacts = userContactRepository.findByUserAndApproved(user, (short) 0);
-        userContacts.stream().map(UserContact::getContact).forEach(System.out::println);
         userContactRepository.deleteAll(userContacts);
         return userProfileService.getCurrentUserDTO();
     }

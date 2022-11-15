@@ -725,7 +725,7 @@
                             <div class="Comment-column">
                                 <header class="Comment-header">
                                     <div>
-                                        <strong class="Comment-title" th:text="${review.getUser().getName()}">
+                                        <strong class="Comment-title" th:text="${review.getUser().getFirstname() + ' ' + review.getUser().getLastname()}">
                                             Дмитрий Петров
                                             <span class="Comment-rating">
                                                 <span class="Rating Rating_comment">

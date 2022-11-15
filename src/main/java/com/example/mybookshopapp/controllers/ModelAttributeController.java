@@ -9,8 +9,10 @@ import com.example.mybookshopapp.service.userService.UserProfileService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,16 @@ public class ModelAttributeController {
 
     protected final UserProfileService userProfileService;
     protected final BookShopService bookShopService;
-
+    protected final MessageSource messageSource;
+    protected final LocaleResolver localeResolver;
 
     @Autowired
-    public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService) {
+    public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService,
+                                    MessageSource messageSource, LocaleResolver localeResolver) {
         this.userProfileService = userProfileService;
         this.bookShopService = bookShopService;
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
     @ModelAttribute("getUser")

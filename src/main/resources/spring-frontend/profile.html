@@ -71,7 +71,7 @@
                                                 E-mail
                                             </label>
                                             <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                                   value="addr@sait.com" data-validate="require mail"
+                                                   data-validate="require mail" autocomplete="off"
                                                    th:value="${currentUser.mail}"/>
                                             <div class="Profile-btn Profile-btn_confirm">
                                                 <button class="btn btn_primary form-btn" type="button"
@@ -108,7 +108,7 @@
                                                 <input class="form-input form-input_code" id="phoneCode"
                                                        name="phoneCode"
                                                        type="text" placeholder="Код из СМС" data-mask="999 999"
-                                                       data-validate="require key" autocomplete="new-phoneCode"/>
+                                                       data-validate="require key" autocomplete="off"/>
                                             </div>
                                             <label class="fieldError" id="phoneError"></label>
                                         </div>
@@ -118,7 +118,8 @@
                                             <label class="form-label" for="password" th:text="#{message.password}">Пароль
                                             </label>
                                             <input class="form-input_password" id="password" name="password"
-                                                   type="password" placeholder="Тут можно изменить пароль"/>
+                                                   type="password" placeholder="Тут можно изменить пароль"
+                                                   autocomplete="new-password"/>
                                             <label class="fieldError" id="passwordError"></label>
                                         </div>
                                         <div class="form-group">
@@ -126,7 +127,7 @@
                                                    th:text="#{message.passwordConfirmation}">Подтверждение пароля
                                             </label>
                                             <input class="form-input_password_repeat" id="passwordReply"
-                                                   name="passwordReply"
+                                                   name="passwordReply" autocomplete="new-password"
                                                    type="password" placeholder="Введите пароль повторно"/>
                                             <label class="fieldError" id="passwordRepeatError"></label>
                                         </div>

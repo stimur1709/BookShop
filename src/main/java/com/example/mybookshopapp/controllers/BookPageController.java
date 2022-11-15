@@ -8,6 +8,7 @@ import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -40,8 +42,8 @@ public class BookPageController extends ModelAttributeController {
                               TagService tagService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService) {
-        super(userProfileService, bookShopService);
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.authorService = authorService;
         this.tagService = tagService;
@@ -100,17 +102,19 @@ public class BookPageController extends ModelAttributeController {
 
     @PostMapping("/api/bookReview")
     @ResponseBody
-    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review) {
+    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review, HttpServletRequest request) {
         if (bookReviewService.saveBookReview(review.getBookId(), review.getText()))
             return new ResponseResultDto(true);
-        else return new ResponseResultDto(false,
-                "Отзыв слишком короткий. Напишите, пожалуйста, более развёрнутый отзыв");
+        else {
+            String message = messageSource.getMessage("message.reviewShort", null, localeResolver.resolveLocale(request));
+            return new ResponseResultDto(false, message);
+        }
     }
 
     @PostMapping("/api/rateBookReview")
     @ResponseBody
     public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-Map<String, Boolean> response = new HashMap<>();
+        Map<String, Boolean> response = new HashMap<>();
         response.put("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue()));
         return new ResponseEntity<>(response, HttpStatus.OK);
 

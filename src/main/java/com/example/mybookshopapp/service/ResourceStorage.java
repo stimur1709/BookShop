@@ -25,7 +25,6 @@ public class ResourceStorage {
     @Value("${download.path}")
     String downloadPath;
 
-
     private final BookFileRepository bookFileRepository;
 
     @Autowired

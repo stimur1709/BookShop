@@ -4,11 +4,15 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.service.*;
+import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.GenreService;
+import com.example.mybookshopapp.service.TagService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
 @Controller
@@ -32,15 +36,15 @@ public class MainPageController extends ModelAttributeController {
     @Autowired
     public MainPageController(BookService bookService, TagService tagService,
                               GenreService genreService, UserProfileService userProfileService,
-                              BookShopService bookShopService) {
-        super(userProfileService, bookShopService);
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.tagService = tagService;
         this.genreService = genreService;
     }
 
     @GetMapping("/")
-    public String mainPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String mainPage(Model model, HttpServletRequest request) {
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
@@ -70,7 +74,7 @@ public class MainPageController extends ModelAttributeController {
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                  Model model) throws EmptySearchException {
+                                  Model model, HttpServletRequest request) throws EmptySearchException {
         if (searchWordDto != null) {
             Page<Book> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
             model.addAttribute("searchWordDto", searchWordDto);
@@ -80,7 +84,8 @@ public class MainPageController extends ModelAttributeController {
             model.addAttribute("totalPages", books.getTotalPages());
             return "search/index";
         } else {
-            throw new EmptySearchException("Поисковый запрос не задан");
+            String message = messageSource.getMessage("message.reviewShort", null, localeResolver.resolveLocale(request));
+            throw new EmptySearchException(message);
         }
     }
 

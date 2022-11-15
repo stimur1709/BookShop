@@ -7,9 +7,11 @@ import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,11 +21,10 @@ import java.util.stream.Collectors;
 @Controller
 public class BookShopController extends ModelAttributeController {
 
-
     @Autowired
-    public BookShopController(BookShopService bookShopService,
-                              UserProfileService userProfileService) {
-        super(userProfileService, bookShopService);
+    public BookShopController(BookShopService bookShopService, UserProfileService userProfileService,
+                              MessageSource messageSource, LocaleResolver localeResolver) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
     }
 
     @GetMapping(value = {"/cart", "/postponed"})

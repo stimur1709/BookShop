@@ -8,6 +8,7 @@ import com.example.mybookshopapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,8 +23,8 @@ public class UserProfileService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public UserDto getCurrentUserDTO() {
-
         String hash = SecurityContextHolder.getContext().getAuthentication().getName();
 
         if (!hash.equals("anonymousUser")) {
@@ -46,7 +47,6 @@ public class UserProfileService {
                         approvedPhone = contact.getApproved();
                     }
                 }
-
                 return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), mail, approvedMail, phone, approvedPhone, user.getBalance());
             }
         }

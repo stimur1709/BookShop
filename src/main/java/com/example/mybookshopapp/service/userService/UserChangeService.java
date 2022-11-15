@@ -38,9 +38,9 @@ public class UserChangeService {
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
+        System.out.println(payload);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(payload.getContact());
         if (userContact.isPresent()) {
-
             if (userContact.get().getApproved() == (short) 1) {
                 String error = payload.getContactType().equals(ContactType.PHONE)
                         ? "Указанный номер телефона уже привязан к другому пользователю, введите другой"
@@ -48,11 +48,12 @@ public class UserChangeService {
                 return new ContactConfirmationResponse(false, error);
             }
 
-            if (payload.getContact().equals(payload.getOldContact())) {
-                long dif = Math.abs(userContact.get().getCodeTime().getTime() - new Date().getTime());
-                if (dif > 300000) {
-                    userContactService.changeContact(userContact.get());
-                }
+            long dif = Math.abs(userContact.get().getCodeTime().getTime() - new Date().getTime());
+            if (dif <= 300000 && userContact.get().getCodeTrails() >= 2) {
+                return new ContactConfirmationResponse(false,
+                        generator.generatorTextBlockContact(dif, "Число попыток подтверждения превышено, повторите попытку через "));
+            } else {
+                userContactService.changeContact(userContact.get());
                 return new ContactConfirmationResponse(true);
             }
         }
@@ -64,7 +65,6 @@ public class UserChangeService {
             userNewContact.setParentUserContact(userOldContact);
             userContactService.save(userNewContact);
             userContactService.save(userOldContact);
-
         } else {
             userNewContact = new UserContact(userProfileService.getCurrentUser(),
                     payload.getContactType(), payload.getContact());
@@ -85,24 +85,21 @@ public class UserChangeService {
             if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent()) {
                 response.put("email", "Указанная почта уже привязана к другому пользователю, введите другую");
             } else {
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail()), user));
+                UserContact userContact = userContactService.getUserContact(changeProfileForm.getOldEmail());
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail(), userContact), user));
             }
         }
         if (!changeProfileForm.getPhone().equals(changeProfileForm.getOldPhone())) {
             if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent()) {
                 response.put("phone", "Указанный номер телефона уже привязан к другому пользователю, введите другой");
             } else {
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone()), user));
+                UserContact userContact = userContactService.getUserContact(changeProfileForm.getOldPhone());
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone(), userContact), user));
             }
         }
 
         userRepository.save(user);
         return response;
-    }
-
-    public void resumedUser() {
-        User user = userProfileService.getCurrentUser();
-        userContactService.deleteAllNoApprovedUserContactByUser(user);
     }
 
 }

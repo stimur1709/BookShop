@@ -65,8 +65,9 @@ public class UserRegisterService {
         if (userContact != null && userContact.getApproved() == (short) 0) {
 
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
-
-            if (userContact.getCodeTrails() >= 2 && dif < 300000) {
+            System.out.println(userContact.getCodeTrails());
+            System.out.println(dif < 300000);
+            if (userContact.getCodeTrails() > 2 && dif < 300000) {
                 return blockContact(dif);
             }
 

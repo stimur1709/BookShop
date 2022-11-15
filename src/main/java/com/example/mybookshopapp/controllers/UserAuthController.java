@@ -34,11 +34,13 @@ public class UserAuthController extends ModelAttributeController {
     private final FormValidator formValidator;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
+    private final UserContactService userContactService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource, LocaleResolver localeResolver) {
+                              UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
+                              LocaleResolver localeResolver, UserContactService userContactService) {
         super(userProfileService, bookShopService);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
@@ -46,6 +48,7 @@ public class UserAuthController extends ModelAttributeController {
         this.formValidator = formValidator;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
+        this.userContactService = userContactService;
     }
 
     @GetMapping("/signin")
@@ -111,6 +114,7 @@ public class UserAuthController extends ModelAttributeController {
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
                                                    HttpServletResponse httpServletResponse) {
         ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
+        System.out.println(loginResponse);
         if (loginResponse.isResult() && loginResponse.getError() == null) {
             Cookie cookie = new Cookie("token", loginResponse.getToken());
             httpServletResponse.addCookie(cookie);
@@ -144,9 +148,10 @@ public class UserAuthController extends ModelAttributeController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> cancelProfile(HttpServletRequest request) {
         //TODO реализовать удаление неподтвержденной почты и номера телефона
-        userChangeService.resumedUser();
         Map<String, Object> response = new HashMap<>();
-        response.put("user", userProfileService.getCurrentUserDTO());
+        UserDto userDto = userContactService.deleteAllNoApprovedUserContactByUser();
+        System.out.println(userDto);
+        response.put("user", userDto);
         response.put("message", messageSource.getMessage("message.dataResumed", null, localeResolver.resolveLocale(request)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

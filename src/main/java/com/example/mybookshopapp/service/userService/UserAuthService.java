@@ -50,7 +50,6 @@ public class UserAuthService {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact == null)
             return new ContactConfirmationResponse(false, "Пользователь не найден");
-
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userContact.getUser().getHash(),
                     payload.getCode()));
@@ -63,7 +62,7 @@ public class UserAuthService {
 
             if (userContact.getCodeTrails() >= 2) {
                 long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
-                return blockContact(true, userContact.getType(), dif);
+                return blockContact(userContact.getType(), dif);
             }
 
             userContact.setCodeTrails(userContact.getCodeTrails() + 1);
@@ -76,18 +75,18 @@ public class UserAuthService {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
-        if (userContact.getCodeTrails() > 2 && dif < 300000) {
-            return blockContact(dif);
+        if (!passwordEncoder.matches(payload.getCode(), userContact.getCode())) {
+            userContact.setCodeTrails(userContact.getCodeTrails() + 1);
+            System.out.println(userContact.getCodeTrails());
+            userContactService.save(userContact);
+            if (userContact.getCodeTrails() > 2 && dif < 300000) {
+                return blockContact(dif);
+            }
+            return badContact(userContact.getCodeTrails(), userContact.getType());
         }
 
         if (dif > 1000000) {
             return new ContactConfirmationResponse(false, "Код подтверждения устарел. Запросите новый");
-        }
-
-        if (!passwordEncoder.matches(payload.getCode(), userContact.getCode())) {
-            userContact.setCodeTrails(userContact.getCodeTrails() + 1);
-            userContactService.save(userContact);
-            return badContact(userContact.getCodeTrails(), userContact.getType());
         }
 
         userContact.setApproved((short) 1);
@@ -108,7 +107,7 @@ public class UserAuthService {
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
 
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
-                return blockContact(false, payload.getContactType(), dif);
+                return blockContact(payload.getContactType(), dif);
             }
 
             userContact.setCodeTrails(0);
@@ -120,8 +119,8 @@ public class UserAuthService {
         return new ContactConfirmationResponse(true);
     }
 
-    private ContactConfirmationResponse blockContact(boolean result, ContactType type, long time) {
-        ContactConfirmationResponse response = new ContactConfirmationResponse(result);
+    private ContactConfirmationResponse blockContact(ContactType type, long time) {
+        ContactConfirmationResponse response = new ContactConfirmationResponse(false);
         response.setError(type.equals(ContactType.PHONE)
                 ? generator.generatorTextBlockContact(time, "Количество попыток входа по телефону исчерпано, попробуйте войти по e-mail или повторить вход по телефону через ")
                 : generator.generatorTextBlockContact(time, "Количество попыток входа по e-mail исчерпано, попробуйте войти по телефону или повторить вход по e-mail через "));

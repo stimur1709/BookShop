@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
@@ -36,13 +40,15 @@ public class MainPageController extends ModelAttributeController {
     }
 
     @GetMapping("/")
-    public String mainPage(Model model) {
+    public String mainPage(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
         model.addAttribute("isAuthenticatedUser", userProfileService.isAuthenticatedUser());
+        Enumeration<String> headerNames = request.getHeaderNames();
+        System.out.println(request.getHeader("user-agent"));
         return "index";
     }
 

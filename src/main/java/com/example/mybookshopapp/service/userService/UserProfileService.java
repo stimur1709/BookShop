@@ -35,7 +35,6 @@ public class UserProfileService {
                 String phone = "";
                 int approvedPhone = 0;
 
-
                 for (UserContact contact : user.getUserContact()) {
                     if (contact.getType() == ContactType.MAIL) {
                         mail = contact.getContact();

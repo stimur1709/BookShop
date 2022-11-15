@@ -1,8 +1,10 @@
 package com.example.mybookshopapp.service;
 
+import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,12 +20,15 @@ public class UserContactService {
     private final UserContactRepository userContactRepository;
     private final Generator generator;
     private final PasswordEncoder passwordEncoder;
+    private final UserProfileService userProfileService;
 
     @Autowired
-    public UserContactService(UserContactRepository userContactRepository, Generator generator, PasswordEncoder passwordEncoder) {
+    public UserContactService(UserContactRepository userContactRepository, Generator generator, PasswordEncoder passwordEncoder,
+                              UserProfileService userProfileService) {
         this.userContactRepository = userContactRepository;
         this.generator = generator;
         this.passwordEncoder = passwordEncoder;
+        this.userProfileService = userProfileService;
     }
 
     public Optional<UserContact> checkUserExistsByContact(String contact) {
@@ -60,9 +65,11 @@ public class UserContactService {
         userContactRepository.delete(userContact);
     }
 
-    public void deleteAllNoApprovedUserContactByUser(User user) {
+    public UserDto deleteAllNoApprovedUserContactByUser() {
+        User user = userProfileService.getCurrentUser();
         List<UserContact> userContacts = userContactRepository.findByUserAndApproved(user, (short) 0);
         userContacts.stream().map(UserContact::getContact).forEach(System.out::println);
-        userContactRepository.deleteAllInBatch(userContacts);
+        userContactRepository.deleteAll(userContacts);
+        return userProfileService.getCurrentUserDTO();
     }
 }

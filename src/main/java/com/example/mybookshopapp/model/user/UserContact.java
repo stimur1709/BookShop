@@ -27,7 +27,7 @@ public class UserContact {
     @JsonBackReference
     private User user;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne()
     @JoinColumn(name = "parent_id", columnDefinition = "INT")
     private UserContact parentUserContact;
 
@@ -49,7 +49,8 @@ public class UserContact {
     @Column(unique = true, columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    @OneToOne(mappedBy = "parentUserContact")
+    @OneToOne(mappedBy = "parentUserContact", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private UserContact childUserContact;
 
     public UserContact(ContactType type, String contact, String code) {
@@ -64,6 +65,14 @@ public class UserContact {
         this.approved = 1;
         this.contact = contact;
         this.codeTime = new Date();
+    }
+
+    public UserContact(ContactType type, String contact, UserContact userContact) {
+        this.type = type;
+        this.approved = 1;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.parentUserContact = userContact;
     }
 
     public UserContact() {

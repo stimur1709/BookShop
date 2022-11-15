@@ -3,6 +3,7 @@ package com.example.mybookshopapp.security.token;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
+import com.example.mybookshopapp.service.UserLoginHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,13 +25,15 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final JWTUtil jwtUtil;
     private final BlacklistService blacklistService;
+    private final UserLoginHistoryService userLoginHistoryService;
 
     @Autowired
     public JWTRequestFilter(BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil,
-                            BlacklistService blacklistService) {
+                            BlacklistService blacklistService, UserLoginHistoryService userLoginHistoryService) {
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
+        this.userLoginHistoryService = userLoginHistoryService;
     }
 
     @Override
@@ -54,12 +57,10 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                         if (jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
                             UsernamePasswordAuthenticationToken authenticationToken =
                                     new UsernamePasswordAuthenticationToken(
-                                            userDetails, null, userDetails.getAuthorities()
-                                    );
+                                            userDetails, null, userDetails.getAuthorities());
                             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                            //TODO  UserLoginHistory userLoginHistory = new UserLoginHistory(System.getProperty("os.name"), request.getRemoteAddr(), userRepository.);
-
+                            userLoginHistoryService.saveLoginHistory();
                         }
                     }
                 } catch (Exception ex) {

@@ -46,7 +46,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private static final String INVALID_USER_INFO_RESPONSE_ERROR_CODE = "invalid_user_info_response";
 
     private static final ParameterizedTypeReference<Map<String, Object>> PARAMETERIZED_RESPONSE_TYPE =
-            new ParameterizedTypeReference<Map<String, Object>>() {
+            new ParameterizedTypeReference<>() {
             };
 
     @Autowired
@@ -98,7 +98,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         ResponseEntity<Map<String, Object>> response;
         try {
-            response = this.restOperations.exchange(request, PARAMETERIZED_RESPONSE_TYPE);
+            response = this.restOperations.exchange(Objects.requireNonNull(request), PARAMETERIZED_RESPONSE_TYPE);
         } catch (OAuth2AuthorizationException ex) {
             OAuth2Error oauth2Error = ex.getError();
             StringBuilder errorDetails = new StringBuilder();
@@ -118,13 +118,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     "An error occurred while attempting to retrieve the UserInfo Resource: " + ex.getMessage(), null);
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString(), ex);
         }
-        ArrayList<Object> valueList = (ArrayList) response.getBody().get("response");
+        ArrayList<Object> valueList = (ArrayList) Objects.requireNonNull(response.getBody()).get("response");
         Map<String, Object> userAttributes = (Map<String, Object>) valueList.get(0);
         Set<GrantedAuthority> authorities = new LinkedHashSet<>();
         authorities.add(new OAuth2UserAuthority(userAttributes));
 
         ObjectMapper mapper = new ObjectMapper();
-        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<List<VkToken>>() {
+        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<>() {
         });
         VkToken vkToken = vkTokenList.get(0);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());

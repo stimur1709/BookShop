@@ -75,6 +75,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Message> messageList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<UserLoginHistory> userLoginHistories;
+
     public User(String firstname, String lastname, String password, String hash) {
         this.hash = hash;
         this.password = password;

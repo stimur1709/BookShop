@@ -50,8 +50,7 @@ public class UserContact implements Serializable {
     @Column(unique = true, columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
-    @OneToOne(mappedBy = "parentUserContact", fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @OneToOne(mappedBy = "parentUserContact")
     private UserContact childUserContact;
 
     public UserContact(ContactType type, String contact, String code) {

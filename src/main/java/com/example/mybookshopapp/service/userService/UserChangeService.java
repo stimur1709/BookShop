@@ -31,11 +31,12 @@ public class UserChangeService {
     private final UserRepository userRepository;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
+    private final HttpServletRequest request;
 
     @Autowired
     public UserChangeService(UserProfileService userProfileService, UserContactService userContactService,
                              Generator generator, PasswordEncoder passwordEncoder, UserRepository userRepository,
-                             MessageSource messageSource, LocaleResolver localeResolver) {
+                             MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         this.userProfileService = userProfileService;
         this.userContactService = userContactService;
         this.generator = generator;
@@ -43,10 +44,10 @@ public class UserChangeService {
         this.userRepository = userRepository;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
+        this.request = request;
     }
 
-    public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload,
-                                                                               HttpServletRequest request) {
+    public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(payload.getContact());
         if (userContact.isPresent()) {
             if (userContact.get().getApproved() == (short) 1) {
@@ -62,7 +63,7 @@ public class UserChangeService {
             if (dif <= 300000 && userContact.get().getCodeTrails() >= 2) {
                 String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
                 return new ContactConfirmationResponse(false,
-                        generator.generatorTextBlockContact(dif, message, request));
+                        generator.generatorTextBlockContact(dif, message));
             } else {
                 userContactService.changeContact(userContact.get());
                 return new ContactConfirmationResponse(true);
@@ -84,7 +85,7 @@ public class UserChangeService {
         return new ContactConfirmationResponse(true);
     }
 
-    public Map<String, Object> updateUser(ChangeProfileForm changeProfileForm, HttpServletRequest request) {
+    public Map<String, Object> updateUser(ChangeProfileForm changeProfileForm) {
         Map<String, Object> response = new HashMap<>();
         User user = userProfileService.getCurrentUser();
         user.setFirstname(changeProfileForm.getFirstname());

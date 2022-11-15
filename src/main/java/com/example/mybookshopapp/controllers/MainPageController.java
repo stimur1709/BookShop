@@ -6,7 +6,6 @@ import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.GenreService;
 import com.example.mybookshopapp.service.TagService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,36 +22,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
 
-    protected final BookService bookService;
-    protected final TagService tagService;
-    protected final GenreService genreService;
+    private final BookService bookService;
+    private final TagService tagService;
+    private final HttpServletRequest request;
 
     @Autowired
-    public MainPageController(BookService bookService, TagService tagService,
-                              GenreService genreService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
+    public MainPageController(BookService bookService, TagService tagService, UserProfileService userProfileService,
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
+                              HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.tagService = tagService;
-        this.genreService = genreService;
+        this.request = request;
     }
 
     @GetMapping("/")
-    public String mainPage(Model model, HttpServletRequest request) {
+    public String mainPage(Model model) {
         model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
         model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
         model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
         model.addAttribute("isAuthenticatedUser", userProfileService.isAuthenticatedUser());
-        Enumeration<String> headerNames = request.getHeaderNames();
-        System.out.println(request.getHeader("user-agent"));
+//        System.out.println(request.getHeader("user-agent"));
         return "index";
     }
 
@@ -74,7 +71,7 @@ public class MainPageController extends ModelAttributeController {
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                  Model model, HttpServletRequest request) throws EmptySearchException {
+                                  Model model) throws EmptySearchException {
         if (searchWordDto != null) {
             Page<Book> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
             model.addAttribute("searchWordDto", searchWordDto);

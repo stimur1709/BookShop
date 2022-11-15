@@ -29,11 +29,12 @@ public class UserRegisterService {
     private final Book2UserTypeService book2UserTypeService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
+    private final HttpServletRequest request;
 
     @Autowired
     public UserRegisterService(UserContactService userContactService, PasswordEncoder passwordEncoder,
                                UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService,
-                               MessageSource messageSource, LocaleResolver localeResolver) {
+                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         this.userContactService = userContactService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -41,6 +42,7 @@ public class UserRegisterService {
         this.book2UserTypeService = book2UserTypeService;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
+        this.request = request;
     }
 
     public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
@@ -62,8 +64,7 @@ public class UserRegisterService {
         book2UserTypeService.addBooksTypeUserFromCookie(cartContent, keptContent, user);
     }
 
-    public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload,
-                                                                            HttpServletRequest request) {
+    public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload) {
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact != null && userContact.getApproved() == (short) 1) {
             String messagePhone = messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request));
@@ -77,7 +78,7 @@ public class UserRegisterService {
 
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
-                return blockContact(dif, request);
+                return blockContact(dif);
             }
 
             userContactService.changeContact(userContact);
@@ -90,9 +91,9 @@ public class UserRegisterService {
         return new ContactConfirmationResponse(true);
     }
 
-    protected ContactConfirmationResponse blockContact(long time, HttpServletRequest request) {
+    protected ContactConfirmationResponse blockContact(long time) {
         String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
         return new ContactConfirmationResponse(false,
-                generator.generatorTextBlockContact(time, message, request));
+                generator.generatorTextBlockContact(time, message));
     }
 }

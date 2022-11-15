@@ -18,17 +18,20 @@ public class BookShopService {
     private final CookieBooksService cookieBooksService;
     private final UserProfileService userProfileService;
     private final Book2UserTypeService book2UserTypeService;
+    private final HttpServletRequest request;
+    private final HttpServletResponse response;
 
     @Autowired
     public BookShopService(CookieBooksService cookieBooksService, UserProfileService userProfileService,
-                           Book2UserTypeService book2UserTypeService) {
+                           Book2UserTypeService book2UserTypeService, HttpServletRequest request, HttpServletResponse response) {
         this.cookieBooksService = cookieBooksService;
         this.userProfileService = userProfileService;
         this.book2UserTypeService = book2UserTypeService;
+        this.request = request;
+        this.response = response;
     }
 
-    public ResponseResultDto changeBookStatus(HttpServletResponse response, HttpServletRequest request,
-                                              BookStatusRequestDto dto) {
+    public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.changeBookStatus(dto);
         }
@@ -36,7 +39,7 @@ public class BookShopService {
         return cookieBooksService.changeBookStatus(response, request.getCookies(), dto);
     }
 
-    public BookCodeType getBookStatus(HttpServletRequest request, Book book) {
+    public BookCodeType getBookStatus(Book book) {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.getBookStatus(book);
         }

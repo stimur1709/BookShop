@@ -36,13 +36,15 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
+    private final HttpServletRequest request;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
                               TagService tagService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
+                              HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.authorService = authorService;
@@ -51,10 +53,11 @@ public class BookPageController extends ModelAttributeController {
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
+        this.request = request;
     }
 
     @GetMapping("/books/{slug}")
-    public String bookPage(@PathVariable("slug") String slug, Model model, HttpServletRequest request) {
+    public String bookPage(@PathVariable("slug") String slug, Model model) {
         Book book = bookService.getBookBySlug(slug);
         model.addAttribute("slugBook", book);
         model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
@@ -68,7 +71,7 @@ public class BookPageController extends ModelAttributeController {
         model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
-        model.addAttribute("status", getBookShopService().getBookStatus(request, book));
+        model.addAttribute("status", getBookShopService().getBookStatus(book));
         return "books/slug";
     }
 
@@ -102,7 +105,7 @@ public class BookPageController extends ModelAttributeController {
 
     @PostMapping("/api/bookReview")
     @ResponseBody
-    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review, HttpServletRequest request) {
+    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review) {
         if (bookReviewService.saveBookReview(review.getBookId(), review.getText()))
             return new ResponseResultDto(true);
         else {

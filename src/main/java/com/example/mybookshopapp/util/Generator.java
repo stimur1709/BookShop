@@ -16,12 +16,14 @@ public class Generator {
     private final Random random;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
+    private final HttpServletRequest request;
 
     @Autowired
-    public Generator(Random random, MessageSource messageSource, LocaleResolver localeResolver) {
+    public Generator(Random random, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         this.random = random;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
+        this.request = request;
     }
 
     public String getSecretCode() {
@@ -30,7 +32,7 @@ public class Generator {
         return code;
     }
 
-    public String generatorTextBlockContact(long time, String text, HttpServletRequest request) {
+    public String generatorTextBlockContact(long time, String text) {
         long value;
         String result;
         if (time > 240000) {
@@ -51,7 +53,7 @@ public class Generator {
         return text + value + result;
     }
 
-    public String generatorTextBadContact(int result, HttpServletRequest request) {
+    public String generatorTextBadContact(int result) {
         int count = 3 - result;
         String password = messageSource.getMessage("message.password", null, localeResolver.resolveLocale(request));
         String enteredIncorrectly = ' ' + messageSource.getMessage("message.enteredIncorrectly", null, localeResolver.resolveLocale(request));

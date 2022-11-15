@@ -14,25 +14,27 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class BookShopController extends ModelAttributeController {
 
+    private final HttpServletRequest request;
+
     @Autowired
     public BookShopController(BookShopService bookShopService, UserProfileService userProfileService,
-                              MessageSource messageSource, LocaleResolver localeResolver) {
+                              MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
+        this.request = request;
     }
 
     @GetMapping(value = {"/cart", "/postponed"})
     public String cartPage(@CookieValue(name = "cartContent", required = false) String cartContent,
                            @CookieValue(name = "keptContent", required = false) String keptContent,
-                           Model model, HttpServletRequest request) {
+                           Model model) {
 
-        List<Book> bookList = getBooksUser(cartContent, keptContent, request);
+        List<Book> bookList = getBooksUser(cartContent, keptContent);
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
@@ -44,29 +46,25 @@ public class BookShopController extends ModelAttributeController {
             model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(Book::getPrice).sum());
         }
 
-        return getUrl(request);
+        return getUrl();
     }
 
     @GetMapping(value = {"/api/size/cart", "/api/size/kept"})
     @ResponseBody
     public int getSize(@CookieValue(name = "cartContent", required = false) String cartContent,
-                       @CookieValue(name = "keptContent", required = false) String keptContent,
-                       HttpServletRequest request) {
-        return getBooksUser(cartContent, keptContent, request).size();
+                       @CookieValue(name = "keptContent", required = false) String keptContent) {
+        return getBooksUser(cartContent, keptContent).size();
     }
 
     @PostMapping("/books/changeBookStatus")
     @ResponseBody
-    public ResponseResultDto handlerChangeBookStatus(@RequestBody BookStatusRequestDto dto,
-                                                     HttpServletRequest request,
-                                                     HttpServletResponse response) {
-        return getBookShopService().changeBookStatus(response, request, dto);
+    public ResponseResultDto handlerChangeBookStatus(@RequestBody BookStatusRequestDto dto) {
+        return getBookShopService().changeBookStatus(dto);
     }
 
     private List<Book> getBooksUser(@CookieValue(name = "cartContent", required = false) String cartContent,
-                                    @CookieValue(name = "keptContent", required = false) String keptContent,
-                                    HttpServletRequest request) {
-        String url = getUrl(request);
+                                    @CookieValue(name = "keptContent", required = false) String keptContent) {
+        String url = getUrl();
         BookCodeType status = url.equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
 
         return status.equals(BookCodeType.CART)
@@ -74,7 +72,7 @@ public class BookShopController extends ModelAttributeController {
                 : getBookShopService().getBooksUser(keptContent, status);
     }
 
-    private String getUrl(HttpServletRequest request) {
+    private String getUrl() {
         return request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
     }
 }

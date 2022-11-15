@@ -18,7 +18,8 @@ public class BookRateReviewService {
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookRateReviewService(BookReviewRepository bookReviewRepository, BookReviewLikeRepository bookReviewLikeRepository, UserRepository userRepository, BookRepository bookRepository) {
+    public BookRateReviewService(BookReviewRepository bookReviewRepository, BookReviewLikeRepository bookReviewLikeRepository,
+                                 UserRepository userRepository, BookRepository bookRepository) {
         this.bookReviewRepository = bookReviewRepository;
         this.bookReviewLikeRepository = bookReviewLikeRepository;
         this.userRepository = userRepository;

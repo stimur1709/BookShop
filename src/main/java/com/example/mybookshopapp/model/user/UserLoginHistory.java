@@ -19,7 +19,7 @@ public class UserLoginHistory {
     private Integer id;
 
     @Column(columnDefinition = "VARCHAR(40) NOT NULL")
-    private String osName;
+    private String system;
 
     @Column(columnDefinition = "VARCHAR(40) NOT NULL")
     private String ipAddress;
@@ -39,8 +39,8 @@ public class UserLoginHistory {
     public UserLoginHistory() {
     }
 
-    public UserLoginHistory(String osName, String ipAddress, User user) {
-        this.osName = osName;
+    public UserLoginHistory(String system, String ipAddress, User user) {
+        this.system = system;
         this.ipAddress = ipAddress;
         this.user = user;
         this.date = new Date();

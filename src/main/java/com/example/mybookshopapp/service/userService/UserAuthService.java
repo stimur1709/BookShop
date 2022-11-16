@@ -103,7 +103,7 @@ public class UserAuthService {
         userContact.setApproved((short) 1);
         userContactService.save(userContact);
 
-        ContactConfirmationResponse response = new ContactConfirmationResponse(true);
+        ContactConfirmationResponse response = new ContactConfirmationResponse(true, userContact.getType());
 
         if (userContact.getParentUserContact() != null) {
             userContactService.delete(userContact.getParentUserContact());

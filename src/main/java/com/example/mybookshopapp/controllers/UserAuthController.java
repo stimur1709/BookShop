@@ -158,11 +158,16 @@ public class UserAuthController extends ModelAttributeController {
 
     @GetMapping("/api/profile/cancel")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> cancelProfile() {
-        //TODO реализовать удаление неподтвержденной почты и номера телефона
+    public ResponseEntity<?> cancelProfile() {
+        userContactService.deleteAllNoApprovedUserContactByUser();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/api/profile")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getProfile() {
         Map<String, Object> response = new HashMap<>();
-        UserDto userDto = userContactService.deleteAllNoApprovedUserContactByUser();
-        response.put("user", userDto);
+        response.put("user", userProfileService.getCurrentUserDTO());
         response.put("message", messageSource.getMessage("message.dataResumed", null, localeResolver.resolveLocale(request)));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -3156,9 +3156,14 @@
     }
 }
 
-.Profile-btn_confirm {
-    margin-top: 25px;
-    display: none
+.Profile-btn_confirm_mail {
+    text-align: left;
+    display: none;
+}
+
+.Profile-btn_confirm_phone {
+    text-align: left;
+    display: none;
 }
 
 .Profile-form {

@@ -38,22 +38,22 @@ public class UserLoginHistoryService {
     @Transactional
     public void saveLoginHistory() {
         User user = userProfileService.getCurrentUser();
-        String osName = System.getProperty("os.name") + " " + request.getHeader("user-agent");
+        String system = System.getProperty("os.name") + " " + request.getHeader("user-agent");
         String ipAddress = request.getRemoteAddr();
-        Optional<UserLoginHistory> userLoginHistory = userLoginHistoryRepository.findFirstByOsNameAndIpAddressAndUserOrderByDateAsc(osName, ipAddress, user);
+        Optional<UserLoginHistory> userLoginHistory = userLoginHistoryRepository.findFirstBySystemAndIpAddressAndUserOrderByDateAsc(system, ipAddress, user);
         if (userLoginHistory.isPresent()) {
             if (Math.abs(userLoginHistory.get().getDate().getTime() - new Date().getTime()) > 300000) {
                 userLoginHistory.get().setDate(new Date());
                 userLoginHistoryRepository.save(userLoginHistory.get());
             }
         } else {
-            userLoginHistoryRepository.save(new UserLoginHistory(osName, ipAddress, user));
+            userLoginHistoryRepository.save(new UserLoginHistory(system, ipAddress, user));
         }
     }
 
     public Page<UserLoginHistory> getPageLoginHistory(int page, int size) {
         User user = userProfileService.getCurrentUser();
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "date"));
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "date"));
         Page<UserLoginHistory> result = userLoginHistoryRepository.findByUser(user, pageable);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));
         result.getContent().forEach(userLoginHistory -> userLoginHistory.setFormatDate(simpleDateFormat));

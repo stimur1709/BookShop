@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -19,6 +20,7 @@ public class ChangeProfileForm {
     @Size(min = 2, max = 100, message = "{message.lastnameEmpty}")
     private String lastname;
 
+    @NotEmpty(message = "{message.validMail}")
     @Email(message = "{message.validMail}")
     private String email;
     private String oldEmail;

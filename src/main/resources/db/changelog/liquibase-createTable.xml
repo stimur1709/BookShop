@@ -6171,7 +6171,7 @@
             <column autoIncrement="true" name="id" type="serial">
                 <constraints primaryKey="true" primaryKeyName="user_login_history_pkey"/>
             </column>
-            <column name="os_name" type="varchar(255)">
+            <column name="system" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="date" type="timestamp(0)">

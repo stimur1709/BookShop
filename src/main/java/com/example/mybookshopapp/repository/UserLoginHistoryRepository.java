@@ -14,6 +14,6 @@ public interface UserLoginHistoryRepository extends JpaRepository<UserLoginHisto
 
     Page<UserLoginHistory> findByUser(User user, Pageable pageable);
 
-    Optional<UserLoginHistory> findFirstByOsNameAndIpAddressAndUserOrderByDateAsc(String osName, String ipAddress, User user);
+    Optional<UserLoginHistory> findFirstBySystemAndIpAddressAndUserOrderByDateAsc(String system, String ipAddress, User user);
 
 }

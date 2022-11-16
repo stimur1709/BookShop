@@ -1,9 +1,11 @@
 package com.example.mybookshopapp.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -28,9 +30,23 @@ public class UserLoginHistory {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", columnDefinition = "INT")
+    @JsonBackReference
     private User user;
 
-    public UserLoginHistory() {
+    @Transient
+    private String formatDate;
 
+    public UserLoginHistory() {
+    }
+
+    public UserLoginHistory(String osName, String ipAddress, User user) {
+        this.osName = osName;
+        this.ipAddress = ipAddress;
+        this.user = user;
+        this.date = new Date();
+    }
+
+    public void setFormatDate(SimpleDateFormat simpleDateFormat) {
+        this.formatDate = simpleDateFormat.format(date);
     }
 }

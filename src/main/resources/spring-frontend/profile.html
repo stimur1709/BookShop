@@ -231,32 +231,33 @@
                     <div class="Tabs-block" id="history">
                         <form class="form Topup" style="flex-direction: column" action="#" method="post"
                               data-sendHash="34534535">
-                            <div class="Transactions">
+                            <div class="Transactions Story">
                                 <div class="tableWrap">
                                     <table class="table table_noMargin">
                                         <thead>
                                         <tr>
                                             <th>Дата и время</th>
                                             <th>Устройство</th>
-                                            <th>Ip адрес</th>
+                                            <th>IP-адрес</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>15 мая 2017 10:03</td>
-                                            <td>
-                                                <span class="Transactions_textSuccess">
-                                                    <strong>+500 р.</strong>
-                                                </span>
+                                        <tr th:each="story : ${loginStories}">
+                                            <td style="width: 20%" th:text="${story.getFormatDate()}">15 мая
+                                                2017 10:03
                                             </td>
-                                            <td>Пополнение счета</td>
+                                            <td th:text="${story.getOsName()}">
+                                                Устройство
+                                            </td>
+                                            <td th:text="${story.getIpAddress()}">Ip адрес</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="Transactions-footer Transactions-footer_center"><a
-                                        class="btn btn_primary History-get" href="#" data-transactionoffset="4"
-                                        data-transactionlimit="10" data-transactionsort="asc">Показать еще</a>
+                                <div class="Transactions-footer Transactions-footer_center">
+                                    <a class="btn btn_primary History-get" href="#" data-page="0"
+                                       th:attr="data-total = ${totalPages}"
+                                       data-size="5" th:text="#{message.showMore}">Показать еще</a>
                                 </div>
                             </div>
                         </form>

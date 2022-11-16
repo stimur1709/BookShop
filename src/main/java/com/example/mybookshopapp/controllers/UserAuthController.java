@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.*;
+import com.example.mybookshopapp.model.user.UserLoginHistory;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
@@ -9,6 +10,7 @@ import com.example.mybookshopapp.service.userService.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,12 +37,14 @@ public class UserAuthController extends ModelAttributeController {
     private final FormValidator formValidator;
     private final HttpServletRequest request;
     private final UserContactService userContactService;
+    private final UserLoginHistoryService userLoginHistoryService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
                               UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
-                              LocaleResolver localeResolver, HttpServletRequest request, UserContactService userContactService) {
+                              LocaleResolver localeResolver, HttpServletRequest request, UserContactService userContactService,
+                              UserLoginHistoryService userLoginHistoryService) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
@@ -47,6 +52,7 @@ public class UserAuthController extends ModelAttributeController {
         this.formValidator = formValidator;
         this.request = request;
         this.userContactService = userContactService;
+        this.userLoginHistoryService = userLoginHistoryService;
     }
 
     @GetMapping("/signin")
@@ -104,7 +110,18 @@ public class UserAuthController extends ModelAttributeController {
     @GetMapping("/profile")
     public String profilePage(Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
+        Page<UserLoginHistory> page = userLoginHistoryService.getPageLoginHistory(0, 5);
+        model.addAttribute("loginStories", page.getContent());
+        model.addAttribute("show", page.getTotalPages() > 1);
+        model.addAttribute("totalPages", page.getTotalPages());
         return "profile";
+    }
+
+    @GetMapping("/api/loginStory")
+    @ResponseBody
+    public List<UserLoginHistory> getPageLoginHistory(@RequestParam("page") int page,
+                                                      @RequestParam("size") int size) {
+        return userLoginHistoryService.getPageLoginHistory(page, size).getContent();
     }
 
     @PostMapping("/login")

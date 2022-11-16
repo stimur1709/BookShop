@@ -4,6 +4,7 @@ import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserLoginHistoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JWTRequestFilter extends OncePerRequestFilter {
 
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
@@ -51,17 +53,17 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                         token = cookie.getValue();
                         username = jwtUtil.extractUsername(token);
                     }
-                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        BookstoreUserDetails userDetails =
-                                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                        if (jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
-                            UsernamePasswordAuthenticationToken authenticationToken =
-                                    new UsernamePasswordAuthenticationToken(
-                                            userDetails, null, userDetails.getAuthorities());
-                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    BookstoreUserDetails userDetails =
+                            (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
+                    if (username != null && jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
+                        UsernamePasswordAuthenticationToken authenticationToken =
+                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                            log.info("Аутентификация");
                             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                            userLoginHistoryService.saveLoginHistory();
                         }
+                        userLoginHistoryService.saveLoginHistory();
                     }
                 } catch (Exception ex) {
                     cookie.setMaxAge(0);

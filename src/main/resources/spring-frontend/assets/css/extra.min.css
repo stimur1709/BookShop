@@ -3166,6 +3166,16 @@
     display: none;
 }
 
+.check-phone  {
+    font-size: 15px;
+    margin-left: 10px
+}
+
+.check-mail {
+    font-size: 15px;
+    margin-left: 10px
+}
+
 .Profile-form {
     margin-top: 0
 }

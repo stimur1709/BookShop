@@ -705,9 +705,10 @@
                         <form class="form" action="#" method="post" data-bookid="1111"
                               th:attr="data-bookid = ${slugBook.id}">
                             <div class="form-group">
-                  <textarea class="form-textarea Comments-review" name="review" id="review"
-                            th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
-                            data-validate="require"></textarea>
+                              <textarea class="form-textarea Comments-review" name="review" id="review"
+                                        th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
+                                        data-validate="require">
+                              </textarea>
                             </div>
                             <div class="form-group Comments-sendReview">
                                 <button class="btn btn_warning" type="submit" th:text="#{message.postAReview}">
@@ -725,7 +726,8 @@
                             <div class="Comment-column">
                                 <header class="Comment-header">
                                     <div>
-                                        <strong class="Comment-title" th:text="${review.getUser().getFirstname() + ' ' + review.getUser().getLastname()}">
+                                        <strong class="Comment-title"
+                                                th:text="${review.getUser().getFirstname() + ' ' + review.getUser().getLastname()}">
                                             Дмитрий Петров
                                             <span class="Comment-rating">
                                                 <span class="Rating Rating_comment">

@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -34,7 +34,8 @@ public class BookReview {
     private User user;
 
     @Column(columnDefinition = "DATE NOT NULL")
-    private LocalDateTime time;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
@@ -49,7 +50,7 @@ public class BookReview {
     public BookReview(Book book, User user, String text) {
         this.book = book;
         this.user = user;
-        this.time = LocalDateTime.now();
+        this.time = new Date();
         this.text = text;
     }
 

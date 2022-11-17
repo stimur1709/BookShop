@@ -106,12 +106,7 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping("/api/bookReview")
     @ResponseBody
     public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review) {
-        if (bookReviewService.saveBookReview(review.getBookId(), review.getText()))
-            return new ResponseResultDto(true);
-        else {
-            String message = messageSource.getMessage("message.reviewShort", null, localeResolver.resolveLocale(request));
-            return new ResponseResultDto(false, message);
-        }
+        return bookReviewService.saveBookReview(review.getBookId(), review.getText());
     }
 
     @PostMapping("/api/rateBookReview")

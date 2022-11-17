@@ -568,7 +568,8 @@
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
-                                    <span class="btn-content" th:text="#{message.postpone}">Отложить</span>
+                                    <span class="btn-content" th:text="#{message.postpone}"
+                                          th:attr="data-status=${status}">Отложить</span>
                                 </button>
                                 <button class="btn btn_primary btn_outline btn_check"
                                         th:if="${status.equals(status.KEPT)}"
@@ -578,7 +579,8 @@
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
-                                    <span class="btn-content" th:text="#{message.postponed}">Отложить</span>
+                                    <span class="btn-content" th:text="#{message.postponed}"
+                                          th:attr="data-status=${status}">Отложить</span>
                                 </button>
                             </div>
                             <div class="ProductCard-cartElement">

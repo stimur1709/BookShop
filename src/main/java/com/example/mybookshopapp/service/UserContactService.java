@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.UserDto;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
@@ -67,10 +66,10 @@ public class UserContactService {
     }
 
     @Transactional
-    public UserDto deleteAllNoApprovedUserContactByUser() {
+    public void deleteAllNoApprovedUserContactByUser() {
         User user = userProfileService.getCurrentUser();
         List<UserContact> userContacts = userContactRepository.findByUserAndApproved(user, (short) 0);
         userContactRepository.deleteAll(userContacts);
-        return userProfileService.getCurrentUserDTO();
+        userProfileService.getCurrentUserDTO();
     }
 }

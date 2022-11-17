@@ -563,7 +563,7 @@
                             <div class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" th:if="${!status.equals(status.KEPT)}"
                                         th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postponed}"
-                                        data-sendstatus="KEPT" data-btntype="check"
+                                        data-sendstatus="KEPT" data-btntype="check" id="KEPT"
                                         data-btnradio="buyblock" data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
@@ -572,7 +572,7 @@
                                 </button>
                                 <button class="btn btn_primary btn_outline btn_check"
                                         th:if="${status.equals(status.KEPT)}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postpone}"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postpone}, data-status=${status}"
                                         data-sendstatus="KEPT" data-btntype="check"
                                         data-btnradio="buyblock" data-check="false">
                                     <span class="btn-icon">
@@ -606,7 +606,7 @@
                             </div>
                         </div>
                         <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement">
+                            <div class="ProductCard-cartElement" th:if="${status.equals(status.PAID)}">
                                 <a class="btn btn_primary btn_outline" href="#">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/download.svg"
@@ -614,7 +614,8 @@
                                     </span>
                                     <span class="btn-content" th:text="#{message.download}">Скачать</span></a>
                             </div>
-                            <div class="ProductCard-cartElement">
+                            <div class="ProductCard-cartElement"
+                                 th:if="${status.equals(status.PAID) || status.equals(status.ARCHIVED)}">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
                                         data-bookid="[1111]"
                                         data-btntype="check" data-btnradio="buyblock" data-check="false"
@@ -699,15 +700,16 @@
                     </div>
                 </div>
                 <div class="Comments">
-                    <strong class="Comments-title" th:text="#{message.writeAReview}">Написать отзыв
+                    <strong class="Comments-title" th:if="${isAuthenticatedUser}" th:text="#{message.writeAReview}">Написать
+                        отзыв
                     </strong>
-                    <div class="Comments-addComment">
+                    <div class="Comments-addComment" th:if="${isAuthenticatedUser}">
                         <form class="form" action="#" method="post" data-bookid="1111"
                               th:attr="data-bookid = ${slugBook.id}">
                             <div class="form-group">
                               <textarea class="form-textarea Comments-review" name="review" id="review"
                                         th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
-                                        data-validate="require">
+                                        data-validate="require" value="">
                               </textarea>
                             </div>
                             <div class="form-group Comments-sendReview">
@@ -716,6 +718,16 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+                    <div class="Comments-addComment" th:if="${!isAuthenticatedUser}">
+                        <strong class="Comments-title" th:text="#{message.onlyAuth}">
+                        </strong>
+                        <a th:href="@{/signin}" th:text="#{message.comeIn}">
+                            <button class="btn btn_primary" type="submit"/>
+                        </a>
+                        <a th:href="@{/signup}" th:text="#{message.register}">
+                            <button class="btn btn_primary" type="submit"/>
+                        </a>
                     </div>
                     <div th:each="review : ${reviews}">
                         <div class="Comment">
@@ -795,7 +807,11 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                        </strong><span class="Comment-date" th:text="${review.getTime()}">17.04.2020 16:40</span>
+                                        </strong>
+                                        <span class="Comment-date"
+                                              th:text="${#dates.format(review.getTime(), 'dd MMMM yyyy HH:mm')}">
+                                            17.04.2020 16:40
+                                        </span>
                                     </div>
                                 </header>
                                 <div class="Comment-content">

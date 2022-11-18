@@ -54,6 +54,7 @@ public class CookieBooksService {
                     break;
                 }
                 case UNLINK: {
+                    System.out.println("UNLINK");
                     removeBookFromCookie(slug, cartCookie, -0.7);
                     removeBookFromCookie(slug, keptCookie, -0.4);
                     break;

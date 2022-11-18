@@ -39,39 +39,36 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String token = null;
-        String username = null;
+        String token;
+        String username;
         Cookie[] cookies = request.getCookies();
-
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                try {
-                    if (cookie.getName().equals("token")) {
+                if (cookie.getName().equals("token")) {
+                    try {
                         token = cookie.getValue();
                         username = jwtUtil.extractUsername(token);
-                    }
-                    BookstoreUserDetails userDetails =
-                            (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                    if (username != null && jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
-                        UsernamePasswordAuthenticationToken authenticationToken =
-                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                            log.info("Аутентификация");
-                            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        BookstoreUserDetails userDetails =
+                                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
+                        if (username != null && jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
+                            UsernamePasswordAuthenticationToken authenticationToken =
+                                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                                log.info("Аутентификация");
+                                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                            }
+                            userLoginHistoryService.saveLoginHistory();
                         }
-                        userLoginHistoryService.saveLoginHistory();
+                    } catch (Exception ex) {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
                     }
-                } catch (Exception ex) {
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
                 }
             }
         }
-
         filterChain.doFilter(request, response);
     }
 }

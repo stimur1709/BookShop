@@ -91,7 +91,7 @@ public class MainPageController extends ModelAttributeController {
     public BooksPageDto getNextSearchPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
-                                          SearchWordDto searchWordDto) {
+                                                  SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
 

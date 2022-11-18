@@ -561,49 +561,32 @@
                         </div>
                         <div class="ProductCard-cart">
                             <div class="ProductCard-cartElement">
-                                <button class="btn btn_primary btn_outline" th:if="${!status.equals(status.KEPT)}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postponed}"
-                                        data-sendstatus="KEPT" data-btntype="check" id="KEPT"
-                                        data-btnradio="buyblock" data-check="false">
+                                <button th:class="${status.equals(status.KEPT) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-status=${status}, data-check=${status.equals(status.KEPT)},
+                                        data-alttext=${status.equals(status.KEPT)} ? #{message.postpone} : #{message.postponed}"
+                                        data-btntype="check" data-sendstatus="KEPT" data-btnradio="buyblock"
+                                        data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
-                                    <span class="btn-content" th:text="#{message.postpone}"
-                                          th:attr="data-status=${status}">Отложить</span>
-                                </button>
-                                <button class="btn btn_primary btn_outline btn_check"
-                                        th:if="${status.equals(status.KEPT)}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.postpone}, data-status=${status}"
-                                        data-sendstatus="KEPT" data-btntype="check"
-                                        data-btnradio="buyblock" data-check="false">
-                                    <span class="btn-icon">
-                                        <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
-                                    </span>
-                                    <span class="btn-content" th:text="#{message.postponed}"
+                                    <span class="btn-content"
+                                          th:text="${status.equals(status.KEPT)} ? #{message.postponed} : #{message.postpone}"
                                           th:attr="data-status=${status}">Отложить</span>
                                 </button>
                             </div>
                             <div class="ProductCard-cartElement">
-                                <button class="btn btn_primary btn_outline" th:if="${!status.equals(status.CART)}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.inBasket}"
-                                        data-sendstatus="CART" data-btntype="check"
-                                        data-btnradio="buyblock" data-check="false">
+                                <button th:class="${status.equals(status.CART) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
+                                        th:attr="data-bookid = ${slugBook.slug}, data-status=${status}, data-check=${status.equals(status.CART)},
+                                        data-alttext=${status.equals(status.CART)} ? #{message.buy} : #{message.inBasket}"
+                                        data-btntype="check" data-sendstatus="CART" data-btnradio="buyblock"
+                                        data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/shopping-basket.svg"
                                              alt="shopping-basket.svg"/>
                                     </span>
-                                    <span class="btn-content" th:text="#{message.buy}">Купить</span>
-                                </button>
-                                <button class="btn btn_primary btn_outline btn_check"
-                                        th:if="${status.equals(status.CART)}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-alttext=#{message.buy}"
-                                        data-sendstatus="CART" data-btntype="check"
-                                        data-btnradio="buyblock" data-check="false">
-                                    <span class="btn-icon">
-                                        <img src="/assets/img/icons/shopping-basket.svg"
-                                             alt="shopping-basket.svg"/>
-                                    </span>
-                                    <span class="btn-content" th:text="#{message.inBasket}">Купить</span>
+                                    <span class="btn-content"
+                                          th:text="${status.equals(status.CART)} ? #{message.inBasket} : #{message.buy}"
+                                          th:attr="data-status=${status}">Отложить</span>
                                 </button>
                             </div>
                         </div>
@@ -646,59 +629,67 @@
                 <div class="Product-comments">
                     <div class="Product-comments-header">
                         <h3 class="Product-comments-title" th:text="#{message.reviews}">Отзывы
-                        </h3><span class="Rating"><span class="Rating-stars"><span
-                            th:class="${rateReview >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                      <g>
-                        <g>
-                          <path fill="#ffc000"
-                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                          </path>
-                        </g>
-                      </g>
-                    </svg></span><span
-                            th:class="${rateReview >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                      <g>
-                        <g>
-                          <path fill="#ffc000"
-                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                          </path>
-                        </g>
-                      </g>
-                    </svg></span><span
-                            th:class="${rateReview >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                      <g>
-                        <g>
-                          <path fill="#ffc000"
-                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                          </path>
-                        </g>
-                      </g>
-                    </svg></span><span
-                            th:class="${rateReview >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                      <g>
-                        <g>
-                          <path fill="#ffc000"
-                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                          </path>
-                        </g>
-                      </g>
-                    </svg></span><span
-                            th:class="${rateReview >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                      <g>
-                        <g>
-                          <path fill="#ffc000"
-                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                          </path>
-                        </g>
-                      </g>
-                    </svg></span></span>
-                        <span class="Rating-title" th:text="${reviews.size() + ' отзывов'}">567</span>
-                    </span>
+                        </h3>
+                        <span class="Rating">
+                            <span class="Rating-stars">
+                                <span th:class="${rateReview >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                      <g>
+                                        <g>
+                                          <path fill="#ffc000"
+                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                          </path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                </span>
+                                <span th:class="${rateReview >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                      <g>
+                                        <g>
+                                          <path fill="#ffc000"
+                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                          </path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                </span>
+                                <span th:class="${rateReview >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                      <g>
+                                        <g>
+                                          <path fill="#ffc000"
+                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                          </path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                </span>
+                                <span th:class="${rateReview >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                      <g>
+                                        <g>
+                                          <path fill="#ffc000"
+                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                          </path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                </span>
+                                <span th:class="${rateReview >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
+                                      <g>
+                                        <g>
+                                          <path fill="#ffc000"
+                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                          </path>
+                                        </g>
+                                      </g>
+                                    </svg>
+                                </span>
+                            </span>
+                            <span class="Rating-title" th:text="${reviews.size() + ' отзывов'}">567</span>
+                        </span>
                     </div>
                 </div>
                 <div class="Comments">
@@ -711,7 +702,7 @@
                             <div class="form-group">
                               <textarea class="form-textarea Comments-review" name="review" id="review"
                                         th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
-                                        data-validate="require" value="">
+                                        data-validate="require">
                               </textarea>
                             </div>
                             <div class="form-group Comments-sendReview">
@@ -749,14 +740,14 @@
                                                         <span class="Rating-star Rating-star_view">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="19"
                                                                  height="18" viewBox="0 0 19 18">
-                                                            <g>
-                                                              <g>
-                                                                <path fill="#ffc000"
-                                                                      d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                                </path>
-                                                              </g>
-                                                            </g>
-                                                          </svg>
+                                                                <g>
+                                                                  <g>
+                                                                    <path fill="#ffc000"
+                                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                                    </path>
+                                                                  </g>
+                                                                </g>
+                                                            </svg>
                                                         </span>
                                                         <span class="Rating-star Rating-star_view">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"

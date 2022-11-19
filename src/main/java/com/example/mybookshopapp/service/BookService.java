@@ -17,16 +17,13 @@ import java.util.Date;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final BooksRatingAndPopularityService booksRatingAndPopularityService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BooksRatingAndPopularityService booksRatingAndPopularityService) {
+    public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.booksRatingAndPopularityService = booksRatingAndPopularityService;
     }
 
     public Page<Book> getPageOfRecommendBooks(Integer offset, Integer limit) {
-        addRate();
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "rate"));
         return bookRepository.findAll(nextPage);
     }
@@ -65,13 +62,6 @@ public class BookService {
 //            bookRepository.save(book);
 //        });
 //    }
-
-    private void addRate() {
-        bookRepository.findAll().forEach(book -> {
-            book.setRate(booksRatingAndPopularityService.getRateBook(book.getId()));
-            bookRepository.save(book);
-        });
-    }
 
     public Page<Book> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);

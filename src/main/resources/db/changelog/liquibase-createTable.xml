@@ -135,13 +135,13 @@
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_rating_pkey"/>
             </column>
-            <column defaultValueNumeric="0" name="number_of_ratings" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="score" type="INT">
+            <column name="rating" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="book_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -209,9 +209,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="pub_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0.0" name="rate" type="FLOAT8">
                 <constraints nullable="false"/>
             </column>
             <column name="slug" type="VARCHAR(255)">
@@ -445,6 +442,10 @@
                                  constraintName="fkg6p9bhsx856y3gj39utdc7udf" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="books"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_rating"
+                                 constraintName="fvz6p9bbxx856y3gj39utdc4udf" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="S Timur" id="38">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_file"

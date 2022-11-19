@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -36,15 +35,13 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
-    private final HttpServletRequest request;
 
     @Autowired
     public BookPageController(BookService bookService, AuthorService authorService,
                               TagService tagService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
-                              HttpServletRequest request) {
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.authorService = authorService;
@@ -53,7 +50,6 @@ public class BookPageController extends ModelAttributeController {
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
-        this.request = request;
     }
 
     @GetMapping("/books/{slug}")
@@ -62,12 +58,13 @@ public class BookPageController extends ModelAttributeController {
         model.addAttribute("slugBook", book);
         model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
         model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
-        model.addAttribute("numberOfScore1", (int) ratingBook.getSizeofRatingValue(book.getId(), 1));
-        model.addAttribute("numberOfScore2", (int) ratingBook.getSizeofRatingValue(book.getId(), 2));
-        model.addAttribute("numberOfScore3", (int) ratingBook.getSizeofRatingValue(book.getId(), 3));
-        model.addAttribute("numberOfScore4", (int) ratingBook.getSizeofRatingValue(book.getId(), 4));
-        model.addAttribute("numberOfScore5", (int) ratingBook.getSizeofRatingValue(book.getId(), 5));
-        model.addAttribute("numberOfRating", (int) ratingBook.numberOfRating(book.getId()));
+        Map<Integer, Long> sizeofRatingValue = ratingBook.getSizeofRatingValue(book.getId());
+        model.addAttribute("numberOfScore1", sizeofRatingValue.get(1));
+        model.addAttribute("numberOfScore2", sizeofRatingValue.get(2));
+        model.addAttribute("numberOfScore3", sizeofRatingValue.get(3));
+        model.addAttribute("numberOfScore4", sizeofRatingValue.get(4));
+        model.addAttribute("numberOfScore5", sizeofRatingValue.get(5));
+        model.addAttribute("numberOfRating", ratingBook.numberOfRating(book.getId()));
         model.addAttribute("rateBook", book.getRate());
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
@@ -99,8 +96,7 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping(value = "/api/rateBook")
     @ResponseBody
     public ResponseResultDto rateBook(@RequestBody BookRateRequestDto rate) {
-        boolean result = ratingBook.changeRateBook(rate.getBookId(), rate.getValue());
-        return new ResponseResultDto(result);
+        return ratingBook.changeRateBook(rate.getBookId(), rate.getValue());
     }
 
     @PostMapping("/api/bookReview")

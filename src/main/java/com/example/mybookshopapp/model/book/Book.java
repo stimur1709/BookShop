@@ -11,6 +11,7 @@ import com.example.mybookshopapp.model.user.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -65,8 +66,7 @@ public class Book {
     @Schema(example = "0.4")
     private Double popularity;
 
-    @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
-    @Schema(example = "15")
+    @Formula("(select coalesce(avg(br.rating), 0) from book_rating br where br.book_id = id)")
     private double rate;
 
     @ManyToMany(cascade = CascadeType.ALL)

@@ -16,9 +16,13 @@ public class ResponseResultDto {
     public ResponseResultDto(Boolean result) {
         this.result = result;
     }
-    public ResponseResultDto(Boolean result, String error) {
+
+    public ResponseResultDto(Boolean result, String text) {
         this.result = result;
-        this.error = error;
+        if (result)
+            this.text = text;
+        else
+            this.error = text;
     }
 
     public ResponseResultDto(Boolean result, String text, String name, String date) {

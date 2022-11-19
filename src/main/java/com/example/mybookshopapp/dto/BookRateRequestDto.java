@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookRateRequestDto {
+
     private int bookId;
     private int value;
 

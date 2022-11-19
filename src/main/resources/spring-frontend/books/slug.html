@@ -128,7 +128,7 @@
                                           </svg>
                                         </span>
                                         </span>
-                                        <span class="Rating-title" th:text="${numberOfRating}">(567)</span>
+                                        <span class="Rating-title" th:text="${'(' + numberOfRating + ')'}">(567)</span>
                                     </div>
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window">
@@ -201,7 +201,8 @@
                                                     </svg>
                                                 </span>
                                                 </span>
-                                                  <span class="Rating-title" th:text="${numberOfScore5}">1
+                                                  <span class="Rating-title"
+                                                        th:text="${numberOfScore5 != null ? numberOfScore5 : 0}">1
                                                   </span>
                                               </span>
                                                 <br>
@@ -267,7 +268,8 @@
                                                         </svg>
                                                     </span>
                                                 </span>
-                                                    <span class="Rating-title" th:text="${numberOfScore4}">4</span>
+                                                    <span class="Rating-title"
+                                                          th:text="${numberOfScore4 != null ? numberOfScore4 : 0}">4</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -333,7 +335,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title"
-                                                          th:text="${numberOfScore3}">0</span>
+                                                          th:text="${numberOfScore3 != null ? numberOfScore3 : 0}">0</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -399,7 +401,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title"
-                                                          th:text="${numberOfScore2}">10</span>
+                                                          th:text="${numberOfScore2 != null ? numberOfScore2 : 0}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -465,7 +467,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title"
-                                                          th:text="${numberOfScore1}">3</span>
+                                                          th:text="${numberOfScore1 != null ? numberOfScore1 : 0}">3</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -476,58 +478,69 @@
                                     class="ProductCard-titleProp"
                                     th:text="#{message.rateTheBook} + ':'">Оцените книгу:</span><span
                                     class="Rating Rating_input" data-bookid="2121"
-                                    th:attr="data-bookid = ${slugBook.id}"><span class="Rating-stars"><span
-                                    class="Rating-star">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                                  <g>
-                                    <g>
-                                      <path fill="#ffc000"
-                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                      </path>
-                                    </g>
-                                  </g>
-                                </svg></span>
-                              <input name="rating" type="radio" value="1"/><span class="Rating-star">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                                  <g>
-                                    <g>
-                                      <path fill="#ffc000"
-                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                      </path>
-                                    </g>
-                                  </g>
-                                </svg></span>
-                              <input name="rating" type="radio" value="2"/><span class="Rating-star">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                                  <g>
-                                    <g>
-                                      <path fill="#ffc000"
-                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                      </path>
-                                    </g>
-                                  </g>
-                                </svg></span>
-                              <input name="rating" type="radio" value="3"/><span class="Rating-star">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                                  <g>
-                                    <g>
-                                      <path fill="#ffc000"
-                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                      </path>
-                                    </g>
-                                  </g>
-                                </svg></span>
-                              <input name="rating" type="radio" value="4"/><span class="Rating-star">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
-                                  <g>
-                                    <g>
-                                      <path fill="#ffc000"
-                                            d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                      </path>
-                                    </g>
-                                  </g>
-                                </svg></span>
-                              <input name="rating" type="radio" value="5"/></span></span>
+                                    th:attr="data-bookid = ${slugBook.id}">
+                                <span class="Rating-stars">
+                                    <span class="Rating-star">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                             viewBox="0 0 19 18">
+                                          <g>
+                                            <g>
+                                              <path fill="#ffc000"
+                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                              </path>
+                                            </g>
+                                          </g>
+                                        </svg>
+                                    </span>
+                                      <input name="rating" type="radio" value="1"/>
+                                        <span class="Rating-star">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                 viewBox="0 0 19 18">
+                                              <g>
+                                                <g>
+                                                  <path fill="#ffc000"
+                                                        d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                  </path>
+                                                </g>
+                                              </g>
+                                            </svg>
+                                        </span>
+                                          <input name="rating" type="radio" value="2"/><span class="Rating-star">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                 viewBox="0 0 19 18">
+                                              <g>
+                                                <g>
+                                                  <path fill="#ffc000"
+                                                        d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                  </path>
+                                                </g>
+                                              </g>
+                                            </svg></span>
+                                          <input name="rating" type="radio" value="3"/><span class="Rating-star">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                 viewBox="0 0 19 18">
+                                              <g>
+                                                <g>
+                                                  <path fill="#ffc000"
+                                                        d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                  </path>
+                                                </g>
+                                              </g>
+                                            </svg></span>
+                                          <input name="rating" type="radio" value="4"/><span class="Rating-star">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                 viewBox="0 0 19 18">
+                                              <g>
+                                                <g>
+                                                  <path fill="#ffc000"
+                                                        d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                  </path>
+                                                </g>
+                                              </g>
+                                            </svg></span>
+                                          <input name="rating" type="radio" value="5"/>
+                                </span>
+                            </span>
                             </div>
                             <div class="ProductCard-tags">
                                 <span class="ProductCard-titleProp" th:text="#{message.tags} + ':'">Тэги:</span>
@@ -713,7 +726,7 @@
                         </form>
                     </div>
                     <div class="Comments-addComment" th:if="${!isAuthenticatedUser}">
-                        <strong class="Comments-title" th:text="#{message.onlyAuth}">
+                        <strong class="Comments-title" th:text="#{message.onlyAuthReview}">
                         </strong>
                         <a th:href="@{/signin}" th:text="#{message.comeIn}">
                             <button class="btn btn_primary" type="submit"/>

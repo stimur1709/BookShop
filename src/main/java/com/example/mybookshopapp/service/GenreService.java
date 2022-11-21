@@ -3,7 +3,6 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.model.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

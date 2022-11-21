@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Schema(description = "Сущность пользователя")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,7 +55,7 @@ public class User {
     @JsonManagedReference
     private List<BookReviewLike> reviewLikeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     @JsonManagedReference
     private List<UserContact> userContact = new ArrayList<>();
 
@@ -74,16 +75,20 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Message> messageList;
 
-    public User(String firstname, String lastname, String password) {
-        this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<UserLoginHistory> userLoginHistories;
+
+    public User(String firstname, String lastname, String password, String hash) {
+        this.hash = hash;
         this.password = password;
         this.regTime = new Date();
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
-    public User(String firstname, String lastname) {
-        this.hash = firstname.replace(" ", "") + lastname.replace(" ", "");
+    public User(String firstname, String lastname, String hash) {
+        this.hash = hash;
         this.regTime = new Date();
         this.firstname = firstname;
         this.lastname = lastname;

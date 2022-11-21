@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=45744385">
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=45744385"></script>
+    <script src="https://kit.fontawesome.com/66f1be2237.js" crossorigin="anonymous"></script>
 </head>
 <body class="Site">
 <header th:replace="~{fragments/header_fragment::headerFragment(profile)}"></header>
@@ -40,92 +41,122 @@
                     <a class="Tabs-link" href="#transactions" th:text="#{message.transactionHistory}">История
                         транзакций</a>
                     <a class="Tabs-link" href="#topup" th:text="#{message.topAccount}">Пополнить счет</a>
+                    <a class="Tabs-link" href="#history" th:text="#{message.loginHistory}">История входа</a>
                 </div>
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
                         <div class="Profile">
-                            <form class="form Login Login_registration" th:action="@{/profile/save}"
-                                  th:object="${currentUser}" th:method="POST"
+                            <form class="form Login Login_registration"
                                   style="padding: 0px; box-shadow: 0 0 0px rgb(0 0 0 / 10%)">
                                 <div class="row">
                                     <div class="row-block">
                                         <div class="form-group">
-                                            <label class="form-label" for="name">Имя
+                                            <label class="form-label" for="name">Фамилия
                                             </label>
-                                            <input class="form-input" id="name" name="name" type="text"
-                                                   th:value="${currentUser.name}" th:field="*{name}"
+                                            <input class="form-input form-input_firstname" name="name" type="text"
+                                                   th:value="${currentUser.getFirstname}" autocomplete="off"
                                                    value="Михаил"/>
+                                            <label class="fieldError" id="firstnameError"></label>
                                         </div>
                                         <div class="form-group form-group_mail">
-                                            <label class="form-label" for="mail">
+                                            <span style="display: flex">
+                                                <label class="form-label" for="mail">
                                                 E-mail
-                                            </label>
+                                                </label>
+                                                <i th:style="${currentUser.approvedMail} == 1 ? 'color: #6db33f' : 'color: red'"
+                                                   th:title="${currentUser.approvedMail} == 1 ? #{message.confirmed} : #{message.notConfirmed}"
+                                                   class="fa fa-check check-mail"
+                                                   aria-hidden="true"></i>
+                                            </span>
                                             <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                                   value="addr@sait.com" data-validate="require mail"
-                                                   th:value="${currentUser.mail}" th:field="*{mail}"/>
-                                            <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary form-btn" type="button"
-                                                        id="submitChangeMail"
-                                                        th:text="#{message.confirm}"
-                                                        th:attr="data-mail = ${currentUser.mail}" data-mail="1">
-                                                    Подтвердить
-                                                </button>
-                                            </div>
-                                            <div class="form-group form-group_key"
-                                                 style="margin-right: revert">
-                                                <input class="form-input form-input_code" id="mailCode" name="mailCode"
-                                                       type="text" placeholder="Код из письма"
-                                                       data-mask="999 999" data-validate="require key"
-                                                       autocomplete="new-mailCode"/>
+                                                   autocomplete="off" th:value="${currentUser.mail}"/>
+                                            <label class="fieldError" id="emailError"></label>
+                                            <div style="display: flex">
+                                                <div class="Profile-btn Profile-btn_confirm_mail">
+                                                    <button class="btn btn_primary form-btn" type="button"
+                                                            id="submitChangeMail" th:text="#{message.confirm}"
+                                                            th:attr="data-mail = ${currentUser.mail}, data-approved = ${currentUser.approvedMail}"
+                                                            data-mail="1" style="width: 135px; margin-top: 0">
+                                                    </button>
+                                                </div>
+                                                <div class="form-group form-group_key"
+                                                     style="margin-right: revert">
+                                                    <input class="form-input form-input_code" id="mailCode"
+                                                           name="mailCode"
+                                                           type="text" placeholder="Код из письма"
+                                                           data-mask="999 999" data-validate="require key"
+                                                           autocomplete="new-mailCode"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group form-group_phone">
-                                            <label class="form-label" for="phone" th:text="#{message.phone}">
-                                                Телефон
-                                            </label>
+                                            <span style="display: flex">
+                                                <label class="form-label" for="phone" th:text="#{message.phone}">
+                                                    Телефон
+                                                </label>
+                                                <i th:style="${currentUser.approvedPhone} == 1 ? 'color: #6db33f' : 'color: red'"
+                                                   th:title="${currentUser.approvedPhone} == 1 ? #{message.confirmed} : #{message.notConfirmed}"
+                                                   class="fa fa-check check-phone"
+                                                   aria-hidden="true"></i>
+                                            </span>
                                             <input class="form-input form-input_phone" id="phone" name="phone"
-                                                   type="text" value="+70000000000" data-mask="+7 (999) 999-99-99"
-                                                   data-validate="require" th:value="${currentUser.phone}"
-                                                   th:field="*{phone}"/>
-                                            <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary form-btn" type="button"
-                                                        id="submitChangePhone"
-                                                        th:attr="data-phone = ${currentUser.phone}"
-                                                        th:text="#{message.confirm}">Подтвердить
-                                                </button>
-                                            </div>
-                                            <div class="form-group form-group_key">
-                                                <input class="form-input form-input_code" id="phoneCode"
-                                                       name="phoneCode"
-                                                       type="text" placeholder="Код из СМС" data-mask="999 999"
-                                                       data-validate="require key" autocomplete="new-phoneCode"/>
+                                                   type="text" data-mask="+7 (999) 999-99-99"
+                                                   autocomplete="off"
+                                                   th:value="${currentUser.phone}"/>
+                                            <label class="fieldError" id="phoneError"></label>
+                                            <div style="display: flex">
+                                                <div class="Profile-btn Profile-btn_confirm_phone">
+                                                    <button class="btn btn_primary form-btn" type="button"
+                                                            id="submitChangePhone" style="width: 135px; margin-top: 0"
+                                                            th:attr="data-phone = ${currentUser.phone}, data-approved = ${currentUser.approvedPhone}"
+                                                            th:text="#{message.confirm}">
+                                                    </button>
+                                                </div>
+                                                <div class="form-group form-group_key">
+                                                    <input class="form-input form-input_code" id="phoneCode"
+                                                           name="phoneCode"
+                                                           type="text" placeholder="Код из СМС" data-mask="999 999"
+                                                           data-validate="require key" autocomplete="off"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row-block">
                                         <div class="form-group">
+                                            <label class="form-label" for="name">Имя
+                                            </label>
+                                            <input class="form-input form-input_lastname" id="name" name="name"
+                                                   type="text" autocomplete="off"
+                                                   th:value="${currentUser.getLastname}"
+                                                   value="Михаил"/>
+                                            <label class="fieldError" id="lastnameError"></label>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="form-label" for="password" th:text="#{message.password}">Пароль
                                             </label>
-                                            <input class="form-input" id="password" name="password" type="password"
-                                                   placeholder="Тут можно изменить пароль"/>
+                                            <input class="form-input_password" id="password" name="password"
+                                                   type="password" placeholder="Тут можно изменить пароль"
+                                                   autocomplete="new-password"/>
+                                            <label class="fieldError" id="passwordError"></label>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="passwordReply"
                                                    th:text="#{message.passwordConfirmation}">Подтверждение пароля
                                             </label>
-                                            <input class="form-input" id="passwordReply" name="passwordReply"
+                                            <input class="form-input_password_repeat" id="passwordReply"
+                                                   name="passwordReply" autocomplete="new-password"
                                                    type="password" placeholder="Введите пароль повторно"/>
+                                            <label class="fieldError" id="passwordRepeatError"></label>
                                         </div>
                                         <div class="form-group">
                                             <div class="Profile-btn">
-                                                <button class="btn btn_danger" type="button"
+                                                <button class="btn btn_danger" type="button" id="cancelProfile"
                                                         th:text="#{message.cancel}">Отменить
                                                 </button>
-                                                <input class="btn btn_primary" type="submit"
+                                                <input class="btn btn_primary" type="submit" id="saveProfile"
                                                        th:value="#{message.save}">
                                             </div>
-                                            <div class="Profile-success" th:text="#{message.profileSave}">Профиль
-                                                успешно сохранен
+                                            <div class="Profile-success" id="message">
                                             </div>
                                         </div>
                                     </div>
@@ -210,6 +241,40 @@
                                         <button class="btn btn_primary">Пополнить
                                         </button>
                                     </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="Tabs-block" id="history">
+                        <form class="form Topup" style="flex-direction: column" action="#" method="post"
+                              data-sendHash="34534535">
+                            <div class="Transactions Story">
+                                <div class="tableWrap">
+                                    <table class="table table_noMargin">
+                                        <thead>
+                                        <tr>
+                                            <th>Дата и время</th>
+                                            <th>Устройство</th>
+                                            <th>IP-адрес</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="story : ${loginStories}">
+                                            <td style="width: 20%" th:text="${story.getFormatDate()}">15 мая
+                                                2017 10:03
+                                            </td>
+                                            <td th:text="${story.getSystem()}">
+                                                Устройство
+                                            </td>
+                                            <td th:text="${story.getIpAddress()}">Ip адрес</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="Transactions-footer Transactions-footer_center" th:if="${show}">
+                                    <a class="btn btn_primary History-get" href="#" data-page="0"
+                                       th:attr="data-total = ${totalPages}"
+                                       data-size="5" th:text="#{message.showMore}">Показать еще</a>
                                 </div>
                             </div>
                         </form>

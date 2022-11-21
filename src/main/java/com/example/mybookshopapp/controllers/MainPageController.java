@@ -4,11 +4,14 @@ import com.example.mybookshopapp.dto.BooksPageDto;
 import com.example.mybookshopapp.dto.SearchWordDto;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.service.*;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.BookService;
+import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.TagService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,42 +19,44 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
 
-    protected final BookService bookService;
-    protected final TagService tagService;
-    protected final GenreService genreService;
+    private final BookService bookService;
+    private final TagService tagService;
+    private final HttpServletRequest request;
 
     @Autowired
-    public MainPageController(BookService bookService, TagService tagService,
-                              GenreService genreService, UserProfileService userProfileService,
-                              BookShopService bookShopService) {
-        super(userProfileService, bookShopService);
+    public MainPageController(BookService bookService, TagService tagService, UserProfileService userProfileService,
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
+                              HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.tagService = tagService;
-        this.genreService = genreService;
+        this.request = request;
     }
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        model.addAttribute("recommendBooks", bookService.getPageOfRecommendBooks(0, 6).getContent());
-        model.addAttribute("recentBooks", bookService.getPageOfRecentBooks(0, 6).getContent());
-        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 6).getContent());
+        model.addAttribute("recommendBooks", bookService.getPageBooks(0, 6, "rate"));
+        model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pubDate"));
+        model.addAttribute("popularBooks", bookService.getPageBooks(0, 6, "popularity"));
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
-        model.addAttribute("sizeBooks", bookService.getNumbersOffAllBooks());
-        model.addAttribute("isAuthenticatedUser", getUserProfileService().isAuthenticatedUser());
         return "index";
     }
 
-    @GetMapping("/api/books/recommended")
+    @GetMapping("/api/books")
     @ResponseBody
-    @Operation(summary = "Постраничный вывод рекомендуемых книг")
+    @Operation(summary = "Постраничный вывод книг")
     public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfRecommendBooks(offset, limit).getContent());
+                                     @RequestParam("limit") Integer limit,
+                                     @RequestParam("properties") String properties) {
+        return new BooksPageDto(bookService.getPageBooks(offset, limit, properties).getContent());
     }
 
     @GetMapping("/api/main_page/books/recent")
@@ -59,7 +64,7 @@ public class MainPageController extends ModelAttributeController {
     @Operation(summary = "Постраничный вывод новых книг")
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfRecentBooks(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPageBooks(offset, limit, "pubDate").getContent());
     }
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
@@ -68,13 +73,11 @@ public class MainPageController extends ModelAttributeController {
         if (searchWordDto != null) {
             Page<Book> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
             model.addAttribute("searchWordDto", searchWordDto);
-            model.addAttribute("searchResult", books.getContent());
-            model.addAttribute("totalElement", books.getTotalElements());
-            model.addAttribute("show", books.getTotalPages() > 1);
-            model.addAttribute("totalPages", books.getTotalPages());
+            model.addAttribute("books", books);
             return "search/index";
         } else {
-            throw new EmptySearchException("Поисковый запрос не задан");
+            String message = messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request));
+            throw new EmptySearchException(message);
         }
     }
 
@@ -85,7 +88,8 @@ public class MainPageController extends ModelAttributeController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
                                           SearchWordDto searchWordDto) {
-        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+        Page<Book> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
+        return new BooksPageDto(page.getContent(), (int) page.getTotalElements());
     }
 
     @GetMapping("/about")

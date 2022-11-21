@@ -5,6 +5,7 @@ import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.dto.VkToken;
+import com.example.mybookshopapp.util.Generator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter;
     private final UserContactService userContactService;
     private final UserRepository userRepository;
+    private final Generator generator;
 
     private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri";
     private static final String MISSING_USER_NAME_ATTRIBUTE_ERROR_CODE = "missing_user_name_attribute";
@@ -49,10 +51,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     public CustomOAuth2UserService(Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter,
-                                   UserContactService userContactService, UserRepository userRepository) {
+                                   UserContactService userContactService, UserRepository userRepository, Generator generator) {
         this.requestEntityConverter = requestEntityConverter;
         this.userContactService = userContactService;
         this.userRepository = userRepository;
+        this.generator = generator;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
         this.restOperations = restTemplate;
@@ -95,7 +98,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         ResponseEntity<Map<String, Object>> response;
         try {
-            response = this.restOperations.exchange(request, PARAMETERIZED_RESPONSE_TYPE);
+            response = this.restOperations.exchange(Objects.requireNonNull(request), PARAMETERIZED_RESPONSE_TYPE);
         } catch (OAuth2AuthorizationException ex) {
             OAuth2Error oauth2Error = ex.getError();
             StringBuilder errorDetails = new StringBuilder();
@@ -115,7 +118,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     "An error occurred while attempting to retrieve the UserInfo Resource: " + ex.getMessage(), null);
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString(), ex);
         }
-        ArrayList<Object> valueList = (ArrayList) response.getBody().get("response");
+        ArrayList<Object> valueList = (ArrayList) Objects.requireNonNull(response.getBody()).get("response");
         Map<String, Object> userAttributes = (Map<String, Object>) valueList.get(0);
         Set<GrantedAuthority> authorities = new LinkedHashSet<>();
         authorities.add(new OAuth2UserAuthority(userAttributes));
@@ -125,9 +128,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         });
         VkToken vkToken = vkTokenList.get(0);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
-        if (userContact.isEmpty()) {
+        if (userContact.isPresent()) {
             UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
-            User user = new User(vkToken.getFirstname(), vkToken.getLastname());
+            User user = new User(vkToken.getFirstname(), vkToken.getLastname(), generator.getSecretCode());
             contact.setUser(user);
             userRepository.save(user);
             userContactService.save(contact);

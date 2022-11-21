@@ -7,9 +7,10 @@ import com.example.mybookshopapp.model.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.TagService;
-import com.example.mybookshopapp.service.UserProfileService;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,9 @@ public class TagPageController extends ModelAttributeController {
 
     @Autowired
     public TagPageController(TagService tagService, BookService bookService,
-                             UserProfileService userProfileService, BookShopService bookShopService) {
-        super(userProfileService, bookShopService);
+                             UserProfileService userProfileService, BookShopService bookShopService,
+                             MessageSource messageSource, LocaleResolver localeResolver) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.tagService = tagService;
         this.bookService = bookService;
     }

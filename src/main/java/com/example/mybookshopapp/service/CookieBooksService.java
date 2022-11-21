@@ -9,26 +9,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Service
 public class CookieBooksService {
+
     private static final String CART_COOKIE_NAME = "cartContent";
     private static final String KEPT_COOKIE_NAME = "keptContent";
 
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
     private final BookRepository bookRepository;
+    private final HttpServletResponse response;
+    private final HttpServletRequest request;
 
     @Autowired
-    public CookieBooksService(BooksRatingAndPopularityService booksRatingAndPopularityService, BookRepository bookRepository) {
+    public CookieBooksService(BooksRatingAndPopularityService booksRatingAndPopularityService, BookRepository bookRepository,
+                              HttpServletResponse response, HttpServletRequest request) {
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
         this.bookRepository = bookRepository;
+        this.response = response;
+        this.request = request;
     }
 
-    public ResponseResultDto changeBookStatus(HttpServletResponse response, Cookie[] cookies, BookStatusRequestDto dto) {
-        Cookie cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
-        Cookie keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
+    public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
+        Cookie cartCookie = getCookieByName(CART_COOKIE_NAME);
+        Cookie keptCookie = getCookieByName(KEPT_COOKIE_NAME);
 
         String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
 
@@ -47,6 +54,7 @@ public class CookieBooksService {
                     break;
                 }
                 case UNLINK: {
+                    System.out.println("UNLINK");
                     removeBookFromCookie(slug, cartCookie, -0.7);
                     removeBookFromCookie(slug, keptCookie, -0.4);
                     break;
@@ -62,7 +70,8 @@ public class CookieBooksService {
         return new ResponseResultDto(true);
     }
 
-    public BookCodeType getBookStatus(String slug, Cookie[] cookies) {
+    public BookCodeType getBookStatus(String slug) {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
@@ -112,7 +121,8 @@ public class CookieBooksService {
         return cookie;
     }
 
-    private Cookie getCookieByName(Cookie[] cookies, String name) {
+    private Cookie getCookieByName(String name) {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equalsIgnoreCase(name)) {

@@ -37,15 +37,18 @@
                 <div class="Login-ins">
                     <div class="Login-step">
                         <div class="form-group">
-                            <input class="form-input" id="name" name="name" th:field="*{name}" type="text"
-                                   placeholder="Введите Имя"
-                                   data-validate="require" autocomplete="new-name"/>
+                            <input class="form-input" id="name" name="name" th:field="*{firstname}" type="text"
+                                   placeholder="Введите фамилию" data-validate="require" autocomplete="new-name"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-input" name="name" th:field="*{lastname}" type="text"
+                                   placeholder="Введите имя" data-validate="require" autocomplete="new-name"/>
                         </div>
                         <div class="form-group form-group_row">
                             <div class="form-group">
                                 <input class="form-input form-input_phone" id="phone" name="phone" type="text"
                                        th:field="*{phone}" placeholder="Введите телефон" data-mask="+7 (999) 999-99-99"
-                                       data-validate="require" autocomplete="new-phone"/>
+                                       data-validate="require" autocomplete="off"/>
                                 <div style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
                                     Error
                                 </div>
@@ -64,9 +67,9 @@
                         <div class="form-group form-group_row">
                             <div class="form-group">
                                 <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                       th:field="*{getMail}" placeholder="Введите e-mail" data-validate="mail require"
-                                       autocomplete="new-email"/>
-                                <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{getMail}">
+                                       th:field="*{mail}" placeholder="Введите e-mail" data-validate="mail require"
+                                       autocomplete="off"/>
+                                <div style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">
                                     Error
                                 </div>
                             </div>
@@ -84,7 +87,7 @@
                         <div class="form-group">
                             <input class="form-input form-input_password" id="password" name="password" type="password"
                                    th:field="*{password}" placeholder="Введите пароль"
-                                   data-validate="password require" autocomplete="on"/>
+                                   data-validate="password require" autocomplete="new-password"/>
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="submit" name="registration"

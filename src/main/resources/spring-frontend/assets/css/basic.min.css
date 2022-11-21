@@ -987,7 +987,8 @@ select {
 
 .form-error {
     font-size: 13px;
-    color: #ba6347
+    color: #ba6347;
+    text-align: center;
 }
 
 .form-info {

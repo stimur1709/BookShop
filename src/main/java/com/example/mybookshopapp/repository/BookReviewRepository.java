@@ -12,4 +12,5 @@ import java.util.List;
 public interface BookReviewRepository extends JpaRepository<BookReview, Integer> {
 
     List<BookReview> getBookReviewEntitiesByBook(Book book, Sort sort);
+
 }

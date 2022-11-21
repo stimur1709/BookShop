@@ -24,13 +24,8 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler im
     }
 
     @Override
-    public void onLogoutSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Authentication authentication)
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-
-
         Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("token")).forEach(blacklistService::add);
         response.sendRedirect(request.getHeader("Referer"));
 

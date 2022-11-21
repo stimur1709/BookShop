@@ -14,20 +14,19 @@ import javax.validation.constraints.Size;
 @ToString
 public class ChangeProfileForm {
 
-    @Size(min = 2, max = 100, message = "Имя должно быть от 2 до 100 символов длиной")
+    @Size(min = 2, max = 100, message = "{message.firstnameEmpty}")
     private String firstname;
 
-    @Size(min = 2, max = 100, message = "Имя должно быть от 2 до 100 символов длиной")
+    @Size(min = 2, max = 100, message = "{message.lastnameEmpty}")
     private String lastname;
 
-    @NotEmpty(message = "Email не должен быть пустым")
-    @Email(message = "Email должен быть в формате *****@***.**")
+    @NotEmpty(message = "{message.validMail}")
+    @Email(message = "{message.validMail}")
     private String email;
     private String oldEmail;
     private int approvedMail;
 
-    @NotEmpty(message = "Номер телефона не может быть пустым")
-    @Pattern(regexp = "^\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}", message = "Телефон должен быть в формате +7 (xxx) xxx-xx-xx")
+    @Pattern(regexp = "^\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}", message = "{message.validPhone}")
     private String phone;
     private String oldPhone;
     private int approvedPhone;

@@ -2,40 +2,62 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.model.book.review.BookReview;
 import com.example.mybookshopapp.model.book.review.BookReviewLike;
+import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BookReviewLikeRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
-import com.example.mybookshopapp.repository.UserRepository;
+import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.LocaleResolver;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class BookRateReviewService {
 
     private final BookReviewRepository bookReviewRepository;
     private final BookReviewLikeRepository bookReviewLikeRepository;
-    private final UserRepository userRepository;
     private final BookRepository bookRepository;
+    private final UserProfileService userProfileService;
+    private final HttpServletRequest request;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @Autowired
-    public BookRateReviewService(BookReviewRepository bookReviewRepository, BookReviewLikeRepository bookReviewLikeRepository, UserRepository userRepository, BookRepository bookRepository) {
+    public BookRateReviewService(BookReviewRepository bookReviewRepository, BookReviewLikeRepository bookReviewLikeRepository,
+                                 BookRepository bookRepository, UserProfileService userProfileService, HttpServletRequest request,
+                                 MessageSource messageSource, LocaleResolver localeResolver) {
         this.bookReviewRepository = bookReviewRepository;
         this.bookReviewLikeRepository = bookReviewLikeRepository;
-        this.userRepository = userRepository;
         this.bookRepository = bookRepository;
+        this.userProfileService = userProfileService;
+        this.request = request;
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
     }
 
-    public boolean changeRateBookReview(int idReview, short value) {
+    public Map<String, Object> changeRateBookReview(int idReview, short value) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userProfileService.getCurrentUser();
         BookReview review = bookReviewRepository.getById(idReview);
-        if (value == 1 || value == -1) {
-            BookReviewLike bookReviewLike = new BookReviewLike(review, userRepository.getById(1), value);
-            review.getReviewLikeList().add(bookReviewLike);
-            review.setRate(review.getRate() + value);
-            bookReviewLikeRepository.save(bookReviewLike);
-            bookReviewRepository.save(review);
-            return true;
+        if (user != null) {
+            BookReviewLike reviewLike = bookReviewLikeRepository.findByBookReviewAndUser(review, user);
+            if (reviewLike == null) {
+                reviewLike = new BookReviewLike(review, user, value);
+            } else {
+                reviewLike.setValue(value);
+            }
+            bookReviewLikeRepository.save(reviewLike);
+            response.put("result", true);
+            return response;
         }
-        return false;
+        response.put("result", false);
+        response.put("error", messageSource.getMessage("message.onlyAuth", null, localeResolver.resolveLocale(request)));
+        return response;
     }
 
     private long getLikesReviewsOfBook(int bookId) {

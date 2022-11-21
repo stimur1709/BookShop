@@ -23,7 +23,6 @@ public class BookStoreUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String hash) throws UsernameNotFoundException {
-//        Optional<UserContact> userContact = userContactRepository.findByContactIgnoreCase(hash);
         Optional<User> user = userRepository.findByHash(hash);
         if (user.isPresent())
             return new BookstoreUserDetails(user.get());

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -14,7 +16,8 @@ import java.util.Date;
 @Entity
 @Table(name = "user_contact")
 @Schema(description = "Сущность контакта пользователя")
-public class UserContact {
+@ToString
+public class UserContact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,7 @@ public class UserContact {
     @JsonBackReference
     private User user;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne()
     @JoinColumn(name = "parent_id", columnDefinition = "INT")
     private UserContact parentUserContact;
 
@@ -64,6 +67,14 @@ public class UserContact {
         this.codeTime = new Date();
     }
 
+    public UserContact(ContactType type, String contact, UserContact userContact) {
+        this.type = type;
+        this.approved = 1;
+        this.contact = contact;
+        this.codeTime = new Date();
+        this.parentUserContact = userContact;
+    }
+
     public UserContact() {
     }
 
@@ -83,17 +94,4 @@ public class UserContact {
         this.contact = contact;
     }
 
-    @Override
-    public String toString() {
-        return "UserContact{" +
-                "id=" + id +
-                ", user=" + user +
-                ", type=" + type +
-                ", approved=" + approved +
-                ", code='" + code + '\'' +
-                ", codeTrails=" + codeTrails +
-                ", codeTime=" + codeTime +
-                ", contact='" + contact + '\'' +
-                '}';
-    }
 }

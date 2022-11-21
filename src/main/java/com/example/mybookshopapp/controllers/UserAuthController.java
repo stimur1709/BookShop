@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.*;
+import com.example.mybookshopapp.model.user.UserLoginHistory;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import com.example.mybookshopapp.service.userService.UserChangeService;
@@ -8,6 +9,8 @@ import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.service.userService.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,12 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,16 +35,24 @@ public class UserAuthController extends ModelAttributeController {
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
     private final FormValidator formValidator;
+    private final HttpServletRequest request;
+    private final UserContactService userContactService;
+    private final UserLoginHistoryService userLoginHistoryService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
-                              UserChangeService userChangeService, FormValidator formValidator) {
-        super(userProfileService, bookShopService);
+                              UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
+                              LocaleResolver localeResolver, HttpServletRequest request, UserContactService userContactService,
+                              UserLoginHistoryService userLoginHistoryService) {
+        super(userProfileService, bookShopService, messageSource, localeResolver);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
         this.formValidator = formValidator;
+        this.request = request;
+        this.userContactService = userContactService;
+        this.userLoginHistoryService = userLoginHistoryService;
     }
 
     @GetMapping("/signin")
@@ -76,19 +89,8 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/api/approveContact")
     @ResponseBody
-    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload,
-                                                             HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
-
-        if (response.getToken() != null) {
-            for (Cookie cookie : httpServletRequest.getCookies())
-                if (cookie.getName().equals("token")) {
-                    cookie.setValue(response.getToken());
-                    cookie.setPath("/");
-                    httpServletResponse.addCookie(cookie);
-                }
-        }
-        return response;
+    public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
+        return userAuthService.handlerApproveContact(payload);
     }
 
     @PostMapping("/registration")
@@ -108,14 +110,25 @@ public class UserAuthController extends ModelAttributeController {
     @GetMapping("/profile")
     public String profilePage(Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
+        Page<UserLoginHistory> page = userLoginHistoryService.getPageLoginHistory(0, 5);
+        model.addAttribute("loginStories", page.getContent());
+        model.addAttribute("show", page.getTotalPages() > 1);
+        model.addAttribute("totalPages", page.getTotalPages());
         return "profile";
+    }
+
+    @GetMapping("/api/loginStory")
+    @ResponseBody
+    public List<UserLoginHistory> getPageLoginHistory(@RequestParam("page") int page,
+                                                      @RequestParam("size") int size) {
+        return userLoginHistoryService.getPageLoginHistory(page, size).getContent();
     }
 
     @PostMapping("/login")
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
-                                                   HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
-        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload, httpServletRequest);
+                                                   HttpServletResponse httpServletResponse) {
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
         if (loginResponse.isResult() && loginResponse.getError() == null) {
             Cookie cookie = new Cookie("token", loginResponse.getToken());
             httpServletResponse.addCookie(cookie);
@@ -127,7 +140,6 @@ public class UserAuthController extends ModelAttributeController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
                                                            BindingResult bindingResult) {
-        System.out.println(changeProfileForm);
         formValidator.validate(changeProfileForm, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, Object> response = new HashMap<>();
@@ -138,17 +150,26 @@ public class UserAuthController extends ModelAttributeController {
 
         Map<String, Object> response = userChangeService.updateUser(changeProfileForm);
 
-        if(response.isEmpty())
-            response.put("message", "Профиль сохранен");
+        if (response.isEmpty())
+            response.put("message", messageSource.getMessage("message.profileSave", null, localeResolver.resolveLocale(request)));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/api/profile/cancel")
     @ResponseBody
-    public ResponseEntity<UserDto> cancelProfile() {
-        //TODO реализовать удаление неподтвержденной почты и номера телефона
-        return new ResponseEntity<>(userProfileService.getCurrentUserDTO(), HttpStatus.OK);
+    public ResponseEntity<?> cancelProfile() {
+        userContactService.deleteAllNoApprovedUserContactByUser();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/api/profile")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getProfile() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", userProfileService.getCurrentUserDTO());
+        response.put("message", messageSource.getMessage("message.dataResumed", null, localeResolver.resolveLocale(request)));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

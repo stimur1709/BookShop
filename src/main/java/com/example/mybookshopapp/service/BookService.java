@@ -17,22 +17,14 @@ import java.util.Date;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final BooksRatingAndPopularityService booksRatingAndPopularityService;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BooksRatingAndPopularityService booksRatingAndPopularityService) {
+    public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.booksRatingAndPopularityService = booksRatingAndPopularityService;
     }
 
-    public Page<Book> getPageOfRecommendBooks(Integer offset, Integer limit) {
-        addRate();
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "rate"));
-        return bookRepository.findAll(nextPage);
-    }
-
-    public Page<Book> getPageOfRecentBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "pubDate"));
+    public Page<Book> getPageBooks(Integer offset, Integer limit, String properties) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.Direction.DESC, properties);
         return bookRepository.findAll(nextPage);
     }
 
@@ -48,29 +40,9 @@ public class BookService {
         return null;
     }
 
-    public Page<Book> getPageOfPopularBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "popularity"));
-        return bookRepository.findAll(nextPage);
-    }
-
     public Page<Book> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findBookEntityByTitleContainingAllIgnoreCase(wordSearch, nextPage);
-    }
-
-//    private void addPopularity() {
-//        List<Book> bookList = bookRepository.f indAll();
-//        bookList.stream().filter(book -> booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()) != null).forEach(book -> {
-//            book.setPopularity(booksRatingAndPopularityService.getPopularity(book.getId()).get(book.getId()));
-//            bookRepository.save(book);
-//        });
-//    }
-
-    private void addRate() {
-        bookRepository.findAll().forEach(book -> {
-            book.setRate(booksRatingAndPopularityService.getRateBook(book.getId()));
-            bookRepository.save(book);
-        });
     }
 
     public Page<Book> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
@@ -90,10 +62,6 @@ public class BookService {
 
     public Book getBookBySlug(String slug) {
         return bookRepository.findBookEntityBySlug(slug);
-    }
-
-    public long getNumbersOffAllBooks() {
-        return bookRepository.count();
     }
 
     public void save(Book bookToUpdate) {

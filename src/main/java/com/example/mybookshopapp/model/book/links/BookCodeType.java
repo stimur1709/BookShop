@@ -4,5 +4,6 @@ public enum BookCodeType {
     UNLINK,
     KEPT,
     CART,
+    PAID,
     ARCHIVED
 }

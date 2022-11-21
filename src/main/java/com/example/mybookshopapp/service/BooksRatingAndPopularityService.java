@@ -87,7 +87,7 @@ public class BooksRatingAndPopularityService {
             bookRatingRepository.save(new BookRating(value, book, user));
         }
         String message = messageSource.getMessage("message.changeRate", null, localeResolver.resolveLocale(request));
-        return new ResponseResultDto(true, message);
+        return new ResponseResultDto(true, message, book.getBookRatingList().size(), getSizeofRatingValue(bookId));
     }
 
     public long numberOfRating(int idBook) {

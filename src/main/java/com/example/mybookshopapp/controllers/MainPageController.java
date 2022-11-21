@@ -80,7 +80,7 @@ public class MainPageController extends ModelAttributeController {
             model.addAttribute("totalPages", books.getTotalPages());
             return "search/index";
         } else {
-            String message = messageSource.getMessage("message.reviewShort", null, localeResolver.resolveLocale(request));
+            String message = messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request));
             throw new EmptySearchException(message);
         }
     }

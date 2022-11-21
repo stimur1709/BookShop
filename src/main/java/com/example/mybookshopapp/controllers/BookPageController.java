@@ -4,8 +4,8 @@ import com.example.mybookshopapp.dto.BookRateRequestDto;
 import com.example.mybookshopapp.dto.BookReviewRequestDto;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.dto.ReviewLikeDto;
-import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,13 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -101,16 +103,21 @@ public class BookPageController extends ModelAttributeController {
 
     @PostMapping("/api/bookReview")
     @ResponseBody
-    public ResponseResultDto saveBookReview(@RequestBody BookReviewRequestDto review) {
+    public ResponseResultDto saveBookReview(@RequestBody @Valid BookReviewRequestDto review, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String error = null;
+            for (FieldError fieldError : bindingResult.getFieldErrors())
+                error = fieldError.getDefaultMessage();
+            return new ResponseResultDto(false, error);
+        }
         return bookReviewService.saveBookReview(review.getBookId(), review.getText());
     }
 
     @PostMapping("/api/rateBookReview")
     @ResponseBody
-    public ResponseEntity<Map<String, Boolean>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("result", bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue()));
+    public ResponseEntity<Map<String, Object>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
+        Map<String, Object> response = bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue());
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+
 }

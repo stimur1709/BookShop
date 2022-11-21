@@ -43,7 +43,7 @@ public class BookReviewService {
     public ResponseResultDto saveBookReview(int bookId, String text) {
         Optional<Book> bookEntity = bookRepository.findById(bookId);
         User user = userProfileService.getCurrentUser();
-        if (bookEntity.isPresent()) {
+        if (bookEntity.isPresent() && user != null) {
             BookReview bookReview = new BookReview(bookEntity.get(), user, text);
             bookEntity.get().getReviewList().add(bookReview);
             BookReview review = bookReviewRepository.save(bookReview);
@@ -54,7 +54,7 @@ public class BookReviewService {
             String date = simpleDateFormat.format(review.getTime());
             return new ResponseResultDto(true, review.getText(), name, date);
         }
-        return new ResponseResultDto(false, messageSource.getMessage("message.reviewShort", null, localeResolver.resolveLocale(request)));
+        return new ResponseResultDto(false, messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request)));
     }
 
     public List<BookReview> getBookReview(Book book) {

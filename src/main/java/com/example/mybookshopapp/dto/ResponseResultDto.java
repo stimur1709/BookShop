@@ -3,6 +3,8 @@ package com.example.mybookshopapp.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 public class ResponseResultDto {
@@ -12,6 +14,8 @@ public class ResponseResultDto {
     private String name;
     private String text;
     private String date;
+    private int value;
+    private Map<Integer, Long> maps;
 
     public ResponseResultDto(Boolean result) {
         this.result = result;
@@ -23,6 +27,13 @@ public class ResponseResultDto {
             this.text = text;
         else
             this.error = text;
+    }
+
+    public ResponseResultDto(Boolean result, String name, int value, Map<Integer, Long> maps) {
+        this.result = result;
+        this.name = name;
+        this.value = value;
+        this.maps = maps;
     }
 
     public ResponseResultDto(Boolean result, String text, String name, String date) {

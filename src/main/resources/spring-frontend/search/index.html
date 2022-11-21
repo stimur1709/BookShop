@@ -52,7 +52,7 @@
                         <a class="btn btn_primary" href="#" th:if="${books.getTotalPages() > 1}"
                            data-refreshshow="search" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshquery=${searchWordDto.example}, data-total = ${totalPages}"
+                           th:attr="data-refreshquery=${searchWordDto.example}, data-total = ${books.getTotalPages()}"
                            data-refreshquery="Техника" th:text="#{message.showMore}">Показать еще</a>
                     </div>
                 </div>

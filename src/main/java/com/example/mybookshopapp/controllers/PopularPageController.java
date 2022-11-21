@@ -35,15 +35,13 @@ public class PopularPageController extends ModelAttributeController {
     @Operation(summary = "Постраничный вывод книг")
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
                                             @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPageBooks(offset, limit, "popularity").getContent());
     }
 
     @GetMapping("/books/popular")
     public String popularPage(Model model) {
-        Page<Book> books = bookService.getPageOfPopularBooks(0, 20);
-        model.addAttribute("popularBooks", books.getContent());
-        model.addAttribute("show", books.getTotalPages() > 1);
-        model.addAttribute("totalPages", books.getTotalPages());
+        Page<Book> books = bookService.getPageBooks(0, 20, "popularity");
+        model.addAttribute("books", books);
         return "books/popular";
     }
 }

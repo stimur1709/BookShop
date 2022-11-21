@@ -1,25 +1,22 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.model.author.Author;
-import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.repository.AuthorRepository;
-import com.example.mybookshopapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final BookRepository bookRepository;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.bookRepository = bookRepository;
     }
 
     public TreeMap<String, List<Author>> getAuthorsMap() {
@@ -35,7 +32,4 @@ public class AuthorService {
         return authorRepository.findAuthorById(id);
     }
 
-    public List<Author> getAuthorsByBook(Integer id) {
-        return bookRepository.findById(id).map(Book::getAuthorList).orElse(Collections.emptyList());
-    }
 }

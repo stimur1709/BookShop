@@ -16,6 +16,4 @@ public interface BookRatingRepository extends JpaRepository<BookRating, Integer>
 
     List<BookRating> findByBook_id(int id);
 
-    long countByBook_Id(int id);
-
 }

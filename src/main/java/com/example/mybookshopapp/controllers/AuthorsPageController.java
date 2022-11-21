@@ -44,7 +44,7 @@ public class AuthorsPageController extends ModelAttributeController {
     @GetMapping("/authors/{slug}")
     public String authorPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
-        model.addAttribute("authorSlug", author);
+        model.addAttribute("author", author);
         model.addAttribute("authorBooks", bookService.getBooksForPageAuthor(author, 0, 5).getContent());
         return "authors/slug";
     }
@@ -54,10 +54,7 @@ public class AuthorsPageController extends ModelAttributeController {
         Author author = authorService.getAuthorsBySlug(slug);
         Page<Book> books = bookService.getBooksForPageAuthor(author, 0, 20);
         model.addAttribute("author", author);
-        model.addAttribute("books", books.getContent());
-        model.addAttribute("show", books.getTotalPages() > 1);
-        model.addAttribute("totalPages", books.getTotalPages());
-
+        model.addAttribute("books", books);
         return "books/author";
     }
 

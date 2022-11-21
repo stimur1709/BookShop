@@ -73,10 +73,10 @@ public class MainPageController extends ModelAttributeController {
                                   Model model) throws EmptySearchException {
         if (searchWordDto != null) {
             Page<Book> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
+            System.out.println(books.getTotalElements() + " getTotalElements !!!");
+            System.out.println(books.getSize() + " size !!!");
             model.addAttribute("searchWordDto", searchWordDto);
-            model.addAttribute("searchResult", books.getContent());
-            model.addAttribute("totalElement", books.getTotalElements());
-            model.addAttribute("show", books.getTotalPages() > 1);
+            model.addAttribute("books", books);
             model.addAttribute("totalPages", books.getTotalPages());
             return "search/index";
         } else {
@@ -92,7 +92,8 @@ public class MainPageController extends ModelAttributeController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
                                                   SearchWordDto searchWordDto) {
-        return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+        Page<Book> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
+        return new BooksPageDto(page.getContent(), (int) page.getTotalElements());
     }
 
     @GetMapping("/about")

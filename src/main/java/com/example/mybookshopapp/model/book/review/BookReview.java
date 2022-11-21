@@ -47,6 +47,9 @@ public class BookReview {
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int rate;
 
+    @Transient
+    private short value;
+
     public BookReview(Book book, User user, String text) {
         this.book = book;
         this.user = user;

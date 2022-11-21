@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${slugBook.title}">Тут название страницы написать</title>
+    <title th:text="${book.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -34,30 +34,30 @@
                 <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{message.books}">Книги</a>
                 </li>
                 <li class="breadcrumbs-item breadcrumbs-item_current">
-                    <span th:text="${slugBook.title}">Мара и морок</span>
+                    <span th:text="${book.title}">Мара и морок</span>
                 </li>
             </ul>
             <div class="Product">
                 <div class="ProductCard">
                     <div class="ProductCard-look">
                         <form id="imgForm" method="post" enctype="multipart/form-data" action="#"
-                              th:action="${'/books/' + slugBook.slug + '/img/save'}">
+                              th:action="${'/books/' + book.slug + '/img/save'}">
                             <div class="ProductCard-photo" id="uploadButton">
-                                <img th:src="${slugBook.image}" alt="card.jpg"/>
+                                <img th:src="${book.image}" alt="card.jpg"/>
                             </div>
                             <input type="file" name="file" id="dialog" style="display: none" accept="image/*">
                         </form>
                     </div>
                     <div class="ProductCard-desc">
                         <div class="ProductCard-header">
-                            <h1 class="ProductCard-title" th:text="${slugBook.title}">Мара и морок</h1>
+                            <h1 class="ProductCard-title" th:text="${book.title}">Мара и морок</h1>
                             <div class="ProductCard-author">
                                 <span class="ProductCard-titleProp" th:text="#{message.author} + ':'">Автор:</span>&#32;
-                                <div class="ProductCard-titleProp" th:each="author, i : ${authorsBook}">
-                                    <a th:if="${i.count} < ${authorsBook.size()}" href="#"
+                                <div class="ProductCard-titleProp" th:each="author, i : ${book.getAuthorList()}">
+                                    <a th:if="${i.count} < ${book.getAuthorList().size()}" href="#"
                                        th:href="'/authors/' + ${author.slug}"
                                        th:text="${author.name} + ', '">Лия Арден</a>
-                                    <a th:if="${i.count} == ${authorsBook.size()}" href="#"
+                                    <a th:if="${i.count} == ${book.getAuthorList().size()}" href="#"
                                        th:href="'/authors/' + ${author.slug}"
                                        th:text="${author.name}">Лия Арден</a>
                                 </div>
@@ -67,7 +67,7 @@
                                 <button class="trigger trigger_dropdown" type="button">
                                     <div class="Rating Rating_noStyleLink">
                                         <span class="Rating-stars">
-                                        <span th:class="${rateBook >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.getRate() >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                viewBox="0 0 19 18">
                                             <g>
@@ -79,7 +79,7 @@
                                             </g>
                                           </svg>
                                         </span>
-                                        <span th:class="${rateBook >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.getRate() >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                viewBox="0 0 19 18">
                                             <g>
@@ -91,7 +91,7 @@
                                             </g>
                                           </svg>
                                         </span>
-                                        <span th:class="${rateBook >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.getRate() >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                viewBox="0 0 19 18">
                                             <g>
@@ -103,7 +103,7 @@
                                             </g>
                                           </svg>
                                         </span>
-                                        <span th:class="${rateBook >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.getRate() >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                viewBox="0 0 19 18">
                                             <g>
@@ -115,7 +115,7 @@
                                             </g>
                                           </svg>
                                         </span>
-                                        <span th:class="${rateBook >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.getRate() >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                viewBox="0 0 19 18">
                                             <g>
@@ -129,7 +129,7 @@
                                         </span>
                                         </span>
                                         <span class="Rating-title" id="Rating-title"
-                                              th:text="${'(' + numberOfRating + ')'}">(567)</span>
+                                              th:text="${'(' + book.getBookRatingList().size() + ')'}">(567)</span>
                                     </div>
                                     <div class="modal modal_compression modal_dropdown">
                                         <div class="modal-window">
@@ -147,65 +147,71 @@
                                             <div class="RatingGroup">
                                               <span class="Rating">
                                                 <span class="Rating-stars">
-                                                  <span class="Rating-star Rating-star_view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                         viewBox="0 0 19 18">
-                                                      <g>
-                                                        <g>
-                                                          <path fill="#ffc000"
-                                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                          </path>
-                                                        </g>
-                                                      </g>
-                                                    </svg>
-                                                  </span>
                                                     <span class="Rating-star Rating-star_view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                         viewBox="0 0 19 18">
-                                                      <g>
-                                                        <g>
-                                                          <path fill="#ffc000"
-                                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                          </path>
-                                                        </g>
-                                                      </g>
-                                                    </svg></span><span class="Rating-star Rating-star_view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                         viewBox="0 0 19 18">
-                                                      <g>
-                                                        <g>
-                                                          <path fill="#ffc000"
-                                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                          </path>
-                                                        </g>
-                                                      </g>
-                                                    </svg></span><span class="Rating-star Rating-star_view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                         viewBox="0 0 19 18">
-                                                      <g>
-                                                        <g>
-                                                          <path fill="#ffc000"
-                                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                          </path>
-                                                        </g>
-                                                      </g>
-                                                    </svg></span><span class="Rating-star Rating-star_view">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                         viewBox="0 0 19 18">
-                                                      <g>
-                                                        <g>
-                                                          <path fill="#ffc000"
-                                                                d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                                          </path>
-                                                        </g>
-                                                      </g>
-                                                    </svg>
-                                                </span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                             viewBox="0 0 19 18">
+                                                          <g>
+                                                            <g>
+                                                              <path fill="#ffc000"
+                                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                              </path>
+                                                            </g>
+                                                          </g>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="Rating-star Rating-star_view">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                             viewBox="0 0 19 18">
+                                                          <g>
+                                                            <g>
+                                                              <path fill="#ffc000"
+                                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                              </path>
+                                                            </g>
+                                                          </g>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="Rating-star Rating-star_view">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                             viewBox="0 0 19 18">
+                                                          <g>
+                                                            <g>
+                                                              <path fill="#ffc000"
+                                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                              </path>
+                                                            </g>
+                                                          </g>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="Rating-star Rating-star_view">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                             viewBox="0 0 19 18">
+                                                          <g>
+                                                            <g>
+                                                              <path fill="#ffc000"
+                                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                              </path>
+                                                            </g>
+                                                          </g>
+                                                        </svg>
+                                                    </span>
+                                                    <span class="Rating-star Rating-star_view">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                             viewBox="0 0 19 18">
+                                                          <g>
+                                                            <g>
+                                                              <path fill="#ffc000"
+                                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                              </path>
+                                                            </g>
+                                                          </g>
+                                                        </svg>
+                                                    </span>
                                                 </span>
                                                   <span class="Rating-title 5"
-                                                        th:text="${numberOfScore5 != null ? numberOfScore5 : 0}">1
+                                                        th:text="${sizeofRatingValue.get(5) != null ? sizeofRatingValue.get(5) : 0}">10</span>
                                                   </span>
-                                              </span>
+                                                </span>
                                                 <br>
                                                 <span class="Rating"><span class="Rating-stars">
                                                     <span class="Rating-star Rating-star_view">
@@ -270,7 +276,7 @@
                                                     </span>
                                                 </span>
                                                     <span class="Rating-title 4"
-                                                          th:text="${numberOfScore4 != null ? numberOfScore4 : 0}">4</span>
+                                                          th:text="${sizeofRatingValue.get(4) != null ? sizeofRatingValue.get(4) : 0}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -336,7 +342,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 3"
-                                                          th:text="${numberOfScore3 != null ? numberOfScore3 : 0}">0</span>
+                                                          th:text="${sizeofRatingValue.get(3) != null ? sizeofRatingValue.get(3) : 0}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -402,7 +408,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 2"
-                                                          th:text="${numberOfScore2 != null ? numberOfScore2 : 0}">10</span>
+                                                          th:text="${sizeofRatingValue.get(2) != null ? sizeofRatingValue.get(2) : 0}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -468,33 +474,23 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 1"
-                                                          th:text="${numberOfScore1 != null ? numberOfScore1 : 0}">3</span>
+                                                          th:text="${sizeofRatingValue.get(1) != null ? sizeofRatingValue.get(1) : 0}">10</span>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                 </button>
                             </div>
-                            <div class="ProductCard-assessment"><span
-                                    class="ProductCard-titleProp"
-                                    th:text="#{message.rateTheBook} + ':'">Оцените книгу:</span><span
-                                    class="Rating Rating_input" data-bookid="2121"
-                                    th:attr="data-bookid = ${slugBook.id}">
-                                <span class="Rating-stars">
-                                    <span class="Rating-star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                             viewBox="0 0 19 18">
-                                          <g>
-                                            <g>
-                                              <path fill="#ffc000"
-                                                    d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
-                                              </path>
-                                            </g>
-                                          </g>
-                                        </svg>
-                                    </span>
-                                      <input name="rating" type="radio" value="1"/>
-                                        <span class="Rating-star">
+                            <div class="ProductCard-assessment">
+                                <span class="ProductCard-titleProp"
+                                      th:text="${userRate == 0} ? #{message.rateTheBook} : #{message.yourMark}"
+                                      th:attr="data-altText=#{message.yourMark}">
+                                    Оцените книгу:
+                                </span>
+                                <span class="Rating Rating_input" data-bookid="2121"
+                                      th:attr="data-bookid = ${book.id}">
+                                    <span class="Rating-stars">
+                                        <span th:class="${userRate >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -506,7 +502,8 @@
                                               </g>
                                             </svg>
                                         </span>
-                                          <input name="rating" type="radio" value="2"/><span class="Rating-star">
+                                        <input name="rating" type="radio" value="1"/>
+                                        <span th:class="${userRate >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -516,8 +513,10 @@
                                                   </path>
                                                 </g>
                                               </g>
-                                            </svg></span>
-                                          <input name="rating" type="radio" value="3"/><span class="Rating-star">
+                                            </svg>
+                                        </span>
+                                        <input name="rating" type="radio" value="2"/>
+                                        <span th:class="${userRate >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -527,8 +526,10 @@
                                                   </path>
                                                 </g>
                                               </g>
-                                            </svg></span>
-                                          <input name="rating" type="radio" value="4"/><span class="Rating-star">
+                                            </svg>
+                                        </span>
+                                        <input name="rating" type="radio" value="3"/>
+                                        <span th:class="${userRate >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -538,32 +539,47 @@
                                                   </path>
                                                 </g>
                                               </g>
-                                            </svg></span>
-                                          <input name="rating" type="radio" value="5"/>
+                                            </svg>
+                                        </span>
+                                        <input name="rating" type="radio" value="4"/>
+                                        <span th:class="${userRate >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                                 viewBox="0 0 19 18">
+                                              <g>
+                                                <g>
+                                                  <path fill="#ffc000"
+                                                        d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z">
+                                                  </path>
+                                                </g>
+                                              </g>
+                                            </svg>
+                                        </span>
+                                        <input name="rating" type="radio" value="5"/>
+                                    </span>
                                 </span>
-                            </span>
                             </div>
                             <div class="ProductCard-tags">
                                 <span class="ProductCard-titleProp" th:text="#{message.tags} + ':'">Тэги:</span>
-                                <div class="ProductCard-titleProp" th:each="tag, i : ${tagsBook}">
-                                    <a th:if="${i.count} < ${tagsBook.size()}" th:href="'/tags/' + ${tag.slug}"
+                                <div class="ProductCard-titleProp" th:each="tag, i : ${book.getTagList()}">
+                                    <a th:if="${i.count} < ${book.getTagList().size()}" th:href="'/tags/' + ${tag.slug}"
                                        th:text="${tag.name} + ', '">Современные</a>&#32;
-                                    <a th:if="${i.count} == ${tagsBook.size()}" th:href="'/tags/' + ${tag.slug}"
+                                    <a th:if="${i.count} == ${book.getTagList().size()}"
+                                       th:href="'/tags/' + ${tag.slug}"
                                        th:text="${tag.name}">Современные</a>&#32;
                                 </div>
                             </div>
                             <div class="ProductCard-cost"><span class="ProductCard-titleProp"
                                                                 th:text="#{message.price} + ':'">Цена:</span>
-                                <span class="ProductCard-priceOld" th:if="${slugBook.discount != 0}"
-                                      th:text="'₽' + ${slugBook.price}">₽300</span>
-                                <span class="ProductCard-price" th:if="${slugBook.discount != 0}"
-                                      th:text="'₽' + ${slugBook.discountPrice()}">₽180</span>
-                                <span class="ProductCard-price" th:if="${slugBook.discount == 0}"
-                                      th:text="'₽' + ${slugBook.discountPrice()}">₽180</span>
+                                <span class="ProductCard-priceOld" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.price}">₽300</span>
+                                <span class="ProductCard-price" th:if="${book.discount != 0}"
+                                      th:text="'₽' + ${book.discountPrice()}">₽180</span>
+                                <span class="ProductCard-price" th:if="${book.discount == 0}"
+                                      th:text="'₽' + ${book.discountPrice()}">₽180</span>
                             </div>
                         </div>
                         <div class="ProductCard-text">
-                            <p th:text="${slugBook.description}">Таких, как я, называют Марами - отмеченными самой
+                            <p th:text="${book.description}">Таких, как я, называют Марами - отмеченными самой
                                 богиней смерти Мораной. Когда-то у меня
                                 и моих шести сестер был свой путь. Тогда люди нас уважали и просили о милосердии. Они
                                 приносили нам подношения и молились нам. Но 200 лет назад все изменилось, когда принц
@@ -576,7 +592,7 @@
                         <div class="ProductCard-cart">
                             <div class="ProductCard-cartElement">
                                 <button th:class="${status.equals(status.KEPT) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-status=${status}, data-check=${status.equals(status.KEPT)},
+                                        th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.KEPT)},
                                         data-alttext=${status.equals(status.KEPT)} ? #{message.postpone} : #{message.postponed}"
                                         data-btntype="check" data-sendstatus="KEPT" data-btnradio="buyblock"
                                         data-check="false">
@@ -590,7 +606,7 @@
                             </div>
                             <div class="ProductCard-cartElement">
                                 <button th:class="${status.equals(status.CART) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
-                                        th:attr="data-bookid = ${slugBook.slug}, data-status=${status}, data-check=${status.equals(status.CART)},
+                                        th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.CART)},
                                         data-alttext=${status.equals(status.CART)} ? #{message.buy} : #{message.inBasket}"
                                         data-btntype="check" data-sendstatus="CART" data-btnradio="buyblock"
                                         data-check="false">
@@ -631,7 +647,7 @@
 
                         <div id="myPopup">
                             <p th:text="#{message.downloadLinks}">Ссылки для скачивания</p>
-                            <div th:each="bookFile : ${slugBook.getBookFileList()}">
+                            <div th:each="bookFile : ${book.getBookFileList()}">
                                 <a href="#" th:href="${'/books/download/' + bookFile.hash}"
                                    th:text="${bookFile.getBookFileType().name}"></a>
                             </div>
@@ -712,7 +728,7 @@
                     </strong>
                     <div class="Comments-addComment" th:if="${isAuthenticatedUser}">
                         <form class="form" action="#" method="post" data-bookid="1111"
-                              th:attr="data-bookid = ${slugBook.id}">
+                              th:attr="data-bookid = ${book.id}">
                             <div class="form-group">
                               <textarea class="form-textarea Comments-review" name="review" id="review"
                                         th:placeholder="#{message.textReview}" placeholder="Текст отзыва"
@@ -837,10 +853,10 @@
                                         </div>
                                         <div class="Comment-footer">
                                             <div class="Comment-appeal">
-                                                <button class="btn btn_white btn_like" data-btntype="check"
-                                                        data-check="false"
+                                                <button th:class="${review.getValue() == 1} ? 'btn btn_white btn_like btn_check' : 'btn btn_white btn_like'"
+                                                        data-btntype="check"
                                                         data-btnradio="one1" data-likeid="222"
-                                                        th:attr="data-likeid = ${review.id}">
+                                                        th:attr="data-likeid = ${review.id}, data-check=${review.getValue() == 1}">
                                                     <span class="btn-icon">
                                                         <img src="/assets/img/icons/comment/like.svg"
                                                              alt="like.svg"/>
@@ -860,10 +876,10 @@
                                                         </a>
                                                     </div>
                                                 </button>
-                                                <button class="btn btn_white btn_dislike" data-btntype="check"
-                                                        data-check="false"
+                                                <button th:class="${review.getValue() == -1} ? 'btn btn_white btn_dislike btn_check' : 'btn btn_white btn_dislike'"
+                                                        data-btntype="check"
                                                         data-btnradio="one1" data-likeid="222"
-                                                        th:attr="data-likeid = ${review.id}">
+                                                        th:attr="data-likeid = ${review.id}, data-check=${review.getValue() == -1}">
                                                     <span class="btn-icon">
                                                         <img src="/assets/img/icons/comment/dislike.svg"
                                                              alt="dislike.svg"/>

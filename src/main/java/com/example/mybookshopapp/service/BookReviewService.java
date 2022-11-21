@@ -3,6 +3,7 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.dto.ResponseResultDto;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.review.BookReview;
+import com.example.mybookshopapp.model.book.review.BookReviewLike;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
@@ -58,6 +59,19 @@ public class BookReviewService {
     }
 
     public List<BookReview> getBookReview(Book book) {
-        return bookReviewRepository.getBookReviewEntitiesByBook(book, Sort.by(Sort.Direction.DESC, "rate"));
+        User user = userProfileService.getCurrentUser();
+        List<BookReview> reviews = bookReviewRepository.getBookReviewEntitiesByBook(book, Sort.by(Sort.Direction.DESC, "rate"));
+        if (user != null) {
+            for (BookReview review : reviews) {
+                Short value = review.getReviewLikeList()
+                        .stream()
+                        .filter(bookReviewLike -> bookReviewLike.getUser() == user)
+                        .map(BookReviewLike::getValue)
+                        .findFirst()
+                        .orElse((short) 0);
+                review.setValue(value);
+            }
+        }
+        return reviews;
     }
 }

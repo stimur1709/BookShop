@@ -6,8 +6,6 @@ import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -17,8 +15,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 public class ModelAttributeController {
 
     protected final UserProfileService userProfileService;

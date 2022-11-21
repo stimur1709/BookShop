@@ -59,7 +59,7 @@ public class BookShopController extends ModelAttributeController {
     @PostMapping("/books/changeBookStatus")
     @ResponseBody
     public ResponseResultDto handlerChangeBookStatus(@RequestBody BookStatusRequestDto dto) {
-        return getBookShopService().changeBookStatus(dto);
+        return bookShopService.changeBookStatus(dto);
     }
 
     private List<Book> getBooksUser(@CookieValue(name = "cartContent", required = false) String cartContent,
@@ -68,8 +68,8 @@ public class BookShopController extends ModelAttributeController {
         BookCodeType status = url.equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
 
         return status.equals(BookCodeType.CART)
-                ? getBookShopService().getBooksUser(cartContent, status)
-                : getBookShopService().getBooksUser(keptContent, status);
+                ? bookShopService.getBooksUser(cartContent, status)
+                : bookShopService.getBooksUser(keptContent, status);
     }
 
     private String getUrl() {

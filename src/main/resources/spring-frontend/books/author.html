@@ -38,12 +38,12 @@
             <h1 class="Middle-title" th:text="${author.name}">Борис Васильевич Бедный</h1>
             <div class="Section">
                 <div class="Cards Cards_refresh">
-                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books})}"></div>
-                    <div class="Cards-footer Cards-footer_center" th:if="${show}">
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books.getContent()})}"></div>
+                    <div class="Cards-footer Cards-footer_center" th:if="${books.getTotalPages() > 1}">
                         <a class="btn btn_primary" href="#"
                            data-refreshshow="author" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${author.id}, data-total = ${totalPages}"
+                           th:attr="data-refreshid=${author.id}, data-total = ${books.getTotalPages()}"
                            data-refreshid="10" th:text="#{message.showMore}">
                             Показать еще</a>
                     </div>

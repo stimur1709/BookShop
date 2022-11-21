@@ -31,23 +31,18 @@ import java.util.Map;
 public class BookPageController extends ModelAttributeController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
-    private final TagService tagService;
     private final ResourceStorage storage;
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
 
     @Autowired
-    public BookPageController(BookService bookService, AuthorService authorService,
-                              TagService tagService, ResourceStorage storage,
+    public BookPageController(BookService bookService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
                               BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
-        this.authorService = authorService;
-        this.tagService = tagService;
         this.storage = storage;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
@@ -57,20 +52,12 @@ public class BookPageController extends ModelAttributeController {
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         Book book = bookService.getBookBySlug(slug);
-        model.addAttribute("slugBook", book);
-        model.addAttribute("authorsBook", authorService.getAuthorsByBook(book.getId()));
-        model.addAttribute("tagsBook", tagService.getTagsByBook(book.getId()));
-        Map<Integer, Long> sizeofRatingValue = ratingBook.getSizeofRatingValue(book.getId());
-        model.addAttribute("numberOfScore1", sizeofRatingValue.get(1));
-        model.addAttribute("numberOfScore2", sizeofRatingValue.get(2));
-        model.addAttribute("numberOfScore3", sizeofRatingValue.get(3));
-        model.addAttribute("numberOfScore4", sizeofRatingValue.get(4));
-        model.addAttribute("numberOfScore5", sizeofRatingValue.get(5));
-        model.addAttribute("numberOfRating", ratingBook.numberOfRating(book.getId()));
-        model.addAttribute("rateBook", book.getRate());
+        model.addAttribute("book", book);
+        model.addAttribute("userRate", ratingBook.getRateByUserAndBook(book));
+        model.addAttribute("sizeofRatingValue", ratingBook.getSizeofRatingValue(book.getId()));
         model.addAttribute("reviews", bookReviewService.getBookReview(book));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
-        model.addAttribute("status", getBookShopService().getBookStatus(book));
+        model.addAttribute("status", bookShopService.getBookStatus(book));
         return "books/slug";
     }
 

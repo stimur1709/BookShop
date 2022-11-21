@@ -50,7 +50,6 @@ public class BookReviewService {
             BookReview review = bookReviewRepository.save(bookReview);
             bookRepository.save(bookEntity.get());
             String name = user.getFirstname() + ' ' + user.getLastname();
-            System.out.println(review.getTime());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));
             String date = simpleDateFormat.format(review.getTime());
             return new ResponseResultDto(true, review.getText(), name, date);

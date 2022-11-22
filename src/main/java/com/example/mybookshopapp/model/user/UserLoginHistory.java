@@ -24,11 +24,17 @@ public class UserLoginHistory {
     @Column(columnDefinition = "VARCHAR(40) NOT NULL")
     private String ipAddress;
 
+    @Column(columnDefinition = "VARCHAR(50)")
+    private String city;
+
+    @Column(columnDefinition = "VARCHAR(50)")
+    private String country;
+
     @Column(columnDefinition = "DATE NOT NULL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id", columnDefinition = "INT")
     @JsonBackReference
     private User user;
@@ -39,10 +45,12 @@ public class UserLoginHistory {
     public UserLoginHistory() {
     }
 
-    public UserLoginHistory(String system, String ipAddress, User user) {
+    public UserLoginHistory(String system, String ipAddress, String city, String country, User user) {
         this.system = system;
         this.ipAddress = ipAddress;
         this.user = user;
+        this.city = city;
+        this.country = country;
         this.date = new Date();
     }
 

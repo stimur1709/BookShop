@@ -60,3 +60,6 @@ download:
 
 jwt:
   key: t911ur00
+
+geolocation:
+  key: 091c97ed150c464cb621c284a49e954f

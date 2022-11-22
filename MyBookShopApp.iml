@@ -172,5 +172,7 @@
     <orderEntry type="library" name="Maven: redis.clients:jedis:3.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.11.1" level="project" />
+    <orderEntry type="library" name="Maven: io.ipgeolocation:ipgeolocation:1.0.12" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.9" level="project" />
   </component>
 </module>

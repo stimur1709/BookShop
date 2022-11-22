@@ -4,10 +4,13 @@ import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserLoginHistory;
 import com.example.mybookshopapp.repository.UserLoginHistoryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.util.UserGeolocation;
+import io.ipgeolocation.api.Geolocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.LocaleResolver;
@@ -22,32 +25,40 @@ public class UserLoginHistoryService {
 
     private final UserLoginHistoryRepository userLoginHistoryRepository;
     private final UserProfileService userProfileService;
-    private final HttpServletRequest request;
     private final LocaleResolver localeResolver;
+    private final UserGeolocation userGeolocation;
+    private final HttpServletRequest request;
 
     @Autowired
     public UserLoginHistoryService(UserLoginHistoryRepository userLoginHistoryRepository,
-                                   UserProfileService userProfileService, HttpServletRequest request,
-                                   LocaleResolver localeResolver) {
+                                   UserProfileService userProfileService,
+                                   LocaleResolver localeResolver, UserGeolocation userGeolocation, HttpServletRequest request) {
         this.userLoginHistoryRepository = userLoginHistoryRepository;
         this.userProfileService = userProfileService;
-        this.request = request;
         this.localeResolver = localeResolver;
+        this.userGeolocation = userGeolocation;
+        this.request = request;
     }
 
+    @Async
     @Transactional
-    public void saveLoginHistory() {
-        User user = userProfileService.getCurrentUser();
-        String system = System.getProperty("os.name") + " " + request.getHeader("user-agent");
+    public void saveLoginHistory(User user, HttpServletRequest request) {
+        String system = System.getProperty("os.name");
+        String agent = request.getHeader("user-agent");
         String ipAddress = request.getRemoteAddr();
-        Optional<UserLoginHistory> userLoginHistory = userLoginHistoryRepository.findFirstBySystemAndIpAddressAndUserOrderByDateAsc(system, ipAddress, user);
-        if (userLoginHistory.isPresent()) {
-            if (Math.abs(userLoginHistory.get().getDate().getTime() - new Date().getTime()) > 300000) {
-                userLoginHistory.get().setDate(new Date());
-                userLoginHistoryRepository.save(userLoginHistory.get());
+        if (ipAddress != null && agent != null) {
+            Optional<UserLoginHistory> userLoginHistory = userLoginHistoryRepository.findFirstBySystemAndIpAddressAndUserOrderByDateAsc(system + ' ' + agent, ipAddress, user);
+            if (userLoginHistory.isPresent()) {
+                if (Math.abs(userLoginHistory.get().getDate().getTime() - new Date().getTime()) > 300000) {
+                    userLoginHistory.get().setDate(new Date());
+                    userLoginHistoryRepository.saveAndFlush(userLoginHistory.get());
+                }
+            } else {
+                Geolocation geolocation = userGeolocation.getGeolocation();
+                userLoginHistoryRepository.saveAndFlush(
+                        new UserLoginHistory(system + ' ' + agent, ipAddress, geolocation.getCity(), geolocation.getCountryName(), user)
+                );
             }
-        } else {
-            userLoginHistoryRepository.save(new UserLoginHistory(system, ipAddress, user));
         }
     }
 
@@ -59,4 +70,5 @@ public class UserLoginHistoryService {
         result.getContent().forEach(userLoginHistory -> userLoginHistory.setFormatDate(simpleDateFormat));
         return result;
     }
+
 }

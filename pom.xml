@@ -108,7 +108,11 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.ipgeolocation</groupId>
+            <artifactId>ipgeolocation</artifactId>
+            <version>1.0.12</version>
+        </dependency>
     </dependencies>
 
     <build>

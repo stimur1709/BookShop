@@ -98,9 +98,15 @@ public class CookieBooksService {
                 ? Collections.emptyList() : new ArrayList<>(Arrays.asList(cookie.split("/")));
     }
 
-    public List<Book> getBooksFromCookie(String cookie) {
-        return cookie == null || cookie.isEmpty()
-                ? Collections.emptyList() : bookRepository.findBookEntitiesBySlugIn(Arrays.asList(cookie.split("/")));
+    public List<Book> getBooksFromCookie(BookCodeType status) {
+        String cookieName = status.equals(BookCodeType.CART) ? CART_COOKIE_NAME : KEPT_COOKIE_NAME;
+        for (Cookie cookie : request.getCookies()) {
+            if (cookieName.equals(cookie.getName())) {
+                List<String> slug = Arrays.asList(cookie.getValue().split("/"));
+                return bookRepository.findBookEntitiesBySlugIn(slug);
+            }
+        }
+        return Collections.emptyList();
     }
 
     private void addBookToCookie(String slug, Cookie cookie) {
@@ -134,10 +140,18 @@ public class CookieBooksService {
         return createCookie(name);
     }
 
-    public Map<BookCodeType, List<Book>> getBooksFromCookies(String cartContent, String keptContent) {
-        Map<BookCodeType, List<Book>> books = new HashMap<>();
-        books.put(BookCodeType.CART, getBooksFromCookie(cartContent));
-        books.put(BookCodeType.KEPT, getBooksFromCookie(keptContent));
-        return books;
+    public Map<BookCodeType, List<Book>> getBooksFromCookies() {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null || cookies.length == 0) {
+            return Collections.emptyMap();
+        } else {
+            Map<BookCodeType, List<Book>> booksMap = new HashMap<>();
+            for (Cookie cookie : cookies) {
+                System.out.println(cookie.getName() + ' ' + cookie.getValue());
+                List<String> slug = Arrays.asList(cookie.getValue().split("/"));
+                booksMap.put(cookie.getName().equals("cartContent") ? BookCodeType.CART : BookCodeType.KEPT, bookRepository.findBookEntitiesBySlugIn(slug));
+            }
+            return booksMap;
+        }
     }
 }

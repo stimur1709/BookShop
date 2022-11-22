@@ -94,10 +94,8 @@ public class UserAuthController extends ModelAttributeController {
     }
 
     @PostMapping("/registration")
-    public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model,
-                                      @CookieValue(name = "cartContent", required = false) String cartContent,
-                                      @CookieValue(name = "keptContent", required = false) String keptContent) {
-        userRegisterService.registerUser(registrationForm, cartContent, keptContent);
+    public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model) {
+        userRegisterService.registerUser(registrationForm);
         model.addAttribute("regOk", true);
         return "signin";
     }

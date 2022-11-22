@@ -45,7 +45,7 @@ public class UserRegisterService {
         this.request = request;
     }
 
-    public void registerUser(RegistrationForm registrationForm, String cartContent, String keptContent) {
+    public User registerUser(RegistrationForm registrationForm) {
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
                 passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
@@ -61,7 +61,8 @@ public class UserRegisterService {
         userContactService.save(contactEmail);
         userContactService.save(contactPhone);
 
-        book2UserTypeService.addBooksTypeUserFromCookie(cartContent, keptContent, user);
+        book2UserTypeService.addBooksTypeUserFromCookie(user);
+        return user;
     }
 
     public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload) {

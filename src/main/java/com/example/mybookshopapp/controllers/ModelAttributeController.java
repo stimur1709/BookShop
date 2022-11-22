@@ -8,7 +8,6 @@ import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.LocaleResolver;
 
@@ -57,12 +56,12 @@ public class ModelAttributeController {
     }
 
     @ModelAttribute("cartSize")
-    public int cartSize(@CookieValue(name = "cartContent", required = false) String cartContent) {
-        return bookShopService.getBooksUser(cartContent, BookCodeType.CART).size();
+    public int cartSize() {
+        return bookShopService.getBooksUser(BookCodeType.CART).size();
     }
 
     @ModelAttribute("keptSize")
-    public int keptSize(@CookieValue(name = "keptContent", required = false) String keptContent) {
-        return bookShopService.getBooksUser(keptContent, BookCodeType.KEPT).size();
+    public int keptSize() {
+        return bookShopService.getBooksUser(BookCodeType.KEPT).size();
     }
 }

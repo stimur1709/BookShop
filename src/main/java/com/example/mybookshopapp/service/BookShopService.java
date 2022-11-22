@@ -39,11 +39,11 @@ public class BookShopService {
         return cookieBooksService.getBookStatus(book.getSlug());
     }
 
-    public List<Book> getBooksUser(String cookie, BookCodeType status) {
+    public List<Book> getBooksUser(BookCodeType status) {
         if (userProfileService.isAuthenticatedUser()) {
             return book2UserTypeService.getBooksUser(status);
         }
-        return cookieBooksService.getBooksFromCookie(cookie);
+        return cookieBooksService.getBooksFromCookie(status);
     }
 
 }

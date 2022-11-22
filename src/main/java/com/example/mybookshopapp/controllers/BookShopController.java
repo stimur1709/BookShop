@@ -30,11 +30,9 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @GetMapping(value = {"/cart", "/postponed"})
-    public String cartPage(@CookieValue(name = "cartContent", required = false) String cartContent,
-                           @CookieValue(name = "keptContent", required = false) String keptContent,
-                           Model model) {
+    public String cartPage(Model model) {
 
-        List<Book> bookList = getBooksUser(cartContent, keptContent);
+        List<Book> bookList = getBooksUser();
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
@@ -51,9 +49,8 @@ public class BookShopController extends ModelAttributeController {
 
     @GetMapping(value = {"/api/size/cart", "/api/size/kept"})
     @ResponseBody
-    public int getSize(@CookieValue(name = "cartContent", required = false) String cartContent,
-                       @CookieValue(name = "keptContent", required = false) String keptContent) {
-        return getBooksUser(cartContent, keptContent).size();
+    public int getSize() {
+        return getBooksUser().size();
     }
 
     @PostMapping("/books/changeBookStatus")
@@ -62,14 +59,10 @@ public class BookShopController extends ModelAttributeController {
         return bookShopService.changeBookStatus(dto);
     }
 
-    private List<Book> getBooksUser(@CookieValue(name = "cartContent", required = false) String cartContent,
-                                    @CookieValue(name = "keptContent", required = false) String keptContent) {
+    private List<Book> getBooksUser() {
         String url = getUrl();
         BookCodeType status = url.equals("cart") ? BookCodeType.CART : BookCodeType.KEPT;
-
-        return status.equals(BookCodeType.CART)
-                ? bookShopService.getBooksUser(cartContent, status)
-                : bookShopService.getBooksUser(keptContent, status);
+        return bookShopService.getBooksUser(status);
     }
 
     private String getUrl() {

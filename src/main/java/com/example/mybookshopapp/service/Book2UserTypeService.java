@@ -72,7 +72,7 @@ public class Book2UserTypeService {
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserRepository.findByUserAndBook(user, book);
         Book2User book2User;
-        if (!optionalBook2User.isPresent()) {
+        if (optionalBook2User.isEmpty()) {
             Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
             book2User = new Book2User(book2UserType, book, user);
             book2UserRepository.save(book2User);
@@ -108,8 +108,10 @@ public class Book2UserTypeService {
         return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
     }
 
-    public void addBooksTypeUserFromCookie(String cartContent, String keptContent, User user) {
-        Map<BookCodeType, List<Book>> books = cookieBooksService.getBooksFromCookies(cartContent, keptContent);
-        books.forEach((key, value) -> value.forEach(book -> changeTypeBook2User(book, user, key, false)));
+    public void addBooksTypeUserFromCookie(User user) {
+        Map<BookCodeType, List<Book>> books = cookieBooksService.getBooksFromCookies();
+        if (!books.isEmpty()) {
+            books.forEach((key, value) -> value.forEach(book -> changeTypeBook2User(book, user, key, false)));
+        }
     }
 }

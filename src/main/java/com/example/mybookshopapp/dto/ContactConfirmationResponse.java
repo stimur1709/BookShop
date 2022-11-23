@@ -18,6 +18,7 @@ public class ContactConfirmationResponse {
     public ContactConfirmationResponse(boolean result) {
         this.result = result;
     }
+
     public ContactConfirmationResponse(boolean result, ContactType type) {
         this.result = result;
         this.type = type;
@@ -25,10 +26,11 @@ public class ContactConfirmationResponse {
 
     public ContactConfirmationResponse(boolean result, String text) {
         this.result = result;
-        if (result)
+        if (result) {
             this.token = text;
-        else
+        } else {
             this.error = text;
+        }
     }
 
     public ContactConfirmationResponse() {

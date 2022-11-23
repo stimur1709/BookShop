@@ -24,9 +24,10 @@ public class BookStoreUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String hash) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByHash(hash);
-        if (user.isPresent())
+        if (user.isPresent()) {
             return new BookstoreUserDetails(user.get());
-        else
+        } else {
             throw new UsernameNotFoundException("Пользователь не найден");
+        }
     }
 }

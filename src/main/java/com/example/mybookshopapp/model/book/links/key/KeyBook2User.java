@@ -1,11 +1,16 @@
 package com.example.mybookshopapp.model.book.links.key;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Getter
+@Setter
 public class KeyBook2User implements Serializable {
     private static final long serialVersionUID = 967105892331588635L;
 
@@ -17,8 +22,12 @@ public class KeyBook2User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         KeyBook2User that = (KeyBook2User) o;
         return bookId == that.bookId && userId == that.userId;
     }
@@ -26,22 +35,6 @@ public class KeyBook2User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(bookId, userId);
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public KeyBook2User(int bookId, int userId) {

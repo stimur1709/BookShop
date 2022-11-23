@@ -54,7 +54,6 @@ public class CookieBooksService {
                     break;
                 }
                 case UNLINK: {
-                    System.out.println("UNLINK");
                     removeBookFromCookie(slug, cartCookie, -0.7);
                     removeBookFromCookie(slug, keptCookie, -0.4);
                     break;
@@ -76,8 +75,9 @@ public class CookieBooksService {
             for (Cookie cookie : cookies) {
                 if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
                     List<String> slugList = getSlugBooksFromCookie(cookie.getValue());
-                    if (slugList.contains(slug))
+                    if (slugList.contains(slug)) {
                         return cookie.getName().equals("cartContent") ? BookCodeType.CART : BookCodeType.KEPT;
+                    }
                 }
             }
         }
@@ -87,8 +87,9 @@ public class CookieBooksService {
     private void removeBookFromCookie(String slug, Cookie cookie, Double value) {
         if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
             List<String> slugList = getSlugBooksFromCookie(cookie.getValue());
-            if (slugList.remove(slug))
+            if (slugList.remove(slug)) {
                 booksRatingAndPopularityService.changePopularity(slug, value);
+            }
             cookie.setValue(String.join("/", slugList));
         }
     }
@@ -100,10 +101,13 @@ public class CookieBooksService {
 
     public List<Book> getBooksFromCookie(BookCodeType status) {
         String cookieName = status.equals(BookCodeType.CART) ? CART_COOKIE_NAME : KEPT_COOKIE_NAME;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookieName.equals(cookie.getName())) {
-                List<String> slug = Arrays.asList(cookie.getValue().split("/"));
-                return bookRepository.findBookEntitiesBySlugIn(slug);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null && cookies.length != 0) {
+            for (Cookie cookie : cookies) {
+                if (cookieName.equals(cookie.getName())) {
+                    List<String> slug = Arrays.asList(cookie.getValue().split("/"));
+                    return bookRepository.findBookEntitiesBySlugIn(slug);
+                }
             }
         }
         return Collections.emptyList();

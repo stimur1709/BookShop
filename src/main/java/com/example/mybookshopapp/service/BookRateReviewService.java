@@ -75,11 +75,22 @@ public class BookRateReviewService {
     public int ratingCalculation(int bookId) {
         long difference = differenceLikesAndDislikes(bookId);
         long size = getLikesReviewsOfBook(bookId) + getDislikesReviewsOfBook(bookId);
-        if (getLikesReviewsOfBook(bookId) == 0 && getDislikesReviewsOfBook(bookId) == 0) return 0;
-        if (difference < size * 0.2) return 1;
-        if (difference >= size * 0.2 && difference < size * 0.4) return 2;
-        if (difference >= size * 0.4 && difference < size * 0.6) return 3;
-        if (difference >= size * 0.6 && difference < size * 0.8) return 4;
-        else return 5;
+        if (getLikesReviewsOfBook(bookId) == 0 && getDislikesReviewsOfBook(bookId) == 0) {
+            return 0;
+        }
+        if (difference < size * 0.2) {
+            return 1;
+        }
+        if (difference >= size * 0.2 && difference < size * 0.4) {
+            return 2;
+        }
+        if (difference >= size * 0.4 && difference < size * 0.6) {
+            return 3;
+        }
+        if (difference >= size * 0.6 && difference < size * 0.8) {
+            return 4;
+        } else {
+            return 5;
+        }
     }
 }

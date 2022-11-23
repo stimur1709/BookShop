@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "book2user")
 public class Book2User {
+
     @EmbeddedId
     private KeyBook2User keyBook2User;
 

@@ -45,7 +45,6 @@ public class Book2UserTypeService {
         for (String slug : slugs) {
             Book book = bookService.getBookBySlug(slug);
             User user = userProfileService.getCurrentUser();
-
             switch (dto.getStatus()) {
                 case CART: {
                     changeTypeBook2User(book, user, BookCodeType.CART, true);
@@ -58,30 +57,29 @@ public class Book2UserTypeService {
                     break;
                 }
                 case UNLINK: {
-                    booksRatingAndPopularityService.changePopularity(book, getValue(user, book));
+                    changeTypeBook2User(book, user, BookCodeType.UNLINK, true);
                     break;
                 }
                 default:
                     break;
             }
         }
-
         return new ResponseResultDto(true);
     }
 
     private void changeTypeBook2User(Book book, User user, BookCodeType status, boolean rating) {
         Optional<Book2User> optionalBook2User = book2UserRepository.findByUserAndBook(user, book);
         Book2User book2User;
-        if (optionalBook2User.isEmpty()) {
-            Book2UserType book2UserType = book2UserTypeRepository.findByCode(status);
-            book2User = new Book2User(book2UserType, book, user);
+        Book2UserType bookCodeType = book2UserTypeRepository.findByCode(status);
+        if (!optionalBook2User.isPresent()) {
+            book2User = new Book2User(bookCodeType, book, user);
             book2UserRepository.save(book2User);
-
         } else {
             book2User = optionalBook2User.get();
-            if (rating)
+            if (rating) {
                 booksRatingAndPopularityService.changePopularity(book, getValue(book2User.getType().getCode()));
-            book2User.setType(book2UserTypeRepository.findByCode(status));
+            }
+            book2User.setType(bookCodeType);
             book2UserRepository.save(book2User);
         }
     }
@@ -95,17 +93,11 @@ public class Book2UserTypeService {
 
     public BookCodeType getBookStatus(Book book) {
         User user = userProfileService.getCurrentUser();
-
         return book2UserRepository.findByUserAndBook(user, book).map(value -> value.getType().getCode()).orElse(BookCodeType.UNLINK);
     }
 
     private double getValue(BookCodeType status) {
         return status.equals(BookCodeType.CART) ? -0.7 : -0.4;
-    }
-
-    private double getValue(User user, Book book) {
-        Optional<Book2User> book2User = book2UserRepository.findByUserAndBook(user, book);
-        return book2User.map(link -> getValue(link.getType().getCode())).orElse(0.0);
     }
 
     public void addBooksTypeUserFromCookie(User user) {

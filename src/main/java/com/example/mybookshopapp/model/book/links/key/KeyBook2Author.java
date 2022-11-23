@@ -19,8 +19,12 @@ public class KeyBook2Author implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         KeyBook2Author that = (KeyBook2Author) o;
         return bookId == that.bookId && authorId == that.authorId;
     }

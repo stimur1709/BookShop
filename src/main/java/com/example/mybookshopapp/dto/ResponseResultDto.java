@@ -23,10 +23,11 @@ public class ResponseResultDto {
 
     public ResponseResultDto(Boolean result, String text) {
         this.result = result;
-        if (result)
+        if (result) {
             this.text = text;
-        else
+        } else {
             this.error = text;
+        }
     }
 
     public ResponseResultDto(Boolean result, String name, int value, Map<Integer, Long> maps) {

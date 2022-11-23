@@ -6193,4 +6193,10 @@
                                  referencedTableName="users" referencedColumnNames="id" onDelete="NO ACTION"
                                  onUpdate="NO ACTION" deferrable="false" initiallyDeferred="false"/>
     </changeSet>
+    <changeSet id="65" author="S Timur">
+        <insert tableName="book2user_type">
+            <column name="code" value="UNLINK"/>
+            <column name="name" value="Удалена"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

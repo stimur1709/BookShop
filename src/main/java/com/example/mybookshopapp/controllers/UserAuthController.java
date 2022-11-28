@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.*;
+import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserLoginHistory;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
@@ -95,8 +96,8 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/registration")
     public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model) {
-        userRegisterService.registerUser(registrationForm);
-        model.addAttribute("regOk", true);
+        User user = userRegisterService.registerUser(registrationForm);
+        model.addAttribute("regOk", user != null);
         return "signin";
     }
 

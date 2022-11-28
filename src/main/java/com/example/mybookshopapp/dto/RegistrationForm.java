@@ -14,4 +14,15 @@ public class RegistrationForm {
     private String mail;
     private String phone;
     private String password;
+
+    public RegistrationForm(String firstname, String lastname, String mail, String phone, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.mail = mail;
+        this.phone = phone;
+        this.password = password;
+    }
+
+    public RegistrationForm() {
+    }
 }

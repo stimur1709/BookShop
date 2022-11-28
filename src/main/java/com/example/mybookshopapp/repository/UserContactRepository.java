@@ -5,6 +5,7 @@ import com.example.mybookshopapp.model.user.UserContact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,5 +15,9 @@ public interface UserContactRepository extends JpaRepository<UserContact, Intege
     Optional<UserContact> findByContactIgnoreCase(String contact);
 
     List<UserContact> findByUserAndApproved(User user, short approved);
+
+    @Transactional
+    void deleteByContact(String contact);
+
 
 }

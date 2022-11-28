@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:/application-test.yaml")
+@TestPropertySource("/application.yaml")
 @Slf4j
 class BookRepositoryTest {
 
@@ -33,10 +33,11 @@ class BookRepositoryTest {
         Pageable pageable = PageRequest.of(0, 100);
         List<Book> books = bookRepository.findBookEntityByTitleContainingAllIgnoreCase(title, pageable).getContent();
 
+        books.stream().map(Book::getTitle).forEach(log::info);
+
         assertNotNull(books);
         assertFalse(books.isEmpty());
 
-        books.stream().map(Book::getTitle).forEach(log::info);
 
     }
 }

@@ -46,10 +46,13 @@ public class UserRegisterService {
     }
 
     public User registerUser(RegistrationForm registrationForm) {
+        System.out.println(registrationForm);
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
                 passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
+        System.out.println(user.getHash());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
+        System.out.println(contactEmail.getContact());
 
         contactEmail.setUser(user);
         contactPhone.setUser(user);
@@ -66,6 +69,7 @@ public class UserRegisterService {
     }
 
     public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload) {
+        System.out.println(payload);
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact != null && userContact.getApproved() == (short) 1) {
             String messagePhone = messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request));

@@ -13,4 +13,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     Optional<User> findByHash(String hash);
 
+    @Transactional
+    long deleteByHash(String hash);
+
+
 }

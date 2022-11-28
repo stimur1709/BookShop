@@ -467,7 +467,7 @@
     <changeSet author="S Timur" id="41">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact"
                                  constraintName="fkigqfory4r46pqd0sl4csnwp72" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="S Timur" id="42">

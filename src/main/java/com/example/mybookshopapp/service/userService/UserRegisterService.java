@@ -46,10 +46,8 @@ public class UserRegisterService {
     }
 
     public User registerUser(RegistrationForm registrationForm) {
-        System.out.println(registrationForm);
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
                 passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
-        System.out.println(user.getHash());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
         System.out.println(contactEmail.getContact());
@@ -90,8 +88,7 @@ public class UserRegisterService {
 
         } else {
             UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), passwordEncoder.encode(generator.getSecretCode()));
-            userContactService.changeContact(contact);
-
+            userContactService.save(contact);
         }
         return new ContactConfirmationResponse(true);
     }

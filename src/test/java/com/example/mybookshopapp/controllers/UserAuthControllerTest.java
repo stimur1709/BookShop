@@ -3,7 +3,6 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserAuthControllerTest {
 
     private final MockMvc mockMvc;
-    private final ObjectMapper objectMapper;
     private final UserContactRepository userContactRepository;
 
     private static String firstname;
@@ -35,9 +33,8 @@ class UserAuthControllerTest {
     private static String password;
 
     @Autowired
-    UserAuthControllerTest(MockMvc mockMvc, ObjectMapper objectMapper, UserContactRepository userContactRepository) {
+    UserAuthControllerTest(MockMvc mockMvc, UserContactRepository userContactRepository) {
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
         this.userContactRepository = userContactRepository;
     }
 
@@ -69,7 +66,7 @@ class UserAuthControllerTest {
                         .param("mail", mail)
                         .param("phone", phone)
                         .param("password", password)
-        ).andExpect(xpath("/html/head/title")
-                .string("Книжный Магазин"));
+        ).andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/span/label")
+                .string("Регистрация прошла успешно!"));
     }
 }

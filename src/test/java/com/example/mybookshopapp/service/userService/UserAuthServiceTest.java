@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Locale;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @TestPropertySource("/application.yaml")
 @Slf4j
+@DisplayName("Подтверждение контакта")
 class UserAuthServiceTest {
 
     private final UserAuthService userAuthService;
@@ -56,7 +58,6 @@ class UserAuthServiceTest {
         mail = "stimur1794@mail.ru";
         code = "123 456";
         phone = "+7 (999) 111-11-22";
-
         contactMail = userContactRepository.save(new UserContact(ContactType.MAIL, mail, passwordEncoder.encode(code)));
         contactPhone = userContactRepository.save(new UserContact(ContactType.PHONE, phone, passwordEncoder.encode(code.replace("123", "987"))));
     }
@@ -69,27 +70,30 @@ class UserAuthServiceTest {
 
     @Test
     void jwtLogin() {
+
     }
 
     @Test
+    @Transactional
     @DisplayName("Подтверждение контакта")
     void handlerApproveContact() throws InterruptedException {
-        ContactConfirmationPayload payload = new ContactConfirmationPayload(contactMail.getContact(), code);
+        ContactConfirmationPayload payload = new ContactConfirmationPayload();
+        payload.setContact(contactMail.getContact());
+        payload.setCode(code);
         ContactConfirmationResponse response = userAuthService.handlerApproveContact(payload);
 
         assertTrue(response.isResult(), "Ошибка подтверждения");
         log.info("Контакт подтвержден");
 
-        contactMail.setCodeTime(new Date(new Date().getTime() - 600000));
-        userContactRepository.save(contactMail);
+        contactMail.setCodeTime(new Date(new Date().getTime() - 1000000));
+        contactMail = userContactRepository.saveAndFlush(contactMail);
         response = userAuthService.handlerApproveContact(payload);
         String message = messageSource.getMessage("message.newCode", null, new Locale("ru"));
         assertEquals(response.getError(), message);
         log.info("Попытка подтверждения: {}", response.getError());
-
-
         for (int i = 1; i < 5; i++) {
-            payload = new ContactConfirmationPayload(contactPhone.getContact(), code);
+            payload.setContact(contactPhone.getContact());
+            payload.setCode(code);
             response = userAuthService.handlerApproveContact(payload);
             if (i < 3) {
                 assertEquals(response.getError(), generator.generatorTextBadContact(i));
@@ -104,6 +108,19 @@ class UserAuthServiceTest {
     }
 
     @Test
+    @DisplayName("Проверка контакта перед логином")
     void handlerRequestContactConfirmation() {
+        ContactConfirmationPayload payload = new ContactConfirmationPayload(contactMail.getContact(), contactMail.getType());
+        ContactConfirmationResponse response = userAuthService.handlerRequestContactConfirmation(payload);
+        assertTrue(response.isResult());
+
+        contactMail.setCodeTrails(3);
+        contactMail.setCodeTime(new Date());
+        userContactRepository.save(contactMail);
+        response = userAuthService.handlerRequestContactConfirmation(payload);
+        String messageMail = messageSource.getMessage("message.blockContactMail", null, new Locale("ru"));
+        long time = Math.abs(contactMail.getCodeTime().getTime() - new Date().getTime());
+        assertEquals(response.getError(), generator.generatorTextBlockContact(time, messageMail));
     }
+
 }

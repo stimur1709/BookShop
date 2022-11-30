@@ -92,6 +92,10 @@ public class UserAuthService {
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
                 return blockContact(dif);
             }
+            if (dif > 300000) {
+                String message = messageSource.getMessage("message.newCode", null, localeResolver.resolveLocale(request));
+                return new ContactConfirmationResponse(false, message);
+            }
             return badContact(userContact.getCodeTrails());
         }
 

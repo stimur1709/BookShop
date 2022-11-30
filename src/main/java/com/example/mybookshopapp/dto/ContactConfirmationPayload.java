@@ -18,8 +18,7 @@ public class ContactConfirmationPayload {
         this.contactType = contactType;
     }
 
-    public ContactConfirmationPayload(String contact, String code) {
-        this.contact = contact;
-        this.code = code;
+    public ContactConfirmationPayload() {
     }
+
 }

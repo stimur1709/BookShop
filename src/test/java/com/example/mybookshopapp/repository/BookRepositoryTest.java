@@ -28,7 +28,7 @@ class BookRepositoryTest {
 
     @Test
     void findBookByTitle() {
-        String title = "java";
+        String title = "марс";
 
         Pageable pageable = PageRequest.of(0, 100);
         List<Book> books = bookRepository.findBookEntityByTitleContainingAllIgnoreCase(title, pageable).getContent();
@@ -37,7 +37,6 @@ class BookRepositoryTest {
 
         assertNotNull(books);
         assertFalse(books.isEmpty());
-
-
     }
+    
 }

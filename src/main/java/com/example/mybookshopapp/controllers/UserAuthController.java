@@ -149,9 +149,9 @@ public class UserAuthController extends ModelAttributeController {
 
         Map<String, Object> response = userChangeService.updateUser(changeProfileForm);
 
-        if (response.isEmpty())
+        if (response.isEmpty()) {
             response.put("message", messageSource.getMessage("message.profileSave", null, localeResolver.resolveLocale(request)));
-
+        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

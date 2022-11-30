@@ -59,7 +59,7 @@ public class User implements Serializable {
     @JsonManagedReference
     private List<UserContact> userContact = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "book2User",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")})

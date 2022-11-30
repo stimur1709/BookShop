@@ -50,7 +50,6 @@ public class UserRegisterService {
                 passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
-        System.out.println(contactEmail.getContact());
 
         contactEmail.setUser(user);
         contactPhone.setUser(user);
@@ -67,7 +66,6 @@ public class UserRegisterService {
     }
 
     public ContactConfirmationResponse handlerRequestNewContactConfirmation(ContactConfirmationPayload payload) {
-        System.out.println(payload);
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact != null && userContact.getApproved() == (short) 1) {
             String messagePhone = messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request));
@@ -78,14 +76,11 @@ public class UserRegisterService {
             return new ContactConfirmationResponse(false, error);
         }
         if (userContact != null && userContact.getApproved() == (short) 0) {
-
             long dif = Math.abs(userContact.getCodeTime().getTime() - new Date().getTime());
             if (userContact.getCodeTrails() > 2 && dif < 300000) {
                 return blockContact(dif);
             }
-
             userContactService.changeContact(userContact);
-
         } else {
             UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), passwordEncoder.encode(generator.getSecretCode()));
             userContactService.save(contact);

@@ -28,7 +28,7 @@ public class UserContact implements Serializable {
     @JsonBackReference
     private User user;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "parent_id", columnDefinition = "INT")
     private UserContact parentUserContact;
 

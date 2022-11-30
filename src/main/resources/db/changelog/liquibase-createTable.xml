@@ -338,7 +338,7 @@
     <changeSet author="S Timur" id="21">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
+                <constraints primaryKey="true" primaryKeyName="users_pkey" deleteCascade="true"/>
             </column>
             <column defaultValueNumeric="0" name="balance" type="INT">
                 <constraints nullable="false"/>
@@ -379,7 +379,7 @@
     <changeSet author="S Timur" id="27">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user"
                                  constraintName="fk1i8i82uo8kbv1wepiujenmj7x" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="S Timur" id="28">

@@ -19,5 +19,6 @@ public interface UserContactRepository extends JpaRepository<UserContact, Intege
     @Transactional
     long deleteByContact(String contact);
 
+    UserContact findFirstByApproved(short approved);
 
 }

@@ -151,7 +151,6 @@ public class CookieBooksService {
         } else {
             Map<BookCodeType, List<Book>> booksMap = new HashMap<>();
             for (Cookie cookie : cookies) {
-                System.out.println(cookie.getName() + ' ' + cookie.getValue());
                 List<String> slug = Arrays.asList(cookie.getValue().split("/"));
                 booksMap.put(cookie.getName().equals("cartContent") ? BookCodeType.CART : BookCodeType.KEPT, bookRepository.findBookEntitiesBySlugIn(slug));
             }

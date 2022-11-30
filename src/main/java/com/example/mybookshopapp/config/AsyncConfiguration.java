@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
@@ -10,6 +11,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
+@Slf4j
 public class AsyncConfiguration extends AsyncConfigurerSupport {
 
     @Override
@@ -27,8 +29,7 @@ public class AsyncConfiguration extends AsyncConfigurerSupport {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (ex, method, params) -> {
-            System.out.println("Exception: " + ex.getMessage());
-            System.out.println("Method Name: " + method.getName());
+            log.info("Exception: {}\nMethod Name: {}", ex.getMessage(), method.getName());
             ex.printStackTrace();
         };
     }

@@ -20,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Service
@@ -36,12 +38,13 @@ public class UserAuthService {
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
     private final HttpServletRequest request;
+    private final HttpServletResponse response;
 
     @Autowired
     public UserAuthService(JWTUtil jwtUtil, BlacklistService blacklistService,
                            UserContactService userContactService, Generator generator,
                            AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, HttpServletResponse response) {
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
         this.userContactService = userContactService;
@@ -52,6 +55,7 @@ public class UserAuthService {
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
         this.request = request;
+        this.response = response;
     }
 
 
@@ -68,6 +72,8 @@ public class UserAuthService {
             BookstoreUserDetails userDetails = (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(userContact.getUser().getHash());
             String jwtToken = jwtUtil.generateToken(userDetails);
             blacklistService.delete(jwtToken);
+            Cookie cookie = new Cookie("token", jwtToken);
+            response.addCookie(cookie);
             return new ContactConfirmationResponse(true, jwtToken);
         } catch (Exception e) {
 

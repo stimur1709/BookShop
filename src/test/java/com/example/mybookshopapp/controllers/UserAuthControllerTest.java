@@ -1,10 +1,12 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.UserContactRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,21 +27,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
 
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application.yaml")
 @Slf4j
-@DisplayName("Регистрация пользователя")
+@DisplayName("Аутентификация пользователя")
 class UserAuthControllerTest {
 
     private final MockMvc mockMvc;
     private final UserContactRepository userContactRepository;
     private final MessageSource messageSource;
     private final BookRepository bookRepository;
+    private final ObjectMapper objectMapper;
 
     private static String firstname;
     private static String lastname;
@@ -47,11 +55,12 @@ class UserAuthControllerTest {
 
     @Autowired
     UserAuthControllerTest(MockMvc mockMvc, UserContactRepository userContactRepository,
-                           MessageSource messageSource, BookRepository bookRepository) {
+                           MessageSource messageSource, BookRepository bookRepository, ObjectMapper objectMapper) {
         this.mockMvc = mockMvc;
         this.userContactRepository = userContactRepository;
         this.messageSource = messageSource;
         this.bookRepository = bookRepository;
+        this.objectMapper = objectMapper;
     }
 
     @BeforeEach
@@ -108,5 +117,32 @@ class UserAuthControllerTest {
                         .string("6"))
                 .andExpect(xpath("//*[@id=\"keptt\"]")
                         .string("5"));
+    }
+
+    @Test
+    @WithUserDetails("stimur")
+    @DisplayName("Проверка аутентификации пользователя и доступ к странице профиля")
+    void authUser() throws Exception {
+        mockMvc.perform(get("/profile"))
+                .andDo(print())
+                .andExpect(authenticated())
+                .andExpect(xpath("/html/body/div/div[2]/main/h2/text()")
+                        .string("Мой профиль"));
+    }
+
+    @Test
+    @DisplayName("Проверка аутентификации пользователя")
+    public void correctLoginTest() throws Exception {
+        ContactConfirmationPayload payload = new ContactConfirmationPayload();
+        payload.setContact("stimur1709@mail.ru");
+        payload.setCode("123456789");
+        mockMvc.perform(
+                        post("/login")
+                                .content(objectMapper.writeValueAsString(payload))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(cookie().exists("token"));
     }
 }

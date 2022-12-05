@@ -21,9 +21,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -125,14 +123,8 @@ public class UserAuthController extends ModelAttributeController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
-                                                   HttpServletResponse httpServletResponse) {
-        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
-        if (loginResponse.isResult() && loginResponse.getError() == null) {
-            Cookie cookie = new Cookie("token", loginResponse.getToken());
-            httpServletResponse.addCookie(cookie);
-        }
-        return loginResponse;
+    public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload) {
+        return userAuthService.jwtLogin(payload);
     }
 
     @PostMapping("/api/profile/save")

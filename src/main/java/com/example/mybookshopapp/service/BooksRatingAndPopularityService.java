@@ -47,6 +47,7 @@ public class BooksRatingAndPopularityService {
 
     public void changePopularity(String slug, Double value) {
         Book book = bookRepository.findBookEntityBySlug(slug);
+        System.out.println(slug + "!!");
         book.setPopularity(book.getPopularity() + value);
         bookRepository.save(book);
     }

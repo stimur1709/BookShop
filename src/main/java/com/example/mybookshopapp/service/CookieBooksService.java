@@ -37,7 +37,7 @@ public class CookieBooksService {
         Cookie cartCookie = getCookieByName(CART_COOKIE_NAME);
         Cookie keptCookie = getCookieByName(KEPT_COOKIE_NAME);
 
-        String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
+        String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split("/");
 
         for (String slug : slugs) {
             switch (dto.getStatus()) {

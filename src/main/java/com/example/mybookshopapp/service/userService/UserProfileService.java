@@ -59,7 +59,6 @@ public class UserProfileService {
     }
 
     public boolean isAuthenticatedUser() {
-        String hash = SecurityContextHolder.getContext().getAuthentication().getName();
-        return !hash.equals("anonymousUser");
+        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 }

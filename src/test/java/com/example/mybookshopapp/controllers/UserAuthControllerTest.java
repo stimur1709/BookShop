@@ -1,11 +1,10 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.enums.ContactType;
 import com.example.mybookshopapp.model.user.UserContact;
-import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.UserContactRepository;
+import com.example.mybookshopapp.util.GeneratorCookie;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -16,16 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.servlet.http.Cookie;
-import java.util.List;
 import java.util.Locale;
-import java.util.StringJoiner;
 
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,8 +39,8 @@ class UserAuthControllerTest {
     private final MockMvc mockMvc;
     private final UserContactRepository userContactRepository;
     private final MessageSource messageSource;
-    private final BookRepository bookRepository;
     private final ObjectMapper objectMapper;
+    private final GeneratorCookie generatorCookie;
 
     private static String firstname;
     private static String lastname;
@@ -55,12 +50,12 @@ class UserAuthControllerTest {
 
     @Autowired
     UserAuthControllerTest(MockMvc mockMvc, UserContactRepository userContactRepository,
-                           MessageSource messageSource, BookRepository bookRepository, ObjectMapper objectMapper) {
+                           MessageSource messageSource, ObjectMapper objectMapper, GeneratorCookie generatorCookie) {
         this.mockMvc = mockMvc;
         this.userContactRepository = userContactRepository;
         this.messageSource = messageSource;
-        this.bookRepository = bookRepository;
         this.objectMapper = objectMapper;
+        this.generatorCookie = generatorCookie;
     }
 
     @BeforeEach
@@ -83,29 +78,12 @@ class UserAuthControllerTest {
         log.info("Контакты удалены {}", l);
     }
 
-    Cookie[] createCookies() {
-        List<Book> books = bookRepository.findAll(PageRequest.of(0, 11)).getContent();
-        StringJoiner cart = new StringJoiner("/");
-        StringJoiner kept = new StringJoiner("/");
-        for (int i = 0; i < books.size(); i++) {
-            if (i % 2 == 0) {
-                cart.add(books.get(i).getSlug());
-            } else {
-                kept.add(books.get(i).getSlug());
-            }
-        }
-        Cookie cartContent = new Cookie("cartContent", cart.toString());
-        Cookie keptContent = new Cookie("keptContent", kept.toString());
-        log.info("Созданы cookies: {}, {}", cartContent.getName(), keptContent.getName());
-        return new Cookie[]{cartContent, keptContent};
-    }
-
     @Test
     @DisplayName("Проверка регистрации пользователя и перенос книг пользователя с cookies в БД")
     void registrationUser() throws Exception {
         mockMvc.perform(
                         post("/registration?lang=en")
-                                .cookie(createCookies())
+                                .cookie(generatorCookie.createCookies(0, 11))
                                 .param("firstname", firstname)
                                 .param("lastname", lastname)
                                 .param("mail", mail)

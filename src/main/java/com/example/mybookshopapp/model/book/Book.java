@@ -38,8 +38,8 @@ public class Book {
     @Schema(example = "1")
     private int isBestseller;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    @Schema(example = "anna-karenina")
+    @Column(columnDefinition = "VARCHAR(19) NOT NULL", unique = true)
+    @Schema(example = "kdrmsjtkjippesbmrvy")
     private String slug;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -119,10 +119,6 @@ public class Book {
 
     public String getAuthors() {
         return getAuthorList().size() > 1 ? getAuthorList().get(0).getName() + " и другие" : getAuthorList().get(0).getName();
-    }
-
-    public int discount() {
-        return (int) (discount * 100);
     }
 
     public int discountPrice() {

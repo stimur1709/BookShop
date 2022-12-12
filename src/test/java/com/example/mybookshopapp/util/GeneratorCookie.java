@@ -22,8 +22,8 @@ public class GeneratorCookie {
         this.bookRepository = bookRepository;
     }
 
-    public Cookie[] createCookies(int offset, int count) {
-        List<Book> books = bookRepository.findAll(PageRequest.of(offset, count)).getContent();
+    public Cookie[] createCookies(int count) {
+        List<Book> books = bookRepository.findAll(PageRequest.of(0, count)).getContent();
         StringJoiner cart = new StringJoiner("/");
         StringJoiner kept = new StringJoiner("/");
         for (int i = 0; i < books.size(); i++) {

@@ -63,7 +63,7 @@ public class Generator {
                 : password + enteredIncorrectly + count + attempts;
     }
 
-    public String generateUserHashCode() {
+    public String generateHashCode() {
         StringBuilder result = new StringBuilder();
         char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         for (int i = 0; i <= 18; i++) {

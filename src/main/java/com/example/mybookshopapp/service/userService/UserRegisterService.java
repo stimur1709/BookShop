@@ -47,7 +47,7 @@ public class UserRegisterService {
 
     public User registerUser(RegistrationForm registrationForm) {
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
-                passwordEncoder.encode(registrationForm.getPassword()), generator.generateUserHashCode());
+                passwordEncoder.encode(registrationForm.getPassword()), generator.generateHashCode());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
         UserContact contactPhone = userContactService.getUserContact(registrationForm.getPhone());
 

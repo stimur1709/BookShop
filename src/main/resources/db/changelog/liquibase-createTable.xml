@@ -15,7 +15,7 @@
             </column>
             <column name="photo" type="VARCHAR(255)"/>
             <column name="slug" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
     </changeSet>
@@ -210,7 +210,7 @@
             <column name="pub_date" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="slug" type="VARCHAR(255)">
+            <column name="slug" type="VARCHAR(19)">
                 <constraints nullable="false"/>
             </column>
             <column name="title" type="VARCHAR(255)">
@@ -343,8 +343,8 @@
             <column defaultValueNumeric="0" name="balance" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="hash" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+            <column name="hash" type="VARCHAR(19)">
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="firstname" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -759,7 +759,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2010-02-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="anna-karenina"/>
+            <column name="slug" value="zcjbamvddqipljkrzoj"/>
             <column name="title" value="Анна Каренина"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Анна Каренина"/>
@@ -769,7 +769,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-03-02"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="prestuplenie-i-nakazanie"/>
+            <column name="slug" value="ngrttfusamvyhzvexah"/>
             <column name="title" value="Преступление и наказание"/>
             <column name="image" value="https://dummyimage.com/735x470.png/ff4444/ffffff"/>
             <column name="description" value="Преступление и наказание"/>
@@ -779,7 +779,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2012-04-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="voyna-i-mir"/>
+            <column name="slug" value="waxmabjgfhopaougbvg"/>
             <column name="title" value="Война и мир"/>
             <column name="image" value="https://dummyimage.com/683x577.png/dddddd/000000"/>
             <column name="description" value="Война и мир"/>
@@ -788,7 +788,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2013-05-02"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="idiot"/>
+            <column name="slug" value="jeeyoudmyapkytnxacw"/>
             <column name="title" value="Идиот"/>
             <column name="image" value="https://dummyimage.com/751x457.png/ff4444/ffffff"/>
             <column name="description" value="Идиот"/>
@@ -798,7 +798,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-06-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="master-i-margarita"/>
+            <column name="slug" value="ympemqinsvxghkqbzdx"/>
             <column name="title" value="Мастер и Маргарита"/>
             <column name="image" value="https://dummyimage.com/414x638.png/dddddd/000000"/>
             <column name="description" value="Мастер и Маргарита"/>
@@ -807,7 +807,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-07-02"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="myortvye-dushi"/>
+            <column name="slug" value="vkobzvennymsemejrjj"/>
             <column name="title" value="Мёртвые души"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Мёртвые души"/>
@@ -817,7 +817,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-08-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="sobache-serdtse"/>
+            <column name="slug" value="rktweuwztrcsfzurbpn"/>
             <column name="title" value="Собачье сердце"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Собачье сердце"/>
@@ -827,7 +827,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-09-02"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="evgeniy-onegin"/>
+            <column name="slug" value="vrrfzgmnvgydpzddkcb"/>
             <column name="title" value="Евгений Онегин"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Евгений Онегин"/>
@@ -837,7 +837,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-10-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="fathers-and-sons"/>
+            <column name="slug" value="aofuowwilidykjtizyu"/>
             <column name="title" value="Отцы и дети"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Отцы и дети"/>
@@ -847,7 +847,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-11-02"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="tales-of-belkin"/>
+            <column name="slug" value="fmckpdjkoqsiovyvvuj"/>
             <column name="title" value="Повести Белкина"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Повести Белкина"/>
@@ -856,7 +856,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-12-02"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="stories"/>
+            <column name="slug" value="dcbkirudjyfllmockmf"/>
             <column name="title" value="Рассказы"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Рассказы"/>
@@ -866,7 +866,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2021-01-03"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="woe-from-wit"/>
+            <column name="slug" value="ruxiwrffyifhajzhvyn"/>
             <column name="title" value="Горе от ума"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Горе от ума"/>
@@ -875,7 +875,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2022-02-03"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="one-story-america"/>
+            <column name="slug" value="qamtweauvslilfzhtum"/>
             <column name="title" value="Одноэтажная Америка"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Одноэтажная Америка"/>
@@ -884,7 +884,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-04-03"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="garri-potter-i-uznik-azkabana"/>
+            <column name="slug" value="etbmyppgzeyrjuebegy"/>
             <column name="title" value="Гарри Поттер и узник Азкабана"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гарри Поттер и узник Азкабана"/>
@@ -893,7 +893,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2012-05-04"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="451-po-farengeytu"/>
+            <column name="slug" value="hqqfudgjcxjtnblndsw"/>
             <column name="title" value="451° по Фаренгейту"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="451° по Фаренгейту"/>
@@ -902,7 +902,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2013-06-05"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="1984"/>
+            <column name="slug" value="idcfsycqtvrccsajwjn"/>
             <column name="title" value="1984"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="1984"/>
@@ -911,7 +911,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-07-06"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="shantaram"/>
+            <column name="slug" value="mxkgizxlqqxgjulgecj"/>
             <column name="title" value="Шантарам"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Шантарам"/>
@@ -920,7 +920,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-08-07"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="tri-tovarishcha"/>
+            <column name="slug" value="dookmyukanptkskexsb"/>
             <column name="title" value="Три товарища"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Три товарища"/>
@@ -929,7 +929,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-09-08"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="tsvety-dlya-eldzhernona"/>
+            <column name="slug" value="hdtolnshoymmurkfkuz"/>
             <column name="title" value="Цветы для Элджернона"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Цветы для Элджернона"/>
@@ -938,7 +938,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-10-03"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="portret-doriana-greya"/>
+            <column name="slug" value="rszdtdbtmgxpcswgzwe"/>
             <column name="title" value="Портрет Дориана Грея"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Портрет Дориана Грея"/>
@@ -947,7 +947,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-11-03"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="malenkiy-prints"/>
+            <column name="slug" value="bgqkkupcjwsyjkffezp"/>
             <column name="title" value="Маленький принц"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Маленький принц"/>
@@ -956,7 +956,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-12-03"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="nad-propastyu-vo-rzhi"/>
+            <column name="slug" value="kmzeulqhoiyokiaghlt"/>
             <column name="title" value="Над пропастью во ржи"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Над пропастью во ржи"/>
@@ -965,7 +965,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-01-11"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="vino-iz-oduvanchikov"/>
+            <column name="slug" value="ycsnhuvkxbzbyivfsow"/>
             <column name="title" value="Вино из одуванчиков"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Вино из одуванчиков"/>
@@ -974,7 +974,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2021-02-12"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="atlant-raspravil-plechi"/>
+            <column name="slug" value="oqkadqghcdbfvtrmfzl"/>
             <column name="title" value="Атлант расправил плечи"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Атлант расправил плечи"/>
@@ -983,7 +983,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-03-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="ubit-peresmeshnika"/>
+            <column name="slug" value="rkexuoshqovhdkmeuab"/>
             <column name="title" value="Убить пересмешника"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Убить пересмешника"/>
@@ -992,7 +992,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2010-04-14"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="sto-let-odinochestva"/>
+            <column name="slug" value="tywhdpozxuqqtlqychz"/>
             <column name="title" value="Сто лет одиночества"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Сто лет одиночества"/>
@@ -1001,7 +1001,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2012-05-12"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="dvenadtsat-stulev"/>
+            <column name="slug" value="fqdhmrsoyeklsxbsgto"/>
             <column name="title" value="Двенадцать стульев"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Двенадцать стульев"/>
@@ -1010,7 +1010,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2013-06-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="triumfalnaya-arka"/>
+            <column name="slug" value="qsqrofvixksmsbmtvch"/>
             <column name="title" value="Триумфальная арка"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Триумфальная арка"/>
@@ -1019,7 +1019,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-07-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="graf-monte-kristo"/>
+            <column name="slug" value="mgbnsfccydhmnjowjwr"/>
             <column name="title" value="Граф Монте-Кристо"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Граф Монте-Кристо"/>
@@ -1028,7 +1028,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-08-12"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="velikiy-getsbi"/>
+            <column name="slug" value="wgoejtvisqvedwsobss"/>
             <column name="title" value="Великий Гэтсби"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Великий Гэтсби"/>
@@ -1037,7 +1037,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-09-12"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="garri-potter-i-filosofskiy-kamen"/>
+            <column name="slug" value="dmoakjbebquvbzlmhzf"/>
             <column name="title" value="Гарри Поттер и философский камень"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гарри Поттер и философский камень"/>
@@ -1046,7 +1046,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-10-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="zhizn-vzaymy"/>
+            <column name="slug" value="iwwdudgkzpjnfwovccy"/>
             <column name="title" value="Жизнь взаймы"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Жизнь взаймы"/>
@@ -1055,7 +1055,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-11-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="gordost-i-predubezhdenie"/>
+            <column name="slug" value="moaiqsjpgipsneexxwz"/>
             <column name="title" value="Гордость и предубеждение"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гордость и предубеждение"/>
@@ -1064,7 +1064,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-12-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="boytsovskiy-klub"/>
+            <column name="slug" value="tegafszfqjaintxhcin"/>
             <column name="title" value="Бойцовский клуб"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Бойцовский клуб"/>
@@ -1073,7 +1073,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-01-12"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="knizhnyy-vor"/>
+            <column name="slug" value="wzxtyfztiuuplfiyrru"/>
             <column name="title" value="Книжный вор"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Книжный вор"/>
@@ -1082,7 +1082,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2021-02-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="zelyonaya-milya"/>
+            <column name="slug" value="nlhhzprsvlywpncctvo"/>
             <column name="title" value="Зелёная миля"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Зелёная миля"/>
@@ -1091,7 +1091,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-03-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="o-divnyy-novyy-mir"/>
+            <column name="slug" value="avgadrfgaljsxrolmpv"/>
             <column name="title" value="О дивный новый мир"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="О дивный новый мир"/>
@@ -1100,7 +1100,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2010-04-13"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="geroy-nashego-vremeni"/>
+            <column name="slug" value="umxdqqddafwssrfccpl"/>
             <column name="title" value="Герой нашего времени"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Герой нашего времени"/>
@@ -1109,7 +1109,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2012-05-13"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="marsianin"/>
+            <column name="slug" value="zzjzwgvjcrawdxjaidl"/>
             <column name="title" value="Марсианин"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Марсианин"/>
@@ -1118,7 +1118,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2013-06-13"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="bratya-karamazovy"/>
+            <column name="slug" value="elfnqyamkfcfnvfkdpf"/>
             <column name="title" value="Братья Карамазовы"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Братья Карамазовы"/>
@@ -1127,7 +1127,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-07-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="unesyonnye-vetrom"/>
+            <column name="slug" value="cbukxnwhoptlsqpnzqr"/>
             <column name="title" value="Унесённые ветром"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Унесённые ветром"/>
@@ -1136,7 +1136,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-08-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="dom-v-kotorom"/>
+            <column name="slug" value="nsmryzibkqgjypzokcj"/>
             <column name="title" value="Дом, в котором…"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Дом, в котором…"/>
@@ -1145,7 +1145,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-09-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="garri-potter-i-orden-feniksa"/>
+            <column name="slug" value="ygdzjldzarnsgnzozyw"/>
             <column name="title" value="Гарри Поттер и орден Феникса"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гарри Поттер и орден Феникса"/>
@@ -1154,7 +1154,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-10-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="ponedelnik-nachinaetsya-v-subbotu"/>
+            <column name="slug" value="hvgexxpuhodwlsvcxjj"/>
             <column name="title" value="Понедельник начинается в субботу"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Понедельник начинается в субботу"/>
@@ -1163,7 +1163,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-11-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="alkhimik"/>
+            <column name="slug" value="bacdazzokmdlvzfasrh"/>
             <column name="title" value="Алхимик"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Алхимик"/>
@@ -1172,7 +1172,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-12-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="besy"/>
+            <column name="slug" value="jwcnclwbmcjjenptqoa"/>
             <column name="title" value="Бесы"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Бесы"/>
@@ -1181,7 +1181,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-01-14"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="garri-potter-i-taynaya-komnata"/>
+            <column name="slug" value="hjlzjrgdegsrbbytjty"/>
             <column name="title" value="Гарри Поттер и тайная комната"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гарри Поттер и тайная комната"/>
@@ -1190,7 +1190,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2021-02-15"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="igra-prestolov"/>
+            <column name="slug" value="cqfqjwhdxvasrtmdprf"/>
             <column name="title" value="Игра престолов"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Игра престолов"/>
@@ -1199,7 +1199,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2022-03-15"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="garri-potter-i-kubok-ognya"/>
+            <column name="slug" value="tkrlhjlvkfcwaxknmlr"/>
             <column name="title" value="Гарри Поттер и Кубок огня"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Гарри Поттер и Кубок огня"/>
@@ -1208,7 +1208,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2010-04-15"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="starik-i-more"/>
+            <column name="slug" value="naemgiyfbczrtnjfgwc"/>
             <column name="title" value="Старик и море"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Старик и море"/>
@@ -1217,7 +1217,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-05-15"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="vlastelin-kolets"/>
+            <column name="slug" value="foqolxqxcmqswfjvkte"/>
             <column name="title" value="Властелин колец"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Властелин колец"/>
@@ -1226,7 +1226,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2012-06-15"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="odinochestvo-v-seti"/>
+            <column name="slug" value="cunntgswnmkvklccues"/>
             <column name="title" value="Одиночество в Сети"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Одиночество в Сети"/>
@@ -1235,7 +1235,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-07-11"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="marsianskie-khroniki"/>
+            <column name="slug" value="rwvolqoreqmnpmmsowe"/>
             <column name="title" value="Марсианские хроники"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="лл"/>
@@ -1244,7 +1244,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2021-09-12"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="kanun-vsekh-svyatykh"/>
+            <column name="slug" value="sfwtwdmupczrcifqsrs"/>
             <column name="title" value="Канун Всех Святых"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1254,7 +1254,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-10-13"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="smert-delo-odinokoe"/>
+            <column name="slug" value="ldfdcfmfkdxqxeknhpw"/>
             <column name="title" value="Смерть – дело одинокое"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1264,7 +1264,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-11-14"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="kladbishche-dlya-bezumtsev-eshche-odna-povest-o-dvukh-gorodakh"/>
+            <column name="slug" value="wnqfcdolzmxeexxnlgb"/>
             <column name="title" value="Кладбище для безумцев. Еще одна повесть о двух городах"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1274,7 +1274,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-12-15"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="zelenye-teni-belyy-kit"/>
+            <column name="slug" value="ihyawhtmhxcjgizxhbh"/>
             <column name="title" value="Зеленые тени, Белый Кит"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1284,7 +1284,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2020-01-16"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="iz-prakha-vosstavshie"/>
+            <column name="slug" value="lwnpeipfnimssqtzwez"/>
             <column name="title" value="Из праха восставшие"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1294,7 +1294,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-02-17"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="davayte-vse-ubem-konstantsiyu"/>
+            <column name="slug" value="rtqiapltewmfmhzfcpw"/>
             <column name="title" value="Давайте все убьем Констанцию"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1304,7 +1304,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-03-18"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="leto-proshchay"/>
+            <column name="slug" value="ieikyceqanhtvytqwdt"/>
             <column name="title" value="Лето, прощай"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1314,7 +1314,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-04-19"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="led-i-plamya"/>
+            <column name="slug" value="jahxwaaaavjlycqznbw"/>
             <column name="title" value="Лед и пламя"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1324,7 +1324,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2013-05-20"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="revun"/>
+            <column name="slug" value="ogdaazjwcnkfxfjkmdz"/>
             <column name="title" value="Ревун"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1334,7 +1334,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-06-10"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="chikagskaya-bezdna"/>
+            <column name="slug" value="bqjrvagnfgcwxyunfwv"/>
             <column name="title" value="Чикагская бездна"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1344,7 +1344,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-07-21"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="temnyy-karnaval-sbornik"/>
+            <column name="slug" value="aylczqdhvkeiymchwtf"/>
             <column name="title" value="Темный карнавал (сборник)"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1354,7 +1354,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-08-22"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="chelovek-v-kartinkakh"/>
+            <column name="slug" value="dkuvhbdrjpziywsjkkd"/>
             <column name="title" value="Человек в картинках"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1364,7 +1364,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-09-23"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="zolotye-yabloki-solntsa"/>
+            <column name="slug" value="fgdikexfdmiefghahqr"/>
             <column name="title" value="Золотые яблоки Солнца"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1374,7 +1374,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-10-24"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="oktyabrskaya-strana"/>
+            <column name="slug" value="bwbpncoszmwqnrhedis"/>
             <column name="title" value="Октябрьская страна"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1384,7 +1384,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-01-25"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="lekarstvo-ot-melankholii"/>
+            <column name="slug" value="rcnppbsdbaebdxxxvib"/>
             <column name="title" value="Лекарство от меланхолии"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1394,7 +1394,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2018-05-26"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="r-znachit-raketa"/>
+            <column name="slug" value="kdrmsjtkjippesbmrvy"/>
             <column name="title" value="Р - значит ракета"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1404,7 +1404,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2017-02-17"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="mekhanizmy-radosti"/>
+            <column name="slug" value="wsyrfyahzedmvxjijut"/>
             <column name="title" value="Механизмы радости"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1414,7 +1414,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2016-03-27"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="daleko-za-polnoch"/>
+            <column name="slug" value="vbpyykiloiripkbrdhj"/>
             <column name="title" value="Далеко за полночь"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1424,7 +1424,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2011-04-28"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="istorii-o-dinozavrakh"/>
+            <column name="slug" value="mzchhdcqelhaouuidky"/>
             <column name="title" value="Истории о динозаврах"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1434,7 +1434,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2014-05-29"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="k-zapadu-ot-oktyabrya"/>
+            <column name="slug" value="fhhcmgpzapxfufagvkp"/>
             <column name="title" value="К западу от Октября"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -1444,7 +1444,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2015-06-30"/>
             <column name="is_bestseller" value="0"/>
-            <column name="slug" value="v-mgnovene-oka"/>
+            <column name="slug" value="npnztizebppkssrycrq"/>
             <column name="title" value="В мгновенье ока"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description" value="Марсианин"/>
@@ -1453,7 +1453,7 @@
         <insert tableName="books">
             <column name="pub_date" value="2019-08-11"/>
             <column name="is_bestseller" value="1"/>
-            <column name="slug" value="nadvigaetsya-beda"/>
+            <column name="slug" value="jlmuobfmmterurtvyum"/>
             <column name="title" value="Надвигается беда"/>
             <column name="image" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
             <column name="description"
@@ -6144,7 +6144,7 @@
             <column name="id" value="1"/>
             <column name="firstname" value="Сафин"/>
             <column name="lastname" value="Тимур"/>
-            <column name="hash" value="stimur"/>
+            <column name="hash" value="stimurstimurstimurs"/>
             <column name="password" value="$2a$10$ZI8MbOn9QVkao.jvFP7LleMJRsUMUjk1KtXKY0mOJ4YI/hDq3jyoy"/>
             <column name="balance" value="5000"/>
             <column name="reg_time" value="24.10.2022 20:00:01"/>

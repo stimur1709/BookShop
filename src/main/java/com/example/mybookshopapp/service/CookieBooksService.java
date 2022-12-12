@@ -40,26 +40,28 @@ public class CookieBooksService {
         String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split("/");
 
         for (String slug : slugs) {
-            switch (dto.getStatus()) {
-                case CART: {
-                    addBookToCookie(slug, cartCookie);
-                    booksRatingAndPopularityService.changePopularity(slug, 0.7);
-                    removeBookFromCookie(slug, keptCookie, -0.4);
-                    break;
+            if (slug != null) {
+                switch (dto.getStatus()) {
+                    case CART: {
+                        addBookToCookie(slug, cartCookie);
+                        booksRatingAndPopularityService.changePopularity(slug, 0.7);
+                        removeBookFromCookie(slug, keptCookie, -0.4);
+                        break;
+                    }
+                    case KEPT: {
+                        addBookToCookie(slug, keptCookie);
+                        booksRatingAndPopularityService.changePopularity(slug, 0.4);
+                        removeBookFromCookie(slug, cartCookie, -0.7);
+                        break;
+                    }
+                    case UNLINK: {
+                        removeBookFromCookie(slug, cartCookie, -0.7);
+                        removeBookFromCookie(slug, keptCookie, -0.4);
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case KEPT: {
-                    addBookToCookie(slug, keptCookie);
-                    booksRatingAndPopularityService.changePopularity(slug, 0.4);
-                    removeBookFromCookie(slug, cartCookie, -0.7);
-                    break;
-                }
-                case UNLINK: {
-                    removeBookFromCookie(slug, cartCookie, -0.7);
-                    removeBookFromCookie(slug, keptCookie, -0.4);
-                    break;
-                }
-                default:
-                    break;
             }
         }
 

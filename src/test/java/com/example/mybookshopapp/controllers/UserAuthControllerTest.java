@@ -83,7 +83,7 @@ class UserAuthControllerTest {
     void registrationUser() throws Exception {
         mockMvc.perform(
                         post("/registration?lang=en")
-                                .cookie(generatorCookie.createCookies(0, 11))
+                                .cookie(generatorCookie.createCookies(11))
                                 .param("firstname", firstname)
                                 .param("lastname", lastname)
                                 .param("mail", mail)

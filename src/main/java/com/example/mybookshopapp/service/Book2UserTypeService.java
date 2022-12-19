@@ -41,7 +41,6 @@ public class Book2UserTypeService {
 
     public ResponseResultDto changeBookStatus(BookStatusRequestDto dto) {
         String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
-
         for (String slug : slugs) {
             Book book = bookService.getBookBySlug(slug);
             User user = userProfileService.getCurrentUser();

@@ -118,7 +118,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     "An error occurred while attempting to retrieve the UserInfo Resource: " + ex.getMessage(), null);
             throw new OAuth2AuthenticationException(oauth2Error, oauth2Error.toString(), ex);
         }
-        ArrayList<Object> valueList = (ArrayList) Objects.requireNonNull(response.getBody()).get("response");
+        ArrayList<Object> valueList = (ArrayList<Object>) Objects.requireNonNull(response.getBody()).get("response");
         Map<String, Object> userAttributes = (Map<String, Object>) valueList.get(0);
         Set<GrantedAuthority> authorities = new LinkedHashSet<>();
         authorities.add(new OAuth2UserAuthority(userAttributes));

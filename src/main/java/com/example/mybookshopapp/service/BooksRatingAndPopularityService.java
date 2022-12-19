@@ -40,7 +40,7 @@ public class BooksRatingAndPopularityService {
         this.request = request;
     }
 
-    public void changePopularity(Book book, Double value) {
+    public void changePopularity(Book book, double value) {
         book.setPopularity(book.getPopularity() + value);
         bookRepository.save(book);
     }

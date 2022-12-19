@@ -10,7 +10,7 @@
                     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
                         <img th:src="${book.image}"/>
                         <div class="Card-sale" th:if="${book.discount != 0}">
-                            <span th:text="${book.discount()}"></span><span>% скидка</span>
+                            <span th:text="${book.discount}"></span><span>% скидка</span>
                         </div>
                         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
                             <span class="Card-ribbonText">Бестселлер</span>
@@ -55,7 +55,7 @@
     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
         <img th:src="${book.image}"/>
         <div class="Card-sale" th:if="${book.discount != 0}">
-            <span th:text="${book.discount()}"></span><span>% скидка</span>
+            <span th:text="${book.discount}"></span><span>% скидка</span>
         </div>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
             <span class="Card-ribbonText">Бестселлер</span>

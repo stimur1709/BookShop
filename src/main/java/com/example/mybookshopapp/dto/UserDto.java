@@ -16,7 +16,7 @@ public class UserDto {
     private int approvedPhone;
     private int balance;
 
-    public UserDto(int id, String firstname,String lastname, String mail, int approvedMail, String phone, int approvedPhone, int balance) {
+    public UserDto(int id, String firstname, String lastname, String mail, int approvedMail, String phone, int approvedPhone, int balance) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;

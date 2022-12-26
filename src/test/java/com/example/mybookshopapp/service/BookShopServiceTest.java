@@ -87,28 +87,6 @@ class BookShopServiceTest {
 
     }
 
-    @Test
-    @DisplayName("Изменение популярности книг. Несколько пользователей")
-    void changeBookStatusWithAuthSomeUser() {
-        ContactConfirmationPayload payload = new ContactConfirmationPayload();
-        payload.setContact("stimur1709@mail.ru");
-        payload.setCode("123456789");
-        userAuthService.jwtLogin(payload);
-        List<Book> books = bookRepository.findAll();
-        for (Book book : books) {
-            bookShopService.changeBookStatus(new BookStatusRequestDto(book.getSlug(), BookCodeType.CART));
-        }
-        books = bookRepository.findAll();
-        double sumCart = books.stream().mapToDouble(Book::getPopularity).sum();
-        for (Book book : books) {
-            bookShopService.changeBookStatus(new BookStatusRequestDto(book.getSlug(), BookCodeType.KEPT));
-        }
-        books = bookRepository.findAll();
-        double sumKept = books.stream().mapToDouble(Book::getPopularity).sum();
-        assertEquals(books.size() * 0.7 - books.size() * 0.4, sumCart - sumKept);
-
-    }
-
     void generatePopularity(int count) {
         Cookie[] cookies = generatorCookie.createCookies(count);
         for (Cookie cookie : cookies) {

@@ -46,9 +46,7 @@ public class BookReviewService {
         User user = userProfileService.getCurrentUser();
         if (bookEntity.isPresent() && user != null) {
             BookReview bookReview = new BookReview(bookEntity.get(), user, text);
-            bookEntity.get().getReviewList().add(bookReview);
             BookReview review = bookReviewRepository.save(bookReview);
-            bookRepository.save(bookEntity.get());
             String name = user.getFirstname() + ' ' + user.getLastname();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));
             String date = simpleDateFormat.format(review.getTime());

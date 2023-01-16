@@ -44,7 +44,7 @@ class BookReviewServiceTest {
     }
 
     @Test
-    @DisplayName("Отправка отзыва авторизованного пользователя")
+    @DisplayName("Отправка отзыва авторизованным пользователем")
     void saveBookReviewAuthUser() {
         String text = "Хорошая книга";
         ContactConfirmationPayload payload = new ContactConfirmationPayload();
@@ -63,4 +63,5 @@ class BookReviewServiceTest {
         ResponseResultDto response = bookReviewService.saveBookReview(1, text);
         assertFalse(response.getResult());
     }
+
 }

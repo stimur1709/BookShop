@@ -3,6 +3,7 @@ package com.example.mybookshopapp.model.book.review;
 import com.example.mybookshopapp.model.book.Book;
 import com.example.mybookshopapp.model.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,8 +41,8 @@ public class BookReview {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    @OneToMany(mappedBy = "bookReview")
-    @JsonBackReference
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "bookReview")
+    @JsonManagedReference
     private List<BookReviewLike> reviewLikeList = new ArrayList<>();
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")

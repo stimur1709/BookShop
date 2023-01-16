@@ -13,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     Optional<User> findByHash(String hash);
 
+    User getByHash(String hash);
 }

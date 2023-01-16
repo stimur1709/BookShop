@@ -10,6 +10,7 @@ import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,7 @@ public class BookRateReviewService {
         this.localeResolver = localeResolver;
     }
 
+    @Transactional
     public Map<String, Object> changeRateBookReview(int idReview, short value) {
         Map<String, Object> response = new HashMap<>();
         User user = userProfileService.getCurrentUser();
@@ -72,6 +74,7 @@ public class BookRateReviewService {
         return getLikesReviewsOfBook(bookId) - getDislikesReviewsOfBook(bookId);
     }
 
+    @Transactional
     public int ratingCalculation(int bookId) {
         long difference = differenceLikesAndDislikes(bookId);
         long size = getLikesReviewsOfBook(bookId) + getDislikesReviewsOfBook(bookId);

@@ -98,7 +98,7 @@ class UserAuthControllerTest {
     }
 
     @Test
-    @WithUserDetails("stimur")
+    @WithUserDetails("stimurstimurstimurs")
     @DisplayName("Проверка аутентификации пользователя и доступ к странице профиля")
     void authUser() throws Exception {
         mockMvc.perform(get("/profile"))

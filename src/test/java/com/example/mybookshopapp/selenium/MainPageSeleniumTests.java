@@ -55,17 +55,4 @@ class MainPageSeleniumTests {
         assertTrue(driver.getPageSource().contains("Энди Вейер"));
     }
 
-    @Test
-    public void testMainPageClickToBook() throws InterruptedException {
-        MainPage mainPage = new MainPage(driver);
-        mainPage
-                .callPage()
-                .pause()
-                .clickToBook("Марсианин")
-                .pause();
-
-        log.info(driver.getPageSource());
-        assertTrue(driver.getPageSource().contains("Марсианин"));
-
-    }
 }

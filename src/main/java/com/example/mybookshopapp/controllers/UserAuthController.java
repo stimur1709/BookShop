@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.aspect.annotation.DurationTrackable;
 import com.example.mybookshopapp.dto.*;
 import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserLoginHistory;
@@ -65,6 +66,7 @@ public class UserAuthController extends ModelAttributeController {
         return "signup";
     }
 
+    @DurationTrackable
     @PostMapping("/api/requestContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
@@ -72,6 +74,7 @@ public class UserAuthController extends ModelAttributeController {
         return userAuthService.handlerRequestContactConfirmation(payload);
     }
 
+    @DurationTrackable
     @PostMapping("/api/requestNewContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
@@ -79,6 +82,7 @@ public class UserAuthController extends ModelAttributeController {
         return userRegisterService.handlerRequestNewContactConfirmation(payload);
     }
 
+    @DurationTrackable
     @PostMapping("/api/requestChangeContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
@@ -86,12 +90,14 @@ public class UserAuthController extends ModelAttributeController {
         return userChangeService.handlerRequestChangeContactConfirmation(payload);
     }
 
+    @DurationTrackable
     @PostMapping("/api/approveContact")
     @ResponseBody
     public ContactConfirmationResponse handlerApproveContact(@RequestBody ContactConfirmationPayload payload) {
         return userAuthService.handlerApproveContact(payload);
     }
 
+    @DurationTrackable
     @PostMapping("/registration")
     public String registrationNewUser(@ModelAttribute("regForm") RegistrationForm registrationForm, Model model) {
         User user = userRegisterService.registerUser(registrationForm);
@@ -104,6 +110,7 @@ public class UserAuthController extends ModelAttributeController {
         return "my";
     }
 
+    @DurationTrackable
     @GetMapping("/profile")
     public String profilePage(Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
@@ -121,12 +128,14 @@ public class UserAuthController extends ModelAttributeController {
         return userLoginHistoryService.getPageLoginHistory(page, size).getContent();
     }
 
+    @DurationTrackable
     @PostMapping("/login")
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload) {
         return userAuthService.jwtLogin(payload);
     }
 
+    @DurationTrackable
     @PostMapping("/api/profile/save")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
@@ -154,6 +163,7 @@ public class UserAuthController extends ModelAttributeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DurationTrackable
     @GetMapping("/api/profile")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getProfile() {

@@ -58,7 +58,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                             if (SecurityContextHolder.getContext().getAuthentication() == null) {
                                 log.info("Аутентификация");
-                                userLoginHistoryService.saveLoginHistory(userDetails.getUser(), request);
+                                userLoginHistoryService.saveLoginHistory(userDetails.getUser());
                                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                             }
                         }

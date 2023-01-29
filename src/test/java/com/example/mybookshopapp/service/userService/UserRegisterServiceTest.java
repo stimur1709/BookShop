@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 class UserRegisterServiceTest {
 

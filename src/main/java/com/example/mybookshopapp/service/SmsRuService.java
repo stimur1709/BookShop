@@ -1,42 +1,53 @@
 package com.example.mybookshopapp.service;
 
+import com.example.mybookshopapp.aspect.annotation.DurationTrackable;
 import com.example.mybookshopapp.dto.SmsCallResult;
+import com.example.mybookshopapp.dto.SmsStatus;
+import com.example.mybookshopapp.util.Generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class SmsService {
+public class SmsRuService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final HttpServletRequest request;
+    private final Generator generator;
+
+    @Value("${sms.ru.url}")
+    private String url;
+
+    @Value("${sms.ru.apiId}")
+    private String apiId;
 
     @Autowired
-    public SmsService(RestTemplate restTemplate, ObjectMapper objectMapper, HttpServletRequest request) {
+    public SmsRuService(RestTemplate restTemplate, ObjectMapper objectMapper, HttpServletRequest request, Generator generator) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
         this.request = request;
+        this.generator = generator;
     }
 
+    @DurationTrackable
     public String sendSms(String phone) {
         SmsCallResult result;
-        String API_ID = "01AD529F-6C73-B85F-EBAF-7B0A709E8900";
-        String URL = "https://sms.ru/code/call?api_id=";
-        String smsRuUrl = URL + API_ID + "&phone=" + phone + "&ip=" + request.getRemoteAddr();
-        System.out.println(smsRuUrl);
+        String smsRuUrl = url + apiId + "&phone=" + phone + "&ip=" + request.getRemoteAddr();
         try {
             result = objectMapper.readValue(restTemplate.getForObject(smsRuUrl, String.class), SmsCallResult.class);
+            if (result.getCode() == null || result.getStatus().equals(SmsStatus.ERROR)) {
+                return generator.getSecretCode().substring(1, 6);
+            }
             System.out.println(result);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        String s = result.getCode().substring(0, 2) + " " + result.getCode().substring(2, 4);
-        System.out.println(s);
-        return s;
+        return result.getCode().substring(0, 2) + " " + result.getCode().substring(2, 4);
     }
 }

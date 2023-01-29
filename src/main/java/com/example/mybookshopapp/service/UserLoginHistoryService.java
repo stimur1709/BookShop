@@ -42,7 +42,7 @@ public class UserLoginHistoryService {
 
     @Async
     @Transactional
-    public void saveLoginHistory(User user) {
+    public void saveLoginHistory(User user, HttpServletRequest request) {
         String system = System.getProperty("os.name");
         String agent = request.getHeader("user-agent");
         String ipAddress = request.getRemoteAddr();

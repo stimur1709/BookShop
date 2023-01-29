@@ -88,10 +88,12 @@ public class UserContact implements Serializable {
         this.code = code;
     }
 
-    public UserContact(User user, ContactType contactType, String contact) {
+    public UserContact(User user, ContactType contactType, String contact, String code) {
         this.user = user;
         this.type = contactType;
         this.contact = contact;
+        this.code = code;
+        this.codeTime = new Date();
     }
 
 }

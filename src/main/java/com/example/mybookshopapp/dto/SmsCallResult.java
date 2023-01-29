@@ -22,4 +22,7 @@ public class SmsCallResult {
     private Double cost;
 
     private Double balance;
+
+    @JsonProperty("status_text")
+    private String statusText;
 }

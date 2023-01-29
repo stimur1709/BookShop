@@ -8,7 +8,6 @@ import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.service.Book2UserTypeService;
-import com.example.mybookshopapp.service.SmsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,11 @@ public class UserRegisterService {
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
     private final HttpServletRequest request;
-    private final SmsService smsService;
 
     @Autowired
     public UserRegisterService(UserContactService userContactService, PasswordEncoder passwordEncoder,
                                UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService,
-                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, SmsService smsService) {
+                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         this.userContactService = userContactService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
@@ -45,7 +43,6 @@ public class UserRegisterService {
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
         this.request = request;
-        this.smsService = smsService;
     }
 
     public User registerUser(RegistrationForm registrationForm) {
@@ -85,24 +82,9 @@ public class UserRegisterService {
             }
             userContactService.changeContact(userContact);
         } else {
-            UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), passwordEncoder.encode(getConfirmationCode(payload)));
-            userContactService.save(contact);
+            userContactService.createNewContact(payload);
         }
         return new ContactConfirmationResponse(true);
-    }
-
-    private String getConfirmationCode(ContactConfirmationPayload payload) {
-        String code = null;
-        switch (payload.getContactType()) {
-            case PHONE:
-                String phone = payload.getContact().replaceAll("[+ ()-]", "");
-                code = smsService.sendSms(phone);
-                break;
-            case MAIL:
-                code = generator.getSecretCode();
-                break;
-        }
-        return code;
     }
 
     protected ContactConfirmationResponse blockContact(long time) {

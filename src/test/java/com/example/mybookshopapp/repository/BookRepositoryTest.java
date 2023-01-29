@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 class BookRepositoryTest {
 

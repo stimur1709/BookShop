@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Подтверждение контакта")
 class UserAuthServiceTest {

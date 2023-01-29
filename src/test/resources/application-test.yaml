@@ -63,3 +63,8 @@ jwt:
 
 geolocation:
   key: 091c97ed150c464cb621c284a49e954f
+
+sms:
+  ru:
+    url: https://sms.ru/code/call?api_id=
+    apiId: 01AD529F-6C73-B85F-EBAF-7B0A709E8900

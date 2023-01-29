@@ -69,18 +69,11 @@ public class UserChangeService {
                 return new ContactConfirmationResponse(true);
             }
         }
-        UserContact userNewContact;
         if (payload.getOldContact() != null) {
             UserContact userOldContact = userContactService.getUserContact(payload.getOldContact());
-            userNewContact = new UserContact(userOldContact.getUser(), userOldContact.getParentUserContact(),
-                    payload.getContactType(), passwordEncoder.encode(generator.getSecretCode()), payload.getContact());
-            userNewContact.setParentUserContact(userOldContact);
-            userContactService.save(userNewContact);
-            userContactService.save(userOldContact);
+            userContactService.createNewContact(userOldContact, payload);
         } else {
-            userNewContact = new UserContact(userProfileService.getCurrentUser(),
-                    payload.getContactType(), payload.getContact());
-            userContactService.save(userNewContact);
+            userContactService.createNewContact(userProfileService.getCurrentUser(), payload);
         }
         return new ContactConfirmationResponse(true);
     }

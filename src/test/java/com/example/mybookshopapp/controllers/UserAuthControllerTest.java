@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Аутентификация пользователя")
 class UserAuthControllerTest {

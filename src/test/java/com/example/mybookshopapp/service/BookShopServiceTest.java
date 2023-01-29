@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Популярность книг")
 class BookShopServiceTest {

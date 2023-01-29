@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.security;
 
+import com.example.mybookshopapp.security.token.CustomTokenResponseConverter;
 import com.example.mybookshopapp.security.token.JWTRequestFilter;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.CustomOAuth2UserService;
-import com.example.mybookshopapp.security.token.CustomTokenResponseConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

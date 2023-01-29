@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@TestPropertySource("/application.yaml")
+@TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Отзывы")
 class BookReviewServiceTest {

@@ -22,7 +22,6 @@ public class MethodExecDurationTrackerAspect {
         this.userProfileService = userProfileService;
     }
 
-
     @Pointcut("within(@org.springframework.stereotype.Controller * ) || within(@org.springframework.web.bind.annotation.RestController *)")
     public void beforeDurationTrackingAdvice() {
     }

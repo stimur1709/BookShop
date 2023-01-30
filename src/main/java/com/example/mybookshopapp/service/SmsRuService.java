@@ -44,7 +44,6 @@ public class SmsRuService {
             if (result.getCode() == null || result.getStatus().equals(SmsStatus.ERROR)) {
                 return generator.getSecretCode().substring(1, 6);
             }
-            System.out.println(result);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

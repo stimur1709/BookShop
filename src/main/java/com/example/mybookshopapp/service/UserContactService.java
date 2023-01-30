@@ -6,7 +6,6 @@ import com.example.mybookshopapp.model.user.User;
 import com.example.mybookshopapp.model.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
-import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,20 +19,20 @@ import java.util.Optional;
 public class UserContactService {
 
     private final UserContactRepository userContactRepository;
-    private final Generator generator;
     private final PasswordEncoder passwordEncoder;
     private final UserProfileService userProfileService;
     private final SmsRuService smsRuService;
+    private final MailService mailService;
 
 
     @Autowired
-    public UserContactService(UserContactRepository userContactRepository, Generator generator, PasswordEncoder passwordEncoder,
-                              UserProfileService userProfileService, SmsRuService smsRuService) {
+    public UserContactService(UserContactRepository userContactRepository, PasswordEncoder passwordEncoder,
+                              UserProfileService userProfileService, SmsRuService smsRuService, MailService mailService) {
         this.userContactRepository = userContactRepository;
-        this.generator = generator;
         this.passwordEncoder = passwordEncoder;
         this.userProfileService = userProfileService;
         this.smsRuService = smsRuService;
+        this.mailService = mailService;
     }
 
     public Optional<UserContact> checkUserExistsByContact(String contact) {
@@ -102,7 +101,7 @@ public class UserContactService {
                 code = smsRuService.sendSms(phone);
                 break;
             case MAIL:
-                code = generator.getSecretCode();
+                code = mailService.sendMail(contact);
                 break;
         }
         return passwordEncoder.encode(code);

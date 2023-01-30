@@ -4,3 +4,4 @@
 /src/main/resources/img/
 /.gradle/
 /src/main/resources/application.yaml
+/src/main/resources/sqlScripts/

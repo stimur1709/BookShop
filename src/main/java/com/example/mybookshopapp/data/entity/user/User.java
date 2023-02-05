@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.data.entity.user;
 
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.file.FileDownload;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
 import com.example.mybookshopapp.data.entity.book.review.Message;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
-import com.example.mybookshopapp.data.entity.book.Book;
-import com.example.mybookshopapp.data.entity.book.file.FileDownload;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;

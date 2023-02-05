@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.data.entity.book.links;
 
-import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2Author;
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2Author;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

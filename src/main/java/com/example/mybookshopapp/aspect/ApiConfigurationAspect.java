@@ -17,7 +17,7 @@ public class ApiConfigurationAspect {
         try {
             object = proceedingJoinPoint.proceed();
             if (object == null) {
-               log.warn("Не заданы настройки для класса {}", proceedingJoinPoint.getTarget().getClass().getSimpleName());
+                log.warn("Не заданы настройки для класса {}", proceedingJoinPoint.getTarget().getClass().getSimpleName());
             }
         } catch (Throwable e) {
             throw new RuntimeException(e);

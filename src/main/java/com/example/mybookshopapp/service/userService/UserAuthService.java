@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.service.userService;
 
+import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.security.token.JWTUtil;
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
 import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;

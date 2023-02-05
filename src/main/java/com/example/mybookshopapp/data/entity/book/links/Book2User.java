@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.data.entity.book.links;
 
-import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
 import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
 import com.example.mybookshopapp.data.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,43 +46,4 @@ public class Book2User {
     public Book2User() {
     }
 
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public Book2UserType getType() {
-        return type;
-    }
-
-    public void setType(Book2UserType type) {
-        this.type = type;
-    }
-
-    public KeyBook2User getKeyBook2User() {
-        return keyBook2User;
-    }
-
-    public void setKeyBook2User(KeyBook2User keyBook2User) {
-        this.keyBook2User = keyBook2User;
-    }
 }

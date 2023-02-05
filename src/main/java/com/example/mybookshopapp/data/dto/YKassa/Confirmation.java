@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.data.dto.YKassa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import liquibase.pro.packaged.S;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,7 +20,5 @@ public class Confirmation {
         this.returnUrl = returnUrl;
     }
 
-    public Confirmation() {
-    }
 }
 

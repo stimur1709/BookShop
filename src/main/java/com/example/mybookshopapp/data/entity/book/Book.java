@@ -1,16 +1,17 @@
 package com.example.mybookshopapp.data.entity.book;
 
 import com.example.mybookshopapp.data.entity.author.Author;
+import com.example.mybookshopapp.data.entity.book.file.BookFile;
+import com.example.mybookshopapp.data.entity.book.file.FileDownload;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
-import com.example.mybookshopapp.data.entity.user.User;
-import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.book.file.FileDownload;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
+import com.example.mybookshopapp.data.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;

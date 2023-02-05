@@ -8,7 +8,6 @@ import com.example.mybookshopapp.data.dto.RegistrationForm;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.PaymentService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserLoginHistoryService;
 import com.example.mybookshopapp.service.userService.UserAuthService;
@@ -27,7 +26,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

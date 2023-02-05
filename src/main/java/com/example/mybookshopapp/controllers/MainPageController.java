@@ -2,8 +2,8 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
-import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.TagService;

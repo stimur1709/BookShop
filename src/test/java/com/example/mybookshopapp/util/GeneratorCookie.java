@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.util;
 
-import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

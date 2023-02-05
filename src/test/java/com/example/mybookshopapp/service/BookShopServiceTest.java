@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BookStatusRequestDto;
-import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.links.BookCodeType;
+import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
+import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.service.userService.UserAuthService;

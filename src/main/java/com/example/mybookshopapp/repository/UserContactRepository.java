@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserContact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

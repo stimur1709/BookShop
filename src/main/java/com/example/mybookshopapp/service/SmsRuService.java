@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.aspect.annotation.DurationTrackable;
-import com.example.mybookshopapp.dto.SmsCallResult;
-import com.example.mybookshopapp.dto.SmsStatus;
+import com.example.mybookshopapp.data.dto.SmsCallResult;
+import com.example.mybookshopapp.data.dto.SmsStatus;
 import com.example.mybookshopapp.util.Generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

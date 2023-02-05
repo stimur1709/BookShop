@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service.userService;
 
-import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.dto.ContactConfirmationResponse;
-import com.example.mybookshopapp.model.enums.ContactType;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.data.entity.enums.ContactType;
+import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.util.Generator;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.service.userService;
 
-import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.dto.ContactConfirmationResponse;
-import com.example.mybookshopapp.dto.RegistrationForm;
-import com.example.mybookshopapp.model.enums.ContactType;
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.data.dto.RegistrationForm;
+import com.example.mybookshopapp.data.entity.enums.ContactType;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.service.Book2UserTypeService;
 import com.example.mybookshopapp.service.UserContactService;

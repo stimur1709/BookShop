@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.book.links.Book2UserType;
-import com.example.mybookshopapp.model.book.links.BookCodeType;
+import com.example.mybookshopapp.data.entity.book.links.Book2UserType;
+import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

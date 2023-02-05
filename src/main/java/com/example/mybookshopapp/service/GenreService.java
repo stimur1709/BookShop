@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.model.genre.Genre;
+import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.BookRateRequestDto;
-import com.example.mybookshopapp.dto.BookReviewRequestDto;
-import com.example.mybookshopapp.dto.ResponseResultDto;
-import com.example.mybookshopapp.dto.ReviewLikeDto;
-import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.data.dto.BookRateRequestDto;
+import com.example.mybookshopapp.data.dto.BookReviewRequestDto;
+import com.example.mybookshopapp.data.dto.ResponseResultDto;
+import com.example.mybookshopapp.data.dto.ReviewLikeDto;
+import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

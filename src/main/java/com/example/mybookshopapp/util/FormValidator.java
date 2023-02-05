@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.util;
 
-import com.example.mybookshopapp.dto.ChangeProfileForm;
+import com.example.mybookshopapp.data.dto.ChangeProfileForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.lang.NonNull;

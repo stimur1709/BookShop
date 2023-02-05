@@ -6321,4 +6321,145 @@
             <column name="name" value="Удалена"/>
         </insert>
     </changeSet>
+    <changeSet id="66" author="S Timur">
+        <createTable tableName="email">
+            <column name="id" autoIncrement="true" type="serial">
+                <constraints primaryKey="true" primaryKeyName="email_pkey"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="host" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="port" type="smallint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="protocol" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_main" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="smmtp_auth" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="smmtp_startttls_enable" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="smmtp_ssl_enable" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="debug" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="67" author="S Timur">
+        <insert tableName="email">
+            <column name="password" value="RAqxPp23uQ3j8uGUfhHG"/>
+            <column name="username" value="bookstore.sbj@mail.ru"/>
+            <column name="host" value="smtp.mail.ru"/>
+            <column name="port" value="465"/>
+            <column name="protocol" value="smtps"/>
+            <column name="is_main" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet id="68" author="S Timur">
+        <createTable tableName="api">
+            <column name="id" autoIncrement="true" type="serial">
+                <constraints primaryKey="true" primaryKeyName="api_pkey"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="api_key" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar(255)"/>
+            <column name="url_documentation" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="property" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_main" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="69" author="S Timur">
+        <insert tableName="api">
+            <column name="name" value="Ю Касса"/>
+            <column name="url" value="https://api.yookassa.ru/v3/payments"/>
+            <column name="username" value="981497"/>
+            <column name="api_key" value="test_PG3qXOzcbDsNGEl4kKm8VuYRKj-J__6zXYiTWeSqx7k"/>
+            <column name="comment" value="Сервис для приёма платежей в интернете"/>
+            <column name="url_documentation" value="https://yookassa.ru/developers"/>
+            <column name="property" value="PAYMENT"/>
+            <column name="is_main" value="true"/>
+        </insert>
+    </changeSet>
+    <changeSet id="70" author="S Timur">
+        <createTable tableName="status_payment">
+            <column name="id" autoIncrement="true" type="serial">
+                <constraints primaryKey="true" primaryKeyName="status_payment_pkey"/>
+            </column>
+            <column name="status_ru" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_en" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="71" author="S Timur">
+        <insert tableName="status_payment">
+            <column name="status_ru" value="В ожидании"/>
+            <column name="status_en" value="Pending"/>
+            <column name="comment" value="Платеж создан и ожидает действий от пользователя"/>
+        </insert>
+        <insert tableName="status_payment">
+            <column name="status_ru" value="В ожидании захвата"/>
+            <column name="status_en" value="Waiting for capture"/>
+            <column name="comment" value="Платеж оплачен, деньги авторизованы и ожидают списания."/>
+        </insert>
+        <insert tableName="status_payment">
+            <column name="status_ru" value="Успешно"/>
+            <column name="status_en" value="Succeeded"/>
+            <column name="comment"
+                    value="Пплатеж успешно завершен, деньги будут перечислены на ваш расчетный счет в соответствии с вашим договором с ЮKassa"/>
+        </insert>
+        <insert tableName="status_payment">
+            <column name="status_ru" value="Отменен"/>
+            <column name="status_en" value="Сanceled"/>
+            <column name="comment"
+                    value="Платеж отменен. Вы увидите этот статус, если вы отменили платеж самостоятельно, истекло время на принятие платежа или платеж был отклонен ЮKassa или платежным провайдером."/>
+        </insert>
+    </changeSet>
+    <changeSet id="72" author="S Timur">
+        <addColumn tableName="balance_transaction">
+            <column name="code_payment" type="uuid"/>
+            <column name="status_payment_id" type="int" defaultValue="1"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="73" author="S Timur">
+        <addForeignKeyConstraint baseTableName="balance_transaction" baseColumnNames="status_payment_id"
+                                 constraintName="fkkdc421k421aersaygg2f0v9588wi"
+                                 referencedTableName="status_payment" referencedColumnNames="id" onDelete="NO ACTION"
+                                 onUpdate="CASCADE" deferrable="false" initiallyDeferred="false"/>
+    </changeSet>
+    <changeSet id="74" author="S Timur">
+        <sqlFile path="db/changelog/scripts/trigger-balance-transaction.sql"/>
+    </changeSet>
 </databaseChangeLog>

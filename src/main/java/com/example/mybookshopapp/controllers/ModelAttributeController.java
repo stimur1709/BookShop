@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.SearchWordDto;
-import com.example.mybookshopapp.dto.UserDto;
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.links.BookCodeType;
+import com.example.mybookshopapp.data.dto.SearchWordDto;
+import com.example.mybookshopapp.data.dto.UserDto;
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

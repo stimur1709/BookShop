@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.book.review.BookReview;
-import com.example.mybookshopapp.model.book.review.BookReviewLike;
-import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.data.entity.book.review.BookReview;
+import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
+import com.example.mybookshopapp.data.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

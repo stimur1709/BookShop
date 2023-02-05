@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.controllers;
 
-import com.example.mybookshopapp.dto.BooksPageDto;
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.genre.Genre;
+import com.example.mybookshopapp.data.dto.BooksPageDto;
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.GenreService;

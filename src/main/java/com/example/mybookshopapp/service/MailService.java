@@ -1,11 +1,12 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.util.Generator;
+import com.example.mybookshopapp.config.EmailConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -17,22 +18,20 @@ import java.util.Map;
 @Service
 public class MailService {
 
-    private final Generator generator;
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
-
-    @Value("${mail.mail}")
-    private String mail;
+    private final EmailConfig emailConfig;
 
     @Autowired
-    public MailService(Generator generator, JavaMailSender javaMailSender, SpringTemplateEngine templateEngine) {
-        this.generator = generator;
+    public MailService(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, EmailConfig emailConfig) {
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
+        this.emailConfig = emailConfig;
     }
 
-    public String sendMail(String contact) {
-        String code = generator.getSecretCode();
+    @Async
+    @Transactional
+    public void sendMail(String contact, String code) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper;
         try {
@@ -43,17 +42,16 @@ public class MailService {
             throw new RuntimeException(e);
         }
         Context context = new Context();
-        context.setVariables(Map.of("code", code));
+        context.setVariables(Map.of("type", 1, "text", code));
         String emailContent = templateEngine.process("mail", context);
         try {
-            mimeMessageHelper.setTo(mail);
+            mimeMessageHelper.setTo(emailConfig.getMainMail());
             mimeMessageHelper.setSubject("Bookstore email verification!");
-            mimeMessageHelper.setFrom(mail);
+            mimeMessageHelper.setFrom(contact);
             mimeMessageHelper.setText(emailContent, true);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
         javaMailSender.send(message);
-        return code;
     }
 }

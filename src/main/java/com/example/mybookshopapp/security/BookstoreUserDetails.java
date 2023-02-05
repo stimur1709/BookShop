@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.security;
 
-import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.data.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;

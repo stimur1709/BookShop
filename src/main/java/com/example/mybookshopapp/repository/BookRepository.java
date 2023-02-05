@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.book.Book;
+import com.example.mybookshopapp.data.entity.book.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +24,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Book findBookEntityBySlug(String slug);
 
     List<Book> findBookEntitiesBySlugIn(Collection<String> slug);
-
 
 }

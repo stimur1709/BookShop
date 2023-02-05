@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserLoginHistory;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import com.example.mybookshopapp.repository.UserLoginHistoryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.UserGeolocation;

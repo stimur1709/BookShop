@@ -1,12 +1,12 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BookStatusRequestDto;
-import com.example.mybookshopapp.dto.ResponseResultDto;
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.links.Book2User;
-import com.example.mybookshopapp.model.book.links.Book2UserType;
-import com.example.mybookshopapp.model.book.links.BookCodeType;
-import com.example.mybookshopapp.model.user.User;
+import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
+import com.example.mybookshopapp.data.dto.ResponseResultDto;
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.Book2User;
+import com.example.mybookshopapp.data.entity.book.links.Book2UserType;
+import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
+import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.Book2UserTypeRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;

@@ -1,11 +1,12 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.model.enums.ContactType;
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.entity.enums.ContactType;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,17 @@ public class UserContactService {
     private final UserProfileService userProfileService;
     private final SmsRuService smsRuService;
     private final MailService mailService;
-
+    private final Generator generator;
 
     @Autowired
     public UserContactService(UserContactRepository userContactRepository, PasswordEncoder passwordEncoder,
-                              UserProfileService userProfileService, SmsRuService smsRuService, MailService mailService) {
+                              UserProfileService userProfileService, SmsRuService smsRuService, MailService mailService, Generator generator) {
         this.userContactRepository = userContactRepository;
         this.passwordEncoder = passwordEncoder;
         this.userProfileService = userProfileService;
         this.smsRuService = smsRuService;
         this.mailService = mailService;
+        this.generator = generator;
     }
 
     public Optional<UserContact> checkUserExistsByContact(String contact) {
@@ -101,7 +103,8 @@ public class UserContactService {
                 code = smsRuService.sendSms(phone);
                 break;
             case MAIL:
-                code = mailService.sendMail(contact);
+                code = generator.getSecretCode();
+                mailService.sendMail(contact, code);
                 break;
         }
         return passwordEncoder.encode(code);

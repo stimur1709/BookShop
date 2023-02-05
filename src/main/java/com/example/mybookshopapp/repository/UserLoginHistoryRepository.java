@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserLoginHistory;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

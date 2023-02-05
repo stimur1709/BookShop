@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.VkToken;
-import com.example.mybookshopapp.model.enums.ContactType;
-import com.example.mybookshopapp.model.user.User;
-import com.example.mybookshopapp.model.user.UserContact;
+import com.example.mybookshopapp.data.dto.VkToken;
+import com.example.mybookshopapp.data.entity.enums.ContactType;
+import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,11 +49,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Autowired
     public CustomOAuth2UserService(Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter,
-                                   UserContactService userContactService, UserRepository userRepository) {
+                                   UserContactService userContactService, UserRepository userRepository, RestTemplate restTemplate) {
         this.requestEntityConverter = requestEntityConverter;
         this.userContactService = userContactService;
         this.userRepository = userRepository;
-        RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
         this.restOperations = restTemplate;
     }

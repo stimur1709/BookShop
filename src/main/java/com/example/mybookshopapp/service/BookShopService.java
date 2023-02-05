@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dto.BookStatusRequestDto;
-import com.example.mybookshopapp.dto.ResponseResultDto;
-import com.example.mybookshopapp.model.book.Book;
-import com.example.mybookshopapp.model.book.links.BookCodeType;
+import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
+import com.example.mybookshopapp.data.dto.ResponseResultDto;
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

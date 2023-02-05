@@ -79,7 +79,7 @@ public class BookShopController extends ModelAttributeController {
             case "my":
                 status = BookCodeType.PAID;
                 break;
-            case "postponed":
+            case "kept":
                 status = BookCodeType.KEPT;
                 break;
             case "myarchive":

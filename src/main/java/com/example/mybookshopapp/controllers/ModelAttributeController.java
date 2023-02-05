@@ -64,4 +64,9 @@ public class ModelAttributeController {
     public int keptSize() {
         return bookShopService.getBooksUser(BookCodeType.KEPT).size();
     }
+
+    @ModelAttribute("paidSize")
+    public int paidSize() {
+        return bookShopService.getBooksUser(BookCodeType.PAID).size();
+    }
 }

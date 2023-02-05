@@ -20,5 +20,7 @@ public class Confirmation {
         this.returnUrl = returnUrl;
     }
 
+    public Confirmation() {
+    }
 }
 

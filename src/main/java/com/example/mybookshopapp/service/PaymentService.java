@@ -6,26 +6,21 @@ import com.example.mybookshopapp.data.dto.YKassa.Confirmation;
 import com.example.mybookshopapp.data.dto.YKassa.Payment;
 import com.example.mybookshopapp.data.dto.YKassa.PaymentRequest;
 import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.config.Api;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.example.mybookshopapp.repository.BalanceTransactionRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -47,11 +42,10 @@ public class PaymentService {
     }
 
     public String getPaymentUrl(String amount, String description, List<String> books) {
-        HttpHeaders headers = (HttpHeaders) paymentConfig.getPayment().get("headers");
-        String url = (String) paymentConfig.getPayment().get("url");
-        PaymentRequest request = new PaymentRequest(new Amount(amount), new Confirmation("redirect", "http://localhost:8085/"), description);
-        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(request, headers);
-        ResponseEntity<Payment> exchange = restTemplate.exchange(url, HttpMethod.POST, httpEntity, Payment.class);
+        Api api = paymentConfig.getPayment();
+        PaymentRequest request = new PaymentRequest(new Amount(amount), new Confirmation("redirect", "http://localhost:8086/my?red"), description);
+        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(request, getHeaders(api));
+        ResponseEntity<Payment> exchange = restTemplate.exchange(api.getUrl(), HttpMethod.POST, httpEntity, Payment.class);
         Payment body = exchange.getBody();
         if (body != null) {
             createBalanceTransaction(body.getId(), books);
@@ -76,17 +70,15 @@ public class PaymentService {
     @Scheduled(fixedDelay = 100000)
     void getStatusPayment() {
         log.info("Запрос статус платежей");
-        HttpHeaders headers = (HttpHeaders) paymentConfig.getPayment().get("headers");
-        String url = (String) paymentConfig.getPayment().get("url");
         List<String> transactions = balanceTransactionRepository.findDistinctByStatusPaymentIn(Arrays.asList(1, 2));
-        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(headers);
+        Api api = paymentConfig.getPayment();
+        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(getHeaders(api));
         for (String code : transactions) {
-            ResponseEntity<Payment> exchange = restTemplate.exchange(url + '/' + code, HttpMethod.GET, httpEntity, Payment.class);
+            ResponseEntity<Payment> exchange = restTemplate.exchange(api.getUrl() + '/' + code, HttpMethod.GET, httpEntity, Payment.class);
             int status = 1;
             if (exchange.getBody() != null) {
                 switch (exchange.getBody().getStatus()) {
                     case "pending": {
-                        status = 1;
                         break;
                     }
                     case "waiting_for_capture": {
@@ -105,6 +97,13 @@ public class PaymentService {
                 balanceTransactionRepository.updateStatusByCode(status, UUID.fromString(code));
             }
         }
+    }
 
+    private HttpHeaders getHeaders(Api api) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setBasicAuth(api.getUsername(), api.getApiKey());
+        headers.add("Idempotence-Key", UUID.randomUUID().toString());
+        return headers;
     }
 }

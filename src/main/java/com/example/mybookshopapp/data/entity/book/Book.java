@@ -61,7 +61,7 @@ public class Book {
 
     @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
     @Schema(example = "0.1")
-    private double discount;
+    private Double discount;
 
     @Column(columnDefinition = "double precision NOT NULL DEFAULT 0")
     @Schema(example = "0.4")

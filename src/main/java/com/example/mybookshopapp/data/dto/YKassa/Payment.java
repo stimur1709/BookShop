@@ -31,6 +31,9 @@ public class Payment {
     @JsonProperty("income_amount")
     private IncomeAmount incomeAmount;
     private Confirmation confirmation;
-
+    @JsonProperty("captured_at")
+    public Date capturedAt;
+    @JsonProperty("refunded_amount")
+    public RefundedAmount refundedAmount;
 
 }

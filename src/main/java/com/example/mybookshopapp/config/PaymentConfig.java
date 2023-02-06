@@ -8,12 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
 
 @Configuration
 @Slf4j
@@ -28,16 +22,8 @@ public class PaymentConfig {
 
     @Bean
     @ApiConfiguration
-    public Map<String, Object> getPayment() {
-        final Api api = apiPropertyRepository.findByIsMainAndProperty(true, Property.PAYMENT);
-        if (api == null) {
-            return null;
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setBasicAuth(api.getUsername(), api.getApiKey());
-        headers.add("Idempotence-Key", UUID.randomUUID().toString());
-        return Map.of("url", api.getUrl(), "headers", headers);
+    public Api getPayment() {
+        return apiPropertyRepository.findByIsMainAndProperty(true, Property.PAYMENT);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.dto.YKassa;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,4 +12,7 @@ public class PaymentMethod {
     private boolean saved;
     private Card card;
     private String title;
+    @JsonProperty("account_number")
+    public String accountNumber;
+
 }

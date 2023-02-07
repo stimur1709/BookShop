@@ -35,8 +35,11 @@ public class BalanceTransaction {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
 
-    @Column(name = "code_payment", columnDefinition = "uuid not null")
-    private UUID codePayment;
+    @Column(name = "code_payment_ex", columnDefinition = "uuid not null")
+    private UUID codePaymentEx;
+
+    @Column(name = "code_payment_in", columnDefinition = "uuid not null")
+    private UUID codePaymentIn;
 
     @Column(name = "status_payment_id")
     private int statusPayment;
@@ -45,12 +48,13 @@ public class BalanceTransaction {
     @JoinColumn(name = "status_payment_id", insertable = false, updatable = false)
     private StatusPayment status;
 
-    public BalanceTransaction(int user, int value, int book, String codePayment) {
+    public BalanceTransaction(int user, int value, int book, String codePaymentIn, String codePaymentEx) {
         this.user = user;
         this.value = value;
         this.book = book;
         this.description = "Покупка книги";
-        this.codePayment = UUID.fromString(codePayment);
+        this.codePaymentIn = UUID.fromString(codePaymentIn);
+        this.codePaymentEx = UUID.fromString(codePaymentEx);
         this.time = new Date();
         this.statusPayment = 1;
     }

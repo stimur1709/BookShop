@@ -34,7 +34,10 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @GetMapping(value = {"/cart", "/postponed", "/my", "/myarchive"})
-    public String cartPage(Model model) {
+    public String cartPage(@RequestParam(value = "uuid", required = false) String uuid, Model model) {
+        if (uuid != null) {
+            paymentService.getStatusPaymentByUCodePaymentEx(uuid);
+        }
 
         List<Book> bookList = getBooksUser();
 
@@ -79,7 +82,7 @@ public class BookShopController extends ModelAttributeController {
             case "my":
                 status = BookCodeType.PAID;
                 break;
-            case "kept":
+            case "postponed":
                 status = BookCodeType.KEPT;
                 break;
             case "myarchive":

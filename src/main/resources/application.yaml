@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8085
   servlet:
     session:
       tracking-modes: cookie
@@ -13,7 +13,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: 3
+    password: 2400024
     driver-class-name: org.postgresql.Driver
 
   cache:

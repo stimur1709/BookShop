@@ -55,7 +55,7 @@ public class UserProfileService {
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
+        if (isAuthenticatedUser()) {
             String hash = authentication.getName();
             return userRepository.findByHash(hash).orElse(null);
         }

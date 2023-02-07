@@ -30,13 +30,16 @@ public class Api {
     @Column(columnDefinition = "varchar(255)")
     private String comment;
 
-    @Column(columnDefinition = "varchar(255)")
+    @Column(name = "url_documentation", columnDefinition = "varchar(255)")
     private String urlDocumentation;
 
     @Enumerated(EnumType.STRING)
     private Property property;
 
-    @Column(name = "IS_MAIN", columnDefinition = "boolean not null default value false")
+    @Column(name = "is_main", columnDefinition = "boolean not null default value false")
     private boolean isMain;
+
+    @Column(name = "return_url")
+    private String returnUrl;
 
 }

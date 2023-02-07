@@ -43,26 +43,34 @@ public class PaymentService {
 
     public String getPaymentUrl(String amount, String description, List<String> books) {
         Api api = paymentConfig.getPayment();
-        PaymentRequest request = new PaymentRequest(new Amount(amount), new Confirmation("redirect", "http://localhost:8086/my?red"), description);
-        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(request, getHeaders(api));
+        String uuid = UUID.randomUUID().toString();
+        PaymentRequest request = new PaymentRequest(new Amount(amount), new Confirmation("redirect", api.getReturnUrl() + uuid), description);
+        HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(request, getHeaders(api, uuid));
         ResponseEntity<Payment> exchange = restTemplate.exchange(api.getUrl(), HttpMethod.POST, httpEntity, Payment.class);
         Payment body = exchange.getBody();
         if (body != null) {
-            createBalanceTransaction(body.getId(), books);
+            createBalanceTransaction(body.getId(), uuid, books);
             return body.getConfirmation().getConfirmationUrl();
         } else {
-            return "index";
+            return "/index";
         }
     }
 
     @Async
     @Transactional
-    void createBalanceTransaction(String codePayment, List<String> books) {
+    void createBalanceTransaction(String codePaymentEx, String codePaymentIn, List<String> books) {
         List<BalanceTransaction> transactions = new ArrayList<>();
         for (Book book : bookRepository.findBookEntitiesBySlugIn(books)) {
-            transactions.add(new BalanceTransaction(userProfileService.getCurrentUser().getId(), book.discountPrice(), book.getId(), codePayment));
+            transactions.add(new BalanceTransaction(userProfileService.getCurrentUser().getId(), book.discountPrice(), book.getId(), codePaymentIn, codePaymentEx));
         }
         balanceTransactionRepository.saveAll(transactions);
+    }
+
+    @Async
+    @Transactional
+    public void getStatusPaymentByUCodePaymentEx(String uuid) {
+        List<String> transactions = balanceTransactionRepository.findDistinctByStatusPaymentInAndCodePaymentEx(Arrays.asList(1, 2), UUID.fromString(uuid));
+        sendUrl(transactions);
     }
 
     @Async
@@ -71,6 +79,10 @@ public class PaymentService {
     void getStatusPayment() {
         log.info("Запрос статус платежей");
         List<String> transactions = balanceTransactionRepository.findDistinctByStatusPaymentIn(Arrays.asList(1, 2));
+        sendUrl(transactions);
+    }
+
+    private void sendUrl(List<String> transactions) {
         Api api = paymentConfig.getPayment();
         HttpEntity<PaymentRequest> httpEntity = new HttpEntity<>(getHeaders(api));
         for (String code : transactions) {
@@ -103,7 +115,12 @@ public class PaymentService {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth(api.getUsername(), api.getApiKey());
-        headers.add("Idempotence-Key", UUID.randomUUID().toString());
+        return headers;
+    }
+
+    private HttpHeaders getHeaders(Api api, String uuid) {
+        HttpHeaders headers = getHeaders(api);
+        headers.add("Idempotence-Key", uuid);
         return headers;
     }
 }

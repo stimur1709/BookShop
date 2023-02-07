@@ -6395,6 +6395,7 @@
             <column name="is_main" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
+            <column name="return_url" type="varchar(255)"/>
         </createTable>
     </changeSet>
     <changeSet id="69" author="S Timur">
@@ -6407,6 +6408,7 @@
             <column name="url_documentation" value="https://yookassa.ru/developers"/>
             <column name="property" value="PAYMENT"/>
             <column name="is_main" value="true"/>
+            <column name="return_url" value="http://localhost:8085/my?uuid="/>
         </insert>
     </changeSet>
     <changeSet id="70" author="S Timur">
@@ -6449,7 +6451,8 @@
     </changeSet>
     <changeSet id="72" author="S Timur">
         <addColumn tableName="balance_transaction">
-            <column name="code_payment" type="uuid"/>
+            <column name="code_payment_in" type="uuid"/>
+            <column name="code_payment_ex" type="uuid"/>
             <column name="status_payment_id" type="int" defaultValue="1"/>
         </addColumn>
     </changeSet>

@@ -13,12 +13,15 @@ import java.util.UUID;
 public interface BalanceTransactionRepository extends JpaRepository<BalanceTransaction, Integer> {
 
 
-    @Query("select distinct b.codePayment from BalanceTransaction b where b.statusPayment in ?1")
+    @Query("select distinct b.codePaymentEx from BalanceTransaction b where b.statusPayment in ?1")
     List<String> findDistinctByStatusPaymentIn(Collection<Integer> statusPayments);
+
+    @Query("select distinct b.codePaymentEx from BalanceTransaction b where b.statusPayment in ?1 and b.codePaymentIn = ?2")
+    List<String> findDistinctByStatusPaymentInAndCodePaymentEx(Collection<Integer> statusPayments, UUID uuidIn);
 
     @Modifying
     @Transactional
-    @Query("update BalanceTransaction b set b.statusPayment = ?1 where b.codePayment = ?2")
+    @Query("update BalanceTransaction b set b.statusPayment = ?1 where b.codePaymentEx = ?2")
     void updateStatusByCode(int status, UUID code);
 
 }

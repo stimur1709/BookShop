@@ -590,7 +590,7 @@
                             </p>
                         </div>
                         <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement">
+                            <div class="ProductCard-cartElement" th:if="${!status.equals(status.PAID) && !status.equals(status.ARCHIVED)}">
                                 <button th:class="${status.equals(status.KEPT) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
                                         th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.KEPT)},
                                         data-alttext=${status.equals(status.KEPT)} ? #{message.postpone} : #{message.postponed}"
@@ -604,7 +604,7 @@
                                           th:attr="data-status=${status}">Отложить</span>
                                 </button>
                             </div>
-                            <div class="ProductCard-cartElement">
+                            <div class="ProductCard-cartElement" th:if="${!status.equals(status.PAID) && !status.equals(status.ARCHIVED)}">
                                 <button th:class="${status.equals(status.CART) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
                                         th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.CART)},
                                         data-alttext=${status.equals(status.CART)} ? #{message.buy} : #{message.inBasket}"
@@ -619,9 +619,7 @@
                                           th:attr="data-status=${status}">Отложить</span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement" th:if="${status.equals(status.PAID)}">
+                            <div class="ProductCard-cartElement" th:if="${status.equals(status.PAID) || status.equals(status.ARCHIVED)}">
                                 <a class="btn btn_primary btn_outline" href="#">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/download.svg"

@@ -6465,4 +6465,7 @@
     <changeSet id="74" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-balance-transaction.sql"/>
     </changeSet>
+    <changeSet id="75" author="S Timur">
+        <sqlFile path="db/changelog/scripts/trigger-book2user.sql"/>
+    </changeSet>
 </databaseChangeLog>

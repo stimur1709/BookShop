@@ -131,9 +131,6 @@
     </changeSet>
     <changeSet author="S Timur" id="10">
         <createTable tableName="book_rating">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_rating_pkey"/>
-            </column>
             <column name="rating" type="INT">
                 <constraints nullable="false"/>
             </column>
@@ -6467,5 +6464,20 @@
     </changeSet>
     <changeSet id="75" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-book2user.sql"/>
+    </changeSet>
+    <changeSet author="S Timur" id="76">
+        <addPrimaryKey columnNames="book_id, user_id" constraintName="book_rating_pkey" tableName="book_rating"/>
+    </changeSet>
+    <changeSet id="77" author="S Timur">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_rating"
+                                 constraintName="fk1i8i82uf4ebv1wepiujenmj7x" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="78" author="S Timur">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_rating"
+                                 constraintName="fk1i4g52uf4ebv1wepiujenmj7x" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
 </databaseChangeLog>

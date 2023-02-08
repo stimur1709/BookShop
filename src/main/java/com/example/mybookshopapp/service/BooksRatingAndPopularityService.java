@@ -63,20 +63,17 @@ public class BooksRatingAndPopularityService {
 
     public ResponseResultDto changeRateBook(int bookId, int value) {
         User user = userProfileService.getCurrentUser();
-        Book book = bookRepository.getById(bookId);
+        Optional<Book> book = bookRepository.findById(bookId);
         if (user == null) {
             String message = messageSource.getMessage("message.onlyAuth", null, localeResolver.resolveLocale(request));
             return new ResponseResultDto(false, message);
         }
-        Optional<BookRating> bookRating = bookRatingRepository.findByBookAndUser(book, user);
-        if (bookRating.isPresent()) {
-            bookRating.get().setRating(value);
-            bookRatingRepository.save(bookRating.get());
-        } else {
-            bookRatingRepository.save(new BookRating(value, book, user));
+        if (book.isPresent()) {
+            bookRatingRepository.updateRating(value, bookId, user.getId());
+            String message = messageSource.getMessage("message.changeRate", null, localeResolver.resolveLocale(request));
+            return new ResponseResultDto(true, message, book.get().getBookRatingList().size(), getSizeofRatingValue(bookId));
         }
-        String message = messageSource.getMessage("message.changeRate", null, localeResolver.resolveLocale(request));
-        return new ResponseResultDto(true, message, book.getBookRatingList().size(), getSizeofRatingValue(bookId));
+        return new ResponseResultDto(false, "Ошибка");
     }
 
 }

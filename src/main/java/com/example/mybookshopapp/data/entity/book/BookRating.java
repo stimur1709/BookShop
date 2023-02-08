@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.entity.book;
 
+import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -13,20 +14,19 @@ import javax.persistence.*;
 @Table(name = "book_rating")
 public class BookRating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private KeyBook2User keyBook2User;
 
     @Column(name = "rating", columnDefinition = "INT NOT NULL DEFAULT 0")
     private int rating;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id", columnDefinition = "INT NOT NULL")
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     @JsonBackReference
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", columnDefinition = "INT NOT NULL")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     @JsonBackReference
     private User user;
 

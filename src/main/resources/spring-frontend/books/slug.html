@@ -209,7 +209,7 @@
                                                     </span>
                                                 </span>
                                                   <span class="Rating-title 5"
-                                                        th:text="${sizeofRatingValue.get(5) != null ? sizeofRatingValue.get(5) : 0}">10</span>
+                                                        th:text="${book.count5}">10</span>
                                                   </span>
                                                 </span>
                                                 <br>
@@ -276,7 +276,7 @@
                                                     </span>
                                                 </span>
                                                     <span class="Rating-title 4"
-                                                          th:text="${sizeofRatingValue.get(4) != null ? sizeofRatingValue.get(4) : 0}">10</span>
+                                                          th:text="${book.count4}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -342,7 +342,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 3"
-                                                          th:text="${sizeofRatingValue.get(3) != null ? sizeofRatingValue.get(3) : 0}">10</span>
+                                                          th:text="${book.count3}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -408,7 +408,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 2"
-                                                          th:text="${sizeofRatingValue.get(2) != null ? sizeofRatingValue.get(2) : 0}">10</span>
+                                                          th:text="${book.count2}">10</span>
                                                 </span><br>
                                                 <span class="Rating">
                                                     <span class="Rating-stars">
@@ -474,7 +474,7 @@
                                                         </span>
                                                     </span>
                                                     <span class="Rating-title 1"
-                                                          th:text="${sizeofRatingValue.get(1) != null ? sizeofRatingValue.get(1) : 0}">10</span>
+                                                          th:text="${book.count1}">10</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -483,14 +483,14 @@
                             </div>
                             <div class="ProductCard-assessment">
                                 <span class="ProductCard-titleProp"
-                                      th:text="${userRate == 0} ? #{message.rateTheBook} : #{message.yourMark}"
+                                      th:text="${book.userRating == 0} ? #{message.rateTheBook} : #{message.yourMark}"
                                       th:attr="data-altText=#{message.yourMark}">
                                     Оцените книгу:
                                 </span>
                                 <span class="Rating Rating_input" data-bookid="2121"
                                       th:attr="data-bookid = ${book.id}">
                                     <span class="Rating-stars">
-                                        <span th:class="${userRate >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.userRating >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -503,7 +503,7 @@
                                             </svg>
                                         </span>
                                         <input name="rating" type="radio" value="1"/>
-                                        <span th:class="${userRate >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.userRating >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -516,7 +516,7 @@
                                             </svg>
                                         </span>
                                         <input name="rating" type="radio" value="2"/>
-                                        <span th:class="${userRate >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.userRating >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -529,7 +529,7 @@
                                             </svg>
                                         </span>
                                         <input name="rating" type="radio" value="3"/>
-                                        <span th:class="${userRate >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.userRating >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -542,7 +542,7 @@
                                             </svg>
                                         </span>
                                         <input name="rating" type="radio" value="4"/>
-                                        <span th:class="${userRate >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                                        <span th:class="${book.userRating >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
                                                  viewBox="0 0 19 18">
                                               <g>
@@ -590,24 +590,24 @@
                             </p>
                         </div>
                         <div class="ProductCard-cart">
-                            <div class="ProductCard-cartElement" th:if="${!status.equals(status.PAID) && !status.equals(status.ARCHIVED)}">
-                                <button th:class="${status.equals(status.KEPT) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
-                                        th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.KEPT)},
-                                        data-alttext=${status.equals(status.KEPT)} ? #{message.postpone} : #{message.postponed}"
+                            <div class="ProductCard-cartElement" th:if="${!book.code.equals('PAID') && !book.code.equals('ARCHIVED')}">
+                                <button th:class="${book.code.equals('KEPT') ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
+                                        th:attr="data-bookid = ${book.slug}, data-status=${book.code}, data-check=${book.code.equals('KEPT')},
+                                        data-alttext=${book.code.equals('KEPT')} ? #{message.postpone} : #{message.postponed}"
                                         data-btntype="check" data-sendstatus="KEPT" data-btnradio="buyblock"
                                         data-check="false">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/heart.svg" alt="heart.svg"/>
                                     </span>
                                     <span class="btn-content"
-                                          th:text="${status.equals(status.KEPT)} ? #{message.postponed} : #{message.postpone}"
-                                          th:attr="data-status=${status}">Отложить</span>
+                                          th:text="${book.code.equals('KEPT')} ? #{message.postponed} : #{message.postpone}"
+                                          th:attr="data-status=${book.code}">Отложить</span>
                                 </button>
                             </div>
-                            <div class="ProductCard-cartElement" th:if="${!status.equals(status.PAID) && !status.equals(status.ARCHIVED)}">
-                                <button th:class="${status.equals(status.CART) ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
-                                        th:attr="data-bookid = ${book.slug}, data-status=${status}, data-check=${status.equals(status.CART)},
-                                        data-alttext=${status.equals(status.CART)} ? #{message.buy} : #{message.inBasket}"
+                            <div class="ProductCard-cartElement" th:if="${!book.code.equals('PAID') && !book.code.equals('ARCHIVED')}">
+                                <button th:class="${book.code.equals('CART') ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
+                                        th:attr="data-bookid = ${book.slug}, data-status=${book.code}, data-check=${book.code.equals('CART')},
+                                        data-alttext=${book.code.equals('CART')} ? #{message.buy} : #{message.inBasket}"
                                         data-btntype="check" data-sendstatus="CART" data-btnradio="buyblock"
                                         data-check="false">
                                     <span class="btn-icon">
@@ -615,11 +615,11 @@
                                              alt="shopping-basket.svg"/>
                                     </span>
                                     <span class="btn-content"
-                                          th:text="${status.equals(status.CART)} ? #{message.inBasket} : #{message.buy}"
-                                          th:attr="data-status=${status}">Отложить</span>
+                                          th:text="${book.code.equals('CART')} ? #{message.inBasket} : #{message.buy}"
+                                          th:attr="data-status=${book.code}">Отложить</span>
                                 </button>
                             </div>
-                            <div class="ProductCard-cartElement" th:if="${status.equals(status.PAID) || status.equals(status.ARCHIVED)}">
+                            <div class="ProductCard-cartElement" th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}">
                                 <a class="btn btn_primary btn_outline" href="#">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/download.svg"
@@ -628,7 +628,7 @@
                                     <span class="btn-content" th:text="#{message.download}">Скачать</span></a>
                             </div>
                             <div class="ProductCard-cartElement"
-                                 th:if="${status.equals(status.PAID) || status.equals(status.ARCHIVED)}">
+                                 th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
                                         data-bookid="[1111]"
                                         data-btntype="check" data-btnradio="buyblock" data-check="false"

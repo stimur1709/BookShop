@@ -1,20 +1,21 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.links.Book2User;
-import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
-import com.example.mybookshopapp.data.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface Book2UserRepository extends JpaRepository<Book2User, Integer> {
 
-    Optional<Book2User> findByUserAndBook(User user, Book book);
-
-    List<Book2User> findByType_CodeAndUser_Id(BookCodeType code, int id);
-
+    @Modifying
+    @Transactional
+    @Query(value = "insert into book2user(book_id, user_id, type_id) " +
+            "values (?1, ?2, ?3) " +
+            "on conflict(book_id, user_id) do update set book_id = ?1, " +
+            "                                                     user_id = ?2, " +
+            "                                                     type_id = ?3", nativeQuery = true)
+    void updateOrCreateType(int bookId, int userId, int typeId);
 }

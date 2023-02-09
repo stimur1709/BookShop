@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.SearchWordDto;
 import com.example.mybookshopapp.data.dto.UserDto;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -46,12 +46,12 @@ public class ModelAttributeController {
     }
 
     @ModelAttribute("searchResult")
-    public List<Book> searchResult() {
+    public List<BookQuery> searchResult() {
         return new ArrayList<>();
     }
 
     @ModelAttribute(name = "bookCart")
-    public List<Book> bookCart() {
+    public List<BookQuery> bookCart() {
         return new ArrayList<>();
     }
 

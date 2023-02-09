@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.PaymentService;
@@ -39,16 +39,16 @@ public class BookShopController extends ModelAttributeController {
             paymentService.getStatusPaymentByUCodePaymentEx(uuid);
         }
 
-        List<Book> bookList = getBooksUser();
+        List<BookQuery> bookList = getBooksUser();
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
         } else {
             model.addAttribute("emptyList", false);
             model.addAttribute("books", bookList);
-            model.addAttribute("booksSlug", bookList.stream().map(Book::getSlug).collect(Collectors.toList()));
-            model.addAttribute("priceAll", bookList.stream().mapToInt(Book::discountPrice).sum());
-            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(Book::getPrice).sum());
+            model.addAttribute("booksSlug", bookList.stream().map(BookQuery::getSlug).collect(Collectors.toList()));
+            model.addAttribute("priceAll", bookList.stream().mapToInt(BookQuery::discountPrice).sum());
+            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(BookQuery::getPrice).sum());
         }
 
         return getUrl();
@@ -60,7 +60,7 @@ public class BookShopController extends ModelAttributeController {
         return new RedirectView(paymentService.getPaymentUrl(String.valueOf(amount), "Оплата книг", books));
     }
 
-    @GetMapping(value = {"/api/size/cart", "/api/size/kept"})
+    @GetMapping(value = {"/api/size/cart", "/api/size/postponed"})
     @ResponseBody
     public int getSize() {
         return getBooksUser().size();
@@ -72,9 +72,9 @@ public class BookShopController extends ModelAttributeController {
         return bookShopService.changeBookStatus(dto);
     }
 
-    private List<Book> getBooksUser() {
+    private List<BookQuery> getBooksUser() {
         String url = getUrl();
-        BookCodeType status = null;
+        BookCodeType status = BookCodeType.UNLINK;
         switch (url) {
             case "cart":
                 status = BookCodeType.CART;

@@ -65,12 +65,12 @@ public class BookQuery {
     @Schema(example = "0.4")
     private Double popularity;
 
-    @Column(name = "avg_rate")
-    private Double avgRate;
+    private Double rate;
 
     private String code;
 
-    private Integer rating;
+    @Column(name = "user_rating")
+    private Integer userRating;
 
     private Long count1;
     private Long count2;

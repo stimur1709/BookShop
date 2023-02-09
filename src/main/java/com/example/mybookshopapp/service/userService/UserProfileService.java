@@ -62,6 +62,11 @@ public class UserProfileService {
         return null;
     }
 
+    public Integer getUserId() {
+        User user = getCurrentUser();
+        return user == null ? -1 : user.getId();
+    }
+
     public boolean isAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {

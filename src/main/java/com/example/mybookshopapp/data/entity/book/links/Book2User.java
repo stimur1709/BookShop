@@ -1,13 +1,14 @@
 package com.example.mybookshopapp.data.entity.book.links;
 
-import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
-import com.example.mybookshopapp.data.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,29 +20,18 @@ public class Book2User {
     @EmbeddedId
     private KeyBook2User keyBook2User;
 
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private Book2UserType type;
+    @Column(name = "type_id", insertable = false, updatable = false)
+    private Integer type;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-    private Book book;
+    @Column(name = "book_id", insertable = false, updatable = false)
+    private Integer book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Integer user;
 
     @UpdateTimestamp
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
-
-    public Book2User(Book2UserType type, Book book, User user) {
-        this.keyBook2User = new KeyBook2User(book.getId(), user.getId());
-        this.time = LocalDateTime.now();
-        this.type = type;
-        this.book = book;
-        this.user = user;
-    }
 
     public Book2User() {
     }

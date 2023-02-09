@@ -4,6 +4,7 @@ import com.example.mybookshopapp.data.dto.BookRateRequestDto;
 import com.example.mybookshopapp.data.dto.BookReviewRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
 import com.example.mybookshopapp.data.dto.ReviewLikeDto;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -51,13 +52,10 @@ public class BookPageController extends ModelAttributeController {
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
-        Book book = bookService.getBookBySlug(slug);
+        BookQuery book = bookService.getBookQBySlug(slug);
         model.addAttribute("book", book);
-        model.addAttribute("userRate", ratingBook.getRateByUserAndBook(book));
-        model.addAttribute("sizeofRatingValue", ratingBook.getSizeofRatingValue(book.getId()));
-        model.addAttribute("reviews", bookReviewService.getBookReview(book));
+        model.addAttribute("reviews", bookReviewService.getBookReview(book.getSlug()));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
-        model.addAttribute("status", bookShopService.getBookStatus(book));
         return "books/slug";
     }
 

@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface BookReviewRepository extends JpaRepository<BookReview, Integer> {
 
-    List<BookReview> getBookReviewEntitiesByBook(Book book, Sort sort);
+    List<BookReview> getBookReviewEntitiesByBook_Slug(String slug, Sort sort);
 
     Optional<BookReview> findByText(String text);
 

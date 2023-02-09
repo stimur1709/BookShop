@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.data.dto;
 
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,14 +11,14 @@ import java.util.List;
 public class BooksPageDto {
 
     private Integer count;
-    private List<Book> books;
+    private List<BookQuery> books;
 
-    public BooksPageDto(List<Book> books) {
+    public BooksPageDto(List<BookQuery> books) {
         this.books = books;
         this.count = books.size();
     }
 
-    public BooksPageDto(List<Book> books, Integer count) {
+    public BooksPageDto(List<BookQuery> books, Integer count) {
         this.count = count;
         this.books = books;
     }

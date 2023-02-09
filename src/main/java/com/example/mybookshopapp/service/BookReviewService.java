@@ -55,9 +55,9 @@ public class BookReviewService {
         return new ResponseResultDto(false, messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request)));
     }
 
-    public List<BookReview> getBookReview(Book book) {
+    public List<BookReview> getBookReview(String slug) {
         User user = userProfileService.getCurrentUser();
-        List<BookReview> reviews = bookReviewRepository.getBookReviewEntitiesByBook(book, Sort.by(Sort.Direction.DESC, "rate"));
+        List<BookReview> reviews = bookReviewRepository.getBookReviewEntitiesByBook_Slug(slug, Sort.by(Sort.Direction.DESC, "rate"));
         if (user != null) {
             for (BookReview review : reviews) {
                 Short value = review.getReviewLikeList()

@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -41,7 +41,7 @@ public class TagPageController extends ModelAttributeController {
     @GetMapping("/tags/{slug}")
     public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<Book> books = bookService.getBooksForPageTage(tag, 0, 20);
+        Page<BookQuery> books = bookService.getBooksForPageTage(tag, 0, 20);
         model.addAttribute("tagPage", tag);
         model.addAttribute("booksTag", books);
         model.addAttribute("searchWordDto", new SearchWordDto());
@@ -58,7 +58,7 @@ public class TagPageController extends ModelAttributeController {
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<Book> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
+        Page<BookQuery> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
         return new BooksPageDto(tagBooks.getContent());
     }
 }

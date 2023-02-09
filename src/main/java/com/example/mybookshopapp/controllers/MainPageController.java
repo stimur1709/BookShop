@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BookQuery;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -44,7 +44,7 @@ public class MainPageController extends ModelAttributeController {
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute("recommendBooks", bookService.getPageBooks(0, 6, "rate"));
-        model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pubDate"));
+        model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pub_date"));
         model.addAttribute("popularBooks", bookService.getPageBooks(0, 6, "popularity"));
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         return "index";
@@ -64,14 +64,14 @@ public class MainPageController extends ModelAttributeController {
     @Operation(summary = "Постраничный вывод новых книг")
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageBooks(offset, limit, "pubDate").getContent());
+        return new BooksPageDto(bookService.getPageBooks(offset, limit, "pub_date").getContent());
     }
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                   Model model) throws EmptySearchException {
         if (searchWordDto != null) {
-            Page<Book> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
+            Page<BookQuery> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("books", books);
             return "search/index";
@@ -88,7 +88,7 @@ public class MainPageController extends ModelAttributeController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
                                           SearchWordDto searchWordDto) {
-        Page<Book> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
+        Page<BookQuery> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
         return new BooksPageDto(page.getContent(), (int) page.getTotalElements());
     }
 

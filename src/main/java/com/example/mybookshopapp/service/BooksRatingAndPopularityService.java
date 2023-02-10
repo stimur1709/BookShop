@@ -40,31 +40,15 @@ public class BooksRatingAndPopularityService {
         this.request = request;
     }
 
-    public void changePopularity(Book book, double value) {
-        book.setPopularity(book.getPopularity() + value);
-        bookRepository.save(book);
-    }
-
-    public void changePopularity(String slug, Double value) {
-        Book book = bookRepository.findBookEntityBySlug(slug);
-        book.setPopularity(book.getPopularity() + value);
-        bookRepository.save(book);
-    }
-
     public Map<Integer, Long> getSizeofRatingValue(int idBook) {
         List<BookRating> bookRatings = bookRatingRepository.findByBook_id(idBook);
         return bookRatings.stream().collect(Collectors.groupingBy(BookRating::getRating, Collectors.counting()));
     }
 
-    public int getRateByUserAndBook(Book book) {
-        return bookRatingRepository.findByBookAndUser(book, userProfileService.getCurrentUser())
-                .map(BookRating::getRating).orElse(0);
-    }
-
     public ResponseResultDto changeRateBook(int bookId, int value) {
         User user = userProfileService.getCurrentUser();
         Optional<Book> book = bookRepository.findById(bookId);
-        if (user == null) {
+        if (!userProfileService.isAuthenticatedUser()) {
             String message = messageSource.getMessage("message.onlyAuth", null, localeResolver.resolveLocale(request));
             return new ResponseResultDto(false, message);
         }

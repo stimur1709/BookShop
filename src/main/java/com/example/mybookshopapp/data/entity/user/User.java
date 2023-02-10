@@ -29,13 +29,13 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "VARCHAR(19) NOT NULL", unique = true)
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL", unique = true)
     private String hash;
 
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(columnDefinition = "DATE NOT NULL")
+    @Column(columnDefinition = "DATE")
     private Date regTime;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")

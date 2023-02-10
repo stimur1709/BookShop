@@ -7,6 +7,7 @@ import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
 import com.example.mybookshopapp.security.token.JWTUtil;
 import com.example.mybookshopapp.service.BlacklistService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
@@ -39,12 +40,13 @@ public class UserAuthService {
     private final LocaleResolver localeResolver;
     private final HttpServletRequest request;
     private final HttpServletResponse response;
-
+    private final BookShopService bookShopService;
+    private final UserProfileService userProfileService;
     @Autowired
     public UserAuthService(JWTUtil jwtUtil, BlacklistService blacklistService,
                            UserContactService userContactService, Generator generator,
                            AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, HttpServletResponse response) {
+                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, HttpServletResponse response, BookShopService bookShopService, UserProfileService userProfileService) {
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
         this.userContactService = userContactService;
@@ -56,10 +58,13 @@ public class UserAuthService {
         this.localeResolver = localeResolver;
         this.request = request;
         this.response = response;
+        this.bookShopService = bookShopService;
+        this.userProfileService = userProfileService;
     }
 
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
+        Integer userOld = userProfileService.getUserId();
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact == null) {
             String message = messageSource.getMessage("message.userNotFound", null, localeResolver.resolveLocale(request));
@@ -74,6 +79,7 @@ public class UserAuthService {
             blacklistService.delete(jwtToken);
             Cookie cookie = new Cookie("token", jwtToken);
             response.addCookie(cookie);
+            bookShopService.addBooksType(userOld, userContact.getUser().getId());
             return new ContactConfirmationResponse(true, jwtToken);
         } catch (Exception e) {
 

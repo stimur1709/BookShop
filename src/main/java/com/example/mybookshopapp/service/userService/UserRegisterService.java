@@ -7,7 +7,7 @@ import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.repository.UserRepository;
-import com.example.mybookshopapp.service.Book2UserTypeService;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +26,29 @@ public class UserRegisterService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final Generator generator;
-    private final Book2UserTypeService book2UserTypeService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
     private final HttpServletRequest request;
+    private final BookShopService bookShopService;
+    private final UserProfileService userProfileService;
 
     @Autowired
     public UserRegisterService(UserContactService userContactService, PasswordEncoder passwordEncoder,
-                               UserRepository userRepository, Generator generator, Book2UserTypeService book2UserTypeService,
-                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+                               UserRepository userRepository, Generator generator, MessageSource messageSource,
+                               LocaleResolver localeResolver, HttpServletRequest request, BookShopService bookShopService, UserProfileService userProfileService) {
         this.userContactService = userContactService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.generator = generator;
-        this.book2UserTypeService = book2UserTypeService;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
         this.request = request;
+        this.bookShopService = bookShopService;
+        this.userProfileService = userProfileService;
     }
 
     public User registerUser(RegistrationForm registrationForm) {
+        int userOld = userProfileService.getUserId();
         User user = new User(registrationForm.getFirstname(), registrationForm.getLastname(),
                 passwordEncoder.encode(registrationForm.getPassword()), generator.generateHashCode());
         UserContact contactEmail = userContactService.getUserContact(registrationForm.getMail());
@@ -61,7 +64,7 @@ public class UserRegisterService {
         userContactService.save(contactEmail);
         userContactService.save(contactPhone);
 
-        book2UserTypeService.addBooksTypeUserFromCookie(user);
+        bookShopService.addBooksType(userOld, user.getId());
         return user;
     }
 

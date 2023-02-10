@@ -17,10 +17,12 @@ import java.util.Optional;
 public class UserProfileService {
 
     private final UserRepository userRepository;
+    private final UserNotAuthService userNotAuthService;
 
     @Autowired
-    public UserProfileService(UserRepository userRepository) {
+    public UserProfileService(UserRepository userRepository, UserNotAuthService userNotAuthService) {
         this.userRepository = userRepository;
+        this.userNotAuthService = userNotAuthService;
     }
 
     @Transactional
@@ -59,7 +61,7 @@ public class UserProfileService {
             String hash = authentication.getName();
             return userRepository.findByHash(hash).orElse(null);
         }
-        return null;
+        return userNotAuthService.createNotAuthUser();
     }
 
     public Integer getUserId() {

@@ -18,4 +18,9 @@ public interface Book2UserRepository extends JpaRepository<Book2User, Integer> {
             "                                                     user_id = ?2, " +
             "                                                     type_id = ?3", nativeQuery = true)
     void updateOrCreateType(int bookId, int userId, int typeId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update book2user set user_id = ?2 where user_id = ?1 and type_id not in (3, 4)", nativeQuery = true)
+    void updateUserBooksType(int userOld, int userNew);
 }

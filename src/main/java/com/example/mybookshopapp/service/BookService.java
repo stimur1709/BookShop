@@ -33,11 +33,6 @@ public class BookService {
         this.userProfileService = userProfileService;
     }
 
-//    public Page<Book> getPageBooks(Integer offset, Integer limit, String properties) {
-//        Pageable nextPage = PageRequest.of(offset, limit, Sort.Direction.DESC, properties);
-//        return bookRepository.findAll(nextPage);
-//    }
-
     public Page<BookQuery> getPageBooks(Integer offset, Integer limit, String properties) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.Direction.DESC, properties);
         return bookQueryRepository.getBooks(userProfileService.getUserId(), nextPage);

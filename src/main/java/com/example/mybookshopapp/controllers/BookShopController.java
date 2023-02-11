@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.data.dto.Balance;
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
 import com.example.mybookshopapp.data.entity.BookQuery;
@@ -55,9 +56,14 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @GetMapping("/order/{amount}")
-    public RedirectView profilePage(@PathVariable("amount") int amount,
-                                    @RequestParam(value = "books", required = false) List<String> books) {
-        return new RedirectView(paymentService.getPaymentUrl(String.valueOf(amount), "Оплата книг", books));
+    public RedirectView buyBooks(@PathVariable("amount") int amount,
+                                 @RequestParam(value = "books", required = false) List<String> books) {
+        return paymentService.buyBooks(amount, books);
+    }
+
+    @PostMapping("/payment")
+    public RedirectView profilePage(Balance balance) {
+        return new RedirectView(paymentService.getPaymentUrl(String.valueOf(balance.getSum()), "Пополнение счета"));
     }
 
     @GetMapping(value = {"/api/size/cart", "/api/size/postponed"})

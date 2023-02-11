@@ -1,6 +1,8 @@
 package com.example.mybookshopapp.repository;
 
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +14,7 @@ import java.util.UUID;
 
 public interface BalanceTransactionRepository extends JpaRepository<BalanceTransaction, Integer> {
 
+    Page<BalanceTransaction> findByUserOrderByTimeDesc(int user, Pageable pageable);
 
     @Query("select distinct b.codePaymentEx from BalanceTransaction b where b.statusPayment in ?1")
     List<String> findDistinctByStatusPaymentIn(Collection<Integer> statusPayments);

@@ -33,9 +33,7 @@
             <column defaultValueNumeric="0" name="value" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
+            <column name="book_id" type="INT"/>
             <column name="user_id" type="INT">
                 <constraints nullable="false"/>
             </column>
@@ -6460,7 +6458,7 @@
                                  onUpdate="CASCADE" deferrable="false" initiallyDeferred="false"/>
     </changeSet>
     <changeSet id="74" author="S Timur">
-        <sqlFile path="db/changelog/scripts/trigger-balance-transaction.sql"/>
+        <sqlFile path="db/changelog/scripts/trigger-balance-transaction-up.sql"/>
     </changeSet>
     <changeSet id="75" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-book2user.sql"/>
@@ -6479,5 +6477,11 @@
                                  constraintName="fk1i4g52uf4ebv1wepiujenmj7x" deferrable="false"
                                  initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="books"/>
+    </changeSet>
+    <changeSet id="79" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-get-books.sql"/>
+    </changeSet>
+    <changeSet id="80" author="S Timur">
+        <sqlFile path="db/changelog/scripts/trigger-balance-transaction-in.sql"/>
     </changeSet>
 </databaseChangeLog>

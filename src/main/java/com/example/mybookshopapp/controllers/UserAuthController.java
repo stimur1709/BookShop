@@ -1,13 +1,12 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.aspect.annotation.DurationTrackable;
-import com.example.mybookshopapp.data.dto.ChangeProfileForm;
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
-import com.example.mybookshopapp.data.dto.RegistrationForm;
+import com.example.mybookshopapp.data.dto.*;
+import com.example.mybookshopapp.data.entity.payments.BalanceTransactionDto;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.PaymentService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserLoginHistoryService;
 import com.example.mybookshopapp.service.userService.UserAuthService;
@@ -43,13 +42,14 @@ public class UserAuthController extends ModelAttributeController {
     private final HttpServletRequest request;
     private final UserContactService userContactService;
     private final UserLoginHistoryService userLoginHistoryService;
+    private final PaymentService paymentService;
 
     @Autowired
     public UserAuthController(UserRegisterService userRegisterService, UserProfileService userProfileService,
                               BookShopService bookShopService, UserAuthService userAuthService,
                               UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
                               LocaleResolver localeResolver, HttpServletRequest request, UserContactService userContactService,
-                              UserLoginHistoryService userLoginHistoryService) {
+                              UserLoginHistoryService userLoginHistoryService, PaymentService paymentService) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
@@ -58,6 +58,7 @@ public class UserAuthController extends ModelAttributeController {
         this.request = request;
         this.userContactService = userContactService;
         this.userLoginHistoryService = userLoginHistoryService;
+        this.paymentService = paymentService;
     }
 
     @GetMapping("/signin")
@@ -75,7 +76,6 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/api/requestContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
-        //TODO реализовать отправку кода на телефон
         return userAuthService.handlerRequestContactConfirmation(payload);
     }
 
@@ -83,7 +83,6 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/api/requestNewContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestNewContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
-        //TODO реализовать отправку кода на телефон
         return userRegisterService.handlerRequestNewContactConfirmation(payload);
     }
 
@@ -91,7 +90,6 @@ public class UserAuthController extends ModelAttributeController {
     @PostMapping("/api/requestChangeContactConfirmation")
     @ResponseBody
     public ContactConfirmationResponse handleRequestChangeContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
-        //TODO реализовать отправку кода на телефон
         return userChangeService.handlerRequestChangeContactConfirmation(payload);
     }
 
@@ -112,13 +110,33 @@ public class UserAuthController extends ModelAttributeController {
 
     @DurationTrackable
     @GetMapping("/profile")
-    public String profilePage(Model model) {
+    public String profilePage(@RequestParam(value = "difference", required = false) Double difference, Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
+
+        Page<BalanceTransactionDto> pageTr = paymentService.getTransactionsUser();
+        model.addAttribute("transactions", pageTr.getContent());
+        model.addAttribute("showTr", pageTr.getTotalPages() > 1);
+        model.addAttribute("totalPagesTr", pageTr.getTotalPages());
+
         Page<UserLoginHistory> page = userLoginHistoryService.getPageLoginHistory(0, 5);
         model.addAttribute("loginStories", page.getContent());
         model.addAttribute("show", page.getTotalPages() > 1);
         model.addAttribute("totalPages", page.getTotalPages());
+
+        model.addAttribute("balance", new Balance());
+
+        if (difference > 0) {
+            model.addAttribute("text", "Не хватает средств для покупки книг. Необходимо пополнить на сумму " + difference + " руб.");
+            model.addAttribute("sum", difference);
+        }
         return "profile";
+    }
+
+    @GetMapping("/api/transactions")
+    @ResponseBody
+    public List<BalanceTransactionDto> getTransactionsUser(@RequestParam("offset") int offset,
+                                                           @RequestParam("limit") int limit) {
+        return paymentService.getTransactionsUser(offset, limit);
     }
 
     @GetMapping("/api/loginStory")

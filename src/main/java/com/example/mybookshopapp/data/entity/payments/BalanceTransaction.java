@@ -1,10 +1,13 @@
 package com.example.mybookshopapp.data.entity.payments;
 
+import com.example.mybookshopapp.data.entity.book.Book;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -29,8 +32,8 @@ public class BalanceTransaction {
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int value;
 
-    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
-    private int book;
+    @Column(name = "book_id", columnDefinition = "INT")
+    private Integer book;
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
@@ -48,15 +51,36 @@ public class BalanceTransaction {
     @JoinColumn(name = "status_payment_id", insertable = false, updatable = false)
     private StatusPayment status;
 
-    public BalanceTransaction(int user, int value, int book, String codePaymentIn, String codePaymentEx) {
+    @ManyToOne
+    @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Book books;
+
+    @Transient
+    private String formatDate;
+
+    public void setFormatDate(SimpleDateFormat simpleDateFormat) {
+        this.formatDate = simpleDateFormat.format(time);
+    }
+
+    public BalanceTransaction(int user, int value, String codePaymentIn, String codePaymentEx) {
         this.user = user;
         this.value = value;
-        this.book = book;
-        this.description = "Покупка книги";
+        this.description = "Пополнение счета";
         this.codePaymentIn = UUID.fromString(codePaymentIn);
         this.codePaymentEx = UUID.fromString(codePaymentEx);
         this.time = new Date();
         this.statusPayment = 1;
+    }
+
+    public BalanceTransaction(int user, int value, int book, UUID codePaymentIn) {
+        this.user = user;
+        this.value = value;
+        this.book = book;
+        this.description = "Покупка книги";
+        this.codePaymentIn = codePaymentIn;
+        this.time = new Date();
+        this.statusPayment = 3;
     }
 
     public BalanceTransaction() {

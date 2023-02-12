@@ -629,16 +629,16 @@
                             </div>
                             <div class="ProductCard-cartElement"
                                  th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}">
-                                <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
-                                        data-bookid="[1111]"
-                                        data-btntype="check" data-btnradio="buyblock" data-check="false"
-                                        data-alttext="Вернуть из архива"
-                                        th:attr="data-alttext=#{message.returnArc}">
+                                <button th:class="${book.code.equals('ARCHIVED') ? 'btn btn_primary btn_outline btn_check' : 'btn btn_primary btn_outline'}"
+                                        th:attr="data-bookid = ${book.slug}, data-status=${book.code}, data-check=${book.code.equals('ARCHIVED')},
+                                        data-alttext=${book.code.equals('ARCHIVED')} ? #{message.toArc} : #{message.returnArc}"
+                                        data-btntype="check" data-sendstatus="ARCHIVED" data-btnradio="buyblock">
                                     <span class="btn-icon">
                                         <img src="/assets/img/icons/archive.svg"
                                              alt="archive.svg"/>
                                     </span>
-                                    <span class="btn-content" th:text="#{message.toArc}">В архив</span>
+                                    <span class="btn-content" th:text="${book.code.equals('ARCHIVED')} ? #{message.returnArc} : #{message.toArc}"
+                                          th:attr="data-status=${book.code}">В архив</span>
                                 </button>
                             </div>
                         </div>

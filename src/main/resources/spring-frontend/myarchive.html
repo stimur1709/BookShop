@@ -39,9 +39,9 @@
                         <span class="Section-header-link Section-header-link_ACTIVE">Архив</span>
                     </div>
                 </div>
-                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.listIsEmpty}">Корзина пуста</div>
+                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.archiveEmpty}">В архиве нет книг</div>
                 <div class="Cards" th:if="${!emptyList}">
-                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books.getContent()})}"></div>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books})}"></div>
                 </div>
             </div>
         </main>

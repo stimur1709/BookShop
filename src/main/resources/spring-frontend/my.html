@@ -40,7 +40,7 @@
                             class="Section-header-link" th:href="@{/myarchive}">Архив</a>
                     </div>
                 </div>
-                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.listIsEmpty}">Корзина пуста</div>
+                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.myEmpty}">Корзина пуста</div>
                 <div class="Cards" th:if="${!emptyList}">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${books})}"></div>
                 </div>

@@ -31,27 +31,32 @@ public class MailService {
 
     @Async
     @Transactional
-    public void sendMail(String contact, String code) {
+    public void sendMail(String contact, String code, int type) {
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper;
-        try {
-            mimeMessageHelper = new MimeMessageHelper(message,
-                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        MimeMessageHelper mimeMessageHelper = getMimeMessageHelper(message);
         Context context = new Context();
-        context.setVariables(Map.of("type", 1, "text", code));
+        context.setVariables(Map.of("type", type, "text", code));
         String emailContent = templateEngine.process("mail", context);
         try {
-            mimeMessageHelper.setTo(emailConfig.getMainMail());
-            mimeMessageHelper.setSubject("Bookstore email verification!");
-            mimeMessageHelper.setFrom(contact);
+            mimeMessageHelper.setSubject(type == 1 ? "Bookstore email verification!" : type == 2 ? "Пополнение счета" : "Купленные книги");
+            mimeMessageHelper.setTo(contact.trim());
             mimeMessageHelper.setText(emailContent, true);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
         javaMailSender.send(message);
     }
+
+    private MimeMessageHelper getMimeMessageHelper(MimeMessage message) {
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+            mimeMessageHelper.setFrom(emailConfig.getMainMail());
+            return mimeMessageHelper;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

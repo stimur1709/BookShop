@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +64,11 @@ public class BookShopController extends ModelAttributeController {
     }
 
     @PostMapping("/payment")
-    public RedirectView profilePage(Balance balance) {
+    public RedirectView profilePage(@Valid Balance balance, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new RedirectView("profile/#topup");
+        }
+
         return new RedirectView(paymentService.getPaymentUrl(String.valueOf(balance.getSum()), "Пополнение счета"));
     }
 

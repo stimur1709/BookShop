@@ -104,7 +104,7 @@ public class UserContactService {
                 break;
             case MAIL:
                 code = generator.getSecretCode();
-                mailService.sendMail(contact, code);
+                mailService.sendMail(contact, code, 1);
                 break;
         }
         return passwordEncoder.encode(code);

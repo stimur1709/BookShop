@@ -24,11 +24,27 @@
             <tr>
                 <td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0; text-align: center">
                     <div class="text" style="padding: 0 2.5em; ;">
-                        <h2>Finish creating your account.</h2>
-                        <h3 th:if="${type} == 1">
-                            <span th:text="#{message.code} + ' :'">Verification code:</span>
-                            <span th:text="${text}">code</span>
-                        </h3>
+                        <div th:if="${type} == 1">
+                            <h2>Finish creating your account.</h2>
+                            <h3>
+                                <span th:text="#{message.code} + ' :'">Verification code:</span>
+                                <span th:text="${text}">code</span>
+                            </h3>
+                        </div>
+                        <div th:if="${type} == 2">
+                            <h2>Пополнение счета</h2>
+                            <h3>
+                                <span th:text="#{message.urlPayment} + ' :'">url</span>
+                                <span th:text="${text}">url</span>
+                            </h3>
+                        </div>
+                        <div th:if="${type} == 3">
+                            <h2>Мои книги</h2>
+                            <h3>
+                                <span th:text="#{message.urlPayment} + ' :'">url</span>
+                                <span th:text="${text}">url</span>
+                            </h3>
+                        </div>
                     </div>
                 </td>
             </tr>

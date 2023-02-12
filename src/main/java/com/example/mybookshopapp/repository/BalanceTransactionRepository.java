@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public interface BalanceTransactionRepository extends JpaRepository<BalanceTransaction, Integer> {
 
-    Page<BalanceTransaction> findByUserOrderByTimeDesc(int user, Pageable pageable);
+    Page<BalanceTransaction> findByUserAndStatusPaymentOrderByTimeDesc(int user, int status, Pageable pageable);
 
     @Query("select distinct b.codePaymentEx from BalanceTransaction b where b.statusPayment in ?1")
     List<String> findDistinctByStatusPaymentIn(Collection<Integer> statusPayments);

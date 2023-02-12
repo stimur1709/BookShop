@@ -215,6 +215,7 @@
                                 <div class="form-group form-group_row Topup-group">
                                     <label for="sum"></label>
                                     <input class="form-input" th:field="*{sum}" data-validate="require money" id="sum" name="sum" type="text" autocomplete="off"/><span>рублей</span>
+                                    <div style="color: red" th:if="${#fields.hasErrors('sum')}" th:errors="*{sum}"></div>
                                 </div>
                                 <div class="form-group">
                                     <div class="Topup-btn">

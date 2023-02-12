@@ -43,9 +43,10 @@ public class PaymentService {
     private final ModelMapper modelMapper;
     private final LocaleResolver localeResolver;
     private final HttpServletRequest request;
+    private final MailService mailService;
 
     @Autowired
-    public PaymentService(RestTemplate restTemplate, PaymentConfig paymentConfig, BookRepository bookRepository, BalanceTransactionRepository balanceTransactionRepository, UserProfileService userProfileService, ModelMapper modelMapper, LocaleResolver localeResolver, HttpServletRequest request) {
+    public PaymentService(RestTemplate restTemplate, PaymentConfig paymentConfig, BookRepository bookRepository, BalanceTransactionRepository balanceTransactionRepository, UserProfileService userProfileService, ModelMapper modelMapper, LocaleResolver localeResolver, HttpServletRequest request, MailService mailService) {
         this.restTemplate = restTemplate;
         this.paymentConfig = paymentConfig;
         this.bookRepository = bookRepository;
@@ -54,6 +55,7 @@ public class PaymentService {
         this.modelMapper = modelMapper;
         this.localeResolver = localeResolver;
         this.request = request;
+        this.mailService = mailService;
     }
 
     public String getPaymentUrl(String amount, String description) {
@@ -64,8 +66,10 @@ public class PaymentService {
         ResponseEntity<Payment> exchange = restTemplate.exchange(api.getUrl(), HttpMethod.POST, httpEntity, Payment.class);
         Payment body = exchange.getBody();
         if (body != null) {
+            String url = body.getConfirmation().getConfirmationUrl();
+            mailService.sendMail(userProfileService.getCurrentUserDTO().getMail(), url, 2);
             createBalanceTransaction(body.getId(), uuid, amount);
-            return body.getConfirmation().getConfirmationUrl();
+            return url;
         } else {
             return "/index";
         }
@@ -81,9 +85,11 @@ public class PaymentService {
     @Transactional
     void createBalanceTransaction(UUID codePaymentIn, List<String> books) {
         List<BalanceTransaction> transactions = new ArrayList<>();
-        for (Book book : bookRepository.findBookEntitiesBySlugIn(books)) {
+        List<Book> bookList = bookRepository.findBookEntitiesBySlugIn(books);
+        for (Book book : bookList) {
             transactions.add(new BalanceTransaction(userProfileService.getCurrentUser().getId(), book.discountPrice(), book.getId(), codePaymentIn));
         }
+        mailService.sendMail(userProfileService.getCurrentUserDTO().getMail(), "http://localhost:8085/my", 3);
         balanceTransactionRepository.saveAll(transactions);
     }
 
@@ -146,12 +152,12 @@ public class PaymentService {
     }
 
     public Page<BalanceTransactionDto> getTransactionsUser() {
-        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserOrderByTimeDesc(userProfileService.getUserId(), PageRequest.of(0, 5));
+        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserAndStatusPaymentOrderByTimeDesc(userProfileService.getUserId(), 3, PageRequest.of(0, 5));
         return mapper(transactions);
     }
 
     public List<BalanceTransactionDto> getTransactionsUser(int offset, int limit) {
-        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserOrderByTimeDesc(userProfileService.getUserId(), PageRequest.of(offset, limit));
+        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserAndStatusPaymentOrderByTimeDesc(userProfileService.getUserId(), 3, PageRequest.of(offset, limit));
         return mapper(transactions).getContent();
     }
 

@@ -110,7 +110,7 @@ public class UserAuthController extends ModelAttributeController {
 
     @DurationTrackable
     @GetMapping("/profile")
-    public String profilePage(@RequestParam(value = "difference", required = false) Double difference, Model model) {
+    public String profilePage(@RequestParam(value = "difference", defaultValue = "0") Double difference, Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
 
         Page<BalanceTransactionDto> pageTr = paymentService.getTransactionsUser();

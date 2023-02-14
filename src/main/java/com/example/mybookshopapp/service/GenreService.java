@@ -17,8 +17,8 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public List<Genre> getGenreList() {
-        return genreRepository.findAll();
+    public List<Genre> getParentGenreList() {
+        return genreRepository.getParentGenreList();
     }
 
     public Genre getPageBySlug(String slug) {

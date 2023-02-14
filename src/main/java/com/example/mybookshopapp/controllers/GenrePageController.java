@@ -38,7 +38,7 @@ public class GenrePageController extends ModelAttributeController {
 
     @GetMapping("/genres")
     public String genresPage(Model model) {
-        model.addAttribute("genres", genreService.getGenreList());
+        model.addAttribute("genres", genreService.getParentGenreList());
         return "genres/index";
     }
 

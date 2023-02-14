@@ -35,4 +35,9 @@ public interface BookQueryRepository extends JpaRepository<BookQuery, Integer> {
     @Query(value = "select * from get_books(?1) where code = ?2 ", nativeQuery = true)
     List<BookQuery> getBooksUser(Integer userId, String name);
 
+    @Query(value = "select count(*) " +
+            "    from books b " +
+            "             join book2user b2u on b.id = b2u.book_id and b2u.user_id = ?1 " +
+            "    where b2u.type_id in (?2) ", nativeQuery = true)
+    long getCountBooksForUser(Integer userId, List<Integer> ids);
 }

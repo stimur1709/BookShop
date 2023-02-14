@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="genreList(genres)" th:each="genre : ${genres}"
+     th:class="${genre.getParent() == null ? 'Tags Tags_embed' : (genre.getChildGenres().size() != 0 ? 'Tags' : 'Tag')}">
+    <div th:if="${genre.getChildGenres().size() != 0}"
+         th:class="${genre.getChildGenres().size() != 0 ? 'Tags-title' : ''}">
+        <div class="Tag">
+            <a th:href="${'/genres/' + genre.getSlug()}"
+               th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
+        </div>
+    </div>
+    <span th:if="${genre.getChildGenres() != null}"
+          th:replace="~{fragments/genre_fragment::genreList(${genre.getChildGenres()})}"></span>
+    <a th:if="${genre.getChildGenres().size() == 0}" th:href="${'/genres/' + genre.getSlug()}"
+       th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
+</div>
+</body>
+
+</html>
+
+

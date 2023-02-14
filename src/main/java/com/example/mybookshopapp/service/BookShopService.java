@@ -64,6 +64,10 @@ public class BookShopService {
         return bookQueryRepository.getBooksUser(userProfileService.getUserId(), status.name());
     }
 
+    public long getCountBooksForUser(List<Integer> ids) {
+        return bookQueryRepository.getCountBooksForUser(userProfileService.getUserId(), ids);
+    }
+
     @Async
     public void addBooksType(int userOld, int userNew) {
         book2UserRepository.updateUserBooksType(userOld, userNew);

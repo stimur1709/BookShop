@@ -3,7 +3,6 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
 import com.example.mybookshopapp.data.dto.UserDto;
 import com.example.mybookshopapp.data.entity.BookQuery;
-import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,17 +55,17 @@ public class ModelAttributeController {
     }
 
     @ModelAttribute("cartSize")
-    public int cartSize() {
-        return bookShopService.getBooksUser(BookCodeType.CART).size();
+    public long cartSize() {
+        return bookShopService.getCountBooksForUser(List.of(2));
     }
 
     @ModelAttribute("keptSize")
-    public int keptSize() {
-        return bookShopService.getBooksUser(BookCodeType.KEPT).size();
+    public long keptSize() {
+        return bookShopService.getCountBooksForUser(List.of(1));
     }
 
     @ModelAttribute("paidSize")
-    public int paidSize() {
-        return bookShopService.getBooksUser(BookCodeType.PAID).size();
+    public long paidSize() {
+        return bookShopService.getCountBooksForUser(List.of(3, 4));
     }
 }

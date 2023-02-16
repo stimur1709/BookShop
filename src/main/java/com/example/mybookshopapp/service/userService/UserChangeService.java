@@ -11,8 +11,10 @@ import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,5 +107,15 @@ public class UserChangeService {
         return response;
     }
 
+    @Async
+    @Transactional
+    public void restorePassword(String contact) {
+        Optional<UserContact> userContact = userContactService.checkUserExistsByContact(contact);
+        if (userContact.isPresent()) {
+            String code = userContactService.getConfirmationCode(contact, userContact.get().getType(), 0);
+            userContact.get().setCode(code);
+            userContactService.save(userContact.get());
+        }
+    }
 }
 

@@ -191,4 +191,11 @@ public class UserAuthController extends ModelAttributeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PostMapping("/restorePassword")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> restorePassword(@RequestBody ContactConfirmationPayload payload) {
+        userChangeService.restorePassword(payload.getContact());
+        return new ResponseEntity<>(Map.of("url", "genres"), HttpStatus.OK);
+    }
+
 }

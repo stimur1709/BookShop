@@ -50,23 +50,23 @@ public class UserContactService {
     }
 
     public void createNewContact(ContactConfirmationPayload payload) {
-        UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), getConfirmationCode(payload.getContact(), payload.getContactType()));
+        UserContact contact = new UserContact(payload.getContactType(), payload.getContact(), getConfirmationCode(payload.getContact(), payload.getContactType(), 1));
         save(contact);
     }
 
     public void createNewContact(UserContact userOldContact, ContactConfirmationPayload payload) {
         UserContact userNewContact = new UserContact(userOldContact.getUser(), userOldContact,
-                payload.getContactType(), getConfirmationCode(payload.getContact(), payload.getContactType()), payload.getContact());
+                payload.getContactType(), getConfirmationCode(payload.getContact(), payload.getContactType(), 1), payload.getContact());
         save(userNewContact);
     }
 
     public void createNewContact(User currentUser, ContactConfirmationPayload payload) {
-        UserContact userNewContact = new UserContact(currentUser, payload.getContactType(), payload.getContact(), getConfirmationCode(payload.getContact(), payload.getContactType()));
+        UserContact userNewContact = new UserContact(currentUser, payload.getContactType(), payload.getContact(), getConfirmationCode(payload.getContact(), payload.getContactType(), 1));
         save(userNewContact);
     }
 
     public void changeContact(UserContact userContact) {
-        userContact.setCode(getConfirmationCode(userContact.getContact(), userContact.getType()));
+        userContact.setCode(getConfirmationCode(userContact.getContact(), userContact.getType(), 1));
         userContact.setCodeTime(new Date());
         userContact.setApproved((short) 0);
         userContact.setCodeTrails(0);
@@ -75,7 +75,7 @@ public class UserContactService {
 
     public UserContact changeContact(UserContact userNewContact, User user) {
         userNewContact.setUser(user);
-        userNewContact.setCode(getConfirmationCode(userNewContact.getContact(), userNewContact.getType()));
+        userNewContact.setCode(getConfirmationCode(userNewContact.getContact(), userNewContact.getType(), 1));
         userNewContact.setCodeTime(new Date());
         userNewContact.setApproved((short) 0);
         userNewContact.setCodeTrails(0);
@@ -95,7 +95,7 @@ public class UserContactService {
         userProfileService.getCurrentUserDTO();
     }
 
-    private String getConfirmationCode(String contact, ContactType contactType) {
+    public String getConfirmationCode(String contact, ContactType contactType, int type) {
         String code = null;
         switch (contactType) {
             case PHONE:
@@ -104,7 +104,7 @@ public class UserContactService {
                 break;
             case MAIL:
                 code = generator.getSecretCode();
-                mailService.sendMail(contact, code, 1);
+                mailService.sendMail(contact, code, type);
                 break;
         }
         return passwordEncoder.encode(code);

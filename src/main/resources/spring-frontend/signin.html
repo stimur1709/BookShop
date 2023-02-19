@@ -37,6 +37,11 @@
                                        th:text="#{message.registrationSuccessfully}">
                                 Регистрация прошла успешно!
                                 </label>
+                                <label th:if="${restorePassword}"
+                                       th:text="#{message.passwordUpdate}"
+                                       class="form-label Login-title">
+                                Пароль обновлен!
+                                </label>
                                 <br/>
                             </span>
                             <label class="form-label Login-title" th:text="#{message.enterMailPhone}">Введите e-mail или
@@ -107,6 +112,10 @@
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="toComeInMail"
                                     id="toComeInMail" data-send="" th:text="#{message.comeIn}">Войти
+                            </button>
+                            <br>
+                            <button class="btn btn_primary form-btn" type="button"
+                                    data-send="" name="restorePass" th:text="#{message.forgotPass}">Войти
                             </button>
                         </div>
                     </div>

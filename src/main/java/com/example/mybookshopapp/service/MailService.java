@@ -38,7 +38,7 @@ public class MailService {
         context.setVariables(Map.of("type", type, "text", code));
         String emailContent = templateEngine.process("mail", context);
         try {
-            mimeMessageHelper.setSubject(type == 1 ? "Bookstore email verification!" : type == 2 ? "Пополнение счета" : "Купленные книги");
+            mimeMessageHelper.setSubject(getSubject(type));
             mimeMessageHelper.setTo(contact.trim());
             mimeMessageHelper.setText(emailContent, true);
         } catch (MessagingException e) {
@@ -57,6 +57,25 @@ public class MailService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getSubject(int type) {
+        String subject = null;
+        switch (type) {
+            case 1:
+                subject = "Bookstore email verification!";
+                break;
+            case 2:
+                subject = "Пополнение счета";
+                break;
+            case 3:
+                subject = "Купленные книги";
+                break;
+            case 4:
+                subject = "Восстановление пароля";
+                break;
+        }
+        return subject;
     }
 
 }

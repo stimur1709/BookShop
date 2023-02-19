@@ -25,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -191,11 +192,30 @@ public class UserAuthController extends ModelAttributeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/restorePassword")
+    @PostMapping("/restore")
     @ResponseBody
     public ResponseEntity<Map<String, String>> restorePassword(@RequestBody ContactConfirmationPayload payload) {
         userChangeService.restorePassword(payload.getContact());
-        return new ResponseEntity<>(Map.of("url", "genres"), HttpStatus.OK);
+        String url = "restore/" + payload.getContactType().toString().toLowerCase() + "/" + payload.getContact();
+        return new ResponseEntity<>(Map.of("url", url), HttpStatus.OK);
+    }
+
+    @GetMapping("/restore/{type}/{contact}")
+    public String restore(@PathVariable(value = "type") String type,
+                          @PathVariable(value = "contact") String contact, Model model) {
+        model.addAttribute("type", type);
+        model.addAttribute("contact", contact);
+        model.addAttribute("restore", new RestorePassword());
+        return "restore";
+    }
+
+    @PostMapping("/restore/changePassword/{contact}")
+    public String changePassword(@PathVariable("contact") String contact,
+                                 @ModelAttribute RestorePassword restorePassword,
+                                 RedirectAttributes redirectAttributes) {
+        userChangeService.changePassword(contact, restorePassword);
+        redirectAttributes.addFlashAttribute("restorePassword");
+        return "redirect:/signin";
     }
 
 }

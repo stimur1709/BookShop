@@ -3,6 +3,7 @@ package com.example.mybookshopapp.service.userService;
 import com.example.mybookshopapp.data.dto.ChangeProfileForm;
 import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
+import com.example.mybookshopapp.data.dto.RestorePassword;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserContact;
@@ -112,9 +113,20 @@ public class UserChangeService {
     public void restorePassword(String contact) {
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(contact);
         if (userContact.isPresent()) {
-            String code = userContactService.getConfirmationCode(contact, userContact.get().getType(), 0);
+            String code = userContactService.getConfirmationCode(contact, userContact.get().getType(), 4);
             userContact.get().setCode(code);
             userContactService.save(userContact.get());
+        }
+    }
+
+    @Async
+    @Transactional
+    public void changePassword(String contact, RestorePassword restorePassword) {
+        UserContact userContact = userContactService.getUserContact(contact);
+        if (userContact != null && passwordEncoder.matches(restorePassword.getCode(), userContact.getCode())) {
+            User user = userContact.getUser();
+            user.setPassword(passwordEncoder.encode(restorePassword.getPassword()));
+            userRepository.save(user);
         }
     }
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{bottomBar.restorePass}">Тут название страницы написать</title>
+    <meta name="description" content="Описание страницы"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <link href="../favicon.ico" rel="shortcut icon"/>
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous"/>
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous"/>
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous"/>
+    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/assets/css/fonts.min.css?v=27449092"/>
+    <link rel="stylesheet" href="/assets/css/basic.min.css?v=27449092"/>
+    <link rel="stylesheet" href="/assets/css/extra.min.css?v=27449092"/>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script defer="defer" src="/assets/js/scripts.min.js?v=27449092"></script>
+</head>
+
+<body class="Site">
+<header th:replace="~{fragments/header_fragment::headerFragment(signin)}"></header>
+<div class="Middle Middle_form">
+    <div class="Middle-top">
+        <div class="wrap">
+            <h1 class="Middle-title" th:text="#{bottomBar.restorePass}">Вход
+            </h1>
+        </div>
+    </div>
+    <div class="wrap">
+        <main class="Middle-main">
+            <form class="form Login" th:method="POST" th:action="${'/restore/changePassword/' + contact}"
+                  th:object="${restore}">
+                <div class="Login-ins">
+                    <div class="form-group">
+                        <label class="form-label" for="phoneCode" th:text="#{message.code}">Код подтверждения</label>
+                        <input class="form-input form-input_code" style="width: 120%"
+                               id="phoneCode" name="phoneCode" type="text" autocomplete="off"
+                               th:placeholder="${type == 'phone'} ? #{message.input4d} : #{message.input6d}"
+                               th:attr="data-mask = ${type == 'phone' ? '99 99' : '999 999'}, data-validate = ${type == 'phone' ? 'require key4' : 'require key6'}"
+                               th:field="*{code}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password" th:text="#{message.password}">Пароль
+                        </label>
+                        <input class="form-input" style="width: 120%"
+                               id="password" name="password"
+                               type="password" th:placeholder="#{message.changePass}"
+                               autocomplete="new-password" th:field="*{password}"
+                               data-validate="require pass"/>
+                        <label class="fieldError" id="passwordError"></label>
+                    </div>
+                    <input class="btn btn_primary form-btn" type="submit" th:value="#{message.restore}">
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</body>
+</html>

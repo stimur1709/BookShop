@@ -32,27 +32,30 @@ public class UserProfileService {
         if (!hash.equals("anonymousUser")) {
             Optional<User> userOptional = userRepository.findByHash(hash);
             if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                String mail = "";
-                int approvedMail = 0;
-                String phone = "";
-                int approvedPhone = 0;
-
-                for (UserContact contact : user.getUserContact()) {
-                    if (contact.getType() == ContactType.MAIL) {
-                        mail = contact.getContact();
-                        approvedMail = contact.getApproved();
-                    }
-
-                    if (contact.getType() == ContactType.PHONE) {
-                        phone = contact.getContact();
-                        approvedPhone = contact.getApproved();
-                    }
-                }
-                return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), mail, approvedMail, phone, approvedPhone, user.getBalance());
+                return mapperDto(userOptional.get());
             }
         }
         return null;
+    }
+
+    private UserDto mapperDto(User user) {
+        String mail = "";
+        int approvedMail = 0;
+        String phone = "";
+        int approvedPhone = 0;
+
+        for (UserContact contact : user.getUserContact()) {
+            if (contact.getType() == ContactType.MAIL) {
+                mail = contact.getContact();
+                approvedMail = contact.getApproved();
+            }
+
+            if (contact.getType() == ContactType.PHONE) {
+                phone = contact.getContact();
+                approvedPhone = contact.getApproved();
+            }
+        }
+        return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), mail, approvedMail, phone, approvedPhone, user.getBalance());
     }
 
     public User getCurrentUser() {

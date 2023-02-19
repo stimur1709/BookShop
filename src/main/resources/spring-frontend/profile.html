@@ -79,7 +79,7 @@
                                                      style="margin-right: revert">
                                                     <input class="form-input form-input_code" id="mailCode"
                                                            name="mailCode"
-                                                           type="text" placeholder="Код из письма"
+                                                           type="text" th:placeholder="#{message.input6d}"
                                                            data-mask="999 999" data-validate="require key"
                                                            autocomplete="new-mailCode"/>
                                                 </div>
@@ -111,7 +111,7 @@
                                                 <div class="form-group form-group_key">
                                                     <input class="form-input form-input_code" id="phoneCode"
                                                            name="phoneCode"
-                                                           type="text" placeholder="Введите 4 цифры" data-mask="99 99"
+                                                           type="text" th:placeholder="#{message.input4d}" data-mask="99 99"
                                                            data-validate="require key4" autocomplete="off"/>
                                                 </div>
                                             </div>
@@ -130,7 +130,7 @@
                                             <label class="form-label" for="password" th:text="#{message.password}">Пароль
                                             </label>
                                             <input class="form-input_password" id="password" name="password"
-                                                   type="password" placeholder="Тут можно изменить пароль"
+                                                   type="password" th:placeholder="#{message.changePass}"
                                                    autocomplete="new-password"/>
                                             <label class="fieldError" id="passwordError"></label>
                                         </div>

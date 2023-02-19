@@ -24,8 +24,9 @@
             <tr>
                 <td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0; text-align: center">
                     <div class="text" style="padding: 0 2.5em; ;">
-                        <div th:if="${type} == 1">
-                            <h2>Finish creating your account.</h2>
+                        <div th:if="${type == 1 || type == 4}">
+                            <h2 th:text="${type == 1} ? 'Finish creating your account.' : 'Восстановление пароля'">
+                                Finish creating your account.</h2>
                             <h3>
                                 <span th:text="#{message.code} + ' :'">Verification code:</span>
                                 <span th:text="${text}">code</span>

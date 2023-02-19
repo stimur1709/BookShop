@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group form-group_key">
                                 <input class="form-input form-input_code" id="phoneCode" name="phoneCode"
-                                       type="text" placeholder="Введите 4 цифры" data-mask="99 99"
+                                       type="text" th:placeholder="#{message.input4d}" data-mask="99 99"
                                        data-validate="require key4" autocomplete="new-phoneCode"/>
                             </div>
                             <div class="form-group">
@@ -75,7 +75,7 @@
                             </div>
                             <div class="form-group form-group_key">
                                 <input class="form-input form-input_code" id="mailCode" name="mailCode" type="text"
-                                       placeholder="Код из письма" data-mask="999 999" data-validate="require key6"
+                                       th:placeholder="#{message.input6d}" data-mask="999 999" data-validate="require key6"
                                        autocomplete="new-mailCode"/>
                             </div>
                             <div class="form-group">

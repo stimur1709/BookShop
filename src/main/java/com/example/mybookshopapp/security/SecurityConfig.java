@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/my", "/profile", "/api/bookReview", "/order/**").hasRole("USER")
+                .antMatchers("/restore/**").hasRole("ANONYMOUS")
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
                 .loginPage("/signin").failureUrl("/signin")

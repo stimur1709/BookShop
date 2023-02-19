@@ -26,19 +26,17 @@
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <ul class="breadcrumbs">
+            <ul class="breadcrumbs" style="display: inline-block">
                 <li class="breadcrumbs-item"><a th:href="@{/}" th:text="#{topbar.main}">Главная</a>
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                 </li>
-                <li class="breadcrumbs-item">
-                    <a th:if="${genre.getParent()} != null" th:href="'/genres/' + ${genre.getParent().slug}"
-                       th:text="${genre.getParent().name}">
-                        Легкое чтение
-                    </a>
+                <li class="breadcrumbs-item" th:if="${genre} != null"
+                    th:replace="~{fragments/genre_fragment::parentGenre(${genre.getParent()})}">
+                    Легкое чтение
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current">
-                    <span th:text="${genre.name}">Детективы</span>
+                <li style="display: inline-block">
+                    <span th:text="${genre.name}" style="color: #6db33f">Название</span>
                 </li>
             </ul>
             <header class="Middle-header">

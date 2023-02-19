@@ -94,7 +94,7 @@
                                 </g>
                             </svg>
                             <span class="CartBlock-text" id="username" th:text="${getUser.getLastname()}"></span>
-                            <span class="CartBlock-budget">На счете <span th:text="${getUser.getBalance()}"></span> рублей</span>
+                            <span class="CartBlock-budget" th:text="#{message.onAccount} + ${getUser.getBalance()} + #{message.rub}">На счете рублей</span>
                         </a>
                         <a class="CartBlock-block" th:if="${!isAuthenticatedUser}"
                            th:href="@{/signin}">
@@ -108,7 +108,7 @@
                                 </g>
                             </svg>
                         </a>
-                        <a th:if="${isAuthenticatedUser}" th:href="@{/logout}">Выход</a>
+                        <a th:if="${isAuthenticatedUser}" th:href="@{/logout}" th:text="#{message.exit}">Выход</a>
                     </div>
                 </div>
                 <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">

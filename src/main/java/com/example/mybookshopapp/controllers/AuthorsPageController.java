@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.service.AuthorService;
 import com.example.mybookshopapp.service.BookService;
@@ -55,7 +55,7 @@ public class AuthorsPageController extends ModelAttributeController {
     @GetMapping("/books/author/{slug}")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
-        Page<BookQuery> books = bookService.getBooksForPageAuthor(author, 0, 20);
+        Page<BooksQuery> books = bookService.getBooksForPageAuthor(author, 0, 20);
         model.addAttribute("author", author);
         model.addAttribute("books", books);
         return "books/author";

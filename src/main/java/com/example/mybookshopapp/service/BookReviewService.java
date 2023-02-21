@@ -3,14 +3,14 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
-import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
+import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.BookRepository;
+import com.example.mybookshopapp.repository.BookReviewQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.LocaleResolver;
 
@@ -28,17 +28,20 @@ public class BookReviewService {
     private final MessageSource messageSource;
     private final HttpServletRequest request;
     private final UserProfileService userProfileService;
+    private final BookReviewQueryRepository bookReviewQueryRepository;
 
     @Autowired
     public BookReviewService(BookRepository bookRepository,
                              BookReviewRepository bookReviewRepository, LocaleResolver localeResolver,
-                             MessageSource messageSource, HttpServletRequest request, UserProfileService userProfileService) {
+                             MessageSource messageSource, HttpServletRequest request, UserProfileService userProfileService,
+                             BookReviewQueryRepository bookReviewQueryRepository) {
         this.bookRepository = bookRepository;
         this.userProfileService = userProfileService;
         this.bookReviewRepository = bookReviewRepository;
         this.localeResolver = localeResolver;
         this.messageSource = messageSource;
         this.request = request;
+        this.bookReviewQueryRepository = bookReviewQueryRepository;
     }
 
     public ResponseResultDto saveBookReview(int bookId, String text) {
@@ -55,20 +58,8 @@ public class BookReviewService {
         return new ResponseResultDto(false, messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request)));
     }
 
-    public List<BookReview> getBookReview(String slug) {
+    public List<BookReviewQuery> getBookReview(String slug) {
         User user = userProfileService.getCurrentUser();
-        List<BookReview> reviews = bookReviewRepository.getBookReviewEntitiesByBook_Slug(slug, Sort.by(Sort.Direction.DESC, "rate"));
-        if (user != null) {
-            for (BookReview review : reviews) {
-                Short value = review.getReviewLikeList()
-                        .stream()
-                        .filter(bookReviewLike -> bookReviewLike.getUser() == user)
-                        .map(BookReviewLike::getValue)
-                        .findFirst()
-                        .orElse((short) 0);
-                review.setValue(value);
-            }
-        }
-        return reviews;
+        return bookReviewQueryRepository.getReviewsByBookAndUser(slug, user.getId());
     }
 }

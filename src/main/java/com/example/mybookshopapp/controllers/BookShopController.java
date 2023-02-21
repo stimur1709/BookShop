@@ -3,7 +3,7 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.data.dto.Balance;
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.PaymentService;
@@ -42,16 +42,16 @@ public class BookShopController extends ModelAttributeController {
             paymentService.getStatusPaymentByUCodePaymentEx(uuid);
         }
 
-        List<BookQuery> bookList = getBooksUser();
+        List<BooksQuery> bookList = getBooksUser();
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
         } else {
             model.addAttribute("emptyList", false);
             model.addAttribute("books", bookList);
-            model.addAttribute("booksSlug", bookList.stream().map(BookQuery::getSlug).collect(Collectors.toList()));
-            model.addAttribute("priceAll", bookList.stream().mapToInt(BookQuery::discountPrice).sum());
-            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(BookQuery::getPrice).sum());
+            model.addAttribute("booksSlug", bookList.stream().map(BooksQuery::getSlug).collect(Collectors.toList()));
+            model.addAttribute("priceAll", bookList.stream().mapToInt(BooksQuery::discountPrice).sum());
+            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(BooksQuery::getPrice).sum());
         }
 
         return getUrl();
@@ -84,7 +84,7 @@ public class BookShopController extends ModelAttributeController {
         return bookShopService.changeBookStatus(dto);
     }
 
-    private List<BookQuery> getBooksUser() {
+    private List<BooksQuery> getBooksUser() {
         String url = getUrl();
         BookCodeType status = BookCodeType.UNLINK;
         switch (url) {

@@ -67,10 +67,10 @@
                         </div>
                         <div class="form-group">
                             <input class="form-input form-input_phone" id="phone" name="phone" type="text"
-                                   placeholder="Введите телефон" data-mask="+7 (999) 999-99-99"
+                                   th:placeholder="#{message.enterPhone}" data-mask="+7 (999) 999-99-99"
                                    data-validate="require" autocomplete="off"/>
                             <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                   placeholder="Введите e-mail" data-validate="mail require"
+                                   th:placeholder="#{message.enterMail}" data-validate="mail require"
                                    autocomplete="off"/>
                         </div>
                         <div class="form-group form-group_center">
@@ -81,7 +81,7 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="phone">
                         <div class="form-group">
-                            <label class="form-label Login-title" th:text="#{message.enterPassword}">
+                            <label class="form-label Login-title" th:text="#{message.enterPasswordOrRegister}">
                                 Введите пароль учетной записи или зарегистрируйтесь:
                             </label>
                         </div>
@@ -101,7 +101,7 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="mail">
                         <div class="form-group">
-                            <label class="form-label Login-title" th:text="#{message.enterPassword}">
+                            <label class="form-label Login-title" th:text="#{message.enterPasswordOrRegister}">
                                 Введите пароль учетной записи или зарегистрируйтесь
                             </label>
                         </div>

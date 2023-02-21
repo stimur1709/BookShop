@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -40,7 +40,7 @@ public class PopularPageController extends ModelAttributeController {
 
     @GetMapping("/books/popular")
     public String popularPage(Model model) {
-        Page<BookQuery> books = bookService.getPageBooks(0, 20, "popularity");
+        Page<BooksQuery> books = bookService.getPageBooks(0, 20, "popularity");
         model.addAttribute("books", books);
         return "books/popular";
     }

@@ -28,16 +28,20 @@
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/my}" th:text="#{bottomBar.myProfile}">Мой профиль</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{bottomBar.myBook}">Мои книги</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span
+                        th:text="#{bottomBar.myBook}">Мои книги</span>
                 </li>
             </ul>
             <div class="Section">
                 <div class="Section-header">
                     <h1 class="Section-title" th:text="#{bottomBar.myBook}">Мои книги
                     </h1>
-                    <div class="Section-header-links"><span
-                            class="Section-header-link Section-header-link_ACTIVE">Непрочитанные</span><a
-                            class="Section-header-link" th:href="@{/myarchive}">Архив</a>
+                    <div class="Section-header-links">
+                        <span class="Section-header-link Section-header-link_ACTIVE" th:text="#{message.unread}">
+                            Непрочитанные
+                        </span>
+                        <a class="Section-header-link" th:href="@{/myarchive}"
+                            th:text="#{message.archive}">Архив</a>
                     </div>
                 </div>
                 <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.myEmpty}">Корзина пуста</div>

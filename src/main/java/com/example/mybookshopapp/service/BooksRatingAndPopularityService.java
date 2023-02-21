@@ -46,12 +46,12 @@ public class BooksRatingAndPopularityService {
     }
 
     public ResponseResultDto changeRateBook(int bookId, int value) {
-        User user = userProfileService.getCurrentUser();
-        Optional<Book> book = bookRepository.findById(bookId);
         if (!userProfileService.isAuthenticatedUser()) {
             String message = messageSource.getMessage("message.onlyAuth", null, localeResolver.resolveLocale(request));
             return new ResponseResultDto(false, message);
         }
+        User user = userProfileService.getCurrentUser();
+        Optional<Book> book = bookRepository.findById(bookId);
         if (book.isPresent()) {
             bookRatingRepository.updateRating(value, bookId, user.getId());
             String message = messageSource.getMessage("message.changeRate", null, localeResolver.resolveLocale(request));

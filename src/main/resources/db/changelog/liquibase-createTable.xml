@@ -151,7 +151,7 @@
             <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="TIMESTAMP(0) WITHOUT TIME ZONE" defaultValueDate="now()">
+            <column name="time" type="datetime" defaultValueDate="now()">
                 <constraints nullable="false"/>
             </column>
             <column name="book_id" type="INT">
@@ -6483,5 +6483,8 @@
     </changeSet>
     <changeSet id="80" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-balance-transaction-in.sql"/>
+    </changeSet>
+    <changeSet id="81" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-get-reviews.sql"/>
     </changeSet>
 </databaseChangeLog>

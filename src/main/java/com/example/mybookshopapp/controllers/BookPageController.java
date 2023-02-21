@@ -54,7 +54,7 @@ public class BookPageController extends ModelAttributeController {
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         BookQuery book = bookService.getBookQBySlug(slug);
         model.addAttribute("book", book);
-        model.addAttribute("reviews", bookReviewService.getBookReview(book.getSlug()));
+        model.addAttribute("reviews", bookReviewService.getBookReview(slug));
         model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
         return "books/slug";
     }

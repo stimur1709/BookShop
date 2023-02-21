@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -42,7 +42,7 @@ public class RecentPageController extends ModelAttributeController {
 
     @GetMapping("/books/recent")
     public String recentPage(Model model) {
-        Page<BookQuery> books = bookService.getPageBooks(0, 20, "pub_date");
+        Page<BooksQuery> books = bookService.getPageBooks(0, 20, "pub_date");
         model.addAttribute("recentBooks", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());

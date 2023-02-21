@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -71,7 +71,7 @@ public class MainPageController extends ModelAttributeController {
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                   Model model) throws EmptySearchException {
         if (searchWordDto != null) {
-            Page<BookQuery> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
+            Page<BooksQuery> books = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 20);
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("books", books);
             return "search/index";
@@ -88,7 +88,7 @@ public class MainPageController extends ModelAttributeController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false)
                                           SearchWordDto searchWordDto) {
-        Page<BookQuery> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
+        Page<BooksQuery> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
         return new BooksPageDto(page.getContent(), (int) page.getTotalElements());
     }
 

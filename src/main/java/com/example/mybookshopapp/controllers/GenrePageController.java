@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -45,7 +45,7 @@ public class GenrePageController extends ModelAttributeController {
     @GetMapping("/genres/{slug}")
     public String genresSlugPage(@PathVariable("slug") String slug, Model model) {
         Genre genre = genreService.getPageBySlug(slug);
-        Page<BookQuery> books = bookService.getBooksForPageGenre(genre, 0, 20);
+        Page<BooksQuery> books = bookService.getBooksForPageGenre(genre, 0, 20);
         model.addAttribute("genre", genre);
         model.addAttribute("booksGenre", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);

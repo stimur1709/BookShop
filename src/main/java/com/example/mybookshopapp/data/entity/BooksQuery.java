@@ -1,9 +1,6 @@
 package com.example.mybookshopapp.data.entity;
 
 import com.example.mybookshopapp.data.entity.author.Author;
-import com.example.mybookshopapp.data.entity.book.BookRating;
-import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -16,9 +13,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@Schema(description = "Сущность книги")
+@Schema(description = "Сущность для получения списка книг")
 @Entity
-public class BookQuery {
+public class BooksQuery {
 
     @Id
     @Schema(example = "1")
@@ -54,39 +51,16 @@ public class BookQuery {
 
     private Double rate;
 
-    @Schema(example = "Описание книги")
-    private String description;
-
-    @Column(name = "user_rating")
-    private Integer userRating;
-
-    private Long count1;
-    private Long count2;
-    private Long count3;
-    private Long count4;
-    private Long count5;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book2tag",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    @JsonManagedReference
-    private List<TagBook> tagList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "book")
-    @JsonManagedReference
-    private List<BookFile> bookFileList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "book")
-    @JsonManagedReference
-    private List<BookRating> bookRatingList = new ArrayList<>();
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
     @JsonManagedReference
     private List<Author> authorList = new ArrayList<>();
+
+    public String getAuthors() {
+        return getAuthorList().size() > 1 ? getAuthorList().get(0).getName() + " и другие" : getAuthorList().get(0).getName();
+    }
 
     public int discountPrice() {
         if (discount == 0) {
@@ -95,4 +69,5 @@ public class BookQuery {
             return price - Math.toIntExact(Math.round(price * discount));
         }
     }
+
 }

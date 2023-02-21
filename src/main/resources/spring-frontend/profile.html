@@ -47,7 +47,7 @@
                                 <div class="row">
                                     <div class="row-block">
                                         <div class="form-group">
-                                            <label class="form-label" for="name">Фамилия
+                                            <label class="form-label" for="name" th:text="#{message.firstname}">Фамилия
                                             </label>
                                             <input class="form-input form-input_firstname" name="name" type="text"
                                                    th:value="${currentUser.getFirstname}" autocomplete="off"
@@ -111,7 +111,8 @@
                                                 <div class="form-group form-group_key">
                                                     <input class="form-input form-input_code" id="phoneCode"
                                                            name="phoneCode"
-                                                           type="text" th:placeholder="#{message.input4d}" data-mask="99 99"
+                                                           type="text" th:placeholder="#{message.input4d}"
+                                                           data-mask="99 99"
                                                            data-validate="require key4" autocomplete="off"/>
                                                 </div>
                                             </div>
@@ -119,7 +120,7 @@
                                     </div>
                                     <div class="row-block">
                                         <div class="form-group">
-                                            <label class="form-label" for="name">Имя
+                                            <label class="form-label" for="name" th:text="#{message.lastname}">Имя
                                             </label>
                                             <input class="form-input form-input_lastname" id="name" name="name"
                                                    type="text" autocomplete="off"
@@ -131,7 +132,7 @@
                                             </label>
                                             <input class="form-input_password" id="password" name="password"
                                                    type="password" th:placeholder="#{message.changePass}"
-                                                   autocomplete="new-password"/>
+                                                   autocomplete="new-password" style="width: 100%;"/>
                                             <label class="fieldError" id="passwordError"></label>
                                         </div>
                                         <div class="form-group">
@@ -140,7 +141,8 @@
                                             </label>
                                             <input class="form-input_password_repeat" id="passwordReply"
                                                    name="passwordReply" autocomplete="new-password"
-                                                   type="password" placeholder="Введите пароль повторно"/>
+                                                   type="password" th:placeholder="#{message.changePassRetry}"
+                                                   style="width: 100%;"/>
                                             <label class="fieldError" id="passwordRepeatError"></label>
                                         </div>
                                         <div class="form-group">
@@ -165,11 +167,11 @@
                                 <table class="table table_noMargin">
                                     <thead>
                                     <tr>
-                                        <th>Дата и время
+                                        <th th:text="#{message.dateAndTime}">Дата и время
                                         </th>
-                                        <th>Сумма
+                                        <th th:text="#{message.sum}">Сумма
                                         </th>
-                                        <th>Описание
+                                        <th th:text="#{message.description}">Описание
                                         </th>
                                     </tr>
                                     </thead>
@@ -210,16 +212,20 @@
                                     свой счет:
                                 </strong>
                                 <br>
-                                <strong class="Topup-title">Введите сумму, на которую хотите пополнить свой счет:
+                                <strong class="Topup-title" th:text="#{message.enterSum}">
+                                    Введите сумму, на которую хотите пополнить свой счет:
                                 </strong>
                                 <div class="form-group form-group_row Topup-group">
                                     <label for="sum"></label>
-                                    <input class="form-input" th:field="*{sum}" data-validate="require money" id="sum" name="sum" type="text" autocomplete="off"/><span>рублей</span>
-                                    <div style="color: red" th:if="${#fields.hasErrors('sum')}" th:errors="*{sum}"></div>
+                                    <input class="form-input" th:field="*{sum}" data-validate="require money" id="sum"
+                                           name="sum" type="text" autocomplete="off"/>
+                                    <span th:text="#{message.rub}">рублей</span>
+                                    <div style="color: red" th:if="${#fields.hasErrors('sum')}"
+                                         th:errors="*{sum}"></div>
                                 </div>
                                 <div class="form-group">
                                     <div class="Topup-btn">
-                                        <button class="btn btn_primary">Пополнить
+                                        <button class="btn btn_primary" th:text="#{message.topAccount}">Пополнить
                                         </button>
                                     </div>
                                 </div>
@@ -234,9 +240,9 @@
                                     <table class="table table_noMargin">
                                         <thead>
                                         <tr>
-                                            <th>Дата и время</th>
-                                            <th>Местоположение</th>
-                                            <th>Устройство</th>
+                                            <th th:text="#{message.dateAndTime}">Дата и время</th>
+                                            <th th:text="#{message.location}">Местоположение</th>
+                                            <th th:text="#{message.device}">Устройство</th>
                                         </tr>
                                         </thead>
                                         <tbody>

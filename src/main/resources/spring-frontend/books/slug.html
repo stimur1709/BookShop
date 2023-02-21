@@ -759,7 +759,7 @@
                                 <header class="Comment-header">
                                     <div>
                                         <strong class="Comment-title"
-                                                th:text="${review.getUser().getFirstname() + ' ' + review.getUser().getLastname()}">
+                                                th:text="${review.getName()}">
                                             Дмитрий Петров
                                             <span class="Comment-rating">
                                                 <span class="Rating Rating_comment">
@@ -829,7 +829,7 @@
                                             </span>
                                         </strong>
                                         <span class="Comment-date"
-                                              th:text="${#dates.format(review.getTime(), 'dd MMMM yyyy HH:mm')}">
+                                              th:text="${#dates.format(review.getDate(), 'dd MMMM yyyy HH:mm')}">
                                             17.04.2020 16:40
                                         </span>
                                     </div>

@@ -3,7 +3,6 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
-import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
@@ -20,14 +19,12 @@ public class BookShopService {
 
     private final UserProfileService userProfileService;
     private final BooksQueryRepository booksQueryRepository;
-    private final BookService bookService;
     private final Book2UserRepository book2UserRepository;
 
     @Autowired
-    public BookShopService(UserProfileService userProfileService, BooksQueryRepository booksQueryRepository, BookService bookService, Book2UserRepository book2UserRepository) {
+    public BookShopService(UserProfileService userProfileService, BooksQueryRepository booksQueryRepository, Book2UserRepository book2UserRepository) {
         this.userProfileService = userProfileService;
         this.booksQueryRepository = booksQueryRepository;
-        this.bookService = bookService;
         this.book2UserRepository = book2UserRepository;
     }
 
@@ -35,14 +32,9 @@ public class BookShopService {
         String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
         User user = userProfileService.getCurrentUser();
         for (String slug : slugs) {
-            Book book = bookService.getBookBySlug(slug);
-            changeTypeBook2User(book, user, getIntStatus(dto.getStatus()));
+            book2UserRepository.updateOrCreateType(slug, user.getId(), getIntStatus(dto.getStatus()));
         }
         return new ResponseResultDto(true);
-    }
-
-    private void changeTypeBook2User(Book book, User user, int typeId) {
-        book2UserRepository.updateOrCreateType(book.getId(), user.getId(), typeId);
     }
 
     private Integer getIntStatus(BookCodeType status) {

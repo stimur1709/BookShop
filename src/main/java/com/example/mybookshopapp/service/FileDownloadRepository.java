@@ -10,9 +10,9 @@ public interface FileDownloadRepository extends JpaRepository<FileDownload, KeyB
 
     @Transactional
     @Query(value = "insert into file_download(book_id, user_id) " +
-            "values (?1, ?2) " +
-            "on conflict(book_id, user_id) do update set book_id = ?1, " +
+            "values ((select book_file.book_id from book_file where hash = ?1), ?2) " +
+            "on conflict(book_id, user_id) do update set book_id = (select book_file.book_id from book_file where hash = ?1), " +
             "user_id = ?2, count = file_download.count + 1 returning count", nativeQuery = true)
-    int fileDownload(int bookId, int userId);
+    int fileDownload(String hash, int userId);
 
 }

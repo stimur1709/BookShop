@@ -3,15 +3,12 @@ package com.example.mybookshopapp.data.entity.book.review;
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -41,16 +38,6 @@ public class BookReview {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "bookReview")
-    @JsonManagedReference
-    private List<BookReviewLike> reviewLikeList = new ArrayList<>();
-
-    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
-    private int rate;
-
-    @Transient
-    private short value;
-
     public BookReview(Book book, User user, String text) {
         this.book = book;
         this.user = user;
@@ -61,13 +48,4 @@ public class BookReview {
     public BookReview() {
     }
 
-    public long getLikes() {
-        return getReviewLikeList().stream()
-                .filter(bookReviewLikeEntity -> bookReviewLikeEntity.getValue() == 1).count();
-    }
-
-    public long getDislikes() {
-        return getReviewLikeList().stream()
-                .filter(bookReviewLikeEntity -> bookReviewLikeEntity.getValue() == -1).count();
-    }
 }

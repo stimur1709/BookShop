@@ -60,11 +60,21 @@ public class BookQuery {
     @Column(name = "user_rating")
     private Integer userRating;
 
-    private Long count1;
-    private Long count2;
-    private Long count3;
-    private Long count4;
-    private Long count5;
+    private long count1;
+
+    private long count2;
+
+    private long count3;
+
+    private long count4;
+
+    private long count5;
+
+    @Column(name = "rate_review")
+    private int rateReview;
+
+    @Column(name = "download_count")
+    private int downloadCount;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2tag",

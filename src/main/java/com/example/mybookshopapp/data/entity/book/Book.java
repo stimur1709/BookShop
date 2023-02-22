@@ -2,7 +2,6 @@ package com.example.mybookshopapp.data.entity.book;
 
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.book.file.FileDownload;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
@@ -105,10 +104,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
     private List<BalanceTransaction> transactionList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "book")
-    @JsonManagedReference
-    private List<FileDownload> downloadList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
     @JsonManagedReference

@@ -145,9 +145,6 @@
             <column autoIncrement="true" name="id" type="SERIAL">
                 <constraints primaryKey="true" primaryKeyName="book_review_pkey"/>
             </column>
-            <column defaultValueNumeric="0" name="rate" type="INT">
-                <constraints nullable="false"/>
-            </column>
             <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
@@ -164,10 +161,7 @@
     </changeSet>
     <changeSet author="S Timur" id="12">
         <createTable tableName="book_review_like">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_review_like_pkey"/>
-            </column>
-            <column name="time" type="date">
+            <column name="time" type="timestamp(0)" defaultValueDate="now()">
                 <constraints nullable="false"/>
             </column>
             <column name="value" type="SMALLINT">
@@ -250,10 +244,7 @@
     </changeSet>
     <changeSet author="S Timur" id="16">
         <createTable tableName="file_download">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="file_download_pkey"/>
-            </column>
-            <column defaultValueNumeric="1" name="count" type="INT">
+            <column defaultValueNumeric="0" name="count" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="book_id" type="INT">
@@ -395,12 +386,6 @@
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="book_file_type"/>
     </changeSet>
-    <changeSet author="S Timur" id="31">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like"
-                                 constraintName="fkbh4qufg71ntnx2v11gy8ldc5f" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>
     <changeSet author="S Timur" id="32">
         <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="book2tag"
                                  constraintName="fkbha16g6maqt9emet4pt8qq9" deferrable="false" initiallyDeferred="false"
@@ -424,12 +409,6 @@
                                  constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false"
                                  initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
                                  referencedColumnNames="id" referencedTableName="books"/>
-    </changeSet>
-    <changeSet author="S Timur" id="36">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download"
-                                 constraintName="fkelm7ats7ftrgyvfn8a1xwhin9" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="S Timur" id="37">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_rating"
@@ -478,10 +457,8 @@
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="44">
-        <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like"
-                                 constraintName="fkl5konyr7ye2i76wv92vf9w6y2" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="book_review"/>
+        <addPrimaryKey columnNames="review_id, user_id" constraintName="book_review_like_pkey"
+                       tableName="book_review_like"/>
     </changeSet>
     <changeSet author="S Timur" id="45">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction"
@@ -502,10 +479,7 @@
                                  referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
     <changeSet author="S Timur" id="48">
-        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download"
-                                 constraintName="fkswtliibr0mrua60wbmecwlfyo" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
-                                 referencedColumnNames="id" referencedTableName="books"/>
+        <addPrimaryKey columnNames="user_id, book_id" constraintName="file_download_pkey" tableName="file_download"/>
     </changeSet>
     <changeSet id="49" author="S Timur">
         <insert tableName="authors">

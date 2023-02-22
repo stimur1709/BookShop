@@ -20,10 +20,10 @@ import java.nio.file.Paths;
 public class ResourceStorage {
 
     @Value("${upload.path}")
-    String uploadPath;
+    private String uploadPath;
 
     @Value("${download.path}")
-    String downloadPath;
+    private String downloadPath;
 
     private final BookFileRepository bookFileRepository;
 

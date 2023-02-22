@@ -36,18 +36,20 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
+    private final DownloadService downloadService;
 
     @Autowired
     public BookPageController(BookService bookService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver, DownloadService downloadService) {
         super(userProfileService, bookShopService, messageSource, localeResolver);
         this.bookService = bookService;
         this.storage = storage;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
+        this.downloadService = downloadService;
     }
 
     @GetMapping("/books/{slug}")
@@ -55,7 +57,6 @@ public class BookPageController extends ModelAttributeController {
         BookQuery book = bookService.getBookQBySlug(slug);
         model.addAttribute("book", book);
         model.addAttribute("reviews", bookReviewService.getBookReview(slug));
-        model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
         return "books/slug";
     }
 
@@ -69,15 +70,19 @@ public class BookPageController extends ModelAttributeController {
     }
 
     @GetMapping("/books/download/{hash}")
-    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
-        Path path = storage.getBookFilePath(hash);
-        MediaType mediaType = storage.getBookFileName(hash);
-        byte[] data = storage.getBookFileByteArray(hash);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
-                .contentType(mediaType)
-                .contentLength(data.length)
-                .body(new ByteArrayResource(data));
+    public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {
+        if (downloadService.fileDownload(hash) <= 5) {
+            Path path = storage.getBookFilePath(hash);
+            MediaType mediaType = storage.getBookFileName(hash);
+            byte[] data = storage.getBookFileByteArray(hash);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                    .contentType(mediaType)
+                    .contentLength(data.length)
+                    .body(new ByteArrayResource(data));
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @PostMapping(value = "/api/rateBook")

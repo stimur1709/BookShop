@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<html class="ie7" lang="ru">
-<html class="ie8" lang="ru">
-<html class="ie9" lang="ru">
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -30,7 +27,7 @@
             <div class="Section">
                 <div class="Documents">
                     <div class="Documents-wrap">
-                        <a class="Documents-item" href="/documents/slug.html">
+                        <a class="Documents-item" th:href="${'/documents/gsdgds'}">
                             <div class="Documents-image">
                                 <img src="/assets/img/content/documents/1.jpg" alt="1.jpg"/>
                             </div>
@@ -54,7 +51,8 @@
                                     заключившим договор с любым
                                 </p>
                             </div>
-                        </a><a class="Documents-item" href="/documents/slug.html">
+                        </a>
+                        <a class="Documents-item" th:href="${'/documents/gsdgds'}">
                         <div class="Documents-image">
                             <img src="/assets/img/content/documents/2.jpg" alt="2.jpg"/>
                         </div>

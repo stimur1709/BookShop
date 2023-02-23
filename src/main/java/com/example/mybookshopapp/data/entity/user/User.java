@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.data.entity.user;
 
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
-import com.example.mybookshopapp.data.entity.book.review.Message;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -53,9 +52,6 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<BalanceTransaction> transactionList;
-
-    @OneToMany(mappedBy = "user")
-    private List<Message> messageList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference

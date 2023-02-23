@@ -85,6 +85,7 @@ public class BookQuery {
 
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
+    @OrderBy("hash")
     private List<BookFile> bookFileList = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")

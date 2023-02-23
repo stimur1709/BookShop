@@ -282,7 +282,7 @@
             <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="date">
+            <column name="time" type="timestamp(0)" defaultValueDate="now()">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="INT"/>

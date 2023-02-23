@@ -71,18 +71,15 @@ public class BookPageController extends ModelAttributeController {
 
     @GetMapping("/books/download/{hash}")
     public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {
-        if (downloadService.fileDownload(hash) <= 5) {
-            Path path = storage.getBookFilePath(hash);
-            MediaType mediaType = storage.getBookFileName(hash);
-            byte[] data = storage.getBookFileByteArray(hash);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
-                    .contentType(mediaType)
-                    .contentLength(data.length)
-                    .body(new ByteArrayResource(data));
-        } else {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        downloadService.fileDownload(hash);
+        Path path = storage.getBookFilePath(hash);
+        MediaType mediaType = storage.getBookFileName(hash);
+        byte[] data = storage.getBookFileByteArray(hash);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                .contentType(mediaType)
+                .contentLength(data.length)
+                .body(new ByteArrayResource(data));
     }
 
     @PostMapping(value = "/api/rateBook")

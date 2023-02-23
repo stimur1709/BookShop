@@ -17,7 +17,7 @@ public class DownloadService {
         this.userProfileService = userProfileService;
     }
 
-    public int fileDownload(String hash) {
-        return fileDownloadRepository.fileDownload(hash, userProfileService.getUserId());
+    public void fileDownload(String hash) {
+        fileDownloadRepository.fileDownload(hash, userProfileService.getUserId());
     }
 }

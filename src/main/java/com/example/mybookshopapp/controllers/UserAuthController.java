@@ -214,7 +214,8 @@ public class UserAuthController extends ModelAttributeController {
                                  @ModelAttribute RestorePassword restorePassword,
                                  RedirectAttributes redirectAttributes) {
         userChangeService.changePassword(contact, restorePassword);
-        redirectAttributes.addFlashAttribute("restorePassword");
+        String message = messageSource.getMessage("message.passwordUpdate", null, localeResolver.resolveLocale(request));
+        redirectAttributes.addFlashAttribute("restorePassword", message);
         return "redirect:/signin";
     }
 

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ContactsController extends ModelAttributeController {
 
@@ -29,7 +31,7 @@ public class ContactsController extends ModelAttributeController {
 
     @GetMapping("/contacts")
     public String contactsPage(Model model) {
-        MessageDto message =  userProfileService.isAuthenticatedUser()
+        MessageDto message = userProfileService.isAuthenticatedUser()
                 ? new MessageDto(userProfileService.getCurrentUserDTO().getLastname(), userProfileService.getCurrentUserDTO().getMail())
                 : new MessageDto();
         model.addAttribute("message", message);
@@ -37,9 +39,11 @@ public class ContactsController extends ModelAttributeController {
     }
 
     @PostMapping("/contacts")
-    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes) {
+    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes,
+                              HttpServletRequest request) {
         messageService.sendMessage(messageDto);
-        redirectAttributes.addAttribute("send");
+        String message = messageSource.getMessage("message.sendMessage", null, localeResolver.resolveLocale(request));
+        redirectAttributes.addFlashAttribute("sendMessage", message);
         return "redirect:/contacts";
     }
 }

@@ -38,16 +38,11 @@
             </ul>
             <div class="Contacts">
                 <div class="row">
-                    <label th:if="${send}"
-                           th:text="#{message.passwordUpdate}"
-                           class="form-label Login-title">
-                        Сообщение отправлено!
-                    </label>
                     <div class="row-block">
                         <h2 th:text="#{bottomBar.contacts}">Контакты
                         </h2>
                         <div class="Contacts-prop">
-                            <strong class="Contacts-propTitle">Телефон:
+                            <strong class="Contacts-propTitle" th:text="#{message.phone} + ':'">Телефон:
                             </strong><span class="Contacts-propContent">8 (800) 484-48-48</span>
                         </div>
                         <div class="Contacts-prop">
@@ -55,12 +50,15 @@
                             </strong><span class="Contacts-propContent">test@test.ru</span>
                         </div>
                         <div class="Contacts-prop">
-                            <strong class="Contacts-propTitle">Телеграм-бот:
+                            <strong class="Contacts-propTitle" th:text="#{message.telegramBot} + ':'">Телеграм-бот:
                             </strong><span class="Contacts-propContent">@testBookShop</span>
                         </div>
                     </div>
                     <div class="row-block">
                         <div class="Contacts-form">
+                            <label th:text="${sendMessage}" class="Section-title">
+                                Сообщение отправлено!
+                            </label>
                             <h2 th:text="#{message.writeToUs} + ':'">Напишите нам:
                             </h2>
                             <form class="form" th:method="POST" th:object="${message}">
@@ -68,7 +66,7 @@
                                     <label for="name"></label>
                                     <input class="form-input" id="name" name="name"
                                            type="text" th:field="*{name}"
-                                           placeholder="Введите Имя" data-validate="require"/>
+                                           th:placeholder="#{message.enterLastname}" data-validate="require"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="mail"></label>
@@ -81,14 +79,14 @@
                                     <label for="topic"></label>
                                     <input class="form-input" id="topic" name="topic"
                                            type="text" th:field="*{title}"
-                                           placeholder="Введите тему"
+                                           th:placeholder="#{message.enterSubject}"
                                            data-validate="require"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="message"></label>
                                     <textarea class="form-textarea Contacts-message"
                                               name="message" id="message" th:field="*{text}"
-                                              placeholder="Введите сообщение"
+                                              th:placeholder="#{message.enterMessage}"
                                               data-validate="require"></textarea>
                                 </div>
                                 <div class="form-group">

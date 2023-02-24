@@ -58,7 +58,7 @@ class BookRateReviewServiceTest {
     void setUp() {
         book = bookRepository.findBookEntityBySlug("zcjbamvddqipljkrzoj");
         user = userRepository.getByHash("stimurstimurstimurs");
-        review = bookReviewRepository.save(new BookReview(book, user, "Норм книжка"));
+        review = bookReviewRepository.save(new BookReview(book.getId(), user.getId(), "Норм книжка"));
     }
 
     @AfterEach
@@ -98,7 +98,7 @@ class BookRateReviewServiceTest {
         List<User> users = userRepository.findAll();
 
         for (int i = 0; i < 20; i++) {
-            BookReview newReview = bookReviewRepository.save(new BookReview(book, user, "kroiqwpnrifniqe " + i));
+            BookReview newReview = bookReviewRepository.save(new BookReview(book.getId(), user.getId(), "kroiqwpnrifniqe " + i));
             for (User user1 : users) {
                 bookReviewLikeRepository.insertOrUpdateBookReviewLike(newReview.getId(), user1.getId(), (short) 1);
             }

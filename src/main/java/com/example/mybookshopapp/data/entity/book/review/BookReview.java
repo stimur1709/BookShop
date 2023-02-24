@@ -1,8 +1,5 @@
 package com.example.mybookshopapp.data.entity.book.review;
 
-import com.example.mybookshopapp.data.entity.book.Book;
-import com.example.mybookshopapp.data.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,15 +18,11 @@ public class BookReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id")
-    @JsonBackReference
-    private Book book;
+    @Column(columnDefinition = "INT NOT NULL", name = "book_id")
+    private int bookId;
 
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
-    @JsonBackReference
-    private User user;
+    @Column(columnDefinition = "INT NOT NULL", name = "user_id")
+    private int userId;
 
     @Column(columnDefinition = "DATE NOT NULL")
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,9 +31,9 @@ public class BookReview {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    public BookReview(Book book, User user, String text) {
-        this.book = book;
-        this.user = user;
+    public BookReview(int bookId, int userId, String text) {
+        this.bookId = bookId;
+        this.userId = userId;
         this.time = new Date();
         this.text = text;
     }

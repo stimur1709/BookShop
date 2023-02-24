@@ -2,7 +2,6 @@ package com.example.mybookshopapp.data.entity.book;
 
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
@@ -82,10 +81,6 @@ public class Book {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     @JsonManagedReference
     private List<TagBook> tagList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "book")
-    @JsonManagedReference
-    private List<BookReview> reviewList = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "book2genre",

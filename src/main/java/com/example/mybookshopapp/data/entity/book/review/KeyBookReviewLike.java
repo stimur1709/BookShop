@@ -15,19 +15,19 @@ public class KeyBookReviewLike implements Serializable {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "author_id")
-    private int authorId;
+    @Column(name = "review_id")
+    private int reviewId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         KeyBookReviewLike that = (KeyBookReviewLike) o;
-        return userId == that.userId && authorId == that.authorId;
+        return userId == that.userId && reviewId == that.reviewId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, authorId);
+        return Objects.hash(userId, reviewId);
     }
 }

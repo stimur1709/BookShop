@@ -1,11 +1,9 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
-import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BookReviewQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -17,12 +15,10 @@ import org.springframework.web.servlet.LocaleResolver;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookReviewService {
 
-    private final BookRepository bookRepository;
     private final BookReviewRepository bookReviewRepository;
     private final LocaleResolver localeResolver;
     private final MessageSource messageSource;
@@ -31,11 +27,9 @@ public class BookReviewService {
     private final BookReviewQueryRepository bookReviewQueryRepository;
 
     @Autowired
-    public BookReviewService(BookRepository bookRepository,
-                             BookReviewRepository bookReviewRepository, LocaleResolver localeResolver,
+    public BookReviewService(BookReviewRepository bookReviewRepository, LocaleResolver localeResolver,
                              MessageSource messageSource, HttpServletRequest request, UserProfileService userProfileService,
                              BookReviewQueryRepository bookReviewQueryRepository) {
-        this.bookRepository = bookRepository;
         this.userProfileService = userProfileService;
         this.bookReviewRepository = bookReviewRepository;
         this.localeResolver = localeResolver;
@@ -45,10 +39,9 @@ public class BookReviewService {
     }
 
     public ResponseResultDto saveBookReview(int bookId, String text) {
-        Optional<Book> bookEntity = bookRepository.findById(bookId);
-        User user = userProfileService.getCurrentUser();
-        if (bookEntity.isPresent() && user != null) {
-            BookReview bookReview = new BookReview(bookEntity.get(), user, text);
+        if (userProfileService.isAuthenticatedUser()) {
+            User user = userProfileService.getCurrentUser();
+            BookReview bookReview = new BookReview(bookId, user.getId(), text);
             BookReview review = bookReviewRepository.save(bookReview);
             String name = user.getFirstname() + ' ' + user.getLastname();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));

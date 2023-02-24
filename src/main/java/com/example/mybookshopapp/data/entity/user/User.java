@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.data.entity.user;
 
-import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,10 +40,6 @@ public class User implements Serializable {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String lastname;
-
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-    private List<BookReview> reviewList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     @JsonManagedReference

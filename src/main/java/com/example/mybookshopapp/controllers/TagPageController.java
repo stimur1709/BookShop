@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Controller
@@ -32,8 +33,8 @@ public class TagPageController extends ModelAttributeController {
     @Autowired
     public TagPageController(TagService tagService, BookService bookService,
                              UserProfileService userProfileService, BookShopService bookShopService,
-                             MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                             MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.tagService = tagService;
         this.bookService = bookService;
     }

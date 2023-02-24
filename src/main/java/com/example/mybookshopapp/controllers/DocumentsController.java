@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class DocumentsController extends ModelAttributeController {
 
     private final DocumentService documentService;
 
     @Autowired
-    public DocumentsController(UserProfileService userProfileService, BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver, DocumentService documentService) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+    public DocumentsController(UserProfileService userProfileService, BookShopService bookShopService,
+                               MessageSource messageSource, LocaleResolver localeResolver, DocumentService documentService, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.documentService = documentService;
     }
 

@@ -33,9 +33,4 @@ public class BookRating {
     public BookRating() {
     }
 
-    public BookRating(int rating, Book book, User user) {
-        this.rating = rating;
-        this.book = book;
-        this.user = user;
-    }
 }

@@ -9,6 +9,7 @@ import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.repository.BookQueryRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BooksQueryRepository;
+import com.example.mybookshopapp.repository.BooksViewedRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,19 +29,23 @@ public class BookService {
     private final BooksQueryRepository booksQueryRepository;
     private final UserProfileService userProfileService;
     private final BookQueryRepository bookQueryRepository;
+    private final BooksViewedRepository booksViewedRepository;
 
     @Autowired
     public BookService(BookRepository bookRepository, BooksQueryRepository booksQueryRepository, UserProfileService userProfileService,
-                       BookQueryRepository bookQueryRepository) {
+                       BookQueryRepository bookQueryRepository, BooksViewedRepository booksViewedRepository) {
         this.bookRepository = bookRepository;
         this.booksQueryRepository = booksQueryRepository;
         this.userProfileService = userProfileService;
         this.bookQueryRepository = bookQueryRepository;
+        this.booksViewedRepository = booksViewedRepository;
     }
 
     public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.Direction.DESC, properties);
-        return booksQueryRepository.getBooks(userProfileService.getUserId(), nextPage);
+        if (properties.equals("viewed")) {
+            return booksQueryRepository.getBooksRecentlyViewed(userProfileService.getUserId(), PageRequest.of(offset, limit));
+        }
+        return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, Sort.Direction.DESC, properties));
     }
 
     public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
@@ -85,6 +90,10 @@ public class BookService {
 
     public void save(Book bookToUpdate) {
         bookRepository.save(bookToUpdate);
+    }
+
+    public void saveBooksViewed(int bookId) {
+        booksViewedRepository.insertOrUpdate(bookId, userProfileService.getUserId());
     }
 
 }

@@ -24,8 +24,8 @@ public class ContactsController extends ModelAttributeController {
     @Autowired
     public ContactsController(UserProfileService userProfileService,
                               BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
-                              MessageService messageService) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                              MessageService messageService, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.messageService = messageService;
     }
 
@@ -39,8 +39,7 @@ public class ContactsController extends ModelAttributeController {
     }
 
     @PostMapping("/contacts")
-    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes,
-                              HttpServletRequest request) {
+    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes) {
         messageService.sendMessage(messageDto);
         String message = messageSource.getMessage("message.sendMessage", null, localeResolver.resolveLocale(request));
         redirectAttributes.addFlashAttribute("sendMessage", message);

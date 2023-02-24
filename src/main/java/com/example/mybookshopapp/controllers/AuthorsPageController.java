@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Tag(name = "Страница авторов", description = "На странице размещается список ссылок на всех авторов, " +
         "отсортированный по алфавиту и сгруппированы по буквам алфавита. " +
@@ -32,8 +34,8 @@ public class AuthorsPageController extends ModelAttributeController {
     @Autowired
     public AuthorsPageController(AuthorService authorService, BookService bookService,
                                  UserProfileService userProfileService, BookShopService bookShopService,
-                                 MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                                 MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.authorService = authorService;
         this.bookService = bookService;
     }

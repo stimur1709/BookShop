@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -42,8 +43,9 @@ public class BookPageController extends ModelAttributeController {
     public BookPageController(BookService bookService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver, DownloadService downloadService) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
+                              DownloadService downloadService, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.bookService = bookService;
         this.storage = storage;
         this.ratingBook = ratingBook;
@@ -55,6 +57,7 @@ public class BookPageController extends ModelAttributeController {
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         BookQuery book = bookService.getBookQBySlug(slug);
+        bookService.saveBooksViewed(book.getId());
         model.addAttribute("book", book);
         model.addAttribute("reviews", bookReviewService.getBookReview(slug));
         return "books/slug";

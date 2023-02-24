@@ -17,36 +17,59 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-@Tag(name = "Страница новинок", description = "Выводит на странице книги в порядке убывания даты публикации")
-public class RecentPageController extends ModelAttributeController {
+@Tag(name = "Страница разделов книг", description = "Выводит на странице книги в зависимости от выбранного раздела")
+public class BooksPageController extends ModelAttributeController {
 
     private final BookService bookService;
 
     @Autowired
-    public RecentPageController(BookService bookService, UserProfileService userProfileService,
-                                BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+    public BooksPageController(BookService bookService, UserProfileService userProfileService,
+                               BookShopService bookShopService, MessageSource messageSource,
+                               LocaleResolver localeResolver, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.bookService = bookService;
     }
 
-    @GetMapping("/api/books/recent")
+    @GetMapping({"/api/books/recent", "/api/books/popular", "/api/books/viewed"})
     @ResponseBody
     @Operation(summary = "Постраничный вывод книг с указанием параметров даты \"от\" и \"до\"")
     public BooksPageDto getRecentBooksPage(@RequestParam(value = "from", defaultValue = "16.06.2009") String from,
                                            @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit).getContent());
+        String property = getProperty(getUrl());
+        if (property.equals("pub_date")) {
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit).getContent());
+        } else {
+            return new BooksPageDto(bookService.getPageBooks(offset, limit, property).getContent());
+        }
     }
 
-    @GetMapping("/books/recent")
+    @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})
     public String recentPage(Model model) {
-        Page<BooksQuery> books = bookService.getPageBooks(0, 20, "pub_date");
-        model.addAttribute("recentBooks", books.getContent());
+        Page<BooksQuery> books = bookService.getPageBooks(0, 20, getProperty(getUrl()));
+        model.addAttribute("books", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
+        return "books/" + getUrl();
+    }
 
-        return "books/recent";
+    public String getProperty(String url) {
+        String property = null;
+        switch (url) {
+            case "viewed":
+                property = "viewed";
+                break;
+            case "popular":
+                property = "popularity";
+                break;
+            case "recent":
+                property = "pub_date";
+                break;
+        }
+        return property;
     }
 }

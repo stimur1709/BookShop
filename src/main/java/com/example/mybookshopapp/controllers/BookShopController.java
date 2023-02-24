@@ -25,14 +25,12 @@ import java.util.stream.Collectors;
 @Controller
 public class BookShopController extends ModelAttributeController {
 
-    private final HttpServletRequest request;
     private final PaymentService paymentService;
 
     @Autowired
     public BookShopController(BookShopService bookShopService, UserProfileService userProfileService,
                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, PaymentService paymentService) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
-        this.request = request;
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.paymentService = paymentService;
     }
 
@@ -104,7 +102,4 @@ public class BookShopController extends ModelAttributeController {
         return bookShopService.getBooksUser(status);
     }
 
-    private String getUrl() {
-        return request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-    }
 }

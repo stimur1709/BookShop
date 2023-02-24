@@ -10,6 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +20,16 @@ public class ModelAttributeController {
     protected final BookShopService bookShopService;
     protected final MessageSource messageSource;
     protected final LocaleResolver localeResolver;
+    protected final HttpServletRequest request;
 
     @Autowired
     public ModelAttributeController(UserProfileService userProfileService, BookShopService bookShopService,
-                                    MessageSource messageSource, LocaleResolver localeResolver) {
+                                    MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         this.userProfileService = userProfileService;
         this.bookShopService = bookShopService;
         this.messageSource = messageSource;
         this.localeResolver = localeResolver;
+        this.request = request;
     }
 
     @ModelAttribute("getUser")
@@ -67,5 +70,9 @@ public class ModelAttributeController {
     @ModelAttribute("paidSize")
     public long paidSize() {
         return bookShopService.getCountBooksForUser(List.of(3, 4));
+    }
+
+    public String getUrl() {
+        return request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
     }
 }

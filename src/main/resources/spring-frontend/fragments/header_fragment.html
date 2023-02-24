@@ -144,6 +144,11 @@
                             th:text="#{topbar.popular}">Популярное</a>
                     </li>
                     <li class="menu-item"
+                        th:classappend="${#strings.equals(this_page, 'viewed')} ? 'menu-item_ACTIVE'"><a
+                            class="menu-link" th:href="@{/books/viewed}"
+                            th:text="#{topbar.recentlyViewed}">Недавно просмотренные</a>
+                    </li>
+                    <li class="menu-item"
                         th:classappend="${#strings.equals(this_page, 'authors')} ? 'menu-item_ACTIVE'"><a
                             class="menu-link" th:href="@{/authors}"
                             th:text="#{topbar.authors}">Авторы</a>

@@ -32,7 +32,7 @@ public class MainPageController extends ModelAttributeController {
     public MainPageController(BookService bookService, TagService tagService, UserProfileService userProfileService,
                               BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
                               HttpServletRequest request) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.bookService = bookService;
         this.tagService = tagService;
         this.request = request;
@@ -43,6 +43,7 @@ public class MainPageController extends ModelAttributeController {
         model.addAttribute("recommendBooks", bookService.getPageBooks(0, 6, "rate"));
         model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pub_date"));
         model.addAttribute("popularBooks", bookService.getPageBooks(0, 6, "popularity"));
+        model.addAttribute("recentlyViewed", bookService.getPageBooks(0, 6, "viewed"));
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         return "index";
     }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BooksQueryRepository extends JpaRepository<BooksQuery, Integer> {
 
-    @Query(value = "select * from get_books(?1 )", nativeQuery = true)
+    @Query(value = "select * from get_books(?1)", nativeQuery = true)
     Page<BooksQuery> getBooks(Integer userId, Pageable pageable);
 
     @Query(value = "select * from get_books(?1) where pub_date between ?2 and ?3 ", nativeQuery = true)
@@ -37,4 +37,7 @@ public interface BooksQueryRepository extends JpaRepository<BooksQuery, Integer>
             "             join book2user b2u on b.id = b2u.book_id and b2u.user_id = ?1 " +
             "    where b2u.type_id in (?2) ", nativeQuery = true)
     long getCountBooksForUser(Integer userId, List<Integer> ids);
+
+    @Query(value = "select * from get_books_viewed(?1)", nativeQuery = true)
+    Page<BooksQuery> getBooksRecentlyViewed(Integer userId, Pageable nextPage);
 }

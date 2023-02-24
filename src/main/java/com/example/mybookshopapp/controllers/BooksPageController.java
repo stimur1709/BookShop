@@ -50,11 +50,12 @@ public class BooksPageController extends ModelAttributeController {
 
     @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})
     public String recentPage(Model model) {
-        Page<BooksQuery> books = bookService.getPageBooks(0, 20, getProperty(getUrl()));
+        String url = getUrl();
+        Page<BooksQuery> books = bookService.getPageBooks(0, 20, getProperty(url));
         model.addAttribute("books", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
-        return "books/" + getUrl();
+        return "books/" + url;
     }
 
     public String getProperty(String url) {

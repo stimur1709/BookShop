@@ -6480,4 +6480,7 @@
     <changeSet id="84" author="S Timur">
         <sqlFile path="db/changelog/scripts/function-get-books-viewed.sql"/>
     </changeSet>
+    <changeSet id="85" author="S Timur">
+        <sqlFile path="db/changelog/scripts/insert-document.sql"/>
+    </changeSet>
 </databaseChangeLog>

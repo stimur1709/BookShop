@@ -1,46 +1,4 @@
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <title>Тут название страницы написать</title>
-  <meta name="description" content="Описание страницы">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-  <link href="../favicon.ico" rel="shortcut icon">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
-  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=46559719">
-  <link rel="stylesheet" href="/assets/css/basic.min.css?v=46559719">
-  <link rel="stylesheet" href="/assets/css/extra.min.css?v=46559719">
-  <script defer src="/assets/js/scripts.min.js?v=46559719"></script>
-</head>
-
-<body class="Site">
-<header th:replace="~{fragments/header_fragment::headerFragment(about)}"></header>
-  <div class="Middle">
-    <div class="Middle-top">
-      <div class="wrap">
-        <h1 class="Middle-title">Документ
-        </h1>
-      </div>
-    </div>
-    <div class="wrap">
-      <main class="Middle-main">
-        <ul class="breadcrumbs">
-          <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
-          </li>
-          <li class="breadcrumbs-item"><a href="/documents/index.html">Документы</a>
-          </li>
-          <li class="breadcrumbs-item breadcrumbs-item_current"><span>Политика обработки персональных данных</span>
-          </li>
-        </ul>
-        <h1 class="Middle-title" th:text="${document.getTitle()}">Политика обработки персональных данных
-        </h1>
-        <div th:insert="~{article :: ${document.getText()}}"></div>
-        <h1 class="Middle-title">Политика обработки персональных данных
-        </h1>
-        <article class="Article" id="Article">
+INSERT INTO document (slug, text, title) VALUES ('gsdgds', '<article class="Article" id="Article">
           <div class="sdf">
           </div>
           <div class="pict pict_left"><img src="/assets/img/content/documents/2.jpg" alt="2.jpg" />
@@ -243,12 +201,4 @@
               https://yandex.com/legal/confidential_google_api.
             </p>
           </div>
-        </article>
-      </main>
-    </div>
-  </div>
-<footer th:replace="~{fragments/footer_fragment :: footerFragment}"></footer>
-  <script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
-</body>
-
-</html>
+        </article>', 'Политика обработки персональных данных');

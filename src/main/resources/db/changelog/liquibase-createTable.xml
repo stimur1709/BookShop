@@ -6461,4 +6461,23 @@
     <changeSet id="81" author="S Timur">
         <sqlFile path="db/changelog/scripts/function-get-reviews.sql"/>
     </changeSet>
+    <changeSet id="82" author="S Timur">
+        <createTable tableName="books_viewed">
+            <column name="book_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="timestamp(0)" defaultValueDate="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="83" author="S Timur">
+        <addPrimaryKey columnNames="book_id, user_id" constraintName="books_viewed_pkey" tableName="books_viewed"/>
+    </changeSet>
+    <changeSet id="84" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-get-books-viewed.sql"/>
+    </changeSet>
 </databaseChangeLog>

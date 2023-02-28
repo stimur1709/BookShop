@@ -26,7 +26,8 @@ public class DocumentsController extends ModelAttributeController {
     }
 
     @GetMapping("/documents")
-    public String documentsPage() {
+    public String documentsPage(Model model) {
+        model.addAttribute("documents", documentService.getDocuments());
         return "documents/index";
     }
 

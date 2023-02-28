@@ -25,24 +25,16 @@
         <main class="Middle-main">
             <h1 class="Middle-title" th:text="#{bottomBar.documents}">Документы</h1>
             <div class="Section">
-                <div class="Documents">
+                <div class="Documents" th:each="document : ${documents}">
                     <div class="Documents-wrap">
-                        <a class="Documents-item" th:href="${'/documents/gsdgds'}">
+                        <a class="Documents-item" th:href="${'/documents/' + document.getSlug()}">
                             <div class="Documents-image">
-                                <img src="/assets/img/content/documents/1.jpg" alt="1.jpg"/>
+                                <img th:src="${document.getImage()}" alt="1.jpg"/>
                             </div>
                             <div class="Documents-content">
-                                <strong class="Documents-title">Публичная оферта
+                                <strong class="Documents-title" th:text="${document.getTitle()}">Публичная оферта
                                 </strong>
-                                <p>Согласно закону, публичная оферта – это предложение, которое, во-первых,
-                                    адресовано
-                                    неопределенному кругу лиц, во-вторых, содержит все существенные условия
-                                    договора, и,
-                                    в-третьих, достаточно определенно выражает намерение предприятия-оферента
-                                    считать себя
-                                    заключившим договор с любым
-                                </p>
-                                <p>Согласно закону, публичная оферта – это предложение, которое, во-первых,
+                                <p th:text="${document.getDescription()}">Согласно закону, публичная оферта – это предложение, которое, во-первых,
                                     адресовано
                                     неопределенному кругу лиц, во-вторых, содержит все существенные условия
                                     договора, и,
@@ -51,23 +43,8 @@
                                     заключившим договор с любым
                                 </p>
                             </div>
+                            <br/>
                         </a>
-                        <a class="Documents-item" th:href="${'/documents/gsdgds'}">
-                        <div class="Documents-image">
-                            <img src="/assets/img/content/documents/2.jpg" alt="2.jpg"/>
-                        </div>
-                        <div class="Documents-content">
-                            <strong class="Documents-title">Политика обработки персональных данных</strong>
-                            <p>Согласно закону, публичная оферта – это предложение, которое, во-первых,
-                                адресовано
-                                неопределенному кругу лиц, во-вторых, содержит все существенные условия
-                                договора, и,
-                                в-третьих, достаточно определенно выражает намерение предприятия-оферента
-                                считать себя
-                                заключившим договор с любым
-                            </p>
-                        </div>
-                    </a>
                     </div>
                 </div>
             </div>

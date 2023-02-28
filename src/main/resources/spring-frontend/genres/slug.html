@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<html class="ie7" lang="ru">
-<html class="ie8" lang="ru">
-<html class="ie9" lang="ru">
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -35,7 +32,8 @@
                     th:replace="~{fragments/genre_fragment::parentGenre(${genre.getParent()})}">
                     Легкое чтение
                 </li>
-                <li style="display: inline-block">
+                <li th:class="${genre.getParent() == null} ? 'breadcrumbs-item breadcrumbs-item_current' : ''"
+                    style="display: inline-block">
                     <span th:text="${genre.name}" style="color: #6db33f">Название</span>
                 </li>
             </ul>

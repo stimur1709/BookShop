@@ -42,10 +42,14 @@ public class BookService {
     }
 
     public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties) {
-        if (properties.equals("viewed")) {
-            return booksQueryRepository.getBooksRecentlyViewed(userProfileService.getUserId(), PageRequest.of(offset, limit));
+        switch (properties) {
+            case "viewed":
+                return booksQueryRepository.getBooksRecentlyViewed(userProfileService.getUserId(), PageRequest.of(offset, limit));
+            case "recommend":
+                return booksQueryRepository.getRecommendedBooks(userProfileService.getUserId(), PageRequest.of(offset, limit));
+            default:
+                return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, Sort.Direction.DESC, properties));
         }
-        return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, Sort.Direction.DESC, properties));
     }
 
     public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {

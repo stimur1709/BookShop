@@ -6489,4 +6489,7 @@
     <changeSet id="85" author="S Timur">
         <sqlFile path="db/changelog/scripts/insert-document.sql"/>
     </changeSet>
+    <changeSet id="86" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-get-recommended-books.sql"/>
+    </changeSet>
 </databaseChangeLog>

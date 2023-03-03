@@ -40,4 +40,10 @@ public interface BooksQueryRepository extends JpaRepository<BooksQuery, Integer>
 
     @Query(value = "select * from get_books_viewed(?1)", nativeQuery = true)
     Page<BooksQuery> getBooksRecentlyViewed(Integer userId, Pageable nextPage);
+
+    @Query(value = "select id, discount, image, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
+            "from get_recommended_books(?1) " +
+            "group by id, discount, image, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
+            "order by max(sort_index) desc ", nativeQuery = true)
+    Page<BooksQuery> getRecommendedBooks(Integer userId, Pageable nextPage);
 }

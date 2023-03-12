@@ -37,11 +37,12 @@
                     <h2 class="Section-title" th:text="#{topbar.popular}">Популярное</h2>
                 </div>
                 <div th:replace="~{fragments/book_fragment::bookSlider(${popularBooks.getContent()}, popular)}"></div>
-                <div class="Section-header" th:if="${recentlyViewed.getContent().size() > 5}">
+                <span th:if="${recentlyViewed.getContent().size() > 5}">
+                     <div class="Section-header">
                     <h2 class="Section-title" th:text="#{topbar.recentlyViewed}">Недавно просмотренные</h2>
-                </div>
-                <div th:if="${recentlyViewed.getContent().size() > 5}"
-                     th:replace="~{fragments/book_fragment::bookSlider(${recentlyViewed.getContent()}, 'time')}"></div>
+                    </div>
+                    <div th:replace="~{fragments/book_fragment::bookSlider(${recentlyViewed.getContent()}, 'viewed')}"></div>
+                </span>
             </div>
             <h2 class="Middle-title" th:text="#{message.booksByTags}">Книги по тегам</h2>
             <div class="Tags" id="tags">

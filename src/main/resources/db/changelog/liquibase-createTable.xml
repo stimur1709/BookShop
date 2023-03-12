@@ -6492,4 +6492,7 @@
     <changeSet id="86" author="S Timur">
         <sqlFile path="db/changelog/scripts/function-get-recommended-books.sql"/>
     </changeSet>
+    <changeSet id="87" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-find-books.sql"/>
+    </changeSet>
 </databaseChangeLog>

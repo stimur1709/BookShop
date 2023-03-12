@@ -66,7 +66,7 @@ public class BookService {
 
     public Page<BooksQuery> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return booksQueryRepository.findBookEntityByTitleContainingAllIgnoreCase(userProfileService.getUserId(), wordSearch, nextPage);
+        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, nextPage);
     }
 
     public Page<BooksQuery> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {

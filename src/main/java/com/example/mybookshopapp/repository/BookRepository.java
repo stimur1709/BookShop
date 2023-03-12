@@ -18,6 +18,4 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBookEntitiesBySlugIn(Collection<String> slug);
 
-    Book findByBookFileList_Hash(String hash);
-
 }

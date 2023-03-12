@@ -57,13 +57,13 @@ public class MainPageController extends ModelAttributeController {
         return new BooksPageDto(bookService.getPageBooks(offset, limit, properties).getContent());
     }
 
-    @GetMapping("/api/main_page/books/recent")
-    @ResponseBody
-    @Operation(summary = "Постраничный вывод новых книг")
-    public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
-                                           @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageBooks(offset, limit, "pub_date").getContent());
-    }
+//    @GetMapping("/api/main_page/books/recent")
+//    @ResponseBody
+//    @Operation(summary = "Постраничный вывод новых книг")
+//    public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset,
+//                                           @RequestParam("limit") Integer limit) {
+//        return new BooksPageDto(bookService.getPageBooks(offset, limit, "pub_date").getContent());
+//    }
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
@@ -74,7 +74,7 @@ public class MainPageController extends ModelAttributeController {
             model.addAttribute("books", books);
             return "search/index";
         } else {
-            String message = messageSource.getMessage("message.reviewEmpty", null, localeResolver.resolveLocale(request));
+            String message = messageSource.getMessage("message.searchRequest", null, localeResolver.resolveLocale(request));
             throw new EmptySearchException(message);
         }
     }

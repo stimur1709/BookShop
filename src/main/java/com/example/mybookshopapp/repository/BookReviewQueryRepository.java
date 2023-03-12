@@ -12,5 +12,5 @@ public interface BookReviewQueryRepository extends JpaRepository<BookReviewQuery
     List<BookReviewQuery> getReviewsByBookAndUser(String slug, int userId);
 
     @Query(value = "select * from get_reviews(?1, ?2) where id = ?3", nativeQuery = true)
-   BookReviewQuery getReviewsByBookAndUser(String slug, int userId, int reviewId);
+    BookReviewQuery getReviewsByBookAndUser(String slug, int userId, int reviewId);
 }

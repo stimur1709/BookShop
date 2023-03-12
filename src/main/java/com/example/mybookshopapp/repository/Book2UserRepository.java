@@ -13,11 +13,10 @@ public interface Book2UserRepository extends JpaRepository<Book2User, Integer> {
     @Modifying
     @Transactional
     @Query(value = "insert into book2user(book_id, user_id, type_id) " +
-            "values (?1, ?2, ?3) " +
-            "on conflict(book_id, user_id) do update set book_id = ?1, " +
-            "                                                     user_id = ?2, " +
-            "                                                     type_id = ?3", nativeQuery = true)
-    void updateOrCreateType(int bookId, int userId, int typeId);
+            "values ((select id from books where slug = ?1), ?2, ?3) " +
+            "on conflict(book_id, user_id) do update set book_id = (select id from books where slug = ?1), " +
+            "user_id = ?2, type_id = ?3", nativeQuery = true)
+    void updateOrCreateType(String slug, int userId, int typeId);
 
     @Modifying
     @Transactional

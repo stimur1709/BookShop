@@ -1,12 +1,11 @@
 package com.example.mybookshopapp.data.entity.book.review;
 
-import com.example.mybookshopapp.data.entity.user.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,14 +16,14 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(columnDefinition = "DATE NOT NULL")
-    private LocalDateTime time;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(columnDefinition = "DATE")
+    private Date time;
 
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT", name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private int userId;
 
     @Column(columnDefinition = "VARCHAR(255)")
     private String email;
@@ -37,4 +36,17 @@ public class Message {
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
+
+    public Message(int userId, String email, String name, String subject, String text) {
+        this.userId = userId;
+        this.email = email;
+        this.name = name;
+        this.subject = subject;
+        this.text = text;
+        this.time = new Date();
+    }
+
+    public Message() {
+
+    }
 }

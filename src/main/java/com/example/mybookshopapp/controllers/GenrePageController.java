@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @Tag(name = "Страница жанров")
 public class GenrePageController extends ModelAttributeController {
@@ -30,8 +32,8 @@ public class GenrePageController extends ModelAttributeController {
     @Autowired
     public GenrePageController(GenreService genreService, BookService bookService,
                                UserProfileService userProfileService, BookShopService bookShopService,
-                               MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                               MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.genreService = genreService;
         this.bookService = bookService;
     }
@@ -45,13 +47,11 @@ public class GenrePageController extends ModelAttributeController {
     @GetMapping("/genres/{slug}")
     public String genresSlugPage(@PathVariable("slug") String slug, Model model) {
         Genre genre = genreService.getPageBySlug(slug);
-        Page<BookQuery> books = bookService.getBooksForPageGenre(genre, 0, 20);
+        Page<BooksQuery> books = bookService.getBooksForPageGenre(genre, 0, 20);
         model.addAttribute("genre", genre);
-        model.addAttribute("parentGenre", genreService.getPageById(genre.getSlug()));
         model.addAttribute("booksGenre", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());
-
         return "genres/slug";
     }
 

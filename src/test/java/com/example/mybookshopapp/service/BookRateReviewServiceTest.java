@@ -4,11 +4,9 @@ import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.review.BookReview;
 import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
+import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
-import com.example.mybookshopapp.repository.BookRepository;
-import com.example.mybookshopapp.repository.BookReviewLikeRepository;
-import com.example.mybookshopapp.repository.BookReviewRepository;
-import com.example.mybookshopapp.repository.UserRepository;
+import com.example.mybookshopapp.repository.*;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -21,17 +19,19 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Рейтинг отзывов")
 class BookRateReviewServiceTest {
+    @Autowired
+    private BookReviewQueryRepository bookReviewQueryRepository;
 
+    private final BookQueryRepository bookQueryRepository;
     private final BookRateReviewService bookRateReviewService;
     private final BookReviewRepository bookReviewRepository;
     private final BookRepository bookRepository;
@@ -44,7 +44,8 @@ class BookRateReviewServiceTest {
     private User user;
 
     @Autowired
-    BookRateReviewServiceTest(BookRateReviewService bookRateReviewService, BookReviewRepository bookReviewRepository, BookRepository bookRepository, UserRepository userRepository, UserAuthService userAuthService, BookReviewLikeRepository bookReviewLikeRepository) {
+    BookRateReviewServiceTest(BookQueryRepository bookQueryRepository, BookRateReviewService bookRateReviewService, BookReviewRepository bookReviewRepository, BookRepository bookRepository, UserRepository userRepository, UserAuthService userAuthService, BookReviewLikeRepository bookReviewLikeRepository) {
+        this.bookQueryRepository = bookQueryRepository;
         this.bookRateReviewService = bookRateReviewService;
         this.bookReviewRepository = bookReviewRepository;
         this.bookRepository = bookRepository;
@@ -57,7 +58,7 @@ class BookRateReviewServiceTest {
     void setUp() {
         book = bookRepository.findBookEntityBySlug("zcjbamvddqipljkrzoj");
         user = userRepository.getByHash("stimurstimurstimurs");
-        review = bookReviewRepository.save(new BookReview(book, user, "Норм книжка"));
+        review = bookReviewRepository.save(new BookReview(book.getId(), user.getId(), "Норм книжка"));
     }
 
     @AfterEach
@@ -75,18 +76,18 @@ class BookRateReviewServiceTest {
         userAuthService.jwtLogin(payload);
         Map<String, Object> response = bookRateReviewService.changeRateBookReview(review.getId(), (short) 1);
         assertEquals(true, response.get("result"));
-        Optional<BookReview> reviewOptional = bookReviewRepository.findById(review.getId());
-        assertTrue(reviewOptional.isPresent());
-        long likes = reviewOptional.get().getLikes();
-        long dislikes = reviewOptional.get().getDislikes();
+        BookReviewQuery review = bookReviewQueryRepository.getReviewsByBookAndUser(book.getSlug(), user.getId(), this.review.getId());
+        assertNotNull(review);
+        long likes = review.getLikes();
+        long dislikes = review.getDislikes();
         assertEquals(0, dislikes);
         assertEquals(1, likes);
-        response = bookRateReviewService.changeRateBookReview(review.getId(), (short) -1);
+        response = bookRateReviewService.changeRateBookReview(this.review.getId(), (short) -1);
         assertEquals(true, response.get("result"));
-        reviewOptional = bookReviewRepository.findById(review.getId());
-        assertTrue(reviewOptional.isPresent());
-        likes = reviewOptional.get().getLikes();
-        dislikes = reviewOptional.get().getDislikes();
+        review = bookReviewQueryRepository.getReviewsByBookAndUser(book.getSlug(), user.getId(), this.review.getId());
+        assertNotNull(review);
+        likes = review.getLikes();
+        dislikes = review.getDislikes();
         assertEquals(1, dislikes);
         assertEquals(0, likes);
     }
@@ -97,19 +98,19 @@ class BookRateReviewServiceTest {
         List<User> users = userRepository.findAll();
 
         for (int i = 0; i < 20; i++) {
-            BookReview newReview = bookReviewRepository.save(new BookReview(book, user, "kroiqwpnrifniqe " + i));
+            BookReview newReview = bookReviewRepository.save(new BookReview(book.getId(), user.getId(), "kroiqwpnrifniqe " + i));
             for (User user1 : users) {
-                bookReviewLikeRepository.save(new BookReviewLike(newReview, user1, (short) 1));
+                bookReviewLikeRepository.insertOrUpdateBookReviewLike(newReview.getId(), user1.getId(), (short) 1);
             }
         }
 
-        int rate = bookRateReviewService.ratingCalculation(book.getId());
+        int rate = bookQueryRepository.findBookEntityBySlug(1, book.getSlug()).getRateReview();
         assertEquals(5, rate);
 
         List<BookReviewLike> bookReviewLikes = bookReviewLikeRepository.findAll();
         bookReviewLikes.forEach(bookReviewLike -> bookReviewLike.setValue((short) -1));
         bookReviewLikeRepository.saveAll(bookReviewLikes);
-        rate = bookRateReviewService.ratingCalculation(book.getId());
+        rate = bookQueryRepository.findBookEntityBySlug(1, book.getSlug()).getRateReview();
         assertEquals(1, rate);
     }
 }

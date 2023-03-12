@@ -74,30 +74,42 @@
             </div>
             <div class="row-block">
                 <ul class="menu menu_vt Footer-menu">
-                    <li class="menu-item"><a class="menu-link" href="/index.html" th:href="@{/}"
-                                             th:if="${!isAuthenticatedUser}"
-                                             th:text="#{bottomBar.main}">Главная</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/}"
+                           th:if="${!isAuthenticatedUser}"
+                           th:text="#{bottomBar.main}">Главная</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="/genres/index.html" th:href="@{/genres}"
-                                             th:text="#{bottomBar.genres}">Жанры</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/genres}"
+                           th:text="#{bottomBar.genres}">Жанры</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="/books/recent.html" th:href="@{/books/recent}"
-                                             th:text="#{bottomBar.news}">Новинки</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/books/recent}"
+                           th:text="#{bottomBar.news}">Новинки</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="/books/popular.html"
-                                             th:href="@{/books/popular}" th:text="#{bottomBar.popular}">Популярное</a>
+                    <li class="menu-item">
+                        <a class="menu-link"
+                           th:href="@{/books/popular}" th:text="#{bottomBar.popular}">Популярное</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" th:href="@{/my}" th:if="${isAuthenticatedUser}"
-                                             th:text="#{bottomBar.myBook}">Мои книги</a>
+                    <li class="menu-item">
+                        <a class="menu-link"
+                           th:href="@{/books/viewed}" th:text="#{topbar.recentlyViewed}">Недавно просмотренные</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" th:href="@{/cart}" th:if="${isAuthenticatedUser}"
-                                             th:text="#{bottomBar.basket}">Корзина</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/my}" th:if="${isAuthenticatedUser}"
+                           th:text="#{bottomBar.myBook}">Мои книги</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" th:href="@{/postponed}" th:if="${isAuthenticatedUser}"
-                                             th:text="#{bottomBar.postponed}">Отложено</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/cart}" th:if="${isAuthenticatedUser}"
+                           th:text="#{bottomBar.basket}">Корзина</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" th:if="${isAuthenticatedUser}" th:href="@{/profile}"
-                                             th:text="#{bottomBar.myProfile}">Мой профиль</a>
+                    <li class="menu-item">
+                        <a class="menu-link" th:href="@{/postponed}" th:if="${isAuthenticatedUser}"
+                           th:text="#{bottomBar.postponed}">Отложено</a>
+                    </li>
+                    <li class="menu-item">
+                        <a class="menu-link" th:if="${isAuthenticatedUser}" th:href="@{/profile}"
+                           th:text="#{bottomBar.myProfile}">Мой профиль</a>
                     </li>
                 </ul>
             </div>

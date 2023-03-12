@@ -1,14 +1,14 @@
 package com.example.mybookshopapp.data.entity.book.review;
 
-import com.example.mybookshopapp.data.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,32 +19,13 @@ import java.time.LocalDateTime;
 @Schema(description = "Лайки и дизлайки отзывов")
 public class BookReviewLike {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private KeyBookReviewLike id;
 
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "review_id")
-    @JsonManagedReference
-    private BookReview bookReview;
-
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
-    @JsonBackReference
-    private User user;
-
-    @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
-
-    public BookReviewLike(BookReview bookReview, User user, short value) {
-        this.bookReview = bookReview;
-        this.user = user;
-        this.time = LocalDateTime.now();
-        this.value = value;
-    }
 
     public BookReviewLike() {
     }

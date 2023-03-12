@@ -1,8 +1,6 @@
 package com.example.mybookshopapp.data.entity.book.file;
 
-import com.example.mybookshopapp.data.entity.book.Book;
-import com.example.mybookshopapp.data.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,18 +12,8 @@ import javax.persistence.*;
 @Table(name = "file_download")
 public class FileDownload {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id")
-    @JsonBackReference
-    private Book book;
+    @EmbeddedId
+    private KeyBook2User keyBook2User;
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 1")
     private int count;

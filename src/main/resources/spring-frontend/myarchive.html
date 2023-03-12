@@ -35,8 +35,8 @@
                     <h1 class="Section-title" th:text="#{bottomBar.myBook}">Мои книги
                     </h1>
                     <div class="Section-header-links">
-                        <a class="Section-header-link" th:href="@{/my}">Непрочитанные</a>
-                        <span class="Section-header-link Section-header-link_ACTIVE">Архив</span>
+                        <a class="Section-header-link" th:href="@{/my}" th:text="#{message.unread}">Непрочитанные</a>
+                        <span class="Section-header-link Section-header-link_ACTIVE" th:text="#{message.archive}">Архив</span>
                     </div>
                 </div>
                 <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.archiveEmpty}">В архиве нет книг</div>

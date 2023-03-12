@@ -39,12 +39,12 @@
                     <h1 class="Section-title" th:text="#{topbar.popular}">Популярное</h1>
                 </div>
                 <div class="Cards Cards_refresh">
-                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books.getContent()})}"></div>
+                    <div th:replace="~{fragments/book_fragment::bookRefresh(${books})}"></div>
                 </div>
-                <div class="Cards-footer Cards-footer_center" th:if="${books.getTotalPages() > 1}">
+                <div class="Cards-footer Cards-footer_center" th:if="${show}">
                     <a class="btn btn_primary" href="#"
-                       th:attr="data-total = ${books.getTotalPages()}"
                        data-refreshshow="popular" data-refreshoffset="0"
+                       th:attr="data-total = ${totalPages}"
                        data-refreshlimit="20" th:text="#{message.showMore}">Показать еще</a>
                 </div>
             </div>

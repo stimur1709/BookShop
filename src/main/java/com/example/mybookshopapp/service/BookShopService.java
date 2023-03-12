@@ -2,12 +2,11 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
-import com.example.mybookshopapp.repository.BookQueryRepository;
+import com.example.mybookshopapp.repository.BooksQueryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,15 +18,13 @@ import java.util.List;
 public class BookShopService {
 
     private final UserProfileService userProfileService;
-    private final BookQueryRepository bookQueryRepository;
-    private final BookService bookService;
+    private final BooksQueryRepository booksQueryRepository;
     private final Book2UserRepository book2UserRepository;
 
     @Autowired
-    public BookShopService(UserProfileService userProfileService, BookQueryRepository bookQueryRepository, BookService bookService, Book2UserRepository book2UserRepository) {
+    public BookShopService(UserProfileService userProfileService, BooksQueryRepository booksQueryRepository, Book2UserRepository book2UserRepository) {
         this.userProfileService = userProfileService;
-        this.bookQueryRepository = bookQueryRepository;
-        this.bookService = bookService;
+        this.booksQueryRepository = booksQueryRepository;
         this.book2UserRepository = book2UserRepository;
     }
 
@@ -35,14 +32,9 @@ public class BookShopService {
         String[] slugs = dto.getBooksIds().replace("[", "").replace("]", "").split(", ");
         User user = userProfileService.getCurrentUser();
         for (String slug : slugs) {
-            Book book = bookService.getBookBySlug(slug);
-            changeTypeBook2User(book, user, getIntStatus(dto.getStatus()));
+            book2UserRepository.updateOrCreateType(slug, user.getId(), getIntStatus(dto.getStatus()));
         }
         return new ResponseResultDto(true);
-    }
-
-    private void changeTypeBook2User(Book book, User user, int typeId) {
-        book2UserRepository.updateOrCreateType(book.getId(), user.getId(), typeId);
     }
 
     private Integer getIntStatus(BookCodeType status) {
@@ -60,12 +52,12 @@ public class BookShopService {
         }
     }
 
-    public List<BookQuery> getBooksUser(BookCodeType status) {
-        return bookQueryRepository.getBooksUser(userProfileService.getUserId(), status.name());
+    public List<BooksQuery> getBooksUser(BookCodeType status) {
+        return booksQueryRepository.getBooksUser(userProfileService.getUserId(), status.name());
     }
 
     public long getCountBooksForUser(List<Integer> ids) {
-        return bookQueryRepository.getCountBooksForUser(userProfileService.getUserId(), ids);
+        return booksQueryRepository.getCountBooksForUser(userProfileService.getUserId(), ids);
     }
 
     @Async

@@ -42,6 +42,7 @@ public class UserAuthService {
     private final HttpServletResponse response;
     private final BookShopService bookShopService;
     private final UserProfileService userProfileService;
+
     @Autowired
     public UserAuthService(JWTUtil jwtUtil, BlacklistService blacklistService,
                            UserContactService userContactService, Generator generator,

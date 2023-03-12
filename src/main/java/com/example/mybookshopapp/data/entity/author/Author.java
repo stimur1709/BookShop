@@ -40,10 +40,4 @@ public class Author {
     @JsonBackReference
     private List<Book> bookList = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 }

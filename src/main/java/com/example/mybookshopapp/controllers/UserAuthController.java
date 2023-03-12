@@ -40,7 +40,6 @@ public class UserAuthController extends ModelAttributeController {
     private final UserAuthService userAuthService;
     private final UserChangeService userChangeService;
     private final FormValidator formValidator;
-    private final HttpServletRequest request;
     private final UserContactService userContactService;
     private final UserLoginHistoryService userLoginHistoryService;
     private final PaymentService paymentService;
@@ -51,12 +50,11 @@ public class UserAuthController extends ModelAttributeController {
                               UserChangeService userChangeService, FormValidator formValidator, MessageSource messageSource,
                               LocaleResolver localeResolver, HttpServletRequest request, UserContactService userContactService,
                               UserLoginHistoryService userLoginHistoryService, PaymentService paymentService) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
         this.userChangeService = userChangeService;
         this.formValidator = formValidator;
-        this.request = request;
         this.userContactService = userContactService;
         this.userLoginHistoryService = userLoginHistoryService;
         this.paymentService = paymentService;
@@ -214,7 +212,8 @@ public class UserAuthController extends ModelAttributeController {
                                  @ModelAttribute RestorePassword restorePassword,
                                  RedirectAttributes redirectAttributes) {
         userChangeService.changePassword(contact, restorePassword);
-        redirectAttributes.addFlashAttribute("restorePassword");
+        String message = messageSource.getMessage("message.passwordUpdate", null, localeResolver.resolveLocale(request));
+        redirectAttributes.addFlashAttribute("restorePassword", message);
         return "redirect:/signin";
     }
 

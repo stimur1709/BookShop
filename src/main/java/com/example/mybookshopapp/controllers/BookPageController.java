@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,26 +37,29 @@ public class BookPageController extends ModelAttributeController {
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
+    private final DownloadService downloadService;
 
     @Autowired
     public BookPageController(BookService bookService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
+                              DownloadService downloadService, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.bookService = bookService;
         this.storage = storage;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
+        this.downloadService = downloadService;
     }
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         BookQuery book = bookService.getBookQBySlug(slug);
+        bookService.saveBooksViewed(book.getId());
         model.addAttribute("book", book);
-        model.addAttribute("reviews", bookReviewService.getBookReview(book.getSlug()));
-        model.addAttribute("rateReview", bookRateReviewService.ratingCalculation(book.getId()));
+        model.addAttribute("reviews", bookReviewService.getBookReview(slug));
         return "books/slug";
     }
 
@@ -69,7 +73,8 @@ public class BookPageController extends ModelAttributeController {
     }
 
     @GetMapping("/books/download/{hash}")
-    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
+    public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {
+        downloadService.fileDownload(hash);
         Path path = storage.getBookFilePath(hash);
         MediaType mediaType = storage.getBookFileName(hash);
         byte[] data = storage.getBookFileByteArray(hash);

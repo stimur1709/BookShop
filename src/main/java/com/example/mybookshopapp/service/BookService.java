@@ -1,12 +1,15 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.genre.Genre;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.repository.BookQueryRepository;
 import com.example.mybookshopapp.repository.BookRepository;
+import com.example.mybookshopapp.repository.BooksQueryRepository;
+import com.example.mybookshopapp.repository.BooksViewedRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,51 +26,62 @@ import java.util.Date;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final BookQueryRepository bookQueryRepository;
+    private final BooksQueryRepository booksQueryRepository;
     private final UserProfileService userProfileService;
+    private final BookQueryRepository bookQueryRepository;
+    private final BooksViewedRepository booksViewedRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BookQueryRepository bookQueryRepository, UserProfileService userProfileService) {
+    public BookService(BookRepository bookRepository, BooksQueryRepository booksQueryRepository, UserProfileService userProfileService,
+                       BookQueryRepository bookQueryRepository, BooksViewedRepository booksViewedRepository) {
         this.bookRepository = bookRepository;
-        this.bookQueryRepository = bookQueryRepository;
+        this.booksQueryRepository = booksQueryRepository;
         this.userProfileService = userProfileService;
+        this.bookQueryRepository = bookQueryRepository;
+        this.booksViewedRepository = booksViewedRepository;
     }
 
-    public Page<BookQuery> getPageBooks(Integer offset, Integer limit, String properties) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.Direction.DESC, properties);
-        return bookQueryRepository.getBooks(userProfileService.getUserId(), nextPage);
+    public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties) {
+        switch (properties) {
+            case "viewed":
+                return booksQueryRepository.getBooksRecentlyViewed(userProfileService.getUserId(), PageRequest.of(offset, limit));
+            case "recommend":
+                return booksQueryRepository.getRecommendedBooks(userProfileService.getUserId(), PageRequest.of(offset, limit));
+            default:
+                return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, Sort.Direction.DESC, properties));
+        }
     }
 
-    public Page<BookQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
+    public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pub_date"));
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
             Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return bookQueryRepository.findBookEntityByPubDateBetween(userProfileService.getUserId(), dateFrom, dateTo, nextPage);
+            return booksQueryRepository.findBookEntityByPubDateBetween(userProfileService.getUserId(), dateFrom, dateTo, nextPage);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public Page<BookQuery> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
+    public Page<BooksQuery> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookQueryRepository.findBookEntityByTitleContainingAllIgnoreCase(userProfileService.getUserId(), wordSearch, nextPage);
+        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, nextPage);
     }
 
-    public Page<BookQuery> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
+    public Page<BooksQuery> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookQueryRepository.findByTagList_Slug(userProfileService.getUserId(), tag.getSlug(), nextPage);
+        return booksQueryRepository.findByTagList_Slug(userProfileService.getUserId(), tag.getSlug(), nextPage);
     }
 
-    public Page<BookQuery> getBooksForPageGenre(Genre genre, Integer offset, Integer limit) {
+    public Page<BooksQuery> getBooksForPageGenre(Genre genre, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookQueryRepository.getByGenreList_Slug(userProfileService.getUserId(), genre.getSlug(), nextPage);
+        return booksQueryRepository.getByGenreList_Slug(userProfileService.getUserId(), genre.getSlug(), nextPage);
     }
 
-    public Page<BookQuery> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
+    public Page<BooksQuery> getBooksForPageAuthor(Author author, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return bookQueryRepository.getByAuthorList_Slug(userProfileService.getUserId(), author.getSlug(), nextPage);
+        return booksQueryRepository.getByAuthorList_Slug(userProfileService.getUserId(), author.getSlug(), nextPage);
     }
 
     public Book getBookBySlug(String slug) {
@@ -80,6 +94,10 @@ public class BookService {
 
     public void save(Book bookToUpdate) {
         bookRepository.save(bookToUpdate);
+    }
+
+    public void saveBooksViewed(int bookId) {
+        booksViewedRepository.insertOrUpdate(bookId, userProfileService.getUserId());
     }
 
 }

@@ -16,6 +16,16 @@
     <a th:if="${genre.getChildGenres().size() == 0}" th:href="${'/genres/' + genre.getSlug()}"
        th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
 </div>
+<span class="breadcrumbs-item" th:fragment="parentGenre(genre)" th:if="${genre != null}">
+    <a th:href="'/genres/' + ${genre.slug}"
+       th:text="${genre.name}">
+    Легкое чтение
+    </a>
+    <span style="color: #b8b8b8; padding: 4px">/</span>
+    <div th:if="${genre.getParent()} != null"
+         th:replace="~{fragments/genre_fragment::parentGenre(${genre.getParent()})}">
+    </div>
+</span>
 </body>
 
 </html>

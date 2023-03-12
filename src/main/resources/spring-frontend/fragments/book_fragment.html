@@ -9,11 +9,11 @@
                 <div class="Card">
                     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
                         <img th:src="${book.image}"/>
-                        <div class="Card-sale" th:if="${book.discount != 0}">
-                            <span th:text="${(book.discount * 100).intValue()}"></span><span>% скидка</span>
+                        <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
+                            <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
                         </div>
                         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
-                            <span class="Card-ribbonText">Бестселлер</span>
+                            <span class="Card-ribbonText" th:text="#{message.bestseller}">Бестселлер</span>
                         </div>
                         <a class="Card-status" th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}" title="Куплена">
                             <img src="/assets/img/icons/check.svg" alt="check.svg"/>
@@ -37,10 +37,9 @@
                              th:text="${book.authorList.get(0).name}">
                             ФИО <span>  и другие</span>
                         </div>
-
-                        <div class="Card-cost">
-                                            <span class="Card-priceOld" th:if="${book.discount != 0}"
-                                                  th:text="'₽' + ${book.price}">₽500.00</span>
+                        <div class="Card-cost" th:if="${!book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
+                            <span class="Card-priceOld" th:if="${book.discount != 0}"
+                                  th:text="'₽' + ${book.price}">₽500.00</span>
                             <span class="Card-price" th:if="${book.discount != 0}"
                                   th:text="'₽' + ${book.discountPrice()}">₽390.00</span>
                             <span class="Card-price" th:if="${book.discount == 0}"
@@ -63,11 +62,11 @@
 <div class="Card" th:fragment="bookRefresh(booksCollection)" th:each="book : ${booksCollection}">
     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
         <img th:src="${book.image}"/>
-        <div class="Card-sale" th:if="${book.discount != 0}">
-            <span th:text="${book.discount * 100}"></span><span>% скидка</span>
+        <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
+            <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
         </div>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
-            <span class="Card-ribbonText">Бестселлер</span>
+            <span class="Card-ribbonText" th:text="#{message.bestseller}">Бестселлер</span>
         </div>
         <a class="Card-status" th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}" title="Куплена">
             <img src="/assets/img/icons/check.svg" alt="check.svg"/>
@@ -85,7 +84,7 @@
         </strong>
         <div class="Card-description" th:text="${book.getAuthors()}">ФИО
         </div>
-        <div class="Card-cost">
+        <div class="Card-cost" th:if="${!book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
                 <span class="Card-priceOld" th:if="${book.discount != 0}"
                       th:text="'₽' + ${book.price}">₽500.00</span>
             <span class="Card-price" th:if="${book.discount != 0}"
@@ -105,78 +104,78 @@
         <div class="Cart-block Cart-block_row">
             <div class="Cart-block Cart-block_info">
                 <div class="Cart-author">
-                                    <span th:each="author, i : ${book.getAuthorList()}" style="display: inline">
-                                        <a th:if="${i.count} < ${book.getAuthorList().size()}"
-                                           th:href="'/authors/' + ${author.slug}"
-                                           th:text="${author.name} + ',  '">Лия Арден</a>
-                                        <a th:if="${i.count} == ${book.getAuthorList().size()}" href="#"
-                                           th:href="'/authors/' + ${author.slug}"
-                                           th:text="${author.name}">Лия Арден</a>
-                                    </span>
+                    <span th:each="author, i : ${book.getAuthorList()}" style="display: inline">
+                        <a th:if="${i.count} < ${book.getAuthorList().size()}"
+                           th:href="'/authors/' + ${author.slug}"
+                           th:text="${author.name} + ',  '">Лия Арден</a>
+                        <a th:if="${i.count} == ${book.getAuthorList().size()}" href="#"
+                           th:href="'/authors/' + ${author.slug}"
+                           th:text="${author.name}">Лия Арден</a>
+                    </span>
                 </div>
                 <div class="Cart-title">
                     <a th:href="@{/books/{slug}(slug=${book.slug})}" th:text="${book.title}">Жизнь</a>
                 </div>
                 <div class="Cart-rating">
-                                    <span class="Rating">
-                                        <span class="Rating-stars">
-                                            <span th:class="${book.getRate() >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                   viewBox="0 0 19 18">
-                                                <g>
-                                                  <g>
-                                                    <path fill="#ffc000"
-                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                            </span>
-                                            <span th:class="${book.getRate() >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                   viewBox="0 0 19 18">
-                                                <g>
-                                                  <g>
-                                                    <path fill="#ffc000"
-                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                            </span>
-                                            <span th:class="${book.getRate() >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                   viewBox="0 0 19 18">
-                                                <g>
-                                                  <g>
-                                                    <path fill="#ffc000"
-                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                            </span>
-                                            <span th:class="${book.getRate() >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                   viewBox="0 0 19 18">
-                                                <g>
-                                                  <g>
-                                                    <path fill="#ffc000"
-                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                            </span>
-                                            <span th:class="${book.getRate() >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
-                                                   viewBox="0 0 19 18">
-                                                <g>
-                                                  <g>
-                                                    <path fill="#ffc000"
-                                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
-                                                  </g>
-                                                </g>
-                                              </svg>
-                                            </span>
-                                        </span>
-                                    </span>
+                    <span class="Rating">
+                        <span class="Rating-stars">
+                            <span th:class="${book.getRate() >= 1} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                   viewBox="0 0 19 18">
+                                <g>
+                                  <g>
+                                    <path fill="#ffc000"
+                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                  </g>
+                                </g>
+                              </svg>
+                            </span>
+                            <span th:class="${book.getRate() >= 2} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                   viewBox="0 0 19 18">
+                                <g>
+                                  <g>
+                                    <path fill="#ffc000"
+                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                  </g>
+                                </g>
+                              </svg>
+                            </span>
+                            <span th:class="${book.getRate() >= 3} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                   viewBox="0 0 19 18">
+                                <g>
+                                  <g>
+                                    <path fill="#ffc000"
+                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                  </g>
+                                </g>
+                              </svg>
+                            </span>
+                            <span th:class="${book.getRate() >= 4} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                   viewBox="0 0 19 18">
+                                <g>
+                                  <g>
+                                    <path fill="#ffc000"
+                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                  </g>
+                                </g>
+                              </svg>
+                            </span>
+                            <span th:class="${book.getRate() >= 5} ? 'Rating-star Rating-star_view' : 'Rating-star'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18"
+                                   viewBox="0 0 19 18">
+                                <g>
+                                  <g>
+                                    <path fill="#ffc000"
+                                          d="M9.5 14.925L3.629 18l1.121-6.512L0 6.875l6.564-.95L9.5 0l2.936 5.925 6.564.95-4.75 4.613L15.371 18z"></path>
+                                  </g>
+                                </g>
+                              </svg>
+                            </span>
+                        </span>
+                    </span>
                 </div>
                 <div class="Cart-buttons">
                     <div class="Cart-btn">
@@ -219,7 +218,10 @@
                     254 р.
                 </div>
                 <div class="Cart-sale" th:if="${book.discount != 0}"
-                     th:text="${'-' + book.discount * 100  + '%'}">254 р.
+                     th:text="${'-' + (book.discount * 100).intValue()  + '%'}">254 р.
+                </div>
+                <div class="Cart-sale" style="background-color: #9bc90d" th:if="${book.isBestseller == 1}"
+                     th:text="#{message.bestseller}">Бестселлер
                 </div>
             </div>
         </div>

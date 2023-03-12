@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
+import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Controller
@@ -32,8 +33,8 @@ public class TagPageController extends ModelAttributeController {
     @Autowired
     public TagPageController(TagService tagService, BookService bookService,
                              UserProfileService userProfileService, BookShopService bookShopService,
-                             MessageSource messageSource, LocaleResolver localeResolver) {
-        super(userProfileService, bookShopService, messageSource, localeResolver);
+                             MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+        super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.tagService = tagService;
         this.bookService = bookService;
     }
@@ -41,7 +42,7 @@ public class TagPageController extends ModelAttributeController {
     @GetMapping("/tags/{slug}")
     public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<BookQuery> books = bookService.getBooksForPageTage(tag, 0, 20);
+        Page<BooksQuery> books = bookService.getBooksForPageTage(tag, 0, 20);
         model.addAttribute("tagPage", tag);
         model.addAttribute("booksTag", books);
         model.addAttribute("searchWordDto", new SearchWordDto());
@@ -58,7 +59,7 @@ public class TagPageController extends ModelAttributeController {
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<BookQuery> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
+        Page<BooksQuery> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
         return new BooksPageDto(tagBooks.getContent());
     }
 }

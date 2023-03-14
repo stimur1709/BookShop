@@ -33,18 +33,18 @@ public class BooksPageController extends ModelAttributeController {
         this.bookService = bookService;
     }
 
-    @GetMapping({"/api/books/recent", "/api/books/popular", "/api/books/viewed"})
+    @GetMapping("/api/books")
     @ResponseBody
     @Operation(summary = "Постраничный вывод книг с указанием параметров даты \"от\" и \"до\"")
-    public BooksPageDto getRecentBooksPage(@RequestParam(value = "from", defaultValue = "16.06.2009") String from,
+    public BooksPageDto getRecentBooksPage(@RequestParam(value = "property", defaultValue = "popularity") String property,
+                                           @RequestParam(value = "from", defaultValue = "16.06.2009") String from,
                                            @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit) {
-        String property = getProperty(getUrl());
         if (property.equals("pub_date")) {
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit).getContent());
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit));
         } else {
-            return new BooksPageDto(bookService.getPageBooks(offset, limit, property).getContent());
+            return new BooksPageDto(bookService.getPageBooks(offset, limit, property));
         }
     }
 

@@ -63,6 +63,6 @@ public class GenrePageController extends ModelAttributeController {
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         Genre genre = genreService.getPageBySlug(slug);
-        return new BooksPageDto(bookService.getBooksForPageGenre(genre, offset, limit).getContent());
+        return new BooksPageDto(bookService.getBooksForPageGenre(genre, offset, limit));
     }
 }

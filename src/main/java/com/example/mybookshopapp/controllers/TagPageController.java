@@ -60,6 +60,6 @@ public class TagPageController extends ModelAttributeController {
                                      @RequestParam("limit") Integer limit) {
         TagBook tag = tagService.getPageBySlug(slug);
         Page<BooksQuery> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
-        return new BooksPageDto(tagBooks.getContent());
+        return new BooksPageDto(tagBooks);
     }
 }

@@ -3,6 +3,7 @@ package com.example.mybookshopapp.data.dto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -10,16 +11,16 @@ import java.util.List;
 @Setter
 public class BooksPageDto {
 
-    private Integer count;
+    private long count;
+    private int totalPages;
+    private String sort;
     private List<BooksQuery> books;
 
-    public BooksPageDto(List<BooksQuery> books) {
-        this.books = books;
-        this.count = books.size();
+    public BooksPageDto(Page<BooksQuery> page) {
+        this.books = page.getContent();
+        this.totalPages = page.getTotalPages();
+        this.count = page.getTotalElements();
+        this.sort = page.getSort().toString();
     }
 
-    public BooksPageDto(List<BooksQuery> books, Integer count) {
-        this.count = count;
-        this.books = books;
-    }
 }

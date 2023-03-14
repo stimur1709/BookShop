@@ -51,15 +51,6 @@ public class MainPageController extends ModelAttributeController {
         return "index";
     }
 
-    @GetMapping("/api/books")
-    @ResponseBody
-    @Operation(summary = "Постраничный вывод книг")
-    public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit,
-                                     @RequestParam("properties") String properties) {
-        return new BooksPageDto(bookService.getPageBooks(offset, limit, properties).getContent());
-    }
-
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                   Model model) throws EmptySearchException {
@@ -82,7 +73,7 @@ public class MainPageController extends ModelAttributeController {
                                           @PathVariable(value = "searchWord", required = false)
                                           SearchWordDto searchWordDto) {
         Page<BooksQuery> page = bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit);
-        return new BooksPageDto(page.getContent(), (int) page.getTotalElements());
+        return new BooksPageDto(page);
     }
 
     @GetMapping("/about")

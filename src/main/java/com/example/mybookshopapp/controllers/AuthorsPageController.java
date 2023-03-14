@@ -70,6 +70,6 @@ public class AuthorsPageController extends ModelAttributeController {
     public BooksPageDto authorBooksPage(@PathVariable("id") Integer id, @RequestParam("offset") Integer offset,
                                         @RequestParam("limit") Integer limit) {
         Author author = authorService.getAuthorsById(id);
-        return new BooksPageDto(bookService.getBooksForPageAuthor(author, offset, limit).getContent());
+        return new BooksPageDto(bookService.getBooksForPageAuthor(author, offset, limit));
     }
 }

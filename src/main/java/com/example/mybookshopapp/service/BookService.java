@@ -41,19 +41,19 @@ public class BookService {
         this.booksViewedRepository = booksViewedRepository;
     }
 
-    public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties) {
+    public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties, boolean reverse) {
         switch (properties) {
             case "viewed":
                 return booksQueryRepository.getBooksRecentlyViewed(userProfileService.getUserId(), PageRequest.of(offset, limit));
             case "recommend":
                 return booksQueryRepository.getRecommendedBooks(userProfileService.getUserId(), PageRequest.of(offset, limit));
             default:
-                return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, Sort.Direction.DESC, properties));
+                return booksQueryRepository.getBooks(userProfileService.getUserId(), PageRequest.of(offset, limit, !reverse ? Sort.Direction.DESC : Sort.Direction.ASC, properties));
         }
     }
 
-    public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(Sort.Direction.ASC, "pub_date"));
+    public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit, boolean reverse) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, "pub_date"));
         try {
             Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
             Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);

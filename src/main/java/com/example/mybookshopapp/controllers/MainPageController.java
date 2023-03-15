@@ -43,10 +43,10 @@ public class MainPageController extends ModelAttributeController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-        model.addAttribute("recommendBooks", bookService.getPageBooks(0, 6, "recommend"));
-        model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pub_date"));
-        model.addAttribute("popularBooks", bookService.getPageBooks(0, 6, "popularity"));
-        model.addAttribute("recentlyViewed", bookService.getPageBooks(0, 6, "viewed"));
+        model.addAttribute("recommendBooks", bookService.getPageBooks(0, 6, "recommend", false));
+        model.addAttribute("recentBooks", bookService.getPageBooks(0, 6, "pub_date", false));
+        model.addAttribute("popularBooks", bookService.getPageBooks(0, 6, "popularity", false));
+        model.addAttribute("recentlyViewed", bookService.getPageBooks(0, 6, "viewed", false));
         model.addAttribute("tagsBooks", tagService.getPageOfTagsBooks());
         return "index";
     }

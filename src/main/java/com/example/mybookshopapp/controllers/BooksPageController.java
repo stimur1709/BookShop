@@ -40,18 +40,19 @@ public class BooksPageController extends ModelAttributeController {
                                            @RequestParam(value = "from", defaultValue = "16.06.2009") String from,
                                            @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
-                                           @RequestParam("limit") Integer limit) {
+                                           @RequestParam("limit") Integer limit,
+                                           @RequestParam(value = "reverse", defaultValue = "false") boolean reverse) {
         if (property.equals("pub_date")) {
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit));
+            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit, reverse));
         } else {
-            return new BooksPageDto(bookService.getPageBooks(offset, limit, property));
+            return new BooksPageDto(bookService.getPageBooks(offset, limit, property, reverse));
         }
     }
 
     @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})
     public String recentPage(Model model) {
         String url = getUrl();
-        Page<BooksQuery> books = bookService.getPageBooks(0, 20, getProperty(url));
+        Page<BooksQuery> books = bookService.getPageBooks(0, 20, getProperty(url), false);
         model.addAttribute("books", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());

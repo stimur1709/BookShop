@@ -13,14 +13,12 @@ public class BooksPageDto {
 
     private long count;
     private int totalPages;
-    private String sort;
     private List<BooksQuery> books;
 
     public BooksPageDto(Page<BooksQuery> page) {
         this.books = page.getContent();
         this.totalPages = page.getTotalPages();
         this.count = page.getTotalElements();
-        this.sort = page.getSort().toString();
     }
 
 }

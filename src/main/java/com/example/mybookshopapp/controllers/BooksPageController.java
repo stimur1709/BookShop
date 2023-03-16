@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +43,13 @@ public class BooksPageController extends ModelAttributeController {
                                            @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit,
-                                           @RequestParam(value = "reverse", defaultValue = "false") boolean reverse) {
-        if (property.equals("pub_date")) {
+                                           @RequestParam(value = "reverse", defaultValue = "false") boolean reverse,
+                                           @RequestParam(value = "search", required = false) String search) {
+        if (search != null) {
+            PageRequest page = PageRequest.of(offset, limit,
+                    Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, property));
+            return new BooksPageDto(bookService.getPageOfSearchResultBooks(search, page));
+        } else if (property.equals("pub_date")) {
             return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit, reverse));
         } else {
             return new BooksPageDto(bookService.getPageBooks(offset, limit, property, reverse));

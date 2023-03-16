@@ -64,9 +64,8 @@ public class BookService {
         return null;
     }
 
-    public Page<BooksQuery> getPageOfSearchResultBooks(String wordSearch, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, nextPage);
+    public Page<BooksQuery> getPageOfSearchResultBooks(String wordSearch, Pageable page) {
+        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, page);
     }
 
     public Page<BooksQuery> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {

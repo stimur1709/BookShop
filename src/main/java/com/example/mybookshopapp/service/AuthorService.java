@@ -3,6 +3,8 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,4 +34,8 @@ public class AuthorService {
         return authorRepository.findAuthorById(id);
     }
 
+    public Page<Author> getAuthorsPage(PageRequest of, String search) {
+        System.out.println(search);
+        return authorRepository.findAll(of);
+    }
 }

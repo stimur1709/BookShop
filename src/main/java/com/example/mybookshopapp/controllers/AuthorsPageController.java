@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.controllers;
 
+import com.example.mybookshopapp.data.dto.AuthorsPageDto;
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.author.Author;
@@ -12,6 +13,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +55,16 @@ public class AuthorsPageController extends ModelAttributeController {
         model.addAttribute("author", author);
         model.addAttribute("authorBooks", bookService.getBooksForPageAuthor(author, 0, 5).getContent());
         return "authors/slug";
+    }
+
+    @GetMapping("/api/authors")
+    @ResponseBody
+    public AuthorsPageDto authorPage(@RequestParam("offset") Integer offset,
+                                     @RequestParam("limit") Integer limit,
+                                     @RequestParam(value = "property", defaultValue = "name") String property,
+                                     @RequestParam(value = "reverse", defaultValue = "false") boolean reverse,
+                                     @RequestParam(value = "search", required = false) String search) {
+        return new AuthorsPageDto(authorService.getAuthorsPage(PageRequest.of(offset, limit, reverse ? Sort.Direction.ASC : Sort.Direction.DESC, property), search));
     }
 
     @GetMapping("/books/author/{slug}")

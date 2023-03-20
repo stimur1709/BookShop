@@ -44,8 +44,10 @@ public class BooksPageController extends ModelAttributeController {
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit,
                                            @RequestParam(value = "reverse", defaultValue = "false") boolean reverse,
+                                           @RequestParam(value = "bestseller", defaultValue = "false") boolean bestseller,
+                                           @RequestParam(value = "discount", defaultValue = "false") boolean discount,
                                            @RequestParam(value = "search", required = false) String search) {
-        if (search != null) {
+        if (search != null && !search.isBlank()) {
             PageRequest page = PageRequest.of(offset, limit,
                     Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, property));
             return new BooksPageDto(bookService.getPageOfSearchResultBooks(search, page));

@@ -42,7 +42,6 @@ public class SmsRuService {
     public String sendSms(String phone) {
         SmsCallResult result;
         String smsRuUrl = url + apiId + "&phone=" + phone + "&ip=" + getRemoteAddress();
-        System.out.println(smsRuUrl);
         try {
             result = objectMapper.readValue(restTemplate.getForObject(smsRuUrl, String.class), SmsCallResult.class);
             if (result.getCode() == null || result.getStatus().equals(SmsStatus.ERROR)) {

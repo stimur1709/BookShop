@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.data.dto;
 
-import com.example.mybookshopapp.data.entity.BooksQuery;
+import com.example.mybookshopapp.data.entity.author.Author;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
@@ -9,13 +9,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class BooksPageDto {
+public class AuthorsPageDto {
 
     private long count;
     private int totalPages;
-    private List<BooksQuery> content;
+    private List<Author> content;
 
-    public BooksPageDto(Page<BooksQuery> page) {
+    public AuthorsPageDto(Page<Author> page) {
         this.content = page.getContent();
         this.totalPages = page.getTotalPages();
         this.count = page.getTotalElements();

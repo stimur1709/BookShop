@@ -35,7 +35,8 @@ public class AuthorService {
     }
 
     public Page<Author> getAuthorsPage(PageRequest of, String search) {
-        System.out.println(search);
-        return authorRepository.findAll(of);
+        return search == null || search.isBlank()
+                ? authorRepository.findAll(of)
+                : authorRepository.findDistinctByNameContainsOrBookList_TitleContainsAllIgnoreCase(search, search, of);
     }
 }

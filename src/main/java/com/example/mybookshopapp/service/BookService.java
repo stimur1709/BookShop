@@ -52,20 +52,23 @@ public class BookService {
         }
     }
 
-    public Page<BooksQuery> getPageOfPubDateBetweenBooks(String from, String to, Integer offset, Integer limit, boolean reverse) {
-        Pageable nextPage = PageRequest.of(offset, limit, Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, "pub_date"));
-        try {
-            Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
-            Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
-            return booksQueryRepository.findBookEntityByPubDateBetween(userProfileService.getUserId(), dateFrom, dateTo, nextPage);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public Page<BooksQuery> getPageBooks(Integer offset, Integer limit, String properties, boolean reverse, String to, String from, boolean bestseller, boolean discount, String search) {
+        if (bestseller || discount || !search.isBlank() || (from != null && to != null)) {
+            PageRequest of = PageRequest.of(offset, limit, Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, properties));
+            try {
+                Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(from);
+                Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(to);
+                return booksQueryRepository.findBooks(userProfileService.getUserId(), search, bestseller, discount, dateFrom, dateTo, of);
+            } catch (NullPointerException | ParseException ex) {
+                return booksQueryRepository.findBooks(userProfileService.getUserId(), search, bestseller, discount, new Date(1), new Date(), of);
+            }
+        } else {
+            return getPageBooks(offset, limit, properties, reverse);
         }
-        return null;
     }
 
     public Page<BooksQuery> getPageOfSearchResultBooks(String wordSearch, Pageable page) {
-        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, page);
+        return booksQueryRepository.findBooks(userProfileService.getUserId(), wordSearch, false, false, new Date(1), new Date(), page);
     }
 
     public Page<BooksQuery> getBooksForPageTage(TagBook tag, Integer offset, Integer limit) {

@@ -14,11 +14,8 @@ public interface BooksQueryRepository extends JpaRepository<BooksQuery, Integer>
     @Query(value = "select * from get_books(?1)", nativeQuery = true)
     Page<BooksQuery> getBooks(Integer userId, Pageable pageable);
 
-    @Query(value = "select * from get_books(?1) where pub_date between ?2 and ?3 ", nativeQuery = true)
-    Page<BooksQuery> findBookEntityByPubDateBetween(Integer userId, Date from, Date to, Pageable nextPage);
-
-    @Query(value = "select * from find_books(?1, ?2) ", nativeQuery = true)
-    Page<BooksQuery> findBooks(Integer userId, String search, Pageable nextPage);
+    @Query(value = "select * from find_books(?1, ?2, ?3, ?4, ?5, ?6) ", nativeQuery = true)
+    Page<BooksQuery> findBooks(Integer userId, String search, boolean bestseller, boolean discount, Date from, Date to, Pageable nextPage);
 
     @Query(value = "select * from get_books_by_tag_slug(?1, ?2) ", nativeQuery = true)
     Page<BooksQuery> findByTagList_Slug(Integer userId, String slug, Pageable pageable);

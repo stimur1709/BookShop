@@ -10,8 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,23 +37,15 @@ public class BooksPageController extends ModelAttributeController {
     @ResponseBody
     @Operation(summary = "Постраничный вывод книг с указанием параметров даты \"от\" и \"до\"")
     public BooksPageDto getRecentBooksPage(@RequestParam(value = "property", defaultValue = "popularity") String property,
-                                           @RequestParam(value = "from", defaultValue = "16.06.2009") String from,
-                                           @RequestParam(value = "to", defaultValue = "01.01.2035") String to,
+                                           @RequestParam(value = "from", required = false) String from,
+                                           @RequestParam(value = "to", required = false) String to,
                                            @RequestParam("offset") Integer offset,
                                            @RequestParam("limit") Integer limit,
                                            @RequestParam(value = "reverse", defaultValue = "false") boolean reverse,
                                            @RequestParam(value = "bestseller", defaultValue = "false") boolean bestseller,
                                            @RequestParam(value = "discount", defaultValue = "false") boolean discount,
-                                           @RequestParam(value = "search", required = false) String search) {
-        if (search != null && !search.isBlank()) {
-            PageRequest page = PageRequest.of(offset, limit,
-                    Sort.by(!reverse ? Sort.Direction.ASC : Sort.Direction.DESC, property));
-            return new BooksPageDto(bookService.getPageOfSearchResultBooks(search, page));
-        } else if (property.equals("pub_date")) {
-            return new BooksPageDto(bookService.getPageOfPubDateBetweenBooks(from, to, offset, limit, reverse));
-        } else {
-            return new BooksPageDto(bookService.getPageBooks(offset, limit, property, reverse));
-        }
+                                           @RequestParam(value = "search", defaultValue = "") String search) {
+        return new BooksPageDto(bookService.getPageBooks(offset, limit, property, reverse, to, from, bestseller, discount, search));
     }
 
     @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})

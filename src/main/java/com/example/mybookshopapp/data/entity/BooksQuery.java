@@ -58,10 +58,6 @@ public class BooksQuery {
     @JsonManagedReference
     private List<Author> authorList = new ArrayList<>();
 
-    public String getAuthors() {
-        return getAuthorList().size() > 1 ? getAuthorList().get(0).getName() + " и другие" : getAuthorList().get(0).getName();
-    }
-
     public int discountPrice() {
         if (discount == 0) {
             return price;

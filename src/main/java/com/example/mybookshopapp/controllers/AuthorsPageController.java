@@ -5,8 +5,8 @@ import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.service.AuthorService;
-import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.BooksService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,15 +32,15 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthorsPageController extends ModelAttributeController {
 
     private final AuthorService authorService;
-    private final BookService bookService;
+    private final BooksService booksService;
 
     @Autowired
-    public AuthorsPageController(AuthorService authorService, BookService bookService,
+    public AuthorsPageController(AuthorService authorService, BooksService booksService,
                                  UserProfileService userProfileService, BookShopService bookShopService,
                                  MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.authorService = authorService;
-        this.bookService = bookService;
+        this.booksService = booksService;
     }
 
     @GetMapping("/authors")
@@ -53,7 +53,7 @@ public class AuthorsPageController extends ModelAttributeController {
     public String authorPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
         model.addAttribute("author", author);
-        model.addAttribute("authorBooks", bookService.getBooksForPageAuthor(author, 0, 5).getContent());
+        model.addAttribute("authorBooks", booksService.getBooksForPageAuthor(author, 0, 5).getContent());
         return "authors/slug";
     }
 
@@ -70,7 +70,7 @@ public class AuthorsPageController extends ModelAttributeController {
     @GetMapping("/books/author/{slug}")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
         Author author = authorService.getAuthorsBySlug(slug);
-        Page<BooksQuery> books = bookService.getBooksForPageAuthor(author, 0, 20);
+        Page<BooksQuery> books = booksService.getBooksForPageAuthor(author, 0, 20);
         model.addAttribute("author", author);
         model.addAttribute("books", books);
         return "books/author";
@@ -83,6 +83,6 @@ public class AuthorsPageController extends ModelAttributeController {
     public BooksPageDto authorBooksPage(@PathVariable("id") Integer id, @RequestParam("offset") Integer offset,
                                         @RequestParam("limit") Integer limit) {
         Author author = authorService.getAuthorsById(id);
-        return new BooksPageDto(bookService.getBooksForPageAuthor(author, offset, limit));
+        return new BooksPageDto(booksService.getBooksForPageAuthor(author, offset, limit));
     }
 }

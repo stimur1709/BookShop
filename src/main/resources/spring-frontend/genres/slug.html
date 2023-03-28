@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${genre.name}">Тут название страницы написать</title>
+    <title th:text="${content.name}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -28,17 +28,17 @@
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                 </li>
-                <li class="breadcrumbs-item" th:if="${genre} != null"
-                    th:replace="~{fragments/genre_fragment::parentGenre(${genre.getParent()})}">
+                <li class="breadcrumbs-item" th:if="${content} != null"
+                    th:replace="~{fragments/genre_fragment::parentGenre(${content.getParent()})}">
                     Легкое чтение
                 </li>
-                <li th:class="${genre.getParent() == null} ? 'breadcrumbs-item breadcrumbs-item_current' : ''"
+                <li th:class="${content.getParent() == null} ? 'breadcrumbs-item breadcrumbs-item_current' : ''"
                     style="display: inline-block">
-                    <span th:text="${genre.name}" style="color: #6db33f">Название</span>
+                    <span th:text="${content.name}" style="color: #6db33f">Название</span>
                 </li>
             </ul>
             <header class="Middle-header">
-                <h1 class="Middle-title" th:text="${genre.name}">Детективы</h1>
+                <h1 class="Middle-title" th:text="${content.name}">Детективы</h1>
             </header>
             <div class="Section">
                 <div class="Cards Cards_refresh">
@@ -47,7 +47,7 @@
                         <a class="btn btn_primary" href="#"
                            data-refreshshow="genre" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${genre.slug}, data-total = ${totalPages}"
+                           th:attr="data-refreshid=${content.slug}, data-total = ${totalPages}"
                            data-refreshid="1020" th:text="#{message.showMore}">Показать еще</a>
                     </div>
                 </div>

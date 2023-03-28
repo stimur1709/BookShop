@@ -2,7 +2,7 @@ package com.example.mybookshopapp.data.entity.book.links;
 
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2Genre;
-import com.example.mybookshopapp.data.entity.genre.Genre;
+import com.example.mybookshopapp.data.entity.news.Genre;
 import lombok.Getter;
 import lombok.Setter;
 

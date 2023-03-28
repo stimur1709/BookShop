@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.entity.genre;
+package com.example.mybookshopapp.data.entity.news;
 
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -14,11 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "genre")
-public class Genre {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Genre extends Models {
 
     @ManyToOne
     @JsonManagedReference

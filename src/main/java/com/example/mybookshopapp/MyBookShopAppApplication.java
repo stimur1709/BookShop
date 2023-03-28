@@ -1,6 +1,5 @@
 package com.example.mybookshopapp;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +33,4 @@ public class MyBookShopAppApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public ModelMapper getModelMapper() {
-        return new ModelMapper();
-    }
 }

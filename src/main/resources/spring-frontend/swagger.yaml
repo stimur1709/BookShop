@@ -102,7 +102,7 @@ paths:
 #                "200":
 #                    description: Successful response
 #                    schema:
-#                        $ref: '#/definitions/Data'
+#                        $ref: '#/definitions/Models'
                 "400":
                     description: Error
                     schema:

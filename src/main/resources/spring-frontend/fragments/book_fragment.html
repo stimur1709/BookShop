@@ -29,13 +29,9 @@
                         <strong class="Card-title">
                             <a th:href="'/books/' + ${book.slug}" th:text="${book.title}">Техника</a>
                         </strong>
-                        <div class="Card-description" th:if="${book.authorList.size() == 1}"
-                             th:text="${book.authorList.get(0).name}">
+                        <div class="Card-description" th:if="${book.authorList.size() > 0}"
+                             th:text="${book.getAuthorList().size() > 1 ? book.getAuthorList().get(0).getName() + ' и другие' : book.getAuthorList().get(0).getName()}">
                             ФИО
-                        </div>
-                        <div class="Card-description" th:if="${book.authorList.size() > 1}"
-                             th:text="${book.authorList.get(0).name}">
-                            ФИО <span>  и другие</span>
                         </div>
                         <div class="Card-cost" th:if="${!book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
                             <span class="Card-priceOld" th:if="${book.discount != 0}"
@@ -82,7 +78,9 @@
         <strong class="Card-title">
             <a href="#" th:href="'/books/' + ${book.slug}" th:text="${book.title}">Техника</a>
         </strong>
-        <div class="Card-description" th:text="${book.getAuthors()}">ФИО
+        <div class="Card-description" th:if="${book.authorList.size() > 0}"
+             th:text="${book.getAuthorList().size() > 1 ? book.getAuthorList().get(0).getName() + ' и другие' : book.getAuthorList().get(0).getName()}">
+            ФИО
         </div>
         <div class="Card-cost" th:if="${!book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
                 <span class="Card-priceOld" th:if="${book.discount != 0}"

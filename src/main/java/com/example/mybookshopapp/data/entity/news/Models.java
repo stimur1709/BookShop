@@ -13,7 +13,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Model {
+public class Models {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

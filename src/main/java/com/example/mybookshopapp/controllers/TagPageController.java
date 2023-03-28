@@ -4,8 +4,8 @@ import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.data.dto.SearchWordDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
-import com.example.mybookshopapp.service.BookService;
 import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.BooksService;
 import com.example.mybookshopapp.service.TagService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,21 +28,21 @@ import java.util.ArrayList;
 public class TagPageController extends ModelAttributeController {
 
     private final TagService tagService;
-    private final BookService bookService;
+    private final BooksService booksService;
 
     @Autowired
-    public TagPageController(TagService tagService, BookService bookService,
+    public TagPageController(TagService tagService, BooksService booksService,
                              UserProfileService userProfileService, BookShopService bookShopService,
                              MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver, request);
         this.tagService = tagService;
-        this.bookService = bookService;
+        this.booksService = booksService;
     }
 
     @GetMapping("/tags/{slug}")
     public String tagPage(@PathVariable(value = "slug", required = false) String slug, Model model) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<BooksQuery> books = bookService.getBooksForPageTage(tag, 0, 20);
+        Page<BooksQuery> books = booksService.getBooksForPageTage(tag, 0, 20);
         model.addAttribute("tagPage", tag);
         model.addAttribute("booksTag", books);
         model.addAttribute("searchWordDto", new SearchWordDto());
@@ -59,7 +59,7 @@ public class TagPageController extends ModelAttributeController {
                                      @RequestParam("offset") Integer offset,
                                      @RequestParam("limit") Integer limit) {
         TagBook tag = tagService.getPageBySlug(slug);
-        Page<BooksQuery> tagBooks = bookService.getBooksForPageTage(tag, offset, limit);
+        Page<BooksQuery> tagBooks = booksService.getBooksForPageTage(tag, offset, limit);
         return new BooksPageDto(tagBooks);
     }
 }

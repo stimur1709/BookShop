@@ -6,43 +6,49 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
-public class BooksQueryNew extends Model {
+@MappedSuperclass
+public class BooksFModels extends Models {
 
-    private Double discount;
+    protected Double discount;
 
-    private String image;
+    protected String image;
 
     @Column(name = "is_bestseller")
-    private short isBestseller;
+    protected short isBestseller;
 
-    private Double popularity;
+    protected Double popularity;
 
-    private int price;
+    protected int price;
 
-    private String slug;
+    protected String slug;
 
-    private String title;
+    protected String title;
 
     @Column(name = "pub_date")
-    private Date pubDate;
+    protected Date pubDate;
 
-    private String code;
+    protected String code;
 
-    private Double rate;
+    protected Double rate;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
     @JsonManagedReference
-    private List<Author> authorList = new ArrayList<>();
+    protected List<Author> authorList = new ArrayList<>();
 
+//    public int discountPrice() {
+//        if (discount == 0) {
+//            return price;
+//        } else {
+//            return price - Math.toIntExact(Math.round(price * discount));
+//        }
+//    }
 }

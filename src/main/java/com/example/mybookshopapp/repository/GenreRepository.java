@@ -1,14 +1,14 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.genre.Genre;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.mybookshopapp.data.entity.news.Genre;
+import com.example.mybookshopapp.repository.news.ModelRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface GenreRepository extends JpaRepository<Genre, Integer> {
+public interface GenreRepository extends ModelRepository<Genre> {
 
     Genre findGenreEntityBySlug(String slug);
 

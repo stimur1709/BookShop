@@ -32,7 +32,7 @@ import java.util.Map;
 @Controller
 public class BookPageController extends ModelAttributeController {
 
-    private final BookService bookService;
+    private final BooksService booksService;
     private final ResourceStorage storage;
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
@@ -40,13 +40,13 @@ public class BookPageController extends ModelAttributeController {
     private final DownloadService downloadService;
 
     @Autowired
-    public BookPageController(BookService bookService, ResourceStorage storage,
+    public BookPageController(BooksService booksService, ResourceStorage storage,
                               BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
                               BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
                               BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
                               DownloadService downloadService, HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver, request);
-        this.bookService = bookService;
+        this.booksService = booksService;
         this.storage = storage;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
@@ -56,8 +56,8 @@ public class BookPageController extends ModelAttributeController {
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
-        BookQuery book = bookService.getBookQBySlug(slug);
-        bookService.saveBooksViewed(book.getId());
+        BookQuery book = booksService.getBookQBySlug(slug);
+        booksService.saveBooksViewed(book.getId());
         model.addAttribute("book", book);
         model.addAttribute("reviews", bookReviewService.getBookReview(slug));
         return "books/slug";
@@ -66,9 +66,9 @@ public class BookPageController extends ModelAttributeController {
     @PostMapping("/books/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
         String savePath = storage.saveNewBookImage(file, slug);
-        Book bookToUpdate = bookService.getBookBySlug(slug);
+        Book bookToUpdate = booksService.getBookBySlug(slug);
         bookToUpdate.setImage(savePath);
-        bookService.save(bookToUpdate);
+        booksService.save(bookToUpdate);
         return "redirect:/books/" + slug;
     }
 

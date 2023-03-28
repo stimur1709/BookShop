@@ -2,7 +2,7 @@ package com.example.mybookshopapp.data.entity.book;
 
 import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.genre.Genre;
+import com.example.mybookshopapp.data.entity.news.Genre;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.data.entity.user.User;
@@ -82,7 +82,7 @@ public class Book {
     @JsonManagedReference
     private List<TagBook> tagList = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "book2genre",
             joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id", referencedColumnName = "id")})
@@ -107,10 +107,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
     private List<BookRating> bookRatingList = new ArrayList<>();
-
-    public String getAuthors() {
-        return getAuthorList().size() > 1 ? getAuthorList().get(0).getName() + " и другие" : getAuthorList().get(0).getName();
-    }
 
     public int discountPrice() {
         if (discount == 0) {

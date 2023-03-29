@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.SearchWordDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.errors.EmptySearchException;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.BooksService;
+import com.example.mybookshopapp.service.BooksServiceImpl;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,15 @@ import javax.servlet.http.HttpServletRequest;
 @Tag(name = "Главная страница", description = "Выводит на странице список книг и облако тэгов")
 public class MainPageController extends ModelAttributeController {
 
-    private final BooksService booksService;
+    private final BooksServiceImpl booksServiceImpl;
     private final HttpServletRequest request;
 
     @Autowired
-    public MainPageController(BooksService booksService, UserProfileService userProfileService,
+    public MainPageController(BooksServiceImpl booksServiceImpl, UserProfileService userProfileService,
                               BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
                               HttpServletRequest request) {
         super(userProfileService, bookShopService, messageSource, localeResolver, request);
-        this.booksService = booksService;
+        this.booksServiceImpl = booksServiceImpl;
         this.request = request;
     }
 
@@ -39,7 +39,7 @@ public class MainPageController extends ModelAttributeController {
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                   Model model) throws EmptySearchException {
         if (searchWordDto != null) {
-            Page<BooksQuery> books = booksService.getPageOfSearchResultBooks(searchWordDto.getExample(), PageRequest.of(0, 20));
+            Page<BooksQuery> books = booksServiceImpl.getPageOfSearchResultBooks(searchWordDto.getExample(), PageRequest.of(0, 20));
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("books", books);
             return "search/index";

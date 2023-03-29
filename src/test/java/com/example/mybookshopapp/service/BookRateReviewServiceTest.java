@@ -7,6 +7,7 @@ import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
 import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.*;
+import com.example.mybookshopapp.repository.news.BookQueryRepository;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -104,13 +105,13 @@ class BookRateReviewServiceTest {
             }
         }
 
-        int rate = bookQueryRepository.findBookEntityBySlug(1, book.getSlug()).getRateReview();
+        int rate = bookQueryRepository.getBook(1, book.getSlug()).getRateReview();
         assertEquals(5, rate);
 
         List<BookReviewLike> bookReviewLikes = bookReviewLikeRepository.findAll();
         bookReviewLikes.forEach(bookReviewLike -> bookReviewLike.setValue((short) -1));
         bookReviewLikeRepository.saveAll(bookReviewLikes);
-        rate = bookQueryRepository.findBookEntityBySlug(1, book.getSlug()).getRateReview();
+        rate = bookQueryRepository.getBook(1, book.getSlug()).getRateReview();
         assertEquals(1, rate);
     }
 }

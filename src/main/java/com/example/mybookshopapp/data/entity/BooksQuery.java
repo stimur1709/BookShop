@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.data.entity;
 
-import com.example.mybookshopapp.data.entity.author.Author;
+import com.example.mybookshopapp.data.entity.news.Author;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

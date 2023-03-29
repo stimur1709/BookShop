@@ -197,20 +197,20 @@ as
                    b.code,
                    b.rate,
                    b1.description,
-                   br.rating             as user_rating,
-                   count(r1)             as count1,
-                   count(r2)             as count2,
-                   count(r3)             as count3,
-                   count(r4)             as count4,
-                   count(r5)             as count5,
+                   coalesce(br.rating, 0) as user_rating,
+                   count(r1)              as count1,
+                   count(r2)              as count2,
+                   count(r3)              as count3,
+                   count(r4)              as count4,
+                   count(r5)              as count5,
                    (case
                         when count(rl.value) = 0 then 0
                         when sum(rl.value) < count(rl.value) * 0.2 then 1
                         when sum(rl.value) >= count(rl.value) * 0.2 and sum(rl.value) < count(rl.value) * 0.4 then 2
                         when sum(rl.value) >= count(rl.value) * 0.4 and sum(rl.value) < count(rl.value) * 0.6 then 3
                         when sum(rl.value) >= count(rl.value) * 0.6 and sum(rl.value) < count(rl.value) * 0.8 then 3
-                        else 5 end)      as rate_review,
-                   coalesce(fd.count, 0) as download_count
+                        else 5 end)       as rate_review,
+                   coalesce(fd.count, 0)  as download_count
             from get_books($1) b
                      join books b1 on b.id = b1.id
                      left join book_rating br on b.id = br.book_id and br.user_id = $1

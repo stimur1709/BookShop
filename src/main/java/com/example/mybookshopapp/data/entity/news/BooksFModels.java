@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.data.entity.news;
 
-import com.example.mybookshopapp.data.entity.author.Author;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,11 +43,11 @@ public class BooksFModels extends Models {
     @JsonManagedReference
     protected List<Author> authorList = new ArrayList<>();
 
-//    public int discountPrice() {
-//        if (discount == 0) {
-//            return price;
-//        } else {
-//            return price - Math.toIntExact(Math.round(price * discount));
-//        }
-//    }
+    public int discountPrice() {
+        if (discount == 0) {
+            return price;
+        } else {
+            return price - Math.toIntExact(Math.round(price * discount));
+        }
+    }
 }

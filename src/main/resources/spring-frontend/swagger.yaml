@@ -146,7 +146,7 @@ paths:
         get:
             tags:
                 - authorID
-            summary: Show sort by author ID
+            summary: Show sort by content ID
             operationId: authorID
             parameters:
                 -   name: id
@@ -155,7 +155,7 @@ paths:
                     type: string
                 -   name: query
                     in: query
-                    description: Sort by ID of author
+                    description: Sort by ID of content
                     required: false
                     type: integer
                 -   name: offset

@@ -1,8 +1,7 @@
-package com.example.mybookshopapp.data.entity.tag;
+package com.example.mybookshopapp.data.entity.news;
 
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,24 +12,26 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tags")
-@Schema(description = "Сущность тэга")
-public class TagBook {
+@Table(name = "authors")
+public class Author extends Models {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String name;
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String photo;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book2tag",
-            joinColumns = {@JoinColumn(name = "tag_id")},
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String name;
+
+    @Column(columnDefinition = "TEXT NOT NULL")
+    private String description;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "book2Author",
+            joinColumns = {@JoinColumn(name = "author_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     @JsonBackReference
     private List<Book> bookList = new ArrayList<>();
+
 }

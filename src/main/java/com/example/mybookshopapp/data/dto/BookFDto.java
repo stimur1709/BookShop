@@ -1,7 +1,11 @@
 package com.example.mybookshopapp.data.dto;
 
+import com.example.mybookshopapp.data.entity.book.BookRating;
+import com.example.mybookshopapp.data.entity.book.file.BookFile;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,11 +29,10 @@ public class BookFDto extends BooksFDto {
 
     private int downloadCount;
 
-//    private List<TagBook> tagList;
-//
-//    private List<BookFile> bookFileList;
-//
-//    private List<BookRating> bookRatingList;
-//
-//    private List<Author> authorList;
+    private List<TagBookDto> tagList;
+
+    private List<BookFile> bookFileList;
+
+    private List<BookRating> bookRatingList;
+
 }

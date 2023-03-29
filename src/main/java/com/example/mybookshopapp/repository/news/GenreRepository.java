@@ -1,7 +1,6 @@
-package com.example.mybookshopapp.repository;
+package com.example.mybookshopapp.repository.news;
 
 import com.example.mybookshopapp.data.entity.news.Genre;
-import com.example.mybookshopapp.repository.news.ModelRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

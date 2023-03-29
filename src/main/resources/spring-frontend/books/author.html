@@ -43,7 +43,7 @@
                         <a class="btn btn_primary" href="#"
                            data-refreshshow="author" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${author.id}, data-total = ${books.getTotalPages()}"
+                           th:attr="data-refreshid=${author.slug}, data-total = ${books.getTotalPages()}"
                            data-refreshid="10" th:text="#{message.showMore}">
                             Показать еще</a>
                     </div>

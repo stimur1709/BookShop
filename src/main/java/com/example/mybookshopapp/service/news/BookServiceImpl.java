@@ -3,8 +3,11 @@ package com.example.mybookshopapp.service.news;
 import com.example.mybookshopapp.data.dto.BookFDto;
 import com.example.mybookshopapp.data.dto.BookQuery;
 import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.entity.news.BookF;
 import com.example.mybookshopapp.data.entity.news.BooksF;
-import com.example.mybookshopapp.repository.news.BooksQueryRepositoryNew;
+import com.example.mybookshopapp.repository.BooksViewedRepository;
+import com.example.mybookshopapp.repository.news.BookQueryRepository;
+import com.example.mybookshopapp.repository.news.BooksQueryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +20,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class BookService extends ModelServiceImpl<BooksF, BookQuery, BooksFDto, BooksQueryRepositoryNew> {
+public class BookServiceImpl extends ModelServiceImpl<BooksF, BookQuery, BooksFDto, BooksQueryRepository> {
 
 
-    private final BooksQueryRepositoryNew booksQueryRepositoryNew;
+    private final BooksViewedRepository booksViewedRepository;
+    private final BookQueryRepository bookQueryRepository;
 
     @Autowired
-    protected BookService(BooksQueryRepositoryNew repository, UserProfileService userProfileService, ModelMapper modelMapper,
-                          BooksQueryRepositoryNew booksQueryRepositoryNew) {
+    protected BookServiceImpl(BooksQueryRepository repository, UserProfileService userProfileService, ModelMapper modelMapper,
+                              BooksViewedRepository booksViewedRepository, BookQueryRepository bookQueryRepository) {
         super(repository, BooksFDto.class, userProfileService, modelMapper);
-        this.booksQueryRepositoryNew = booksQueryRepositoryNew;
+        this.booksViewedRepository = booksViewedRepository;
+        this.bookQueryRepository = bookQueryRepository;
     }
 
     @Override
@@ -48,6 +53,12 @@ public class BookService extends ModelServiceImpl<BooksF, BookQuery, BooksFDto, 
                 case "genre":
                     return repository.getBooksByGenreSlug(userId, q.getSlug(), PageRequest.of(q.getOffset(), q.getLimit()))
                             .map(m -> modelMapper.map(m, BooksFDto.class));
+                case "author":
+                    return repository.getBooksByAuthorSlug(userId, q.getSlug(), PageRequest.of(q.getOffset(), q.getLimit()))
+                            .map(m -> modelMapper.map(m, BooksFDto.class));
+                case "tag":
+                    return repository.getBooksByTagSlug(userId, q.getSlug(), PageRequest.of(q.getOffset(), q.getLimit()))
+                            .map(m -> modelMapper.map(m, BooksFDto.class));
                 case "viewed":
                     return repository.getBooksRecentlyViewed(userId, PageRequest.of(q.getOffset(), q.getLimit()))
                             .map(m -> modelMapper.map(m, BooksFDto.class));
@@ -63,6 +74,8 @@ public class BookService extends ModelServiceImpl<BooksF, BookQuery, BooksFDto, 
 
     @Override
     public BookFDto getContent(String slug) {
-        return modelMapper.map(booksQueryRepositoryNew.getBook(userProfileService.getUserId(), slug), BookFDto.class);
+        BookF book = bookQueryRepository.getBook(userProfileService.getUserId(), slug);
+        booksViewedRepository.insertOrUpdate(book.getId(), userProfileService.getUserId());
+        return modelMapper.map(book, BookFDto.class);
     }
 }

@@ -4,9 +4,10 @@ import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
 import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
+import com.example.mybookshopapp.data.entity.news.BooksF;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.Book2UserRepository;
-import com.example.mybookshopapp.repository.BooksQueryRepository;
+import com.example.mybookshopapp.repository.news.BooksQueryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -52,7 +53,7 @@ public class BookShopService {
         }
     }
 
-    public List<BooksQuery> getBooksUser(BookCodeType status) {
+    public List<BooksF> getBooksUser(BookCodeType status) {
         return booksQueryRepository.getBooksUser(userProfileService.getUserId(), status.name());
     }
 

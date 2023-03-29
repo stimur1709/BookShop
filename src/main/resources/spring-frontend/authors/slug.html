@@ -5,7 +5,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${author.name}">Тут название страницы написать</title>
+    <title th:text="${content.name}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -32,10 +32,10 @@
                 <li class="breadcrumbs-item"><a th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
                 </li>
                 <li class="breadcrumbs-item breadcrumbs-item_current">
-                    <span th:text="${author.name}">БорисВасильевич Бедный</span>
+                    <span th:text="${content.name}">БорисВасильевич Бедный</span>
                 </li>
             </ul>
-            <h1 class="Middle-title" th:text="${author.name}">Борис Васильевич Бедный
+            <h1 class="Middle-title" th:text="${content.name}">Борис Васильевич Бедный
             </h1>
             <article class="Article">
                 <div class="sdf">
@@ -43,16 +43,16 @@
                 <div class="Spoiler">
                     <div class="Spoiler-visible">
                         <div class="pict pict_left">
-                            <img th:src="${author.photo}" alt="card.jpg"/>
+                            <img th:src="${content.photo}" alt="card.jpg"/>
                         </div>
-                        <div th:if="${author.description.length() >= 200}">
+                        <div th:if="${content.description.length() >= 200}">
                             <h2 th:text="#{messages.biography}">Биография</h2>
-                            <span th:text="${author.description.substring(0, author.description.length()/2)}"
+                            <span th:text="${content.description.substring(0, content.description.length()/2)}"
                                   style="line-height: 1.5em; color: #757575; margin-bottom: 10px">
                                 Борис
                             </span>
                             <span class="Spoiler-hide" style="line-height: 1.5em; color: #757575; margin-bottom: 10px"
-                                  th:text="${author.description.substring(author.description.length()/2)}">
+                                  th:text="${content.description.substring(content.description.length()/2)}">
                                 "Писать он начал до войны, в академии,- рассказал о нем в предисловии к книге "Первое дело"
                             поэт К.Ваншенкин.- Был участником литературных кружков и студий. Но всерьез вернулся к
                             этому
@@ -62,15 +62,15 @@
                             судьбу, поступив в Литературный институт" в 1952г.
                         </span>
                         </div>
-                        <div th:if="${author.description.length() < 200}">
+                        <div th:if="${content.description.length() < 200}">
                             <h2 th:text="#{messages.biography}">Биография</h2>
-                            <span th:text="${author.description}"
+                            <span th:text="${content.description}"
                                   style="line-height: 1.5em; color: #757575; margin-bottom: 10px">
                                 Борис
                             </span>
                         </div>
                     </div>
-                    <div class="Spoiler-footer" th:if="${author.description.length() >= 200}">
+                    <div class="Spoiler-footer" th:if="${content.description.length() >= 200}">
                         <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
                                 data-showtext="Свернуть" data-hidetext="Показать полностью"
                                 th:attr="data-hidetext=#{message.showAll}, data-showtext=#{message.collapse}">
@@ -86,10 +86,10 @@
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${authorBooks})}"></div>
                 </div>
                 <footer class="Section-footer">
-                    <a class="Author-books" th:href="'/books/author/' + ${author.slug}"
+                    <a class="Author-books" th:href="'/books/author/' + ${content.slug}"
                        th:text="#{message.allBooksAuthor}">
                         Все книги автора
-                        <span class="Author-amount" th:text="${author.getBookList().size()}">(55)</span>
+                        <span class="Author-amount" th:text="${content.getBookList().size()}">(55)</span>
                     </a>
                 </footer>
             </div>

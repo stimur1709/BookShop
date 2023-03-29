@@ -5,7 +5,7 @@
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${tagPage.name}">Тут название страницы написать</title>
+    <title th:text="${content.name}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -29,13 +29,13 @@
             <ul class="breadcrumbs">
                 <li class="breadcrumbs-item"><a th:text="#{topbar.main}" th:href="@{/}">Главная</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${tagPage.name}">
+                <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${content.name}">
                     <span>Психологическая проза</span>
                 </li>
             </ul>
             <div class="Section">
                 <div class="Section-header">
-                    <h1 class="Section-title" th:text="${tagPage.name}">Психологическая проза
+                    <h1 class="Section-title" th:text="${content.name}">Психологическая проза
                     </h1>
                     <div class="Section-header-links">
                         <a class="Section-header-link" th:href="@{/#tags}">
@@ -49,7 +49,7 @@
                         <a class="btn btn_primary" href="#" th:if="${show}"
                            data-refreshshow="tag" data-refreshoffset="0"
                            data-refreshlimit="20"
-                           th:attr="data-refreshid=${tagPage.slug}, data-total = ${totalPages}"
+                           th:attr="data-refreshid=${content.slug}, data-total = ${totalPages}"
                            data-refreshid="10" th:text="#{message.showMore}">
                             Показать еще
                         </a>

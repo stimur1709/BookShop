@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.data.entity.book;
 
-import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.file.BookFile;
+import com.example.mybookshopapp.data.entity.news.Author;
 import com.example.mybookshopapp.data.entity.news.Genre;
+import com.example.mybookshopapp.data.entity.news.TagBook;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
-import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;

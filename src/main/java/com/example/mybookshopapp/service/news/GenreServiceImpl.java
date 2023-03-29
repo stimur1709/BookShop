@@ -3,7 +3,7 @@ package com.example.mybookshopapp.service.news;
 import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.dto.Query;
 import com.example.mybookshopapp.data.entity.news.Genre;
-import com.example.mybookshopapp.repository.GenreRepository;
+import com.example.mybookshopapp.repository.news.GenreRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

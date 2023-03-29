@@ -2,7 +2,7 @@ package com.example.mybookshopapp.data.entity.book.links;
 
 import com.example.mybookshopapp.data.entity.book.Book;
 import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2Tag;
-import com.example.mybookshopapp.data.entity.tag.TagBook;
+import com.example.mybookshopapp.data.entity.news.TagBook;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,9 +1,7 @@
 package com.example.mybookshopapp.data.entity.news;
 
-import com.example.mybookshopapp.data.entity.author.Author;
 import com.example.mybookshopapp.data.entity.book.BookRating;
 import com.example.mybookshopapp.data.entity.book.file.BookFile;
-import com.example.mybookshopapp.data.entity.tag.TagBook;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,11 +46,11 @@ public class BookF extends BooksFModels {
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
     @OrderBy("hash")
-    private List<BookFile> bookFileList = new ArrayList<>();
+    private List<BookFile> bookFileList;
 
     @OneToMany(mappedBy = "book")
     @JsonManagedReference
-    private List<BookRating> bookRatingList = new ArrayList<>();
+    private List<BookRating> bookRatingList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2Author",

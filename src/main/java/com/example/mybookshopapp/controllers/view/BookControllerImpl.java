@@ -1,16 +1,11 @@
-package com.example.mybookshopapp.controllers;
+package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BookRateRequestDto;
-import com.example.mybookshopapp.data.dto.BookReviewRequestDto;
-import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.dto.ReviewLikeDto;
-import com.example.mybookshopapp.data.entity.BookQuery;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.dto.*;
 import com.example.mybookshopapp.service.*;
+import com.example.mybookshopapp.service.news.BookServiceImpl;
 import com.example.mybookshopapp.service.userService.UserProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -30,47 +24,67 @@ import java.nio.file.Path;
 import java.util.Map;
 
 @Controller
-public class BookPageController extends ModelAttributeController {
+public class BookControllerImpl extends ViewControllerImpl {
 
-    private final BooksService booksService;
-    private final ResourceStorage storage;
+    private final BookServiceImpl bookService;
     private final BooksRatingAndPopularityService ratingBook;
     private final BookReviewService bookReviewService;
     private final BookRateReviewService bookRateReviewService;
     private final DownloadService downloadService;
+    private final ResourceStorage storage;
 
-    @Autowired
-    public BookPageController(BooksService booksService, ResourceStorage storage,
-                              BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService,
-                              BookRateReviewService bookRateReviewService, UserProfileService userProfileService,
-                              BookShopService bookShopService, MessageSource messageSource, LocaleResolver localeResolver,
-                              DownloadService downloadService, HttpServletRequest request) {
-        super(userProfileService, bookShopService, messageSource, localeResolver, request);
-        this.booksService = booksService;
-        this.storage = storage;
+    protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request, ResourceStorage storage, BookServiceImpl bookService, BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService, BookRateReviewService bookRateReviewService, DownloadService downloadService, ResourceStorage storage1) {
+        super(userProfileService, request);
+        this.bookService = bookService;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
         this.downloadService = downloadService;
+        this.storage = storage1;
     }
+
 
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
-        BookQuery book = booksService.getBookQBySlug(slug);
-        booksService.saveBooksViewed(book.getId());
-        model.addAttribute("book", book);
+        model.addAttribute("book", bookService.getContent(slug));
         model.addAttribute("reviews", bookReviewService.getBookReview(slug));
         return "books/slug";
     }
 
-    @PostMapping("/books/{slug}/img/save")
-    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
-        String savePath = storage.saveNewBookImage(file, slug);
-        Book bookToUpdate = booksService.getBookBySlug(slug);
-        bookToUpdate.setImage(savePath);
-        booksService.save(bookToUpdate);
-        return "redirect:/books/" + slug;
+    @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})
+    public String recentPage(Model model) {
+        String url = getUrl();
+        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, getProperty(url), false));
+        model.addAttribute("books", books.getContent());
+        model.addAttribute("show", books.getTotalPages() > 1);
+        model.addAttribute("totalPages", books.getTotalPages());
+        return "books/" + url;
     }
+
+    private String getProperty(String url) {
+        String property = null;
+        switch (url) {
+            case "viewed":
+                property = "viewed";
+                break;
+            case "popular":
+                property = "popularity";
+                break;
+            case "recent":
+                property = "pub_date";
+                break;
+        }
+        return property;
+    }
+
+//    @PostMapping("/books/{slug}/img/save")
+//    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
+//        String savePath = storage.saveNewBookImage(file, slug);
+//        Book bookToUpdate = bookService.getBookBySlug(slug);
+//        bookToUpdate.setImage(savePath);
+//        bookService.save(bookToUpdate);
+//        return "redirect:/books/" + slug;
+//    }
 
     @GetMapping("/books/download/{hash}")
     public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {

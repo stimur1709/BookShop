@@ -3,8 +3,8 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.data.dto.Balance;
 import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
 import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.BooksQuery;
 import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
+import com.example.mybookshopapp.data.entity.news.BooksF;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.PaymentService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -40,16 +40,16 @@ public class BookShopController extends ModelAttributeController {
             paymentService.getStatusPaymentByUCodePaymentEx(uuid);
         }
 
-        List<BooksQuery> bookList = getBooksUser();
+        List<BooksF> bookList = getBooksUser();
 
         if (bookList == null || bookList.isEmpty()) {
             model.addAttribute("emptyList", true);
         } else {
             model.addAttribute("emptyList", false);
             model.addAttribute("books", bookList);
-            model.addAttribute("booksSlug", bookList.stream().map(BooksQuery::getSlug).collect(Collectors.toList()));
-            model.addAttribute("priceAll", bookList.stream().mapToInt(BooksQuery::discountPrice).sum());
-            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(BooksQuery::getPrice).sum());
+            model.addAttribute("booksSlug", bookList.stream().map(BooksF::getSlug).collect(Collectors.toList()));
+            model.addAttribute("priceAll", bookList.stream().mapToInt(BooksF::discountPrice).sum());
+            model.addAttribute("priceAllNoDisc", bookList.stream().mapToInt(BooksF::getPrice).sum());
         }
 
         return getUrl();
@@ -82,7 +82,7 @@ public class BookShopController extends ModelAttributeController {
         return bookShopService.changeBookStatus(dto);
     }
 
-    private List<BooksQuery> getBooksUser() {
+    private List<BooksF> getBooksUser() {
         String url = getUrl();
         BookCodeType status = BookCodeType.UNLINK;
         switch (url) {

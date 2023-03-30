@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.dto.YKassa;
+package com.example.mybookshopapp.data.outher.YKassa;
 
 import lombok.Getter;
 import lombok.Setter;

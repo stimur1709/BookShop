@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.data.dto;
 
-import com.example.mybookshopapp.data.entity.book.BookRating;
-import com.example.mybookshopapp.data.entity.book.file.BookFile;
+import com.example.mybookshopapp.data.entity.books.BookFile;
+import com.example.mybookshopapp.data.entity.books.BookRating;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.book.links.Book2User;
+import com.example.mybookshopapp.data.entity.links.Book2User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

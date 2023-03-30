@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.entity.book.file.FileDownload;
-import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
+import com.example.mybookshopapp.data.entity.FileDownload;
+import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

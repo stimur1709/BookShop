@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.entity.user;
 
+import com.example.mybookshopapp.data.entity.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "user_login_history")
-public class UserLoginHistory {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class UserLoginHistory extends Models {
 
     @Column(columnDefinition = "VARCHAR(40) NOT NULL")
     private String system;

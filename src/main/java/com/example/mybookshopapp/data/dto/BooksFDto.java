@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.data.dto;
 
-import com.example.mybookshopapp.data.entity.news.Author;
+import com.example.mybookshopapp.data.entity.Author;
 import lombok.Getter;
 import lombok.Setter;
 

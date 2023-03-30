@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.VkToken;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserContact;
+import com.example.mybookshopapp.data.outher.VkToken;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private static final String INVALID_USER_INFO_RESPONSE_ERROR_CODE = "invalid_user_info_response";
 
     private static final ParameterizedTypeReference<Map<String, Object>> PARAMETERIZED_RESPONSE_TYPE =
-            new ParameterizedTypeReference<Map<String, Object>>() {
+            new ParameterizedTypeReference<>() {
             };
 
     @Autowired
@@ -120,11 +120,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         authorities.add(new OAuth2UserAuthority(userAttributes));
 
         ObjectMapper mapper = new ObjectMapper();
-        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<List<VkToken>>() {
+        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<>() {
         });
         VkToken vkToken = vkTokenList.get(0);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
-        if (!userContact.isPresent()) {
+        if (userContact.isEmpty()) {
             UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
             User user = new User(vkToken.getFirstname(), vkToken.getLastname(), vkToken.getId());
             contact.setUser(user);

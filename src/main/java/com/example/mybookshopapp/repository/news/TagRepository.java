@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository.news;
 
-import com.example.mybookshopapp.data.entity.news.TagBook;
+import com.example.mybookshopapp.data.entity.TagBook;
 import org.springframework.stereotype.Repository;
 
 @Repository

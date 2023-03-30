@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.book.BooksViewed;
-import com.example.mybookshopapp.data.entity.book.links.key.KeyBook2User;
+import com.example.mybookshopapp.data.entity.books.BooksViewed;
+import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

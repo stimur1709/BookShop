@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.entity.user;
 
+import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,11 +18,7 @@ import java.util.Date;
 @Table(name = "user_contact")
 @Schema(description = "Сущность контакта пользователя")
 @ToString
-public class UserContact implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class UserContact extends Models implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", columnDefinition = "INT")

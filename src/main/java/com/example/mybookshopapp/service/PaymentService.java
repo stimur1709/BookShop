@@ -1,15 +1,15 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.config.PaymentConfig;
-import com.example.mybookshopapp.data.dto.YKassa.Amount;
-import com.example.mybookshopapp.data.dto.YKassa.Confirmation;
-import com.example.mybookshopapp.data.dto.YKassa.Payment;
-import com.example.mybookshopapp.data.dto.YKassa.PaymentRequest;
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
+import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.entity.config.Api;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
-import com.example.mybookshopapp.data.entity.payments.BalanceTransactionDto;
 import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.outher.YKassa.Amount;
+import com.example.mybookshopapp.data.outher.YKassa.Confirmation;
+import com.example.mybookshopapp.data.outher.YKassa.Payment;
+import com.example.mybookshopapp.data.outher.YKassa.PaymentRequest;
 import com.example.mybookshopapp.repository.BalanceTransactionRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -87,7 +87,7 @@ public class PaymentService {
         List<BalanceTransaction> transactions = new ArrayList<>();
         List<Book> bookList = bookRepository.findBookEntitiesBySlugIn(books);
         for (Book book : bookList) {
-            transactions.add(new BalanceTransaction(userProfileService.getCurrentUser().getId(), book.discountPrice(), book.getId(), codePaymentIn));
+            transactions.add(new BalanceTransaction(userProfileService.getCurrentUser().getId(), book.getDiscountPrice(), book.getId(), codePaymentIn));
         }
         mailService.sendMail(userProfileService.getCurrentUserDTO().getMail(), "http://localhost:8085/my", 3);
         balanceTransactionRepository.saveAll(transactions);

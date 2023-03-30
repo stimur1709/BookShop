@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository.news;
 
-import com.example.mybookshopapp.data.entity.news.Author;
+import com.example.mybookshopapp.data.entity.Author;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

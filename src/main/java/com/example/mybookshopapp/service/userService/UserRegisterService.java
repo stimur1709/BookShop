@@ -1,14 +1,14 @@
 package com.example.mybookshopapp.service.userService;
 
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.dto.ContactConfirmationResponse;
-import com.example.mybookshopapp.data.dto.RegistrationForm;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserContact;
+import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.outher.ContactConfirmationResponse;
+import com.example.mybookshopapp.data.outher.RegistrationForm;
 import com.example.mybookshopapp.repository.UserRepository;
-import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserContactService;
+import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDto {
+public class UserDto extends Dto {
 
-    private int id;
     private String firstname;
     private String lastname;
     private String mail;
@@ -17,7 +16,6 @@ public class UserDto {
     private int balance;
 
     public UserDto(int id, String firstname, String lastname, String mail, int approvedMail, String phone, int approvedPhone, int balance) {
-        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.mail = mail;

@@ -1,18 +1,21 @@
 package com.example.mybookshopapp.data.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class MessageDto {
+@Getter
+@Setter
+public class MessageDto extends Dto {
 
     private String name;
-    private String mail;
-    private String title;
+    private String email;
+    private String subject;
     private String text;
+    private int userId;
 
-    public MessageDto(String name, String mail) {
+    public MessageDto(String name, String email) {
         this.name = name;
-        this.mail = mail;
+        this.email = email;
     }
 
     public MessageDto() {

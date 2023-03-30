@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository.news;
 
-import com.example.mybookshopapp.data.entity.news.BookF;
+import com.example.mybookshopapp.data.entity.books.BookF;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BookQueryRepository extends ModelRepository<BookF> {

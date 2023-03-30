@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.data.entity.payments;
 
-import com.example.mybookshopapp.data.entity.book.Book;
+import com.example.mybookshopapp.data.entity.Models;
+import com.example.mybookshopapp.data.entity.books.Book;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +15,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "balance_transaction")
-@Schema(description = "Транзакции по счетам пользователей")
-public class BalanceTransaction {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class BalanceTransaction extends Models {
 
     @Column(name = "user_id", columnDefinition = "INT NOT NULL")
     private int user;

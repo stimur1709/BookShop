@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service.news;
 
 import com.example.mybookshopapp.data.dto.AuthorDto;
-import com.example.mybookshopapp.data.dto.Query;
-import com.example.mybookshopapp.data.entity.news.Author;
+import com.example.mybookshopapp.data.entity.Author;
+import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.news.AuthorRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -18,8 +19,9 @@ import java.util.stream.Collectors;
 public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDto, AuthorRepository> {
 
     @Autowired
-    protected AuthorServiceImpl(AuthorRepository repository, UserProfileService userProfileService, ModelMapper modelMapper) {
-        super(repository, AuthorDto.class, userProfileService, modelMapper);
+    protected AuthorServiceImpl(AuthorRepository repository, UserProfileService userProfileService,
+                                ModelMapper modelMapper, HttpServletRequest request) {
+        super(repository, AuthorDto.class, Author.class, userProfileService, modelMapper, request);
     }
 
     @Override

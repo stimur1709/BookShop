@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.repository.news;
 
-import com.example.mybookshopapp.data.entity.news.BooksF;
+import com.example.mybookshopapp.data.entity.books.BooksF;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface BooksQueryRepository extends ModelRepository<BooksF> {
-
-    BooksF findBySlug(String slug);
 
     @Query(value = "select * from get_books(?1)", nativeQuery = true)
     Page<BooksF> getBooks(Integer userId, Pageable pageable);

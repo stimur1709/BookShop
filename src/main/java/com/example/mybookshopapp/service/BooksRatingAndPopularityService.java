@@ -1,8 +1,8 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.book.BookRating;
+import com.example.mybookshopapp.data.entity.books.BookRating;
 import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.repository.BookRatingRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;

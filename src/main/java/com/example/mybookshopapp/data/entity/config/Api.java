@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.entity.config;
 
+import com.example.mybookshopapp.data.entity.Models;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table
-public class Api {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Api extends Models {
 
     @Column(columnDefinition = "varchar(255) not null")
     private String name;

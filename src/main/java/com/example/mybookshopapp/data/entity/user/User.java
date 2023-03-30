@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.entity.user;
 
+import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,11 +18,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Schema(description = "Сущность пользователя")
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class User extends Models implements Serializable {
 
     @Column(columnDefinition = "VARCHAR(32) NOT NULL", unique = true)
     private String hash;

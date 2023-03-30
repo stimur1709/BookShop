@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.entity.book.Book;
-import com.example.mybookshopapp.data.entity.book.review.BookReview;
-import com.example.mybookshopapp.data.entity.book.review.BookReviewLike;
-import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
+import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.entity.books.Book;
+import com.example.mybookshopapp.data.entity.books.BookReview;
+import com.example.mybookshopapp.data.entity.books.BookReviewLike;
+import com.example.mybookshopapp.data.entity.books.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.*;
 import com.example.mybookshopapp.repository.news.BookQueryRepository;

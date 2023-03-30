@@ -1,10 +1,10 @@
 package com.example.mybookshopapp.service.news;
 
 import com.example.mybookshopapp.data.dto.BookFDto;
-import com.example.mybookshopapp.data.dto.BookQuery;
 import com.example.mybookshopapp.data.dto.BooksFDto;
-import com.example.mybookshopapp.data.entity.news.BookF;
-import com.example.mybookshopapp.data.entity.news.BooksF;
+import com.example.mybookshopapp.data.entity.books.BookF;
+import com.example.mybookshopapp.data.entity.books.BooksF;
+import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.repository.BooksViewedRepository;
 import com.example.mybookshopapp.repository.news.BookQueryRepository;
 import com.example.mybookshopapp.repository.news.BooksQueryRepository;
@@ -15,9 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl extends ModelServiceImpl<BooksF, BookQuery, BooksFDto, BooksQueryRepository> {
@@ -27,9 +30,10 @@ public class BookServiceImpl extends ModelServiceImpl<BooksF, BookQuery, BooksFD
     private final BookQueryRepository bookQueryRepository;
 
     @Autowired
-    protected BookServiceImpl(BooksQueryRepository repository, UserProfileService userProfileService, ModelMapper modelMapper,
-                              BooksViewedRepository booksViewedRepository, BookQueryRepository bookQueryRepository) {
-        super(repository, BooksFDto.class, userProfileService, modelMapper);
+    protected BookServiceImpl(BooksQueryRepository repository, UserProfileService userProfileService,
+                              ModelMapper modelMapper, BooksViewedRepository booksViewedRepository,
+                              BookQueryRepository bookQueryRepository, HttpServletRequest request) {
+        super(repository, BooksFDto.class, BooksF.class, userProfileService, modelMapper, request);
         this.booksViewedRepository = booksViewedRepository;
         this.bookQueryRepository = bookQueryRepository;
     }
@@ -78,4 +82,12 @@ public class BookServiceImpl extends ModelServiceImpl<BooksF, BookQuery, BooksFD
         booksViewedRepository.insertOrUpdate(book.getId(), userProfileService.getUserId());
         return modelMapper.map(book, BookFDto.class);
     }
+
+    public List<BooksFDto> getBookUser() {
+        return repository.getBooksUser(userProfileService.getUserId(), getStatusUser().toString())
+                .stream()
+                .map(m -> modelMapper.map(m, BooksFDto.class))
+                .collect(Collectors.toList());
+    }
+
 }

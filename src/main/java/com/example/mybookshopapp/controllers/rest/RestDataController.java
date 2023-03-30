@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.controllers.rest;
 
 import com.example.mybookshopapp.data.dto.Dto;
-import com.example.mybookshopapp.data.dto.Query;
+import com.example.mybookshopapp.data.query.Query;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 

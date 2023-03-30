@@ -1,10 +1,12 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BookQuery;
 import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.news.AuthorServiceImpl;
 import com.example.mybookshopapp.service.news.BookServiceImpl;
+import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,10 @@ public class AuthorControllerImpl extends ViewControllerImpl {
     private final BookServiceImpl bookService;
 
     @Autowired
-    protected AuthorControllerImpl(UserProfileService userProfileService, HttpServletRequest request, AuthorServiceImpl authorService, BookServiceImpl bookService) {
-        super(userProfileService, request);
+    protected AuthorControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
+                                   AuthorServiceImpl authorService, BookServiceImpl bookService,
+                                   BookShopService bookShopService, MessageLocale messageLocale) {
+        super(userProfileService, request, bookShopService, messageLocale);
         this.authorService = authorService;
         this.bookService = bookService;
     }

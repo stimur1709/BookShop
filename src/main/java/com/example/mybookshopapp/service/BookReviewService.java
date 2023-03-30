@@ -1,9 +1,9 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.ResponseResultDto;
-import com.example.mybookshopapp.data.entity.book.review.BookReview;
-import com.example.mybookshopapp.data.entity.book.review.BookReviewQuery;
+import com.example.mybookshopapp.data.entity.books.BookReview;
+import com.example.mybookshopapp.data.entity.books.BookReviewQuery;
 import com.example.mybookshopapp.data.entity.user.User;
+import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.repository.BookReviewQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;

@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.dto.ResponseResultDto;
+import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;

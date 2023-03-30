@@ -1,7 +1,8 @@
 package com.example.mybookshopapp.repository;
 
-import com.example.mybookshopapp.data.entity.book.review.Message;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.mybookshopapp.data.entity.Message;
+import com.example.mybookshopapp.repository.news.ModelRepository;
 
-public interface MessageRepository extends JpaRepository<Message, Integer> {
+public interface MessageRepository extends ModelRepository<Message> {
+
 }

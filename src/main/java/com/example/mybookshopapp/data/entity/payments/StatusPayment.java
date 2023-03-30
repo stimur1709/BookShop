@@ -1,19 +1,18 @@
 package com.example.mybookshopapp.data.entity.payments;
 
+import com.example.mybookshopapp.data.entity.Models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "status_payment")
 @Getter
 @Setter
-public class StatusPayment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class StatusPayment extends Models {
 
     @Column(name = "status_ru", columnDefinition = "varchar(20) not null")
     private String statusRu;

@@ -1,9 +1,16 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.*;
+import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.outher.BookRateRequestDto;
+import com.example.mybookshopapp.data.outher.BookReviewRequestDto;
+import com.example.mybookshopapp.data.outher.ResponseResultDto;
+import com.example.mybookshopapp.data.outher.ReviewLikeDto;
+import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.news.BookServiceImpl;
+import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -33,14 +39,19 @@ public class BookControllerImpl extends ViewControllerImpl {
     private final DownloadService downloadService;
     private final ResourceStorage storage;
 
-    protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request, ResourceStorage storage, BookServiceImpl bookService, BooksRatingAndPopularityService ratingBook, BookReviewService bookReviewService, BookRateReviewService bookRateReviewService, DownloadService downloadService, ResourceStorage storage1) {
-        super(userProfileService, request);
+    protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
+                                 ResourceStorage storage, BookServiceImpl bookService,
+                                 BooksRatingAndPopularityService ratingBook,
+                                 BookReviewService bookReviewService, BookRateReviewService bookRateReviewService,
+                                 DownloadService downloadService, BookShopService bookShopService,
+                                 MessageLocale messageLocale) {
+        super(userProfileService, request, bookShopService, messageLocale);
         this.bookService = bookService;
         this.ratingBook = ratingBook;
         this.bookReviewService = bookReviewService;
         this.bookRateReviewService = bookRateReviewService;
         this.downloadService = downloadService;
-        this.storage = storage1;
+        this.storage = storage;
     }
 
 

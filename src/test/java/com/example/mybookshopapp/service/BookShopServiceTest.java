@@ -1,11 +1,12 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.BookStatusRequestDto;
-import com.example.mybookshopapp.data.dto.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.entity.book.Book;
-import com.example.mybookshopapp.data.entity.book.links.BookCodeType;
+import com.example.mybookshopapp.data.outher.BookStatusRequestDto;
+import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.entity.books.Book;
+import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BookRepository;
+import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

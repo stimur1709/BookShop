@@ -1,10 +1,12 @@
 package com.example.mybookshopapp.data.query;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Query {
 
     private Integer offset;
@@ -34,7 +36,13 @@ public class Query {
         this.property = property;
     }
 
-    public Query() {
+    public Query(boolean reverse, String property) {
+        this.reverse = reverse;
+        this.property = property;
+    }
+
+    public Query(String search) {
+        this.search = search;
     }
 
     public String getSearch() {

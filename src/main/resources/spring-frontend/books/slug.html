@@ -211,7 +211,6 @@
                                                   <span class="Rating-title 5"
                                                         th:text="${book.count5}">10</span>
                                                   </span>
-                                                </span>
                                                 <br>
                                                 <span class="Rating"><span class="Rating-stars">
                                                     <span class="Rating-star Rating-star_view">
@@ -846,7 +845,7 @@
                                             </span>
                                         </strong>
                                         <span class="Comment-date"
-                                              th:text="${#dates.format(review.getDate(), 'dd MMMM yyyy HH:mm')}">
+                                              th:text="${#dates.format(review.getTime(), 'dd MMMM yyyy HH:mm')}">
                                             17.04.2020 16:40
                                         </span>
                                     </div>

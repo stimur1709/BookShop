@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.repository;
+package com.example.mybookshopapp.repository.news;
 
 import com.example.mybookshopapp.data.entity.books.BookRating;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface BookRatingRepository extends JpaRepository<BookRating, Integer> {
 
-    List<BookRating> findByBook_id(int id);
+    List<BookRating> findByBookId(int id);
 
     @Transactional
     @Query(value = "insert into book_rating(rating, book_id, user_id) " +

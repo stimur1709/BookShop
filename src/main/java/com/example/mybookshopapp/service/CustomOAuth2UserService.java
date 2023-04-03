@@ -124,6 +124,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         });
         VkToken vkToken = vkTokenList.get(0);
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
+        System.out.println(userRequest.getAdditionalParameters().get("email"));
+
         if (userContact.isEmpty()) {
             UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
             User user = new User(vkToken.getFirstname(), vkToken.getLastname(), vkToken.getId());

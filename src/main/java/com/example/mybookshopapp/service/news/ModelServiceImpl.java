@@ -4,6 +4,7 @@ import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.query.Query;
+import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.news.ModelRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
@@ -47,12 +48,16 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
     }
 
     @Override
-    public List<D> getAllContents(Sort sort) {
-        return repository.findAll(sort).stream().map(m -> modelMapper.map(m, dto)).collect(Collectors.toList());
+    public List<D> getAllContents(Q q) {
+        Sort sort = Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty());
+        return repository.findAll(sort)
+                .stream()
+                .map(m -> modelMapper.map(m, dto))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public D save(D dto) {
+    public D save(D dto) throws DefaultException {
         return modelMapper.map(repository.save(modelMapper.map(dto, this.model)), this.dto);
     }
 

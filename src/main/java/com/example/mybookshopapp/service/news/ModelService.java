@@ -2,9 +2,9 @@ package com.example.mybookshopapp.service.news;
 
 import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.query.Query;
+import com.example.mybookshopapp.errors.DefaultException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface ModelService<Q extends Query, D extends Dto> {
 
     D getContent(String slug);
 
-    List<D> getAllContents(Sort sort);
+    List<D> getAllContents(Q query);
 
-    D save(D dto);
+    D save(D dto) throws DefaultException;
 }

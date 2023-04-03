@@ -6498,4 +6498,7 @@
     <changeSet id="88" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-message.sql"/>
     </changeSet>
+    <changeSet id="89" author="S Timur">
+        <sqlFile path="db/changelog/scripts/trigger-review.sql"/>
+    </changeSet>
 </databaseChangeLog>

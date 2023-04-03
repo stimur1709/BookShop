@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.controllers.view;
 
+import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.news.DocumentService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +27,7 @@ public class DocumentsController extends ViewControllerImpl {
     @GetMapping("/documents")
     public String documentsPage(Model model) {
         model.addAttribute("documents",
-                documentService.getAllContents(Sort.by(Sort.Direction.DESC, "sortIndex")));
+                documentService.getAllContents(new Query(false, "sortIndex")));
         return "documents/index";
     }
 

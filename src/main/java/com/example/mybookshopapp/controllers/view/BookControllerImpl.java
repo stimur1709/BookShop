@@ -1,12 +1,13 @@
 package com.example.mybookshopapp.controllers.view;
 
 import com.example.mybookshopapp.data.dto.BooksFDto;
-import com.example.mybookshopapp.data.outher.BookRateRequestDto;
-import com.example.mybookshopapp.data.outher.BookReviewRequestDto;
-import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.data.outher.ReviewLikeDto;
 import com.example.mybookshopapp.data.query.BookQuery;
-import com.example.mybookshopapp.service.*;
+import com.example.mybookshopapp.data.query.Query;
+import com.example.mybookshopapp.service.BookRateReviewService;
+import com.example.mybookshopapp.service.DownloadService;
+import com.example.mybookshopapp.service.ResourceStorage;
+import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
 import com.example.mybookshopapp.service.news.BookServiceImpl;
 import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -19,12 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
@@ -33,32 +31,28 @@ import java.util.Map;
 public class BookControllerImpl extends ViewControllerImpl {
 
     private final BookServiceImpl bookService;
-    private final BooksRatingAndPopularityService ratingBook;
-    private final BookReviewService bookReviewService;
+    private final BookReviewServiceImpl bookReviewServiceImpl;
     private final BookRateReviewService bookRateReviewService;
     private final DownloadService downloadService;
     private final ResourceStorage storage;
 
     protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
                                  ResourceStorage storage, BookServiceImpl bookService,
-                                 BooksRatingAndPopularityService ratingBook,
-                                 BookReviewService bookReviewService, BookRateReviewService bookRateReviewService,
+                                 BookReviewServiceImpl bookReviewServiceImpl, BookRateReviewService bookRateReviewService,
                                  DownloadService downloadService, BookShopService bookShopService,
                                  MessageLocale messageLocale) {
         super(userProfileService, request, bookShopService, messageLocale);
         this.bookService = bookService;
-        this.ratingBook = ratingBook;
-        this.bookReviewService = bookReviewService;
+        this.bookReviewServiceImpl = bookReviewServiceImpl;
         this.bookRateReviewService = bookRateReviewService;
         this.downloadService = downloadService;
         this.storage = storage;
     }
 
-
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("book", bookService.getContent(slug));
-        model.addAttribute("reviews", bookReviewService.getBookReview(slug));
+        model.addAttribute("reviews", bookReviewServiceImpl.getAllContents(new Query(slug)));
         return "books/slug";
     }
 
@@ -108,24 +102,6 @@ public class BookControllerImpl extends ViewControllerImpl {
                 .contentType(mediaType)
                 .contentLength(data.length)
                 .body(new ByteArrayResource(data));
-    }
-
-    @PostMapping(value = "/api/rateBook")
-    @ResponseBody
-    public ResponseResultDto rateBook(@RequestBody BookRateRequestDto rate) {
-        return ratingBook.changeRateBook(rate.getBookId(), rate.getValue());
-    }
-
-    @PostMapping("/api/bookReview")
-    @ResponseBody
-    public ResponseResultDto saveBookReview(@RequestBody @Valid BookReviewRequestDto review, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String error = null;
-            for (FieldError fieldError : bindingResult.getFieldErrors())
-                error = fieldError.getDefaultMessage();
-            return new ResponseResultDto(false, error);
-        }
-        return bookReviewService.saveBookReview(review.getBookId(), review.getText());
     }
 
     @PostMapping("/api/rateBookReview")

@@ -3,6 +3,7 @@ package com.example.mybookshopapp.service.news;
 import com.example.mybookshopapp.data.dto.MessageDto;
 import com.example.mybookshopapp.data.entity.Message;
 import com.example.mybookshopapp.data.query.Query;
+import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.MessageRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class MessageService extends ModelServiceImpl<Message, Query, MessageDto,
     }
 
     @Override
-    public MessageDto save(MessageDto dto) {
+    public MessageDto save(MessageDto dto) throws DefaultException {
         dto.setUserId(userProfileService.getUserId());
         return super.save(dto);
     }

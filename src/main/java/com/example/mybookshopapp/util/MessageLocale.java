@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class MessageLocale {
@@ -23,5 +25,10 @@ public class MessageLocale {
 
     public String getMessage(String code) {
         return messageSource.getMessage(code, null, localeResolver.resolveLocale(request));
+    }
+
+    public String getLocaleDate(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));
+        return simpleDateFormat.format(date);
     }
 }

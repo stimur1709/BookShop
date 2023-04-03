@@ -3,7 +3,7 @@ package com.example.mybookshopapp.controllers.view;
 import com.example.mybookshopapp.data.dto.BooksFDto;
 import com.example.mybookshopapp.data.outher.SearchWordDto;
 import com.example.mybookshopapp.data.query.BookQuery;
-import com.example.mybookshopapp.errors.EmptySearchException;
+import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.service.news.BookServiceImpl;
 import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.news.TagServiceImpl;
@@ -48,7 +48,7 @@ public class MainViewControllerImpl extends ViewControllerImpl {
 
     @GetMapping(value = {"/search/{searchWord}", "/search"})
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                  Model model) throws EmptySearchException {
+                                  Model model) throws DefaultException {
         if (searchWordDto != null) {
             Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "pub_date", false, searchWordDto.getExample()));
             model.addAttribute("searchWordDto", searchWordDto);
@@ -56,7 +56,7 @@ public class MainViewControllerImpl extends ViewControllerImpl {
             return "search/index";
         } else {
             String message = messageLocale.getMessage("message.searchRequest");
-            throw new EmptySearchException(message);
+            throw new DefaultException(message);
         }
     }
 

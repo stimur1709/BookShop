@@ -2,7 +2,8 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
-import com.example.mybookshopapp.repository.BookReviewRepository;
+import com.example.mybookshopapp.repository.news.BookReviewRepository;
+import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -20,17 +21,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource("/application-test.yaml")
 @Slf4j
 @DisplayName("Отзывы")
-class BookReviewServiceTest {
+class BookReviewServiceImplTest {
 
     private final BookReviewRepository bookReviewRepository;
     private final UserAuthService userAuthService;
-    private final BookReviewService bookReviewService;
+    private final BookReviewServiceImpl bookReviewServiceImpl;
 
     @Autowired
-    BookReviewServiceTest(BookReviewRepository bookReviewRepository, UserAuthService userAuthService, BookReviewService bookReviewService) {
+    BookReviewServiceImplTest(BookReviewRepository bookReviewRepository, UserAuthService userAuthService, BookReviewServiceImpl bookReviewServiceImpl) {
         this.bookReviewRepository = bookReviewRepository;
         this.userAuthService = userAuthService;
-        this.bookReviewService = bookReviewService;
+        this.bookReviewServiceImpl = bookReviewServiceImpl;
     }
 
     @BeforeEach
@@ -51,7 +52,7 @@ class BookReviewServiceTest {
         payload.setContact("stimur1709@mail.ru");
         payload.setCode("123456789");
         userAuthService.jwtLogin(payload);
-        ResponseResultDto response = bookReviewService.saveBookReview(1, text);
+        ResponseResultDto response = bookReviewServiceImpl.saveBookReview(1, text);
         assertEquals(response.getText(), text);
         assertTrue(bookReviewRepository.findByText(text).isPresent());
     }
@@ -60,7 +61,7 @@ class BookReviewServiceTest {
     @DisplayName("Отправка отзыва не авторизованного пользователя")
     void saveBookReviewNoAuthUser() {
         String text = "Хорошая книга";
-        ResponseResultDto response = bookReviewService.saveBookReview(1, text);
+        ResponseResultDto response = bookReviewServiceImpl.saveBookReview(1, text);
         assertFalse(response.getResult());
     }
 

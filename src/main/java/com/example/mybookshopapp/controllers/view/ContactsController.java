@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers.view;
 
 import com.example.mybookshopapp.data.dto.MessageDto;
+import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.news.MessageService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
@@ -38,7 +39,7 @@ public class ContactsController extends ViewControllerImpl {
     }
 
     @PostMapping("/contacts")
-    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes) {
+    public String sendMessage(@ModelAttribute MessageDto messageDto, RedirectAttributes redirectAttributes) throws DefaultException {
         messageService.save(messageDto);
         String message = messageLocale.getMessage("message.sendMessage");
         redirectAttributes.addFlashAttribute("sendMessage", message);

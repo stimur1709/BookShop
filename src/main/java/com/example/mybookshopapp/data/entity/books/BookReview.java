@@ -19,7 +19,7 @@ public class BookReview extends Models {
     @Column(columnDefinition = "INT NOT NULL", name = "user_id")
     private int userId;
 
-    @Column(columnDefinition = "DATE NOT NULL")
+    @Column(columnDefinition = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
 

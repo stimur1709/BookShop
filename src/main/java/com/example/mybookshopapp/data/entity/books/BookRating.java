@@ -1,12 +1,13 @@
 package com.example.mybookshopapp.data.entity.books;
 
 import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;
-import com.example.mybookshopapp.data.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -20,15 +21,11 @@ public class BookRating {
     @Column(name = "rating", columnDefinition = "INT NOT NULL DEFAULT 0")
     private int rating;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private Book book;
+    @Column(name = "book_id", insertable = false, updatable = false)
+    private Integer bookId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private User user;
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Integer userId;
 
     public BookRating() {
     }

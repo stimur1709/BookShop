@@ -48,7 +48,7 @@ public class BookF extends BooksFModels {
     @OrderBy("hash")
     private List<BookFile> bookFileList;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "bookId")
     @JsonManagedReference
     private List<BookRating> bookRatingList;
 

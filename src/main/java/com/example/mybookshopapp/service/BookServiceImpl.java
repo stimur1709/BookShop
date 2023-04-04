@@ -52,6 +52,9 @@ public class BookServiceImpl extends ModelServiceImpl<BooksF, BookQuery, BooksFD
                 return repository.findBooks(userId, q.getSearch(), q.isBestseller(), q.isDiscount(), new Date(userId), new Date(), of)
                         .map(m -> modelMapper.map(m, BooksFDto.class));
             }
+        } else if (q.getProperty() == null) {
+            return repository.getBooks(userId, of)
+                    .map(m -> modelMapper.map(m, BooksFDto.class));
         } else {
             switch (q.getProperty()) {
                 case "genre":

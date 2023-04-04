@@ -1,10 +1,8 @@
 package com.example.mybookshopapp.controllers.view;
 
 import com.example.mybookshopapp.data.dto.BooksFDto;
-import com.example.mybookshopapp.data.outher.ReviewLikeDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.service.BookRateReviewService;
 import com.example.mybookshopapp.service.DownloadService;
 import com.example.mybookshopapp.service.ResourceStorage;
 import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
@@ -15,36 +13,33 @@ import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Map;
 
 @Controller
 public class BookControllerImpl extends ViewControllerImpl {
 
     private final BookServiceImpl bookService;
     private final BookReviewServiceImpl bookReviewServiceImpl;
-    private final BookRateReviewService bookRateReviewService;
     private final DownloadService downloadService;
     private final ResourceStorage storage;
 
     protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
                                  ResourceStorage storage, BookServiceImpl bookService,
-                                 BookReviewServiceImpl bookReviewServiceImpl, BookRateReviewService bookRateReviewService,
+                                 BookReviewServiceImpl bookReviewServiceImpl,
                                  DownloadService downloadService, BookShopService bookShopService,
                                  MessageLocale messageLocale) {
         super(userProfileService, request, bookShopService, messageLocale);
         this.bookService = bookService;
         this.bookReviewServiceImpl = bookReviewServiceImpl;
-        this.bookRateReviewService = bookRateReviewService;
         this.downloadService = downloadService;
         this.storage = storage;
     }
@@ -82,15 +77,6 @@ public class BookControllerImpl extends ViewControllerImpl {
         return property;
     }
 
-//    @PostMapping("/books/{slug}/img/save")
-//    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
-//        String savePath = storage.saveNewBookImage(file, slug);
-//        Book bookToUpdate = bookService.getBookBySlug(slug);
-//        bookToUpdate.setImage(savePath);
-//        bookService.save(bookToUpdate);
-//        return "redirect:/books/" + slug;
-//    }
-
     @GetMapping("/books/download/{hash}")
     public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {
         downloadService.fileDownload(hash);
@@ -104,11 +90,5 @@ public class BookControllerImpl extends ViewControllerImpl {
                 .body(new ByteArrayResource(data));
     }
 
-    @PostMapping("/api/rateBookReview")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
-        Map<String, Object> response = bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue());
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 
 }

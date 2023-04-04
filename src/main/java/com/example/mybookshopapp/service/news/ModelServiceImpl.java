@@ -86,4 +86,15 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
         return status;
     }
 
+    @Override
+    public List<D> saveAll(List<D> dtoList) {
+        List<M> mList = dtoList
+                .stream()
+                .map(m -> modelMapper.map(m, model))
+                .collect(Collectors.toList());
+        return repository.saveAll(mList)
+                .stream()
+                .map(m -> modelMapper.map(m, this.dto))
+                .collect(Collectors.toList());
+    }
 }

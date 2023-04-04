@@ -40,13 +40,9 @@
             <div class="Product">
                 <div class="ProductCard">
                     <div class="ProductCard-look">
-                        <form id="imgForm" method="post" enctype="multipart/form-data" action="#"
-                              th:action="${'/books/' + book.slug + '/img/save'}">
-                            <div class="ProductCard-photo" id="uploadButton">
-                                <img th:src="${book.image}" alt="card.jpg"/>
-                            </div>
-                            <input type="file" name="file" id="dialog" style="display: none" accept="image/*">
-                        </form>
+                        <div class="ProductCard-photo" id="uploadButton">
+                            <img th:src="${book.image}" alt="card.jpg"/>
+                        </div>
                     </div>
                     <div class="ProductCard-desc">
                         <div class="ProductCard-header">

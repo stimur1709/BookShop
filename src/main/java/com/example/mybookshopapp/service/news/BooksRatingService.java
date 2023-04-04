@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service;
+package com.example.mybookshopapp.service.news;
 
 import com.example.mybookshopapp.data.entity.books.BookRating;
 import com.example.mybookshopapp.data.entity.user.User;

@@ -1,13 +1,11 @@
 package com.example.mybookshopapp.data.entity.books;
 
+import com.example.mybookshopapp.data.entity.Image;
 import com.example.mybookshopapp.data.entity.Models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -28,8 +26,9 @@ public class Book extends Models {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String title;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String image;
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @Column(columnDefinition = "TEXT")
     private String description;

@@ -19,4 +19,7 @@ public interface ModelService<Q extends Query, D extends Dto> {
     List<D> getAllContents(Q query);
 
     D save(D dto) throws DefaultException;
+
+    List<D> saveAll(List<D> dtoList);
+
 }

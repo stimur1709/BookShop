@@ -6501,4 +6501,52 @@
     <changeSet id="89" author="S Timur">
         <sqlFile path="db/changelog/scripts/trigger-review.sql"/>
     </changeSet>
+    <changeSet id="90" author="S Timur">
+        <createTable tableName="image">
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="image_pkey"/>
+            </column>
+            <column name="name" type="varchar(57)"/>
+            <column name="size" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="91" author="S Timur">
+        <insert tableName="image">
+            <column name="name" value="/img/518c2ec0-5673-4379-805d-2104fcbb67e5.png"/>
+            <column name="size" value="1477"/>
+        </insert>
+    </changeSet>
+    <changeSet id="92" author="S Timur">
+        <renameColumn tableName="books" oldColumnName="image" newColumnName="image_id"/>
+        <renameColumn tableName="authors" oldColumnName="photo" newColumnName="image_id"/>
+    </changeSet>
+    <changeSet id="93" author="S Timur">
+        <update tableName="books">
+            <column name="image_id" value="1"/>
+            <where>image_id is not null</where>
+        </update>
+    </changeSet>
+    <changeSet id="94" author="S Timur">
+        <update tableName="authors">
+            <column name="image_id" value="1"/>
+            <where>image_id is not null</where>
+        </update>
+    </changeSet>
+    <changeSet id="95" author="S Timur">
+        <modifyDataType tableName="books" columnName="image_id" newDataType="int"/>
+    </changeSet>
+    <changeSet id="96" author="S Timur">
+        <modifyDataType tableName="authors" columnName="image_id" newDataType="int"/>
+    </changeSet>
+    <changeSet id="97" author="S Timur">
+        <addForeignKeyConstraint baseTableName="books" baseColumnNames="image_id" constraintName="fkigqitem4r46mag0sl4csnwp72"
+                                 referencedTableName="image" referencedColumnNames="id" onDelete="SET NULL" deferrable="false"/>
+    </changeSet>
+    <changeSet id="98" author="S Timur">
+        <addForeignKeyConstraint baseTableName="authors" baseColumnNames="image_id" constraintName="fkigqauth4r46mag0sl4csnwp72"
+                                 referencedColumnNames="id" referencedTableName="image" onDelete="SET NULL" deferrable="false"/>
+    </changeSet>
+    <changeSet id="99" author="S Timur">
+        <sqlFile path="db/changelog/scripts/function-get-books-update-image.sql"/>
+    </changeSet>
 </databaseChangeLog>

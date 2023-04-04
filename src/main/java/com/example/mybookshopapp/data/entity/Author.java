@@ -15,9 +15,6 @@ import java.util.List;
 @Table(name = "authors")
 public class Author extends Models {
 
-    @Column(columnDefinition = "VARCHAR(255)")
-    private String photo;
-
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
@@ -26,6 +23,10 @@ public class Author extends Models {
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "book2Author",

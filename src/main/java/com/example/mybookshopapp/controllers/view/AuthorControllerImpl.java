@@ -2,9 +2,9 @@ package com.example.mybookshopapp.controllers.view;
 
 import com.example.mybookshopapp.data.dto.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
-import com.example.mybookshopapp.service.news.AuthorServiceImpl;
-import com.example.mybookshopapp.service.news.BookServiceImpl;
-import com.example.mybookshopapp.service.news.BookShopService;
+import com.example.mybookshopapp.service.AuthorServiceImpl;
+import com.example.mybookshopapp.service.BookServiceImpl;
+import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;

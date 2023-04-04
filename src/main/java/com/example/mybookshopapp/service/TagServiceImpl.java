@@ -1,9 +1,9 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.TagBookDto;
 import com.example.mybookshopapp.data.entity.TagBook;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.repository.news.TagRepository;
+import com.example.mybookshopapp.repository.TagRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

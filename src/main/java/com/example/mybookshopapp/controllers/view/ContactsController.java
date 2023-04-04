@@ -2,8 +2,8 @@ package com.example.mybookshopapp.controllers.view;
 
 import com.example.mybookshopapp.data.dto.MessageDto;
 import com.example.mybookshopapp.errors.DefaultException;
-import com.example.mybookshopapp.service.news.BookShopService;
-import com.example.mybookshopapp.service.news.MessageService;
+import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.MessageService;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;

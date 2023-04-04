@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.repository.news;
+package com.example.mybookshopapp.repository;
 
 import com.example.mybookshopapp.data.entity.books.BookReview;
 import org.springframework.stereotype.Repository;

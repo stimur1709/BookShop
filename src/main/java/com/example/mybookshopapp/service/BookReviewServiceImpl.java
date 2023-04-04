@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.BookReviewDto;
 import com.example.mybookshopapp.data.entity.books.BookReview;
@@ -6,7 +6,7 @@ import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.BookReviewQueryRepository;
-import com.example.mybookshopapp.repository.news.BookReviewRepository;
+import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.modelmapper.ModelMapper;

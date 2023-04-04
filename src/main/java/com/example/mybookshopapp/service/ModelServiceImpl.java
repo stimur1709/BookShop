@@ -1,11 +1,11 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
-import com.example.mybookshopapp.repository.news.ModelRepository;
+import com.example.mybookshopapp.repository.ModelRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;

@@ -6,7 +6,6 @@ import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BookRepository;
-import com.example.mybookshopapp.service.news.BookShopService;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

@@ -1,9 +1,9 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.repository.news.GenreRepository;
+import com.example.mybookshopapp.repository.GenreRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

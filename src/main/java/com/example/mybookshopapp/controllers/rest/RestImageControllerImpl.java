@@ -2,7 +2,7 @@ package com.example.mybookshopapp.controllers.rest;
 
 import com.example.mybookshopapp.data.dto.ImageDto;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.service.news.ImageServiceImpl;
+import com.example.mybookshopapp.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

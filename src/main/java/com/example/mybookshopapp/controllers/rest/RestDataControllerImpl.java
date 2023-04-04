@@ -3,7 +3,7 @@ package com.example.mybookshopapp.controllers.rest;
 import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
-import com.example.mybookshopapp.service.news.ModelService;
+import com.example.mybookshopapp.service.ModelService;
 import com.example.mybookshopapp.util.BindingResultResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

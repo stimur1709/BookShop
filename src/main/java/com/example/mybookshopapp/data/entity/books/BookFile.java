@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.data.entity.books;
 
 import com.example.mybookshopapp.data.entity.Models;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +24,6 @@ public class BookFile extends Models {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String path;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    @JsonBackReference
-    private Book book;
+    @Column(name = "book_id")
+    private Integer bookId;
 }

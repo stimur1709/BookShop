@@ -3,11 +3,7 @@ package com.example.mybookshopapp.controllers.view;
 import com.example.mybookshopapp.data.dto.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.service.DownloadService;
-import com.example.mybookshopapp.service.ResourceStorage;
-import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
-import com.example.mybookshopapp.service.news.BookServiceImpl;
-import com.example.mybookshopapp.service.news.BookShopService;
+import com.example.mybookshopapp.service.*;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.core.io.ByteArrayResource;
@@ -28,18 +24,18 @@ import java.nio.file.Path;
 public class BookControllerImpl extends ViewControllerImpl {
 
     private final BookServiceImpl bookService;
-    private final BookReviewServiceImpl bookReviewServiceImpl;
+    private final BookReviewServiceImpl bookReviewService;
     private final DownloadService downloadService;
-    private final ResourceStorage storage;
+    private final BookFileServiceImpl storage;
 
     protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
-                                 ResourceStorage storage, BookServiceImpl bookService,
-                                 BookReviewServiceImpl bookReviewServiceImpl,
+                                 BookFileServiceImpl storage, BookServiceImpl bookService,
+                                 BookReviewServiceImpl bookReviewService,
                                  DownloadService downloadService, BookShopService bookShopService,
                                  MessageLocale messageLocale) {
         super(userProfileService, request, bookShopService, messageLocale);
         this.bookService = bookService;
-        this.bookReviewServiceImpl = bookReviewServiceImpl;
+        this.bookReviewService = bookReviewService;
         this.downloadService = downloadService;
         this.storage = storage;
     }
@@ -47,7 +43,7 @@ public class BookControllerImpl extends ViewControllerImpl {
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("book", bookService.getContent(slug));
-        model.addAttribute("reviews", bookReviewServiceImpl.getAllContents(new Query(slug)));
+        model.addAttribute("reviews", bookReviewService.getAllContents(new Query(slug)));
         return "books/slug";
     }
 
@@ -89,6 +85,5 @@ public class BookControllerImpl extends ViewControllerImpl {
                 .contentLength(data.length)
                 .body(new ByteArrayResource(data));
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.repository.news;
+package com.example.mybookshopapp.repository;
 
 import com.example.mybookshopapp.data.entity.books.BookRating;
 import org.springframework.data.jpa.repository.JpaRepository;

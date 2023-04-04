@@ -1,11 +1,11 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.outher.BookStatusRequestDto;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.repository.Book2UserRepository;
-import com.example.mybookshopapp.repository.news.BooksQueryRepository;
+import com.example.mybookshopapp.repository.BooksQueryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

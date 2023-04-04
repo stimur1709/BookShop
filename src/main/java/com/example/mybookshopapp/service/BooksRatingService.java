@@ -1,9 +1,9 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.entity.books.BookRating;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
-import com.example.mybookshopapp.repository.news.BookRatingRepository;
+import com.example.mybookshopapp.repository.BookRatingRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;

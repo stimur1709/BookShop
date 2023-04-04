@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.MessageDto;
 import com.example.mybookshopapp.data.entity.Message;

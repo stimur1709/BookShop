@@ -1,9 +1,9 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.ImageDto;
 import com.example.mybookshopapp.data.entity.Image;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.repository.news.ImageRepository;
+import com.example.mybookshopapp.repository.ImageRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;

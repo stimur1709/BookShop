@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.BookReviewDto;
 import com.example.mybookshopapp.data.outher.ReviewLikeDto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.service.BookRateReviewService;
-import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
+import com.example.mybookshopapp.service.BookReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

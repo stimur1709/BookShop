@@ -2,8 +2,7 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
-import com.example.mybookshopapp.repository.news.BookReviewRepository;
-import com.example.mybookshopapp.service.news.BookReviewServiceImpl;
+import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.userService.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

@@ -1,13 +1,13 @@
-package com.example.mybookshopapp.service.news;
+package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.data.dto.BookFDto;
 import com.example.mybookshopapp.data.dto.BooksFDto;
 import com.example.mybookshopapp.data.entity.books.BookF;
 import com.example.mybookshopapp.data.entity.books.BooksF;
 import com.example.mybookshopapp.data.query.BookQuery;
+import com.example.mybookshopapp.repository.BookQueryRepository;
+import com.example.mybookshopapp.repository.BooksQueryRepository;
 import com.example.mybookshopapp.repository.BooksViewedRepository;
-import com.example.mybookshopapp.repository.news.BookQueryRepository;
-import com.example.mybookshopapp.repository.news.BooksQueryRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

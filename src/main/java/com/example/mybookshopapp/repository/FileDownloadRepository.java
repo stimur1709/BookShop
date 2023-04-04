@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service;
+package com.example.mybookshopapp.repository;
 
 import com.example.mybookshopapp.data.entity.FileDownload;
 import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;

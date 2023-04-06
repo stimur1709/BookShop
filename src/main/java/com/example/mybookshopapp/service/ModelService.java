@@ -23,3 +23,5 @@ public interface ModelService<Q extends Query, D extends Dto> {
     List<D> saveAll(List<D> dtoList);
 
 }
+
+

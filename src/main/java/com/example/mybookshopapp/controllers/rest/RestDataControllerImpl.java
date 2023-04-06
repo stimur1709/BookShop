@@ -35,4 +35,14 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, S e
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
+
+    @Override
+    public ResponseEntity<D> getContent(String slug) {
+        try {
+            return new ResponseEntity<>(service.getContent(slug), HttpStatus.OK);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

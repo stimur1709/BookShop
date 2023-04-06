@@ -1,13 +1,13 @@
 package com.example.mybookshopapp.data.entity.books;
 
 import com.example.mybookshopapp.data.entity.Author;
+import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.entity.TagBook;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -41,7 +41,7 @@ public class BookF extends BooksFModels {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     @JsonManagedReference
-    private List<TagBook> tagList = new ArrayList<>();
+    private List<TagBook> tagList;
 
     @OneToMany(mappedBy = "bookId")
     @JsonManagedReference
@@ -57,7 +57,14 @@ public class BookF extends BooksFModels {
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "author_id")})
     @JsonManagedReference
-    private List<Author> authorList = new ArrayList<>();
+    private List<Author> authorList;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book2genre",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+    @JsonManagedReference
+    private List<Genre> genreList;
 
     public int discountPrice() {
         if (discount == 0) {

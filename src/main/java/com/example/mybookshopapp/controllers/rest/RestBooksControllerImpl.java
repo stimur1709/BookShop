@@ -9,11 +9,14 @@ import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BooksRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/books")
-public class RestBooksControllerImpl extends RestDataControllerImpl<BookQuery, BooksFDto, BookServiceImpl> {
+public class RestBooksControllerImpl
+        extends RestDataControllerImpl<BookQuery, BooksFDto, BookServiceImpl> {
 
     private final BookShopService bookShopService;
     private final BooksRatingService booksRatingService;
@@ -42,4 +45,8 @@ public class RestBooksControllerImpl extends RestDataControllerImpl<BookQuery, B
         return booksRatingService.changeRateBook(rate.getBookId(), rate.getValue());
     }
 
+    @Override
+    public ResponseEntity<?> save(BooksFDto dto, BindingResult bindingResult) {
+        return super.save(dto, bindingResult);
+    }
 }

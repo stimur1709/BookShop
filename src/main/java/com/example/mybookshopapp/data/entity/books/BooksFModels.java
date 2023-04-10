@@ -20,6 +20,8 @@ public class BooksFModels extends Models {
 
     protected String image;
 
+    protected Integer imageId;
+
     @Column(name = "is_bestseller")
     protected short isBestseller;
 

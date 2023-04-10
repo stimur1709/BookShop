@@ -1,5 +1,5 @@
 create function get_recommended_books(user_id integer)
-    returns TABLE(id integer, discount double precision, image character varying, is_bestseller smallint, popularity double precision, price integer, slug character varying, title character varying, pub_date date, code character varying, rate numeric, sort_index integer)
+    returns TABLE(id integer, discount double precision, image character varying, image_id integer, is_bestseller smallint, popularity double precision, price integer, slug character varying, title character varying, pub_date date, code character varying, rate numeric, sort_index integer)
     language plpgsql
 as
 '
@@ -17,6 +17,7 @@ BEGIN
         return query select distinct on (b.title) b.id,
                                                   b.discount,
                                                   b.image,
+                                                  b.image_id,
                                                   b.is_bestseller,
                                                   b.popularity,
                                                   b.price,
@@ -60,6 +61,7 @@ BEGIN
                          on (b.title) b.id,
                                       b.discount,
                                       b.image,
+                                      b.image_id,
                                       b.is_bestseller,
                                       b.popularity,
                                       b.price,
@@ -106,6 +108,7 @@ BEGIN
                      select b.id,
                             b.discount,
                             b.image,
+                            b.image_id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,
@@ -121,6 +124,7 @@ BEGIN
         return query select b.id,
                             b.discount,
                             b.image,
+                            b.image_id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,

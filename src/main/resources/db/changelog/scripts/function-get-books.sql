@@ -4,6 +4,7 @@ create function get_books(user_id integer)
                 id            integer,
                 discount      double precision,
                 image         character varying,
+                image_id      integer,
                 is_bestseller smallint,
                 popularity    double precision,
                 price         integer,
@@ -19,7 +20,8 @@ as
     BEGIN
         return query select b.id,
                             b.discount,
-                            b.image,
+                            i.name,
+                            i.id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,
@@ -32,7 +34,8 @@ as
                               left join book2user b2u on b.id = b2u.book_id and b2u.user_id = $1
                               left join book2user_type t on b2u.type_id = t.id
                               left join book_rating br1 on b.id = br1.book_id
-                     group by b.id, b.discount, b.image, b.is_bestseller, b.popularity,
+                              left join image i on i.id = b.image_id
+                     group by b.id, b.discount, i.name, i.id, b.is_bestseller, b.popularity,
                               b.price, b.slug, b.title, b.pub_date, t.code;
     end
 ';
@@ -45,6 +48,7 @@ create function get_books_by_author_slug(user_id integer, a_slug character varyi
                 id            integer,
                 discount      double precision,
                 image         character varying,
+                image_id      integer,
                 is_bestseller smallint,
                 popularity    double precision,
                 price         integer,
@@ -61,6 +65,7 @@ as
         return query select b.id,
                             b.discount,
                             b.image,
+                            b.image_id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,
@@ -84,6 +89,7 @@ create function get_books_by_genre_slug(user_id integer, g_slug character varyin
                 id            integer,
                 discount      double precision,
                 image         character varying,
+                image_id      integer,
                 is_bestseller smallint,
                 popularity    double precision,
                 price         integer,
@@ -100,6 +106,7 @@ as
         return query select b.id,
                             b.discount,
                             b.image,
+                            b.image_id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,
@@ -123,6 +130,7 @@ create function get_books_by_tag_slug(user_id integer, t_slug character varying)
                 id            integer,
                 discount      double precision,
                 image         character varying,
+                image_id      integer,
                 is_bestseller smallint,
                 popularity    double precision,
                 price         integer,
@@ -139,6 +147,7 @@ as
         return query select b.id,
                             b.discount,
                             b.image,
+                            b.image_id,
                             b.is_bestseller,
                             b.popularity,
                             b.price,
@@ -162,6 +171,7 @@ create function get_books_by_slug(user_id integer, book_slug character varying)
                 id             integer,
                 discount       double precision,
                 image          character varying,
+                image_id       integer,
                 is_bestseller  smallint,
                 popularity     double precision,
                 price          integer,
@@ -188,6 +198,7 @@ as
             select b.id,
                    b.discount,
                    b.image,
+                   b.image_id,
                    b.is_bestseller,
                    b.popularity,
                    b.price,
@@ -224,7 +235,7 @@ as
                      left join book_review_like rl on r.id = rl.review_id
                      left join file_download fd on b1.id = fd.book_id
             where b.slug = $2
-            group by b.id, b.discount, b.image, b.is_bestseller, b.popularity,
+            group by b.id, b.discount, b.image, b.image_id, b.is_bestseller, b.popularity,
                      b.price, b.slug, b.title, b.pub_date, b.code, br.rating, b.code, b.rate, b1.description,
                      download_count;
     end

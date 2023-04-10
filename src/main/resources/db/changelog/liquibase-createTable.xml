@@ -6546,7 +6546,4 @@
         <addForeignKeyConstraint baseTableName="authors" baseColumnNames="image_id" constraintName="fkigqauth4r46mag0sl4csnwp72"
                                  referencedColumnNames="id" referencedTableName="image" onDelete="SET NULL" deferrable="false"/>
     </changeSet>
-    <changeSet id="99" author="S Timur">
-        <sqlFile path="db/changelog/scripts/function-get-books-update-image.sql"/>
-    </changeSet>
 </databaseChangeLog>

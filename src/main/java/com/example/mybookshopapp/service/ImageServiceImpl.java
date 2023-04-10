@@ -41,9 +41,9 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
         List<ImageDto> images = new ArrayList<>();
         for (MultipartFile file : files) {
             if (file.getContentType() != null) {
-                String fileName = "/img/" + UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+                String fileName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
                 Path path = Paths.get(uploadPath, fileName);
-                images.add(new ImageDto(fileName, file.getSize()));
+                images.add(new ImageDto("/img/" + fileName, file.getSize()));
                 file.transferTo(path);
             }
         }

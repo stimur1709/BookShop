@@ -37,9 +37,9 @@ public interface BooksQueryRepository extends ModelRepository<BooksF> {
     @Query(value = "select * from get_books_viewed(?1)", nativeQuery = true)
     Page<BooksF> getBooksRecentlyViewed(Integer userId, Pageable nextPage);
 
-    @Query(value = "select id, discount, image, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
+    @Query(value = "select id, discount, image, image_id, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
             "from get_recommended_books(?1) " +
-            "group by id, discount, image, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
+            "group by id, discount, image, image_id, is_bestseller, popularity, price, slug, title, pub_date, code, rate " +
             "order by max(sort_index) desc ", nativeQuery = true)
     Page<BooksF> getRecommendedBooks(Integer userId, Pageable nextPage);
 

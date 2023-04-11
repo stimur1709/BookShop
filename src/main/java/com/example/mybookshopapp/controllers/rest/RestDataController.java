@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-public interface RestDataController<D extends Dto, Q extends Query> {
+public interface RestDataController<D extends Dto, O extends Dto, Q extends Query> {
 
     @GetMapping
     Page<D> getPage(Q query);
 
     @PostMapping("/save")
-    ResponseEntity<?> save(@RequestBody @Valid D dto, BindingResult bindingResult);
+    ResponseEntity<?> save(@RequestBody @Valid O dto, BindingResult bindingResult);
 
     @GetMapping("{slug}")
     ResponseEntity<D> getContent(@PathVariable("slug") String slug);

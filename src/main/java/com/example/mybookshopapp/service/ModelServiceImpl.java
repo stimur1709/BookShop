@@ -16,18 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class ModelServiceImpl<M extends Models, Q extends Query, D extends Dto, R extends ModelRepository<M>>
-        implements ModelService<Q, D> {
+public abstract class ModelServiceImpl<M extends Models, Q extends Query, D extends Dto, O extends Dto, R extends ModelRepository<M>>
+        implements ModelService<Q, D, O> {
 
     protected final R repository;
-    private final Class<D> dto;
+    private final Class<D> dtoS;
+    private final Class<O> dto;
     private final Class<M> model;
     protected final UserProfileService userProfileService;
     protected final ModelMapper modelMapper;
     protected final HttpServletRequest request;
 
-    protected ModelServiceImpl(R repository, Class<D> dto, Class<M> model, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request) {
+    protected ModelServiceImpl(R repository, Class<D> dtoS, Class<O> dto, Class<M> model, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request) {
         this.repository = repository;
+        this.dtoS = dtoS;
         this.dto = dto;
         this.model = model;
         this.userProfileService = userProfileService;
@@ -37,7 +39,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
 
     @Override
     public Page<D> getContents(Q q) {
-        return repository.findAll(PageRequest.of(q.getOffset(), q.getLimit())).map(m -> modelMapper.map(m, dto));
+        return repository.findAll(PageRequest.of(q.getOffset(), q.getLimit())).map(m -> modelMapper.map(m, dtoS));
     }
 
     @Override
@@ -52,18 +54,18 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
         Sort sort = Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty());
         return repository.findAll(sort)
                 .stream()
-                .map(m -> modelMapper.map(m, dto))
+                .map(m -> modelMapper.map(m, dtoS))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public D save(D dto) throws DefaultException {
+    public O save(O dto) throws DefaultException {
         return modelMapper.map(repository.save(modelMapper.map(dto, this.model)), this.dto);
     }
 
     @Override
     public D getContent(String slug) {
-        return modelMapper.map(repository.getById(Integer.parseInt(slug)), this.dto);
+        return modelMapper.map(repository.getById(Integer.parseInt(slug)), this.dtoS);
     }
 
     protected BookCodeType getStatusUser() {
@@ -94,7 +96,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
                 .collect(Collectors.toList());
         return repository.saveAll(mList)
                 .stream()
-                .map(m -> modelMapper.map(m, this.dto))
+                .map(m -> modelMapper.map(m, this.dtoS))
                 .collect(Collectors.toList());
     }
 }

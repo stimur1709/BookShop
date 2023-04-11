@@ -1,12 +1,12 @@
 package com.example.mybookshopapp.data.entity.books;
 
-import com.example.mybookshopapp.data.entity.Image;
-import com.example.mybookshopapp.data.entity.Models;
+import com.example.mybookshopapp.data.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,6 +44,24 @@ public class Book extends Models {
 
     @Transient
     private int discountPrice;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "book2tag",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    private List<TagBook> tagList;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "book2Author",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")})
+    private List<Author> authorList;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "book2genre",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+    private List<Genre> genreList;
 
     public int getDiscountPrice() {
         if (discount == 0) {

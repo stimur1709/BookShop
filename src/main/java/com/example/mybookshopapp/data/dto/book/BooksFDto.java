@@ -1,6 +1,7 @@
-package com.example.mybookshopapp.data.dto;
+package com.example.mybookshopapp.data.dto.book;
 
-import com.example.mybookshopapp.data.entity.Author;
+import com.example.mybookshopapp.data.dto.Dto;
+import com.example.mybookshopapp.data.dto.author.AuthorDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,7 +25,7 @@ public class BooksFDto extends Dto {
     private Date pubDate;
     private String code;
     private Double rate;
-    private List<Author> authorList;
+    private List<AuthorDto> authorList;
 
     public int discountPrice() {
         if (discount == 0) {

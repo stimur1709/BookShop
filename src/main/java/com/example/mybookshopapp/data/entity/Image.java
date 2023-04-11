@@ -14,4 +14,8 @@ public class Image extends Models {
 
     private String name;
     private long size;
+
+    public Image(Integer id) {
+        super(id);
+    }
 }

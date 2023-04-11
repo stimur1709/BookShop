@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, ImageRepository> {
+public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, ImageDto, ImageRepository> {
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -31,7 +31,7 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
     @Autowired
     protected ImageServiceImpl(ImageRepository repository, UserProfileService userProfileService,
                                ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, ImageDto.class, Image.class, userProfileService, modelMapper, request);
+        super(repository, ImageDto.class, ImageDto.class, Image.class, userProfileService, modelMapper, request);
     }
 
     public List<ImageDto> saveImage(MultipartFile[] files) throws IOException {

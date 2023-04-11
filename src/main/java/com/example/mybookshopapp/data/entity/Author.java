@@ -1,18 +1,18 @@
 package com.example.mybookshopapp.data.entity;
 
 import com.example.mybookshopapp.data.entity.books.Book;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "authors")
+@NoArgsConstructor
 public class Author extends Models {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -32,7 +32,11 @@ public class Author extends Models {
     @JoinTable(name = "book2Author",
             joinColumns = {@JoinColumn(name = "author_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
-    @JsonBackReference
-    private List<Book> bookList = new ArrayList<>();
+    private List<Book> bookList;
 
+    public Author(String slug, String name, String description) {
+        this.slug = slug;
+        this.name = name;
+        this.description = description;
+    }
 }

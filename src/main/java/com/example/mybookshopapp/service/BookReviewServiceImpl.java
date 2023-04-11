@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewRepository> {
+public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewDto, BookReviewRepository> {
 
     private final BookReviewQueryRepository bookReviewQueryRepository;
     private final MessageLocale messageLocale;
@@ -26,7 +26,7 @@ public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, B
     protected BookReviewServiceImpl(BookReviewRepository repository, UserProfileService userProfileService,
                                     ModelMapper modelMapper, HttpServletRequest request,
                                     BookReviewQueryRepository bookReviewQueryRepository, MessageLocale messageLocale) {
-        super(repository, BookReviewDto.class, BookReview.class, userProfileService, modelMapper, request);
+        super(repository, BookReviewDto.class, BookReviewDto.class, BookReview.class, userProfileService, modelMapper, request);
         this.bookReviewQueryRepository = bookReviewQueryRepository;
         this.messageLocale = messageLocale;
     }

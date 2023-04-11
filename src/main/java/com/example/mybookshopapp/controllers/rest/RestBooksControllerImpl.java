@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.controllers.rest;
 
-import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.dto.book.BookFDto;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.outher.BookRateRequestDto;
 import com.example.mybookshopapp.data.outher.BookStatusRequestDto;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
@@ -9,14 +10,12 @@ import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BooksRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/books")
 public class RestBooksControllerImpl
-        extends RestDataControllerImpl<BookQuery, BooksFDto, BookServiceImpl> {
+        extends RestDataControllerImpl<BookQuery, BooksFDto, BookFDto, BookServiceImpl> {
 
     private final BookShopService bookShopService;
     private final BooksRatingService booksRatingService;
@@ -45,8 +44,4 @@ public class RestBooksControllerImpl
         return booksRatingService.changeRateBook(rate.getBookId(), rate.getValue());
     }
 
-    @Override
-    public ResponseEntity<?> save(BooksFDto dto, BindingResult bindingResult) {
-        return super.save(dto, bindingResult);
-    }
 }

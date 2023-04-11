@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookFileDto, BookFileRepository> {
+public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookFileDto, BookFileDto, BookFileRepository> {
 
     @Value("${download.path}")
     private String downloadPath;
@@ -27,7 +27,7 @@ public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookF
     @Autowired
     protected BookFileServiceImpl(BookFileRepository repository, UserProfileService userProfileService,
                                   ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, BookFileDto.class, BookFile.class, userProfileService, modelMapper, request);
+        super(repository, BookFileDto.class, BookFileDto.class, BookFile.class, userProfileService, modelMapper, request);
     }
 
     public Path getBookFilePath(String hash) {

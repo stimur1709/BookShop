@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.AuthorDto;
+import com.example.mybookshopapp.data.dto.author.AuthorDto;
+import com.example.mybookshopapp.data.dto.author.AuthorDtoForAuthor;
 import com.example.mybookshopapp.data.entity.Author;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.AuthorRepository;
@@ -16,24 +17,24 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDto, AuthorRepository> {
+public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDtoForAuthor, AuthorDtoForAuthor, AuthorRepository> {
 
     @Autowired
     protected AuthorServiceImpl(AuthorRepository repository, UserProfileService userProfileService,
                                 ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, AuthorDto.class, Author.class, userProfileService, modelMapper, request);
+        super(repository, AuthorDtoForAuthor.class, AuthorDtoForAuthor.class, Author.class, userProfileService, modelMapper, request);
     }
 
     @Override
-    public AuthorDto getContent(String slug) {
-        return modelMapper.map(repository.findAuthorBySlug(slug), AuthorDto.class);
+    public AuthorDtoForAuthor getContent(String slug) {
+        return modelMapper.map(repository.findAuthorBySlug(slug), AuthorDtoForAuthor.class);
     }
 
     @Override
-    public Page<AuthorDto> getContents(Query query) {
+    public Page<AuthorDtoForAuthor> getContents(Query query) {
         if (query.getSearch() != null || !query.getSearch().isBlank()) {
             return repository.getAuthors(query.getSearch(), getPageRequest(query))
-                    .map(m -> modelMapper.map(m, AuthorDto.class));
+                    .map(m -> modelMapper.map(m, AuthorDtoForAuthor.class));
         }
         return super.getContents(query);
     }

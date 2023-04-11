@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.GenreDto;
+import com.example.mybookshopapp.data.dto.genre.GenreDto;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.GenreRepository;
@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
-public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, GenreRepository> {
+public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, GenreDto, GenreRepository> {
 
 
     @Autowired
     protected GenreServiceImpl(GenreRepository repository, UserProfileService userProfileService,
                                ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, GenreDto.class, Genre.class, userProfileService, modelMapper, request);
+        super(repository, GenreDto.class, GenreDto.class, Genre.class, userProfileService, modelMapper, request);
     }
 
     public List<Genre> getParentGenreList() {

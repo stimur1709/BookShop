@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
-public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, S extends ModelService<Q, D>>
-        implements RestDataController<D, Q> {
+public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O extends Dto, S extends ModelService<Q, D, O>>
+        implements RestDataController<D, O, Q> {
 
     protected final S service;
 
@@ -21,11 +21,12 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, S e
 
     @Override
     public Page<D> getPage(Q q) {
-        return service.getContents(q);
+        Page<D> contents = service.getContents(q);
+        return contents;
     }
 
     @Override
-    public ResponseEntity<?> save(D dto, BindingResult bindingResult) {
+    public ResponseEntity<?> save(O dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(BindingResultResponse.getMessage(bindingResult), HttpStatus.CONFLICT);
         }

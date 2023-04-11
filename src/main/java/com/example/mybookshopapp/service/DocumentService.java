@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class DocumentService extends ModelServiceImpl<Document, Query, DocumentDto, DocumentRepository> {
+public class DocumentService extends ModelServiceImpl<Document, Query, DocumentDto, DocumentDto, DocumentRepository> {
 
     @Autowired
     protected DocumentService(DocumentRepository repository, UserProfileService userProfileService,
                               ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, DocumentDto.class, Document.class, userProfileService, modelMapper, request);
+        super(repository, DocumentDto.class, DocumentDto.class, Document.class, userProfileService, modelMapper, request);
     }
 
     @Override

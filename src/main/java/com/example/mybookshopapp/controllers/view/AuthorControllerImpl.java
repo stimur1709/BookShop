@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.AuthorServiceImpl;
 import com.example.mybookshopapp.service.BookServiceImpl;

@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class MessageService extends ModelServiceImpl<Message, Query, MessageDto, MessageRepository> {
+public class MessageService extends ModelServiceImpl<Message, Query, MessageDto, MessageDto, MessageRepository> {
 
     private final UserProfileService userProfileService;
 
     @Autowired
     protected MessageService(MessageRepository repository, UserProfileService userProfileService,
                              ModelMapper modelMapper, HttpServletRequest request, UserProfileService userProfileService1) {
-        super(repository, MessageDto.class, Message.class, userProfileService, modelMapper, request);
+        super(repository, MessageDto.class, MessageDto.class, Message.class, userProfileService, modelMapper, request);
         this.userProfileService = userProfileService1;
     }
 

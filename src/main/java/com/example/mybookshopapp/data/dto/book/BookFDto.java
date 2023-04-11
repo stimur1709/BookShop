@@ -1,14 +1,18 @@
-package com.example.mybookshopapp.data.dto;
+package com.example.mybookshopapp.data.dto.book;
 
-import com.example.mybookshopapp.data.entity.books.BookFile;
-import com.example.mybookshopapp.data.entity.books.BookRating;
+import com.example.mybookshopapp.data.dto.BookFileDto;
+import com.example.mybookshopapp.data.dto.BookRatingDto;
+import com.example.mybookshopapp.data.dto.genre.GenreDto;
+import com.example.mybookshopapp.data.dto.tag.TagBookDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class BookFDto extends BooksFDto {
 
     private String description;
@@ -21,8 +25,8 @@ public class BookFDto extends BooksFDto {
     private int rateReview;
     private int downloadCount;
     private List<TagBookDto> tagList;
-    private List<BookFile> bookFileList;
-    private List<BookRating> bookRatingList;
+    private List<BookFileDto> bookFileList;
+    private List<BookRatingDto> bookRatingList;
     private List<GenreDto> genreList;
 
 }

@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.TagBookDto;
+import com.example.mybookshopapp.data.dto.tag.TagBookDto;
 import com.example.mybookshopapp.data.entity.TagBook;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.TagRepository;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
-public class TagServiceImpl extends ModelServiceImpl<TagBook, Query, TagBookDto, TagRepository> {
+public class TagServiceImpl extends ModelServiceImpl<TagBook, Query, TagBookDto, TagBookDto, TagRepository> {
 
     @Autowired
     protected TagServiceImpl(TagRepository repository, UserProfileService userProfileService,
                              ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, TagBookDto.class, TagBook.class, userProfileService, modelMapper, request);
+        super(repository, TagBookDto.class, TagBookDto.class, TagBook.class, userProfileService, modelMapper, request);
     }
 
     public List<TagBook> getPageOfTagsBooks() {

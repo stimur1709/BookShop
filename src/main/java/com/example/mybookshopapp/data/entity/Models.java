@@ -19,4 +19,7 @@ public class Models {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    public Models(Integer id) {
+        this.id = id;
+    }
 }

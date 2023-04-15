@@ -3,7 +3,6 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.dto.book.BookFDto;
 import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.entity.Image;
-import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.entity.books.BookF;
 import com.example.mybookshopapp.data.entity.books.BooksF;
@@ -114,7 +113,6 @@ public class BookServiceImpl
         book.setAuthorList(bookF.getAuthorList());
         book.setGenreList(bookF.getGenreList());
         book.setTagList(bookF.getTagList());
-        book.getTagList().stream().map(Models::getId).forEach(System.out::println);
         bookRepository.save(book);
         return getContent(dto.getSlug());
     }

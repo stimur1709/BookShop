@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.controllers.rest;
 
-import com.example.mybookshopapp.data.dto.tag.TagBookDto;
+import com.example.mybookshopapp.data.dto.TagBookDto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.service.TagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

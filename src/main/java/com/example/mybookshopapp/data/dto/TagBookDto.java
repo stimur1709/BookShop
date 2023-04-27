@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.dto.genre;
+package com.example.mybookshopapp.data.dto;
 
 import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import lombok.Getter;
@@ -8,9 +8,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GenreDtoForBook extends GenreDto {
+public class TagBookDto extends Dto {
 
-    private GenreDtoForBook parent;
-    private List<GenreDtoForBook> childGenres;
+    private String name;
+    private String slug;
     private List<BooksFDto> bookList;
+
 }

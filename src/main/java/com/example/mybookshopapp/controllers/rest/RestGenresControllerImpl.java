@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.controllers.rest;
 
-import com.example.mybookshopapp.data.dto.genre.GenreDto;
+import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.service.GenreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

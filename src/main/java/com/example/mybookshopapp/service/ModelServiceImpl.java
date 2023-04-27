@@ -39,14 +39,15 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
 
     @Override
     public Page<D> getContents(Q q) {
-        return repository.findAll(PageRequest.of(q.getOffset(), q.getLimit())).map(m -> modelMapper.map(m, dtoS));
+        return repository.findAll(getPageRequest(q)).map(m -> modelMapper.map(m, dtoS));
     }
 
     @Override
     public PageRequest getPageRequest(Q q) {
         return q.getProperty() == null
                 ? PageRequest.of(q.getOffset(), q.getLimit())
-                : PageRequest.of(q.getOffset(), q.getLimit(), Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty()));
+                : PageRequest.of(q.getOffset(), q.getLimit(),
+                Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty()));
     }
 
     @Override

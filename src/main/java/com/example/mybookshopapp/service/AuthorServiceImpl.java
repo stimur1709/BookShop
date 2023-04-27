@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.author.AuthorDto;
-import com.example.mybookshopapp.data.dto.author.AuthorDtoForAuthor;
+import com.example.mybookshopapp.data.dto.AuthorDto;
 import com.example.mybookshopapp.data.entity.Author;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.AuthorRepository;
@@ -17,24 +16,24 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDtoForAuthor, AuthorDtoForAuthor, AuthorRepository> {
+public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDto, AuthorDto, AuthorRepository> {
 
     @Autowired
     protected AuthorServiceImpl(AuthorRepository repository, UserProfileService userProfileService,
                                 ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, AuthorDtoForAuthor.class, AuthorDtoForAuthor.class, Author.class, userProfileService, modelMapper, request);
+        super(repository, AuthorDto.class, AuthorDto.class, Author.class, userProfileService, modelMapper, request);
     }
 
     @Override
-    public AuthorDtoForAuthor getContent(String slug) {
-        return modelMapper.map(repository.findAuthorBySlug(slug), AuthorDtoForAuthor.class);
+    public AuthorDto getContent(String slug) {
+        return modelMapper.map(repository.findAuthorBySlug(slug), AuthorDto.class);
     }
 
     @Override
-    public Page<AuthorDtoForAuthor> getContents(Query q) {
-        if (q.getSearch() != null || !q.getSearch().isBlank()) {
+    public Page<AuthorDto> getContents(Query q) {
+        if (q.checkQuery()) {
             return repository.findAuthors(q.getSearch(), q.getIds(), getPageRequest(q))
-                    .map(m -> modelMapper.map(m, AuthorDtoForAuthor.class));
+                    .map(m -> modelMapper.map(m, AuthorDto.class));
         }
         return super.getContents(q);
     }

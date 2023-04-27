@@ -47,7 +47,7 @@ public class AuthorControllerImpl extends ViewControllerImpl {
         return "authors/slug";
     }
 
-    @GetMapping("/books/author/{slug}")
+    @GetMapping("{slug}/books")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
         Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "author", slug));
         model.addAttribute("author", authorService.getContent(slug));

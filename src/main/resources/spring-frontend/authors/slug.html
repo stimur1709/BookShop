@@ -86,7 +86,7 @@
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${authorBooks})}"></div>
                 </div>
                 <footer class="Section-footer">
-                    <a class="Author-books" th:href="'/books/author/' + ${content.slug}"
+                    <a class="Author-books" th:href="'/authors/' + ${content.slug} + '/books'"
                        th:text="#{message.allBooksAuthor}">
                         Все книги автора
                         <span class="Author-amount" th:text="${content.getBookList().size()}">(55)</span>

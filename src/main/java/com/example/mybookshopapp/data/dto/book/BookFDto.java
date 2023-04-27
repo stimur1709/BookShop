@@ -2,8 +2,9 @@ package com.example.mybookshopapp.data.dto.book;
 
 import com.example.mybookshopapp.data.dto.BookFileDto;
 import com.example.mybookshopapp.data.dto.BookRatingDto;
-import com.example.mybookshopapp.data.dto.genre.GenreDto;
-import com.example.mybookshopapp.data.dto.tag.TagBookDto;
+import com.example.mybookshopapp.data.dto.GenreDto;
+import com.example.mybookshopapp.data.dto.TagBookDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,9 +25,13 @@ public class BookFDto extends BooksFDto {
     private long count5;
     private int rateReview;
     private int downloadCount;
+
+    @JsonIgnoreProperties("bookList")
     private List<TagBookDto> tagList;
     private List<BookFileDto> bookFileList;
     private List<BookRatingDto> bookRatingList;
+
+    @JsonIgnoreProperties({"bookList", "childGenres", "parent"})
     private List<GenreDto> genreList;
 
 }

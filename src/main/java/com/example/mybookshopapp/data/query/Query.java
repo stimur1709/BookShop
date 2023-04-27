@@ -53,7 +53,11 @@ public class Query {
         return search == null ? "" : search;
     }
 
-    public List<Integer> getIds() {
-        return ids != null ? ids : Collections.emptyList();
+    public boolean checkQuery() {
+        if (ids == null) {
+            ids = Collections.emptyList();
+        }
+        return (search != null && !search.isBlank()) || !ids.isEmpty();
     }
+
 }

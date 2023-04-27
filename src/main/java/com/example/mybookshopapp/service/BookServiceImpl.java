@@ -49,7 +49,7 @@ public class BookServiceImpl
     public Page<BooksFDto> getContents(BookQuery q) {
         PageRequest of = getPageRequest(q);
         Integer userId = userProfileService.getUserId();
-        if (q.isBestseller() || q.isDiscount() || !q.getSearch().isBlank() || q.getFrom() != null || q.getTo() != null) {
+        if (q.checkQuery()) {
             try {
                 Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(q.getFrom());
                 Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(q.getTo());

@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.tag.TagBookDto;
+import com.example.mybookshopapp.data.dto.TagBookDto;
 import com.example.mybookshopapp.data.entity.TagBook;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.TagRepository;

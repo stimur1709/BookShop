@@ -21,8 +21,7 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
 
     @Override
     public Page<D> getPage(Q q) {
-        Page<D> contents = service.getContents(q);
-        return contents;
+        return service.getContents(q);
     }
 
     @Override

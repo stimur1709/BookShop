@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.data.dto.genre.GenreDto;
+import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.GenreRepository;

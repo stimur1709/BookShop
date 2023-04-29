@@ -7,6 +7,7 @@ import com.example.mybookshopapp.repository.TagRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,15 @@ public class TagServiceImpl extends ModelServiceImpl<TagBook, Query, TagBookDto,
 
     public List<TagBook> getPageOfTagsBooks() {
         return repository.findAll();
+    }
+
+    @Override
+    public Page<TagBookDto> getContents(Query q) {
+        if (q.checkQuery()) {
+            return repository.findTags(q.getSearch(), q.getIds(), getPageRequest(q))
+                    .map(m -> modelMapper.map(m, TagBookDto.class));
+        }
+        return super.getContents(q);
     }
 
     @Override

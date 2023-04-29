@@ -42,7 +42,7 @@ public class BooksFDto extends Dto {
     private String code;
     private Double rate;
 
-    @JsonIgnoreProperties("bookList")
+    @JsonIgnoreProperties({"bookList", "image"})
     private List<AuthorDto> authorList;
 
     public int discountPrice() {

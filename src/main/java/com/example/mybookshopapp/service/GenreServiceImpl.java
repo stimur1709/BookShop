@@ -7,6 +7,7 @@ import com.example.mybookshopapp.repository.GenreRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,4 +32,12 @@ public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, G
         return modelMapper.map(repository.findGenreEntityBySlug(slug), GenreDto.class);
     }
 
+    @Override
+    public Page<GenreDto> getContents(Query q) {
+        if (q.checkQuery()) {
+            return repository.findGenres(q.getSearch(), q.getIds(), getPageRequest(q))
+                    .map(m -> modelMapper.map(m, GenreDto.class));
+        }
+        return super.getContents(q);
+    }
 }

@@ -53,10 +53,10 @@ public class BookServiceImpl
             try {
                 Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(q.getFrom());
                 Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(q.getTo());
-                return repository.findBooks(userId, q.getSearch(), q.isBestseller(), q.isDiscount(), dateFrom, dateTo, of)
+                return repository.findBooks(userId, q.getSearch(), q.isBestseller(), q.isDiscount(), dateFrom, dateTo, q.getIds(), of)
                         .map(m -> modelMapper.map(m, BooksFDto.class));
             } catch (ParseException | NullPointerException e) {
-                return repository.findBooks(userId, q.getSearch(), q.isBestseller(), q.isDiscount(), new Date(userId), new Date(), of)
+                return repository.findBooks(userId, q.getSearch(), q.isBestseller(), q.isDiscount(), new Date(userId), new Date(), q.getIds(), of)
                         .map(m -> modelMapper.map(m, BooksFDto.class));
             }
         } else if (q.getProperty() == null) {

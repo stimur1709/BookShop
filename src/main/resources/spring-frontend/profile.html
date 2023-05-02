@@ -177,9 +177,8 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="transaction : ${transactions}">
-                                        <td th:text="${transaction.getFormatDate()}">15
-                                            мая
-                                            2017 10:03
+                                        <td th:text="${#dates.format(transaction.getTime(), 'dd MMMM yyyy HH:mm')}">
+                                            15 мая 2017 10:03
                                         </td>
                                         <td>
                                             <span class="Transactions_textSuccess">

@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.config.PaymentConfig;
-import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
 import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.entity.config.Api;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
@@ -14,21 +13,15 @@ import com.example.mybookshopapp.repository.BalanceTransactionRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.service.userService.UserProfileService;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -40,24 +33,19 @@ public class PaymentService {
     private final BookRepository bookRepository;
     private final BalanceTransactionRepository balanceTransactionRepository;
     private final UserProfileService userProfileService;
-    private final ModelMapper modelMapper;
-    private final LocaleResolver localeResolver;
-    private final HttpServletRequest request;
     private final MailService mailService;
 
     @Autowired
-    public PaymentService(RestTemplate restTemplate, PaymentConfig paymentConfig, BookRepository bookRepository, BalanceTransactionRepository balanceTransactionRepository, UserProfileService userProfileService, ModelMapper modelMapper, LocaleResolver localeResolver, HttpServletRequest request, MailService mailService) {
+    public PaymentService(RestTemplate restTemplate, PaymentConfig paymentConfig, BookRepository bookRepository, BalanceTransactionRepository balanceTransactionRepository, UserProfileService userProfileService, MailService mailService) {
         this.restTemplate = restTemplate;
         this.paymentConfig = paymentConfig;
         this.bookRepository = bookRepository;
         this.balanceTransactionRepository = balanceTransactionRepository;
         this.userProfileService = userProfileService;
-        this.modelMapper = modelMapper;
-        this.localeResolver = localeResolver;
-        this.request = request;
         this.mailService = mailService;
     }
 
+    @Transactional
     public String getPaymentUrl(String amount, String description) {
         Api api = paymentConfig.getPayment();
         String uuid = UUID.randomUUID().toString();
@@ -76,7 +64,6 @@ public class PaymentService {
     }
 
     @Async
-    @Transactional
     void createBalanceTransaction(String codePaymentEx, String codePaymentIn, String amount) {
         balanceTransactionRepository.save(new BalanceTransaction(userProfileService.getCurrentUser().getId(), Integer.parseInt(amount), codePaymentIn, codePaymentEx));
     }
@@ -151,22 +138,7 @@ public class PaymentService {
         return headers;
     }
 
-    public Page<BalanceTransactionDto> getTransactionsUser() {
-        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserAndStatusPaymentOrderByTimeDesc(userProfileService.getUserId(), 3, PageRequest.of(0, 5));
-        return mapper(transactions);
-    }
-
-    public List<BalanceTransactionDto> getTransactionsUser(int offset, int limit) {
-        Page<BalanceTransaction> transactions = balanceTransactionRepository.findByUserAndStatusPaymentOrderByTimeDesc(userProfileService.getUserId(), 3, PageRequest.of(offset, limit));
-        return mapper(transactions).getContent();
-    }
-
-    public Page<BalanceTransactionDto> mapper(Page<BalanceTransaction> transactions) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm", localeResolver.resolveLocale(request));
-        transactions.getContent().forEach(balanceTransaction -> balanceTransaction.setFormatDate(simpleDateFormat));
-        return transactions.map(balanceTransaction -> modelMapper.map(balanceTransaction, BalanceTransactionDto.class));
-    }
-
+    @Transactional
     public RedirectView buyBooks(int amount, List<String> books) {
         User user = userProfileService.getCurrentUser();
         if (user.getBalance() >= amount) {

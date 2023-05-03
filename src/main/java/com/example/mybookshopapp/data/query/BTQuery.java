@@ -15,6 +15,9 @@ public class BTQuery extends Query {
     private Integer bookId;
     private List<Integer> statuses;
     private boolean auth;
+    private String interval;
+    private String dateS;
+    private String dateE;
 
     public BTQuery(Integer offset, Integer limit, String property, Integer userId, List<Integer> statuses) {
         super(offset, limit, property);

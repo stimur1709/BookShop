@@ -38,7 +38,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
     }
 
     @Override
-    public Page<D> getContents(Q q) {
+    public Page<D> getPageContents(Q q) {
         return repository.findAll(getPageRequest(q)).map(m -> modelMapper.map(m, dtoS));
     }
 
@@ -51,7 +51,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
     }
 
     @Override
-    public List<D> getAllContents(Q q) {
+    public List<D> getListContents(Q q) {
         Sort sort = Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty());
         return repository.findAll(sort)
                 .stream()

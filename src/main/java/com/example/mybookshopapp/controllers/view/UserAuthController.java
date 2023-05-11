@@ -106,7 +106,7 @@ public class UserAuthController extends ViewControllerImpl {
     public String profilePage(@RequestParam(value = "difference", defaultValue = "0") Double difference, Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
 
-        Page<BalanceTransactionDto> pageTr = balanceTransactionService.getContents(new BTQuery(0, 5, "time", userProfileService.getUserId(), List.of(3)));
+        Page<BalanceTransactionDto> pageTr = balanceTransactionService.getPageContents(new BTQuery(0, 5, "time", userProfileService.getUserId(), List.of(3)));
         model.addAttribute("transactions", pageTr.getContent());
         model.addAttribute("showTr", pageTr.getTotalPages() > 1);
         model.addAttribute("totalPagesTr", pageTr.getTotalPages());

@@ -45,7 +45,7 @@ public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, B
     }
 
     @Override
-    public List<BookReviewDto> getAllContents(Query q) {
+    public List<BookReviewDto> getListContents(Query q) {
         User user = userProfileService.getCurrentUser();
         return bookReviewQueryRepository.getReviewByBookAndUser(q.getSearch(), user.getId())
                 .stream()

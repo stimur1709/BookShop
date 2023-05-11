@@ -42,14 +42,14 @@ public class AuthorControllerImpl extends ViewControllerImpl {
     @GetMapping("/{slug}")
     public String authorPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("content", authorService.getContent(slug));
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 5, "author", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 5, "author", slug));
         model.addAttribute("authorBooks", books.getContent());
         return "authors/slug";
     }
 
     @GetMapping("{slug}/books")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "author", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, "author", slug));
         model.addAttribute("author", authorService.getContent(slug));
         model.addAttribute("books", books);
         return "books/author";

@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface RestDataController<D extends Dto, O extends Dto, Q extends Query> {
 
     @GetMapping
     Page<D> getPage(Q query);
+
+    @GetMapping("/list")
+    List<D> getList(Q query);
 
     @PostMapping("/save")
     ResponseEntity<?> save(@RequestBody @Valid O dto, BindingResult bindingResult);

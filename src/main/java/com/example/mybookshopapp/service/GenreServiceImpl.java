@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, GenreDto, GenreRepository> {
@@ -33,11 +34,18 @@ public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, G
     }
 
     @Override
-    public Page<GenreDto> getContents(Query q) {
+    public Page<GenreDto> getPageContents(Query q) {
         if (q.checkQuery()) {
             return repository.findGenres(q.getSearch(), q.getIds(), getPageRequest(q))
                     .map(m -> modelMapper.map(m, GenreDto.class));
         }
-        return super.getContents(q);
+        return super.getPageContents(q);
+    }
+
+    @Override
+    public List<GenreDto> getListContents(Query query) {
+        return repository.getParentGenreList().stream()
+                .map(m -> modelMapper.map(m, GenreDto.class))
+                .collect(Collectors.toList());
     }
 }

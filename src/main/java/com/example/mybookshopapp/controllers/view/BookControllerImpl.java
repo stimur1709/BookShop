@@ -43,14 +43,14 @@ public class BookControllerImpl extends ViewControllerImpl {
     @GetMapping("/books/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("book", bookService.getContent(slug));
-        model.addAttribute("reviews", bookReviewService.getAllContents(new Query(slug)));
+        model.addAttribute("reviews", bookReviewService.getListContents(new Query(slug)));
         return "books/slug";
     }
 
     @GetMapping({"/books/recent", "/books/popular", "/books/viewed"})
     public String recentPage(Model model) {
         String url = getUrl();
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, getProperty(url), false));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, getProperty(url), false));
         model.addAttribute("books", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());

@@ -30,12 +30,12 @@ public class BalanceTransactionService extends ModelServiceImpl<BalanceTransacti
     }
 
     @Override
-    public Page<BalanceTransactionDto> getContents(BTQuery q) {
+    public Page<BalanceTransactionDto> getPageContents(BTQuery q) {
         if (q.isAuth()) {
             return repository.findBalanceTransactions(userProfileService.getUserId(), q.getStatuses(), getPageRequest(q))
                     .map(m -> modelMapper.map(m, BalanceTransactionDto.class));
         } else {
-            return super.getContents(q);
+            return super.getPageContents(q);
         }
     }
 

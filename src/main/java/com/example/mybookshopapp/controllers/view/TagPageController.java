@@ -35,7 +35,7 @@ public class TagPageController extends ViewControllerImpl {
 
     @GetMapping("/{slug}")
     public String tagPage(@PathVariable(value = "slug") String slug, Model model) {
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "tag", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, "tag", slug));
         model.addAttribute("content", tagService.getContent(slug));
         model.addAttribute("booksTag", books);
         model.addAttribute("show", books.getTotalPages() > 1);

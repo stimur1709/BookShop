@@ -38,10 +38,10 @@ public class MainViewControllerImpl extends ViewControllerImpl {
 
     @GetMapping
     public String getPage(Model model) {
-        model.addAttribute("recommendBooks", bookService.getContents(new BookQuery(0, 6, "recommend", false)));
-        model.addAttribute("recentBooks", bookService.getContents(new BookQuery(0, 6, "pub_date", false)));
-        model.addAttribute("popularBooks", bookService.getContents(new BookQuery(0, 6, "popularity", false)));
-        model.addAttribute("recentlyViewed", bookService.getContents(new BookQuery(0, 6, "viewed", false)));
+        model.addAttribute("recommendBooks", bookService.getPageContents(new BookQuery(0, 6, "recommend", false)));
+        model.addAttribute("recentBooks", bookService.getPageContents(new BookQuery(0, 6, "pub_date", false)));
+        model.addAttribute("popularBooks", bookService.getPageContents(new BookQuery(0, 6, "popularity", false)));
+        model.addAttribute("recentlyViewed", bookService.getPageContents(new BookQuery(0, 6, "viewed", false)));
         model.addAttribute("tagsBooks", tagServiceImpl.getPageOfTagsBooks());
         return "index";
     }
@@ -50,7 +50,7 @@ public class MainViewControllerImpl extends ViewControllerImpl {
     public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
                                   Model model) throws DefaultException {
         if (searchWordDto != null) {
-            Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "pub_date", false, searchWordDto.getExample()));
+            Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, "pub_date", false, searchWordDto.getExample()));
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("books", books);
             return "search/index";

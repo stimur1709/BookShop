@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
+import java.util.List;
+
 public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O extends Dto, S extends ModelService<Q, D, O>>
         implements RestDataController<D, O, Q> {
 
@@ -21,7 +23,7 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
 
     @Override
     public Page<D> getPage(Q q) {
-        return service.getContents(q);
+        return service.getPageContents(q);
     }
 
     @Override
@@ -45,4 +47,8 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
         }
     }
 
+    @Override
+    public List<D> getList(Q query) {
+        return service.getListContents(query);
+    }
 }

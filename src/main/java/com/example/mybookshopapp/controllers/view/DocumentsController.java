@@ -27,7 +27,7 @@ public class DocumentsController extends ViewControllerImpl {
     @GetMapping("/documents")
     public String documentsPage(Model model) {
         model.addAttribute("documents",
-                documentService.getAllContents(new Query(false, "sortIndex")));
+                documentService.getListContents(new Query(false, "sortIndex")));
         return "documents/index";
     }
 

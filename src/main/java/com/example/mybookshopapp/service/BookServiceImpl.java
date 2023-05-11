@@ -46,7 +46,7 @@ public class BookServiceImpl
     }
 
     @Override
-    public Page<BooksFDto> getContents(BookQuery q) {
+    public Page<BooksFDto> getPageContents(BookQuery q) {
         PageRequest of = getPageRequest(q);
         Integer userId = userProfileService.getUserId();
         if (q.checkQuery()) {

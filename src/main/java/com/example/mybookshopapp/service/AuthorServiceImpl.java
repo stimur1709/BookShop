@@ -30,12 +30,12 @@ public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDto
     }
 
     @Override
-    public Page<AuthorDto> getContents(Query q) {
+    public Page<AuthorDto> getPageContents(Query q) {
         if (q.checkQuery()) {
             return repository.findAuthors(q.getSearch(), q.getIds(), getPageRequest(q))
                     .map(m -> modelMapper.map(m, AuthorDto.class));
         }
-        return super.getContents(q);
+        return super.getPageContents(q);
     }
 
     public TreeMap<String, List<AuthorDto>> getAuthorsMap() {

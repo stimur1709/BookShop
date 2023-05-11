@@ -42,7 +42,7 @@ public class GenreControllerImpl extends ViewControllerImpl {
     @GetMapping("/{slug}")
     public String getPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("content", genreService.getContent(slug));
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "genre", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, "genre", slug));
         model.addAttribute("booksGenre", books.getContent());
         model.addAttribute("show", books.getTotalPages() > 1);
         model.addAttribute("totalPages", books.getTotalPages());

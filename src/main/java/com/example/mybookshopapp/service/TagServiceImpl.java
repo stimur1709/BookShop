@@ -27,12 +27,12 @@ public class TagServiceImpl extends ModelServiceImpl<TagBook, Query, TagBookDto,
     }
 
     @Override
-    public Page<TagBookDto> getContents(Query q) {
+    public Page<TagBookDto> getPageContents(Query q) {
         if (q.checkQuery()) {
             return repository.findTags(q.getSearch(), q.getIds(), getPageRequest(q))
                     .map(m -> modelMapper.map(m, TagBookDto.class));
         }
-        return super.getContents(q);
+        return super.getPageContents(q);
     }
 
     @Override

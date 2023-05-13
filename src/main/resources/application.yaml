@@ -56,6 +56,9 @@ spring:
 upload:
   path: src/main/resources/img
 
+crm:
+  url: localhost:4200/
+
 download:
   path: src/main/resources/book-files
 

@@ -6546,4 +6546,55 @@
         <addForeignKeyConstraint baseTableName="authors" baseColumnNames="image_id" constraintName="fkigqauth4r46mag0sl4csnwp72"
                                  referencedColumnNames="id" referencedTableName="image" onDelete="SET NULL" deferrable="false"/>
     </changeSet>
+    <changeSet id="1683121123775-1" author="stimur1709">
+        <comment>creating table user_role</comment>
+        <createTable tableName="user_role">
+            <column autoIncrement="true" name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="user_role_pkey"/>
+            </column>
+            <column name="role" type="varchar(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1312121123775-1" author="stimur1709">
+        <comment>creating table user2role</comment>
+        <createTable tableName="user2role">
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1683121198775-1" author="stimur1709">
+        <comment>creating a primary key 'user2role_pkey' for a table user2role</comment>
+        <addPrimaryKey tableName="user2role" columnNames="user_id, role_id" constraintName="user2role_pkey"/>
+    </changeSet>
+    <changeSet id="1612221123775-1" author="stimur1709">
+        <comment>creating a foreign key 'u2r_user_id_fk' for a table user2role</comment>
+        <addForeignKeyConstraint baseTableName="user2role" baseColumnNames="user_id"
+                                 constraintName="u2r_user_id_fk" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="1683121123123-1" author="stimur1709">
+        <comment>creating a foreign key 'u2r_role_id_fk' for a table user2role</comment>
+        <addForeignKeyConstraint baseTableName="user2role" baseColumnNames="role_id"
+                                 constraintName="u2r_role_id_fk" referencedTableName="user_role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="1683121123987-1" author="stimur1709">
+        <comment>insert data for a table user_role</comment>
+        <insert tableName="user_role">
+            <column name="role" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="role" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1683121123988-1" author="stimur1709">
+        <comment>insert data for a table user2role</comment>
+        <sqlFile path="db/changelog/scripts/insert-user2role.sql"/>
+    </changeSet>
 </databaseChangeLog>

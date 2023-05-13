@@ -2,6 +2,7 @@ package com.example.mybookshopapp.service.userService;
 
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.UserContact;
+import com.example.mybookshopapp.data.entity.user.UserRole;
 import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
 import com.example.mybookshopapp.data.outher.ContactConfirmationResponse;
 import com.example.mybookshopapp.security.BookstoreUserDetails;
@@ -21,10 +22,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserAuthService {
@@ -63,7 +65,6 @@ public class UserAuthService {
         this.userProfileService = userProfileService;
     }
 
-
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
         Integer userOld = userProfileService.getUserId();
         UserContact userContact = userContactService.getUserContact(payload.getContact());
@@ -72,16 +73,18 @@ public class UserAuthService {
             return new ContactConfirmationResponse(false, message);
         }
         try {
-            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userContact.getUser().getHash(),
-                    payload.getCode()));
+            Authentication authenticate = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userContact.getUser().getHash(), payload.getCode()
+                    )
+            );
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             BookstoreUserDetails userDetails = (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(userContact.getUser().getHash());
             String jwtToken = jwtUtil.generateToken(userDetails);
             blacklistService.delete(jwtToken);
-            Cookie cookie = new Cookie("token", jwtToken);
-            response.addCookie(cookie);
+            response.addHeader("Authorization", "Bearer " + jwtToken);
             bookShopService.addBooksType(userOld, userContact.getUser().getId());
-            return new ContactConfirmationResponse(true, jwtToken);
+            return new ContactConfirmationResponse(true, jwtToken, getUserRole(userContact));
         } catch (Exception e) {
 
             if (userContact.getCodeTrails() >= 2) {
@@ -167,6 +170,14 @@ public class UserAuthService {
         contactConfirmationResponse.setResult(true);
         contactConfirmationResponse.setError(generator.generatorTextBadContact(result));
         return contactConfirmationResponse;
+    }
+
+    private List<String> getUserRole(UserContact userContact) {
+        return userContact.getUser()
+                .getUserRoles()
+                .stream()
+                .map(UserRole::getRole)
+                .collect(Collectors.toList());
     }
 
 }

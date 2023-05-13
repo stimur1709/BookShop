@@ -49,6 +49,12 @@ public class User extends Models implements Serializable {
     @JsonManagedReference
     private List<UserLoginHistory> userLoginHistories;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user2Role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private List<UserRole> userRoles;
+
     public User(String firstname, String lastname, String password, String hash) {
         this.hash = hash;
         this.password = password;

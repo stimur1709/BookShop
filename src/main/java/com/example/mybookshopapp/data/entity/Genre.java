@@ -38,4 +38,9 @@ public class Genre extends Models {
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
     private List<Book> bookList;
 
+    public Genre(String name, String slug) {
+        this.slug = slug;
+        this.name = name;
+    }
+
 }

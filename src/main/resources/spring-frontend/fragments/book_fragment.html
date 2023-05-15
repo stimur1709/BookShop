@@ -8,7 +8,7 @@
             <div class="Slider-content">
                 <div class="Card">
                     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
-                        <img th:src="${book.image}"/>
+                        <img th:src="'/img/' + ${book.image}"/>
                         <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
                             <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
                         </div>
@@ -57,7 +57,7 @@
 </div>
 <div class="Card" th:fragment="bookRefresh(booksCollection)" th:each="book : ${booksCollection}">
     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
-        <img th:src="${book.image}"/>
+        <img th:src="'/img/' + ${book.image}"/>
         <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
             <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
         </div>
@@ -96,7 +96,7 @@
     <div class="Cart-block Cart-block_row">
         <div class="Cart-block Cart-block_pict">
             <a class="Cart-pict" href="#">
-                <img class="Cart-img" th:src="${book.image}" alt="card.jpg"/>
+                <img class="Cart-img" th:src="'img/' + ${book.image}" alt="card.jpg"/>
             </a>
         </div>
         <div class="Cart-block Cart-block_row">

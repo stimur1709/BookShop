@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.service;
 
-import com.example.mybookshopapp.dao.TransactionsDao;
+import com.example.mybookshopapp.dao.BooksTransactionsDao;
+import com.example.mybookshopapp.dao.TransactionsIntervalDao;
 import com.example.mybookshopapp.data.daoEntity.BooksTransactionsCount;
 import com.example.mybookshopapp.data.daoEntity.TransactionsInterval;
 import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
@@ -21,12 +22,14 @@ import java.util.List;
 public class BalanceTransactionService extends ModelServiceImpl<BalanceTransaction, BTQuery, BalanceTransactionDto,
         BalanceTransactionDto, BalanceTransactionRepository> {
 
-    private final TransactionsDao transactionsDao;
+    private final TransactionsIntervalDao transactionsIntervalDao;
+    private final BooksTransactionsDao booksTransactionsDao;
 
     @Autowired
-    protected BalanceTransactionService(BalanceTransactionRepository repository, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request, TransactionsDao transactionsDao) {
+    protected BalanceTransactionService(BalanceTransactionRepository repository, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request, TransactionsIntervalDao transactionsIntervalDao, BooksTransactionsDao booksTransactionsDao) {
         super(repository, BalanceTransactionDto.class, BalanceTransactionDto.class, BalanceTransaction.class, userProfileService, modelMapper, request);
-        this.transactionsDao = transactionsDao;
+        this.transactionsIntervalDao = transactionsIntervalDao;
+        this.booksTransactionsDao = booksTransactionsDao;
     }
 
     @Override
@@ -40,10 +43,10 @@ public class BalanceTransactionService extends ModelServiceImpl<BalanceTransacti
     }
 
     public List<TransactionsInterval> getTransactionsInterval(BTQuery query) throws ParseException {
-        return transactionsDao.getTransactionsInterval(query);
+        return transactionsIntervalDao.getTransactionsInterval(query);
     }
 
     public List<BooksTransactionsCount> getBooksTransactionsCount(BTQuery query) throws ParseException {
-        return transactionsDao.getBooksTransactionsCount(query);
+        return booksTransactionsDao.getBooksTransactionsCount(query);
     }
 }

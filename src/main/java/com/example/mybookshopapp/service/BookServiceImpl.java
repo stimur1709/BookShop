@@ -38,7 +38,7 @@ public class BookServiceImpl
     @Autowired
     protected BookServiceImpl(BooksQueryRepository repository, UserProfileService userProfileService,
                               ModelMapper modelMapper, BooksViewedRepository booksViewedRepository,
-                              BookQueryRepository bookQueryRepository, HttpServletRequest request, BookRepository bookRepository) {
+                              BookQueryRepository bookQueryRepository, HttpServletRequest request, BookRepository bookRepository, ExternalBookLoader externalBookLoader) {
         super(repository, BooksFDto.class, BookFDto.class, BooksF.class, userProfileService, modelMapper, request);
         this.booksViewedRepository = booksViewedRepository;
         this.bookQueryRepository = bookQueryRepository;

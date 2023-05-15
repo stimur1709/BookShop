@@ -41,7 +41,7 @@
                 <div class="ProductCard">
                     <div class="ProductCard-look">
                         <div class="ProductCard-photo" id="uploadButton">
-                            <img th:src="${book.image}" alt="card.jpg"/>
+                            <img th:src="'/img/' + ${book.image}" alt="card.jpg"/>
                         </div>
                     </div>
                     <div class="ProductCard-desc">

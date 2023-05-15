@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GenreRepository extends ModelRepository<Genre> {
@@ -24,5 +25,7 @@ public interface GenreRepository extends ModelRepository<Genre> {
 
     @Query(value = "select * from genre where parent_id is null", nativeQuery = true)
     List<Genre> getParentGenreList();
+
+    Optional<Genre> findFirstByNameIgnoreCase(String title);
 
 }

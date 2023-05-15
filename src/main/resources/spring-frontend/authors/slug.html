@@ -43,7 +43,7 @@
                 <div class="Spoiler">
                     <div class="Spoiler-visible">
                         <div class="pict pict_left">
-                            <img th:src="${content.image.getName()}" alt="card.jpg"/>
+                            <img th:src="'/img/' + ${content.image.getName()}" alt="card.jpg"/>
                         </div>
                         <div th:if="${content.description.length() >= 200}">
                             <h2 th:text="#{messages.biography}">Биография</h2>

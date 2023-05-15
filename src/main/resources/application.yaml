@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8081
   servlet:
     session:
       tracking-modes: cookie
@@ -54,7 +54,7 @@ spring:
             userNameAttribute: id
 
 upload:
-  path: src/main/resources/img
+  path: src/main/resources/img/
 
 crm:
   url: localhost:4200/

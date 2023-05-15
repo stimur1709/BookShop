@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.data.entity;
 
 import com.example.mybookshopapp.data.entity.books.Book;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +27,11 @@ public class TagBook extends Models {
     @JoinTable(name = "book2tag",
             joinColumns = {@JoinColumn(name = "tag_id")},
             inverseJoinColumns = {@JoinColumn(name = "book_id")})
-    @JsonBackReference
     private List<Book> bookList;
+
+    public TagBook(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
 
 }

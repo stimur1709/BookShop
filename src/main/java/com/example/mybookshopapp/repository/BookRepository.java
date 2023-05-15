@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
@@ -15,6 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Page<Book> findBookEntityByTitleContainingAllIgnoreCase(String bookTitle, Pageable nextPage);
 
     Book findBookEntityBySlug(String slug);
+
+    Optional<Book> findFirstByTitleIgnoreCase(String title);
 
     List<Book> findBookEntitiesBySlugIn(Collection<String> slug);
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AuthorRepository extends ModelRepository<Author> {
@@ -21,5 +22,7 @@ public interface AuthorRepository extends ModelRepository<Author> {
     Page<Author> findAuthors(String name, List<Integer> ids, Pageable pageable);
 
     Author findAuthorBySlug(String slug);
+
+    Optional<Author> findFirstByNameIgnoreCase(String name);
 
 }

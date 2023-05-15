@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TagRepository extends ModelRepository<TagBook> {
@@ -21,5 +22,7 @@ public interface TagRepository extends ModelRepository<TagBook> {
             "   or upper(t.name) like upper(concat('%', ?1, '%'))) " +
             "   and case when ?2 is not null then t.id not in (?2) else true end ", nativeQuery = true)
     Page<TagBook> findTags(String name, List<Integer> ids, Pageable pageable);
+
+    Optional<TagBook> findFirstByNameIgnoreCase(String title);
 
 }

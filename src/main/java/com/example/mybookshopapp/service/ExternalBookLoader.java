@@ -46,7 +46,7 @@ public class ExternalBookLoader {
 
     private String getUrl(TMLitres tmLitres) {
         String url = "https://api.litres.ru/foundation/api/search?limit=%d&offset=%d&q=%s&types=text_book&types=audiobook&types=podcast&types=podcast_episode";
-        return String.format(url, 15, tmLitres.getLastStart(), tmLitres.getSearchName());
+        return String.format(url, 5, tmLitres.getLastStart(), tmLitres.getSearchName());
     }
 
 }

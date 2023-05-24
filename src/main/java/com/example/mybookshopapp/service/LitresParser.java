@@ -103,7 +103,7 @@ public class LitresParser {
     private List<Author> parserAuthor(List<Person> persons) {
         List<Author> authors = new ArrayList<>();
         for (Person person : persons) {
-            if (person.getRole().equals("author")) {
+            if (person.getRole().equals("author") && !checkContainsAuthor(authors, person.getFullName())) {
                 Optional<Author> optionalAuthor = authorRepository.findFirstByNameIgnoreCase(person.getFullName());
                 Author newAuthor = optionalAuthor
                         .map(author -> refreshAuthor(author, person))
@@ -112,7 +112,7 @@ public class LitresParser {
                 threadSleep();
             }
         }
-        return authors;
+        return authorRepository.saveAll(authors);
     }
 
     private List<Genre> parseGenre(Document doc) {
@@ -121,14 +121,14 @@ public class LitresParser {
             Elements elems = doc.select("a[href~=\\/genre]");
 
             for (Element elem : elems) {
-                Optional<Genre> optionalGenre = genreRepository.findFirstByNameIgnoreCase(elem.text());
-                Genre genre = optionalGenre.orElseGet(() -> new Genre(elem.text(), UUID.randomUUID().toString()));
-                if (!genres.contains(genre)) {
+                if (!checkContainsGenre(genres, elem.text())) {
+                    Optional<Genre> optionalGenre = genreRepository.findFirstByNameIgnoreCase(elem.text());
+                    Genre genre = optionalGenre.orElseGet(() -> new Genre(elem.text(), UUID.randomUUID().toString()));
                     genres.add(genre);
                 }
             }
         }
-        return genres;
+        return genreRepository.saveAll(genres);
     }
 
     private List<TagBook> parseTag(Document doc) {
@@ -138,11 +138,15 @@ public class LitresParser {
             Elements elems = doc.select("a[href~=\\/tags]");
 
             for (Element elem : elems) {
-                Optional<TagBook> optionalTagBook = tagRepository.findFirstByNameIgnoreCase(elem.text());
-                tagBooks.add(optionalTagBook.orElseGet(() -> new TagBook(elem.text(), UUID.randomUUID().toString())));
+                if (!checkContainsTag(tagBooks, elem.text())) {
+                    Optional<TagBook> optionalTagBook = tagRepository.findFirstByNameIgnoreCase(elem.text());
+                    TagBook tagBook = optionalTagBook
+                            .orElseGet(() -> new TagBook(elem.text(), UUID.randomUUID().toString()));
+                    tagBooks.add(tagBook);
+                }
             }
         }
-        return tagBooks;
+        return tagRepository.saveAll(tagBooks);
     }
 
     private Author createAuthor(Person person) {
@@ -202,6 +206,24 @@ public class LitresParser {
             String src = doc.select(".biblio_author_image").select("img").first().absUrl("src");
             return imageService.downloadImage(src);
         }
+    }
+
+    private boolean checkContainsGenre(List<Genre> genres, String name) {
+        boolean b = genres.stream().map(Genre::getName).anyMatch(n -> n.equalsIgnoreCase(name));
+        System.out.println(b + " -- " + name);
+        return b;
+    }
+
+    private boolean checkContainsAuthor(List<Author> authors, String name) {
+        boolean b = authors.stream().map(Author::getName).anyMatch(n -> n.equalsIgnoreCase(name));
+        System.out.println(b + " -- " + name);
+        return b;
+    }
+
+    private boolean checkContainsTag(List<TagBook> tagBooks, String name) {
+        boolean b = tagBooks.stream().map(TagBook::getName).anyMatch(n -> n.equalsIgnoreCase(name));
+        System.out.println(b + " -- " + name);
+        return b;
     }
 
 }

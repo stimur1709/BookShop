@@ -32,6 +32,7 @@ public class TMLitresDao extends BaseDao<TMLitres> {
                 "          left join books b on b2t.book_id = b.id " +
                 "          left join tm_litres l on l.task_id = tm.id and l.tag_id = t.id " +
                 " where name_task = 'litres' " +
+                "   and (total <> 0 or total is null) " +
                 " group by tm.id, tm.name_task, tm.active, t.name, t.id, l.last_start, l.total " +
                 " order by count(b) " +
                 " limit 1) " +
@@ -49,6 +50,7 @@ public class TMLitresDao extends BaseDao<TMLitres> {
                 "          left join books b on b2a.book_id = b.id " +
                 "          left join tm_litres l on l.task_id = tm.id and l.author_id = a.id " +
                 " where name_task = 'litres' " +
+                "   and (total <> 0 or total is null) " +
                 " group by tm.id, tm.name_task, tm.active, a.name, a.id, l.last_start, l.total " +
                 " order by count(b) " +
                 " limit 1) " +
@@ -66,6 +68,7 @@ public class TMLitresDao extends BaseDao<TMLitres> {
                 "          left join books b on b2g.book_id = b.id " +
                 "          left join tm_litres l on l.task_id = tm.id and l.genre_id = g.id " +
                 " where name_task = 'litres' " +
+                "   and (total <> 0 or total is null) " +
                 " group by tm.id, tm.name_task, tm.active, g.name, g.id, l.last_start, l.total " +
                 " order by count(b) " +
                 " limit 1)";
@@ -73,15 +76,25 @@ public class TMLitresDao extends BaseDao<TMLitres> {
     }
 
     public void saveTMLitres(TMLitres tmLitres) {
-        String sql = "insert into tm_litres(task_id, tag_id, last_start, total) " +
-                "values (:id, :tagId, :last_start, :total) " +
-                "on conflict(task_id, tag_id) do update set last_start = :last_start, " +
-                "                                           total      = :total";
+        String s = getSearchId(tmLitres.getType());
+        String sql = "insert into tm_litres(task_id, %s, last_start, total) " +
+                "values (:id, :%s, :last_start, :total) " +
+                "on conflict(task_id, %s) do update set last_start = :last_start,  total = :total";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("id", tmLitres.getId());
-        paramMap.put("tagId", tmLitres.getSearchId());
+        paramMap.put(s, tmLitres.getSearchId());
         paramMap.put("last_start", tmLitres.getLastStart());
         paramMap.put("total", tmLitres.getTotal());
-        super.saveOrUpdate(sql, paramMap);
+        super.saveOrUpdate(String.format(sql, s, s, s), paramMap);
+    }
+
+    private String getSearchId(short type) {
+        if (type == 1) {
+            return "tag_id";
+        } else if (type == 2) {
+            return "author_id";
+        } else {
+            return "genre_id";
+        }
     }
 }

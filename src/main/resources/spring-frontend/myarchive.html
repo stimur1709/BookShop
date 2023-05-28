@@ -27,7 +27,8 @@
                 </li>
                 <li class="breadcrumbs-item"><a th:href="@{/my}" th:text="#{bottomBar.myProfile}">Мой профиль</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span th:text="#{bottomBar.myBook}">Мои книги</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span
+                        th:text="#{bottomBar.myBook}">Мои книги</span>
                 </li>
             </ul>
             <div class="Section">
@@ -36,10 +37,12 @@
                     </h1>
                     <div class="Section-header-links">
                         <a class="Section-header-link" th:href="@{/my}" th:text="#{message.unread}">Непрочитанные</a>
-                        <span class="Section-header-link Section-header-link_ACTIVE" th:text="#{message.archive}">Архив</span>
+                        <span class="Section-header-link Section-header-link_ACTIVE"
+                              th:text="#{message.archive}">Архив</span>
                     </div>
                 </div>
-                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.archiveEmpty}">В архиве нет книг</div>
+                <div class="Cart-messageInfo" th:if="${emptyList}" th:text="#{message.archiveEmpty}">В архиве нет книг
+                </div>
                 <div class="Cards" th:if="${!emptyList}">
                     <div th:replace="~{fragments/book_fragment::bookRefresh(${books})}"></div>
                 </div>

@@ -13,7 +13,8 @@
     </div>
     <span th:if="${genre.getChildGenres() != null}"
           th:replace="~{fragments/genre_fragment::genreList(${genre.getChildGenres()})}"></span>
-    <a th:if="${genre.getChildGenres().size() == 0 && genre.getParent() != null}" th:href="${'/genres/' + genre.getSlug()}"
+    <a th:if="${genre.getChildGenres().size() == 0 && genre.getParent() != null}"
+       th:href="${'/genres/' + genre.getSlug()}"
        th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
 </div>
 <span class="breadcrumbs-item" th:fragment="parentGenre(genre)" th:if="${genre != null}">

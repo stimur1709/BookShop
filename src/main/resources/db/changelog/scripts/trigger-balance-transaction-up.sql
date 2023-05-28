@@ -2,7 +2,9 @@ create function trigger_balance_transaction_up() returns trigger as
 '
     begin
         if (new.status_payment_id = 3) then
-            update users set balance = balance + new.value where id = new.user_id;
+            update users
+            set balance = balance + new.value
+            where id = new.user_id;
         end if;
         return new;
     end;

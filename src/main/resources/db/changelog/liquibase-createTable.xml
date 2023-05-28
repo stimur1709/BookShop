@@ -485,339 +485,6 @@
     <changeSet author="S Timur" id="48">
         <addPrimaryKey columnNames="user_id, book_id" constraintName="file_download_pkey" tableName="file_download"/>
     </changeSet>
-    <changeSet id="49" author="S Timur">
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="lev_tolstoy"/>
-            <column name="name" value="Лев Толстой"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="fyodor_dostoevskiy"/>
-            <column name="name" value="Федор Достаевский"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="mikhail_bulgakov"/>
-            <column name="name" value="Михаил Булгаков"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="nikolay_vasilevich_gogol"/>
-            <column name="name" value="Николай Гоголь"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="aleksandr_pushkin"/>
-            <column name="name" value="Александр Пушкин"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="ivan_sergeevich_turgenev"/>
-            <column name="name" value="Иван Тургенев"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="anton_pavlovich_chekhov"/>
-            <column name="name" value="Антон Чехов"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="aleksandr_griboedov"/>
-            <column name="name" value="Александр Грибоедов"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="ilya_ilf"/>
-            <column name="name" value="Илья Ильф"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="evgeniy_petrov"/>
-            <column name="name" value="Евгений Петров"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzhoan_k_rouling"/>
-            <column name="name" value="Джоан Роулинг"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzhon_ronald_ruel_tolkin"/>
-            <column name="name" value="Джон Рональд Руэл Толкин"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzhordzh_oruell"/>
-            <column name="name" value="Джордж Оруэлл"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="gregori_devid_roberts"/>
-            <column name="name" value="Грегори Дэвид Робертс"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="erikh_mariya_remark"/>
-            <column name="name" value="Эрих Мария Ремарк"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="deniel_kiz"/>
-            <column name="name" value="Дэниел Киз"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="oskar_uayld"/>
-            <column name="name" value="Оскар Уайльд"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="antuan_de_sent_ekzyuperi"/>
-            <column name="name" value="Антуан де Сент-Экзюпери"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzherom_d_selindzher"/>
-            <column name="name" value="Джером Д. Сэлинджер"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="rey_bredberi"/>
-            <column name="name" value="Рэй Брэдбери"/>
-            <column name="description"
-                    value="Рэй Брэдбери — американский писатель. Рэй Дуглас Брэдбери родом из городка Уокиган, штат Иллинойс. Он появился на свет в августе 1920 года. По отцу у автора английские корни, а по матери — шведские. В семье появилось ещё трое детей, однако пережил младенчество лишь его брат Леонард. &#10;&#10;Раннее знакомство со смертью оставило глубокий след в душе Брэдбери, что нашло отражение в его творчестве. В доме любили искусство, особенно новую диковинку века — кинематограф. Великая депрессия привела родителей Брэдбери на заработки в Лос-Анджелес. После школы парень начал зарабатывать, продавая газеты. Семья не могла дать денег сыновьям на колледж, потому Рэй так и не получил высшего образования. Он сам занялся своим просвещением, посещая библиотеки. Так он познакомился с трудами Достоевского, чьё творчество, по мнению американца, сильно на него повлияло. Брэдбери с 12 лет мечтал писать. Тогда он попробовал сочинить продолжение «Великого воина Марса» Берроуза. Через 5 лет юноша стал членом американского сообщества молодых авторов — «Лиги научных фантастов» Лос-Анджелеса. Рэй писал рассказы, выходившие в дешёвых литературных журналах. Зарабатывать только творчеством было тяжело, но он не сдавался. В 1947-ом вышел первый сборник его рассказов «Тёмный карнавал», встреченный, увы, прохладно. В 1949 году молодой человек перебрался из провинции в Нью-Йорк. Он предложил свои произведения двенадцати издательствам, но везде получил отказ. Лишь одно из них заинтересовалось его текстами. Автору выдвинули условие: для публикации его рассказы должны быть объединены в роман. За ночь Рэй набросал концепцию будущего произведения в виде эссе, содержащее первые наброски будущих «Марсианских хроник». После выхода в свет они в корне изменили представление о жанре научной фантастики. Эту работу её создатель считал лучшей у себя. Всемирная известность настигла автора в 1953-ем после публикации романа «451 градус по Фаренгейту». Впервые он вышел частями в журнале Playboy, который только начал набирать популярность. Главный герой романа Гай Монтэг живёт в тоталитарном обществе потребления. Он работает пожарным, чья задача сжигать книги. Гай считает, что дело пожарных правое и нужное. После встречи с загадочной девушкой его взгляды меняются. Роман долгое время издавался с серьёзными поправками из-за жёсткой цензуры издательства. Однако в 1980-ом Брэдбери удалось отвоевать каждый выкинутый кусок своего детища. В будущем текст «451 градус по Фаренгейту» выходил без сокращений. Автора окрестили «мэтром фантастики». Правда, он никогда не ограничивался рамками этого жанра. Так в 1957-ом мир увидел «Вино из одуванчиков» — отчасти биографическую повесть Рэя. В центре сюжета живущие в маленьком городке братья Том и Дуглас Сполдинги (их фамилия — второе имя отца Брэдбери). Дуглас — альтер-эго самого писателя в детстве. Изначально рукопись тянула на полноценный роман, однако издатель потребовал разделить её на две части. «Лето, прощай!», вторая половинка той истории, вышла спустя полвека. Это произведение стало последней прижизненной публикацией Брэдбери. Самое передаваемое произведение фантаста — «И грянул гром», в основе которого лежит «теория хаоса», более известная под названием «эффект бабочки». Он о том, что равновесие в природе хрупко. Сюжет рассказа послужил основой для нескольких фильмов и сериалов. Творческая деятельность Рэя также распространялась на кино и театр. Он писал сценарии, был автором и ведущим нескольких телепередач. Писатель не раз получал награды в области фантастической литературы, в том числе премии «Небьюла» и «Хьюго», Американской академии и Пулитцеровской премии. Со своей единственной супругой Маргарет Маклюр Рэй познакомился в сентябре 1947 года в книжном магазине, где девушка работала продавцом. Первые годы брака она тянула всю семью, ведь Брэдбери не удавалось хорошо заработать творчеством. Он ласково назвал супругу Мэгги и прожил с ней вместе вплоть до её смерти в 2003-ем. Именно Маргаретт автор посвятил «Марсианские хроники». У супругов было четверо дочерей — Сьюзен, Рамона, Александра и Беттина. Жизнь Рэя была полностью посвящена литературе до самых последних дней. Его утро неизменно начиналось за рабочим столом. Фантаст верил, что творчество продлевает ему жизнь. После инсульта в 1999 году Брэдбери уже не вставал с инвалидного кресла. Знаменитый фантаст умер на 91 году жизни 5 июня 2012-го в Лос-Анджелесе."/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="rend_ayn"/>
-            <column name="name" value="Рэнд Айн"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="kharper_li"/>
-            <column name="name" value="Харпер Ли"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="gabriel_garsia_markes"/>
-            <column name="name" value="Габриэль Гарсиа Маркес"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="ernest_kheminguey"/>
-            <column name="name" value="Эрнест Хемингуэй"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="aleksandr_dyuma"/>
-            <column name="name" value="Александр Дюма"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="frensis_skott_fitsdzherald"/>
-            <column name="name" value="Фрэнсис Скотт Фицджеральд"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzheyn_ostin"/>
-            <column name="name" value="Джейн Остин"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="chak_palanik"/>
-            <column name="name" value="Чак Паланик"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="markus_zusak"/>
-            <column name="name" value="Маркус Зусак"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="stiven_king"/>
-            <column name="name" value="Стивен Кинг"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="oldos_khaksli"/>
-            <column name="name" value="Олдос Хаксли"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="mikhail_lermontov"/>
-            <column name="name" value="Михаил Лермонтов"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="endi_veyer"/>
-            <column name="name" value="Энди Вейер"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="margaret_mitchell"/>
-            <column name="name" value="Маргарет Митчелл"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="mariam_petrosyan"/>
-            <column name="name" value="Мариам Петросян"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="arkadiy_strugatskiy"/>
-            <column name="name" value="Аркадий Стругацкий"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="boris_strugatskiy"/>
-            <column name="name" value="Борис Стругацкий"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="paulo_koelo"/>
-            <column name="name" value="Пауло Коэльо"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="dzhordzh_r_r_martin"/>
-            <column name="name" value="Джордж Р. Р. Мартин"/>
-        </insert>
-        <insert tableName="authors">
-            <column name="photo" value="https://dummyimage.com/476x715.png/5fa2dd/ffffff"/>
-            <column name="slug" value="yanush_vishnevskiy"/>
-            <column name="name" value="Януш Вишневский"/>
-        </insert>
-    </changeSet>
-    <changeSet id="52" author="S Timur">
-        <insert tableName="genre">
-            <column name="slug" value="legkoye_chteniye"/>
-            <column name="name" value="Легкое чтение"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="fantasy"/>
-            <column name="name" value="Фантастика"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="puteshestviye"/>
-            <column name="name" value="Путешествие"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="2"/>
-            <column name="slug" value="science_fantasy"/>
-            <column name="name" value="Научная Фантастика"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="boyevki"/>
-            <column name="name" value="Боевки"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="detektivy"/>
-            <column name="name" value="Детективы"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="triller"/>
-            <column name="name" value="Триллер"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="krutoy detektiv"/>
-            <column name="name" value="Крутой детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="ironicheskiy detektiv"/>
-            <column name="name" value="Иронический детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="pro manyakov"/>
-            <column name="name" value="Про маньяков"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="krutoy_detektiv"/>
-            <column name="name" value="Шпионский детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="shpionskiy_detektiv"/>
-            <column name="name" value="Криминальный детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="klassicheskiy_detektiv"/>
-            <column name="name" value="Классический детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="6"/>
-            <column name="slug" value="politicheskiy_detektiv"/>
-            <column name="name" value="Политический детектив"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="fentezi"/>
-            <column name="name" value="Фэнтези"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="romance"/>
-            <column name="name" value="Роман"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="16"/>
-            <column name="slug" value="love_romance"/>
-            <column name="name" value="Любовный роман"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="16"/>
-            <column name="slug" value="philosophical_romance"/>
-            <column name="name" value="Философский роман"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="priklyucheniya"/>
-            <column name="name" value="Приключения"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="1"/>
-            <column name="slug" value="uzhasy"/>
-            <column name="name" value="Ужасы"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="slug" value="serznoye_chteniye"/>
-            <column name="name" value="Серьезное чтение"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="21"/>
-            <column name="slug" value="biografiya"/>
-            <column name="name" value="Биография"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="21"/>
-            <column name="slug" value="art_fiction"/>
-            <column name="name" value="Художественный вымысел"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="slug" value="dramaturgiya"/>
-            <column name="name" value="Драматургия"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="24"/>
-            <column name="slug" value="satire"/>
-            <column name="name" value="Сатира"/>
-        </insert>
-        <insert tableName="genre">
-            <column name="parent_id" value="24"/>
-            <column name="slug" value="comedy"/>
-            <column name="name" value="Комедия"/>
-        </insert>
-    </changeSet>
     <changeSet id="54" author="S Timur">
         <insert tableName="book2user_type">
             <column name="code" value="KEPT"/>
@@ -834,140 +501,6 @@
         <insert tableName="book2user_type">
             <column name="code" value="ARCHIVED"/>
             <column name="name" value="В архиве"/>
-        </insert>
-    </changeSet>
-    <changeSet id="55" author="S Timur">
-        <insert tableName="tags">
-            <column name="name" value="современная литература"/>
-            <column name="slug" value="sovremennaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="классическая литература"/>
-            <column name="slug" value="klassicheskaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="зарубежная литературa"/>
-            <column name="slug" value="zarubezhnaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="английская литература"/>
-            <column name="slug" value="angliyskaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="русская литература"/>
-            <column name="slug" value="russkaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="американская литература"/>
-            <column name="slug" value="amerikanskaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="детская литература"/>
-            <column name="slug" value="detskaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="фантастика"/>
-            <column name="slug" value="fantastika"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="детектив"/>
-            <column name="slug" value="detektiv"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="любовь"/>
-            <column name="slug" value="lyubov"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="мистика"/>
-            <column name="slug" value="mistika"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="юмор"/>
-            <column name="slug" value="yumor"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="приключения"/>
-            <column name="slug" value="priklyucheniya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="сказка"/>
-            <column name="slug" value="skazka"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="французская литература"/>
-            <column name="slug" value="frantsuzskaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="англия"/>
-            <column name="slug" value="angliya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="художественная литература"/>
-            <column name="slug" value="khudozhestvennaya_literatura"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="психология"/>
-            <column name="slug" value="psikhologiya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="философия"/>
-            <column name="slug" value="filosofiya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="экранизировано"/>
-            <column name="slug" value="ekranizirovano"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="любимое"/>
-            <column name="slug" value="lyubimoye"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="антиутопия"/>
-            <column name="slug" value="antiutopiya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="роман"/>
-            <column name="slug" value="roman"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="франция"/>
-            <column name="slug" value="frantsiya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="война"/>
-            <column name="slug" value="voyna"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="история"/>
-            <column name="slug" value="istoriya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="детство"/>
-            <column name="slug" value="detstvo"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="жизнь"/>
-            <column name="slug" value="zhizn"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="драма"/>
-            <column name="slug" value="drama"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="россия"/>
-            <column name="slug" value="rossiya"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="триллер"/>
-            <column name="slug" value="triller"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="америка"/>
-            <column name="slug" value="amerika"/>
-        </insert>
-        <insert tableName="tags">
-            <column name="name" value="немецкая литература"/>
-            <column name="slug" value="nemetskaya_literatura"/>
         </insert>
     </changeSet>
     <changeSet id="57" author="S Timur">
@@ -1009,7 +542,7 @@
             <column name="type" value="MAIL"/>
             <column name="user_id" value="1"/>
             <column name="approved" value="1"/>
-            <column name="contact" value="S Timur@mail.ru"/>
+            <column name="contact" value="stimur1709@mail.ru"/>
             <column name="code" value="111 111"/>
         </insert>
         <insert tableName="user_contact">
@@ -1393,12 +926,6 @@
             <column name="size" type="bigint"/>
         </createTable>
     </changeSet>
-    <changeSet id="91" author="S Timur">
-        <insert tableName="image">
-            <column name="name" value="518c2ec0-5673-4379-805d-2104fcbb67e5.png"/>
-            <column name="size" value="1477"/>
-        </insert>
-    </changeSet>
     <changeSet id="92" author="S Timur">
         <renameColumn tableName="books" oldColumnName="image" newColumnName="image_id"/>
         <renameColumn tableName="authors" oldColumnName="photo" newColumnName="image_id"/>
@@ -1422,12 +949,16 @@
         <modifyDataType tableName="authors" columnName="image_id" newDataType="int"/>
     </changeSet>
     <changeSet id="97" author="S Timur">
-        <addForeignKeyConstraint baseTableName="books" baseColumnNames="image_id" constraintName="fkigqitem4r46mag0sl4csnwp72"
-                                 referencedTableName="image" referencedColumnNames="id" onDelete="SET NULL" deferrable="false"/>
+        <addForeignKeyConstraint baseTableName="books" baseColumnNames="image_id"
+                                 constraintName="fkigqitem4r46mag0sl4csnwp72"
+                                 referencedTableName="image" referencedColumnNames="id" onDelete="SET NULL"
+                                 deferrable="false"/>
     </changeSet>
     <changeSet id="98" author="S Timur">
-        <addForeignKeyConstraint baseTableName="authors" baseColumnNames="image_id" constraintName="fkigqauth4r46mag0sl4csnwp72"
-                                 referencedColumnNames="id" referencedTableName="image" onDelete="SET NULL" deferrable="false"/>
+        <addForeignKeyConstraint baseTableName="authors" baseColumnNames="image_id"
+                                 constraintName="fkigqauth4r46mag0sl4csnwp72"
+                                 referencedColumnNames="id" referencedTableName="image" onDelete="SET NULL"
+                                 deferrable="false"/>
     </changeSet>
     <changeSet id="1683121123775-1" author="S Timur">
         <comment>creating table user_role</comment>
@@ -1500,7 +1031,7 @@
         <insert tableName="task_manager">
             <column name="name_task" value="litres"/>
             <column name="description" value="parsing books with litres"/>
-            <column name="active" value="true"/>
+            <column name="active" value="false"/>
         </insert>
     </changeSet>
     <changeSet id="134621121235-1" author="S Timur">
@@ -1512,9 +1043,7 @@
             <column name="task_id" type="int"/>
             <column name="genre_id" type="int"/>
             <column name="author_id" type="int"/>
-            <column name="tag_id" type="int">
-                <constraints nullable="false"/>
-            </column>
+            <column name="tag_id" type="int"/>
             <column name="last_start" type="int">
                 <constraints nullable="false"/>
             </column>
@@ -1563,5 +1092,13 @@
     <changeSet id="1249121121235-1" author="S Timur">
         <comment>created a trigger to update and insert in the table of tm_litres</comment>
         <sqlFile path="db/changelog/scripts/trigger-tm-litres-in.sql"/>
+    </changeSet>
+    <changeSet id="1431249121235-1" author="S Timur">
+        <comment>created a trigger to insert in the table of books</comment>
+        <sqlFile path="db/changelog/scripts/06-06-2023.sql"/>
+    </changeSet>
+    <changeSet id="312249121235-1" author="S Timur">
+        <comment>insert data</comment>
+        <sqlFile path="db/changelog/scripts/13-06-2023.sql"/>
     </changeSet>
 </databaseChangeLog>

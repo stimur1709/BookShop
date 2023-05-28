@@ -51,7 +51,7 @@ public class Generator {
 
     public String generateHashCode() {
         StringBuilder result = new StringBuilder();
-        char[] alphabet = "abcdefghijklmnopqrstuvwxyz" .toCharArray();
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         for (int i = 0; i <= 18; i++) {
             result.append(alphabet[random.nextInt(alphabet.length)]);
         }
@@ -64,7 +64,7 @@ public class Generator {
         } else if (Arrays.asList(2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44, 52, 53, 54).contains((int) value)) {
             return messageLocale.getMessage("message.second1");
         } else {
-            return messageLocale.getMessage("message.seconds2");
+            return messageLocale.getMessage("message.second2");
         }
     }
 

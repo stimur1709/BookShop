@@ -19,7 +19,6 @@ public class UserGeolocation {
     }
 
     public Geolocation getGeolocation() {
-        geolocationParams.setIPAddress("91.201.75.44");
         return ipGeolocationAPI.getGeolocation(geolocationParams);
     }
 }

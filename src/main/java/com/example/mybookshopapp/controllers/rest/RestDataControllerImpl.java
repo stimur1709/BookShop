@@ -6,11 +6,15 @@ import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.service.ModelService;
 import com.example.mybookshopapp.util.BindingResultResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.status;
 
 public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O extends Dto, S extends ModelService<Q, D, O>>
         implements RestDataController<D, O, Q> {
@@ -29,21 +33,21 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
     @Override
     public ResponseEntity<?> save(O dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(BindingResultResponse.getMessage(bindingResult), HttpStatus.CONFLICT);
+            return status(CONFLICT).body(BindingResultResponse.getMessage(bindingResult));
         }
         try {
-            return new ResponseEntity<>(service.save(dto), HttpStatus.OK);
+            return ok(service.save(dto));
         } catch (DefaultException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            return status(CONFLICT).body(e.getMessage());
         }
     }
 
     @Override
     public ResponseEntity<D> getContent(String slug) {
         try {
-            return new ResponseEntity<>(service.getContent(slug), HttpStatus.OK);
+            return ok(service.getContent(slug));
         } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return status(NOT_FOUND).build();
         }
     }
 

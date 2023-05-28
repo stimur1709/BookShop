@@ -51,7 +51,7 @@ public class LitresParser {
         List<Book> books = new ArrayList<>();
         if ((exchange != null ? exchange.getPayload() : null) != null) {
             for (Data data : exchange.getPayload().getData()) {
-                log.info(data.getInstance().getTitle());
+                log.info("Скачана книга {}", data.getInstance().getTitle());
 
                 Optional<Book> optionalBook = bookRepository.findFirstByTitleIgnoreCase(data.getInstance().getTitle());
                 Optional<String> first = books.stream()
@@ -64,17 +64,6 @@ public class LitresParser {
                 }
             }
         }
-        log.info(String.valueOf(books.size()));
-        for (Book book : books) {
-            log.info(book.getTitle());
-            for (Author author : book.getAuthorList()) {
-                log.info("    " + author.getName() + "  --  ");
-            }
-            for (Genre author : book.getGenreList()) {
-                log.info("    " + author.getName() + "  --  " + author.getId());
-            }
-        }
-        log.info("--------------");
         return bookRepository.saveAll(books);
     }
 
@@ -83,8 +72,8 @@ public class LitresParser {
         book.setSlug(UUID.randomUUID().toString());
         book.setTitle(instance.getTitle());
         book.setIsBestseller(instance.getLabels().isBestseller() ? 1 : 0);
-        String imageUrl = "https://cv7.litres.ru/";
-        Image image = imageService.downloadImage(imageUrl + instance.getCoverUrl());
+        String imageUrl = "https://cv7.litres.ru";
+        Image image = imageService.parsingImage(imageUrl + instance.getCoverUrl());
         book.setImage(image);
 
         Document doc = htmlParse(LITRES + instance.getUrl());
@@ -125,7 +114,8 @@ public class LitresParser {
             for (Element elem : elems) {
                 if (!checkContainsGenre(genres, elem.text())) {
                     Optional<Genre> optionalGenre = genreRepository.findFirstByNameIgnoreCase(elem.text());
-                    Genre genre = optionalGenre.orElseGet(() -> new Genre(elem.text(), UUID.randomUUID().toString()));
+                    Genre genre = optionalGenre
+                            .orElseGet(() -> new Genre(elem.text(), UUID.randomUUID().toString()));
                     genres.add(genre);
                 }
             }
@@ -208,26 +198,20 @@ public class LitresParser {
             return null;
         } else {
             String src = doc.select(".biblio_author_image").select("img").first().absUrl("src");
-            return imageService.downloadImage(src);
+            return imageService.parsingImage(src);
         }
     }
 
     private boolean checkContainsGenre(List<Genre> genres, String name) {
-        boolean b = genres.stream().map(Genre::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        log.info(b + " -- " + name);
-        return b;
+        return genres.stream().map(Genre::getName).anyMatch(n -> n.equalsIgnoreCase(name));
     }
 
     private boolean checkContainsAuthor(List<Author> authors, String name) {
-        boolean b = authors.stream().map(Author::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        log.info(b + " -- " + name);
-        return b;
+        return authors.stream().map(Author::getName).anyMatch(n -> n.equalsIgnoreCase(name));
     }
 
     private boolean checkContainsTag(List<TagBook> tagBooks, String name) {
-        boolean b = tagBooks.stream().map(TagBook::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        log.info(b + " -- " + name);
-        return b;
+        return tagBooks.stream().map(TagBook::getName).anyMatch(n -> n.equalsIgnoreCase(name));
     }
 
 }

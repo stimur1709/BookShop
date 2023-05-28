@@ -9,13 +9,16 @@
                 <div class="Card">
                     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
                         <img th:src="'/img/' + ${book.image}"/>
-                        <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
-                            <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
+                        <div class="Card-sale"
+                             th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
+                            <span th:text="${(book.discount * 100).intValue()}"></span><span
+                                th:text="#{message.discount}">% скидка</span>
                         </div>
                         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
                             <span class="Card-ribbonText" th:text="#{message.bestseller}">Бестселлер</span>
                         </div>
-                        <a class="Card-status" th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}" title="Куплена">
+                        <a class="Card-status" th:if="${book.code.equals('PAID') || book.code.equals('ARCHIVED')}"
+                           title="Куплена">
                             <img src="/assets/img/icons/check.svg" alt="check.svg"/>
                         </a>
                         <a class="Card-status" th:if="${book.code.equals('CART')}" title="В корзине">
@@ -58,8 +61,10 @@
 <div class="Card" th:fragment="bookRefresh(booksCollection)" th:each="book : ${booksCollection}">
     <a class="Card-picture" th:href="'/books/' + ${book.slug}">
         <img th:src="'/img/' + ${book.image}"/>
-        <div class="Card-sale" th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
-            <span th:text="${(book.discount * 100).intValue()}"></span><span th:text="#{message.discount}">% скидка</span>
+        <div class="Card-sale"
+             th:if="${book.discount != 0 && !book.code.equals('ARCHIVED') && !book.code.equals('PAID')}">
+            <span th:text="${(book.discount * 100).intValue()}"></span><span
+                th:text="#{message.discount}">% скидка</span>
         </div>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
             <span class="Card-ribbonText" th:text="#{message.bestseller}">Бестселлер</span>

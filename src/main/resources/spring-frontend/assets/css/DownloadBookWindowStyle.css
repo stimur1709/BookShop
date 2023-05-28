@@ -26,6 +26,7 @@
     display: block;
     font-size: 29px;
 }
+
 #myPopup #myPopup__close:hover, #myPopup__close_end:hover {
     color: red;
 }

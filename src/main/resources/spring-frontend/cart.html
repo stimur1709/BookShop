@@ -38,10 +38,12 @@
                         <strong class="Cart-title" th:text="#{message.total} + ':'">Итого:
                         </strong>
                         <span class="Cart-price" th:text="${priceAll} + ' p.'">0 р.</span>
-                        <span class="Cart-price_old" th:if="${priceAll != priceAllNoDisc}" th:text="${priceAllNoDisc} + ' p.'">0 р.</span>
+                        <span class="Cart-price_old" th:if="${priceAll != priceAllNoDisc}"
+                              th:text="${priceAllNoDisc} + ' p.'">0 р.</span>
                     </div>
                     <div class="Cart-block">
-                        <a class="btn btn_success btn_md" th:text="#{message.buy}" th:href="${'/order/' + priceAll + '?books=' + booksSlug}">Купить</a>
+                        <a class="btn btn_success btn_md" th:text="#{message.buy}"
+                           th:href="${'/order/' + priceAll + '?books=' + booksSlug}">Купить</a>
                     </div>
                 </div>
                 <div class="Cart-total" th:if="${emptyList}">

@@ -70,7 +70,8 @@
                             </span>
                         </div>
                     </div>
-                    <div class="Spoiler-footer" th:if="${content.description.length() >= 200}">
+                    <div class="Spoiler-footer"
+                         th:if="${content.description != null && content.description.length() >= 200}">
                         <button class="Spoiler-trigger btn btn_primary btn_nr" type="button"
                                 data-showtext="Свернуть" data-hidetext="Показать полностью"
                                 th:attr="data-hidetext=#{message.showAll}, data-showtext=#{message.collapse}">

@@ -26,10 +26,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@TestPropertySource("/application-test.yaml")
+@TestPropertySource("/application-test.properties")
 @Slf4j
 @DisplayName("Рейтинг отзывов")
 class BookRateReviewServiceTest {
+
     @Autowired
     private BookReviewQueryRepository bookReviewQueryRepository;
 
@@ -58,7 +59,7 @@ class BookRateReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        book = bookRepository.findBookEntityBySlug("zcjbamvddqipljkrzoj");
+        book = bookRepository.findBookEntityBySlug("d451ebcd-bf4d-4073-9f4a-10232478bff3");
         user = userRepository.getByHash("stimurstimurstimurs");
         review = bookReviewRepository.save(new BookReview(book.getId(), user.getId(), "Норм книжка"));
     }

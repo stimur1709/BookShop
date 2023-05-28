@@ -34,13 +34,16 @@ public class Genre extends Models {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book2genre",
-            joinColumns = {@JoinColumn(name = "genre_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")})
+            joinColumns = @JoinColumn(name = "genre_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> bookList;
 
     public Genre(String name, String slug) {
         this.slug = slug;
         this.name = name;
+        Genre genre = new Genre();
+        genre.setId(1);
+        setParent(genre);
     }
 
 }

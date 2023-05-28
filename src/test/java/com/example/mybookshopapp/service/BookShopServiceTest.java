@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@TestPropertySource("/application-test.yaml")
+@TestPropertySource("/application-test.properties")
 @Slf4j
 @DisplayName("Популярность книг")
 class BookShopServiceTest {

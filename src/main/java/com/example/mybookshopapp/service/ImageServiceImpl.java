@@ -12,13 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,13 +38,14 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
     @Value("${upload.path}")
     private String uploadPath;
 
-    private final RestTemplate restTemplate;
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     @Autowired
     protected ImageServiceImpl(ImageRepository repository, UserProfileService userProfileService,
-                               ModelMapper modelMapper, HttpServletRequest request, RestTemplate restTemplate) {
+                               ModelMapper modelMapper, HttpServletRequest request, EntityManager entityManager) {
         super(repository, ImageDto.class, ImageDto.class, Image.class, userProfileService, modelMapper, request);
-        this.restTemplate = restTemplate;
+        this.entityManager = entityManager;
     }
 
     public List<ImageDto> saveImage(MultipartFile[] files) throws IOException {
@@ -60,19 +64,12 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
         return saveAll(images);
     }
 
-    public Image downloadImage(String url) {
-        String fileName = UUID.randomUUID() + ".jpg";
-        try (FileOutputStream fos = new FileOutputStream(uploadPath + '/' + fileName)) {
-            byte[] imageBytes = restTemplate.getForObject(url, byte[].class);
-            if (imageBytes == null) {
-                log.error("Картина не нашлась");
-                return new Image(1);
-            }
-            fos.write(imageBytes);
-            return new Image(fileName, fos.getChannel().size());
+    public Image parsingImage(String url) {
+        try {
+            return dowloadImage(url);
         } catch (IOException | IllegalArgumentException e) {
             log.error("Картина не нашлась");
-            return new Image(1);
+            return entityManager.merge(new Image(1));
         }
     }
 
@@ -94,7 +91,6 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
             repository.deleteAll(unusedPictures);
         }
         return unusedPictures.size();
-
     }
 
     private int deletingUnusedInProject() {
@@ -126,8 +122,30 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
             Files.delete(file.toPath());
             log.info("{} picture deleted", file.getName());
         } catch (IOException e) {
-            log.error("{} image deletion error", file.getName());
-            throw new RuntimeException(e);
+            log.error("{} image deletion error, most likely the picture has already been deleted.", file.getName());
+        }
+    }
+
+    private Image dowloadImage(String url) throws IOException {
+        BufferedImage image = ImageIO.read(new URL(url));
+        if (image != null) {
+
+            int currentWidth = image.getWidth();
+            int currentHeight = image.getHeight();
+
+            int newHeight = Math.min(800, currentHeight);
+            int newWidth = currentHeight > newHeight ? (int) (currentWidth * ((double) newHeight / currentHeight)) : currentWidth;
+
+            BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, image.getType());
+            resizedImage.createGraphics().drawImage(image.getScaledInstance(newWidth, newHeight, java.awt.Image.SCALE_SMOOTH), 0, 0, newWidth, newHeight, null);
+            String fileName = UUID.randomUUID() + ".jpg";
+            String path = uploadPath + File.separator + fileName;
+            File file = new File(path);
+            ImageIO.write(resizedImage, "jpg", file);
+            return new Image(fileName, file.length());
+        } else {
+            log.warn("image null");
+            return entityManager.merge(new Image(1));
         }
     }
 

@@ -46,8 +46,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
     public PageRequest getPageRequest(Q q) {
         return q.getProperty() == null
                 ? PageRequest.of(q.getOffset(), q.getLimit())
-                : PageRequest.of(q.getOffset(), q.getLimit(),
-                Sort.by(getSortDirection(q.isReverse()), q.getProperty()));
+                : PageRequest.of(q.getOffset(), q.getLimit(), Sort.by(getSortDirection(q.isReverse()), q.getProperty()));
     }
 
     private Sort.Direction getSortDirection(boolean reverse) {

@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource("/application-test.yaml")
+@TestPropertySource("/application-test.properties")
 @Slf4j
 @DisplayName("Аутентификация пользователя")
 class UserAuthControllerTest {
@@ -88,6 +88,6 @@ class UserAuthControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(cookie().exists("token"));
+                .andExpect(header().exists("Authorization"));
     }
 }

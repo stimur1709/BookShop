@@ -1,7 +1,11 @@
 package com.example.mybookshopapp.dao;
 
 
+<<<<<<< HEAD
 import com.example.mybookshopapp.data.dao.TransactionsInterval;
+=======
+import com.example.mybookshopapp.data.daoEntity.TransactionsInterval;
+>>>>>>> origin/dev
 import com.example.mybookshopapp.data.query.BTQuery;
 import com.example.mybookshopapp.util.ParseDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;

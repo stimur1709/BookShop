@@ -1009,7 +1009,7 @@
             <column name="type" value="MAIL"/>
             <column name="user_id" value="1"/>
             <column name="approved" value="1"/>
-            <column name="contact" value="stimur1709@mail.ru"/>
+            <column name="contact" value="S Timur@mail.ru"/>
             <column name="code" value="111 111"/>
         </insert>
         <insert tableName="user_contact">

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.outher.YKassa;
+package com.example.mybookshopapp.data.outher.kassa;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

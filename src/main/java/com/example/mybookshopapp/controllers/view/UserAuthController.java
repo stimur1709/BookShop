@@ -10,10 +10,10 @@ import com.example.mybookshopapp.service.BalanceTransactionService;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserLoginHistoryService;
-import com.example.mybookshopapp.service.userService.UserAuthService;
-import com.example.mybookshopapp.service.userService.UserChangeService;
-import com.example.mybookshopapp.service.userService.UserProfileService;
-import com.example.mybookshopapp.service.userService.UserRegisterService;
+import com.example.mybookshopapp.service.user.UserAuthService;
+import com.example.mybookshopapp.service.user.UserChangeService;
+import com.example.mybookshopapp.service.user.UserProfileService;
+import com.example.mybookshopapp.service.user.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,7 +165,7 @@ public class UserAuthController extends ViewControllerImpl {
 
     @GetMapping("/api/profile/cancel")
     @ResponseBody
-    public ResponseEntity<?> cancelProfile() {
+    public ResponseEntity<Boolean> cancelProfile() {
         userContactService.deleteAllNoApprovedUserContactByUser();
         return new ResponseEntity<>(HttpStatus.OK);
     }

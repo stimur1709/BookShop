@@ -6,7 +6,7 @@ import com.example.mybookshopapp.data.outher.BookStatusRequestDto;
 import com.example.mybookshopapp.data.outher.ResponseResultDto;
 import com.example.mybookshopapp.repository.Book2UserRepository;
 import com.example.mybookshopapp.repository.BooksQueryRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

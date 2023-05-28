@@ -5,7 +5,7 @@ import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.TagServiceImpl;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

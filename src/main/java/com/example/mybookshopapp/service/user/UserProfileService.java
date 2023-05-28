@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service.userService;
+package com.example.mybookshopapp.service.user;
 
 import com.example.mybookshopapp.data.dto.UserDto;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
@@ -55,7 +55,7 @@ public class UserProfileService {
                 approvedPhone = contact.getApproved();
             }
         }
-        return new UserDto(user.getId(), user.getFirstname(), user.getLastname(), mail, approvedMail, phone, approvedPhone, user.getBalance());
+        return new UserDto(user.getFirstname(), user.getLastname(), mail, approvedMail, phone, approvedPhone, user.getBalance());
     }
 
     public User getCurrentUser() {

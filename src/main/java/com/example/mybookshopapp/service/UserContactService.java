@@ -5,7 +5,7 @@ import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserContact;
 import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
 import com.example.mybookshopapp.repository.UserContactRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -97,15 +97,12 @@ public class UserContactService {
 
     public String getConfirmationCode(String contact, ContactType contactType, int type) {
         String code = null;
-        switch (contactType) {
-            case PHONE:
-                String phone = contact.replaceAll("[+ ()-]", "");
-                code = smsRuService.sendSms(phone);
-                break;
-            case MAIL:
-                code = generator.getSecretCode();
-                mailService.sendMail(contact, code, type);
-                break;
+        if (contactType == ContactType.PHONE) {
+            String phone = contact.replaceAll("[+ ()-]", "");
+            code = smsRuService.sendSms(phone);
+        } else if (contactType == ContactType.MAIL) {
+            code = generator.getSecretCode();
+            mailService.sendMail(contact, code, type);
         }
         return passwordEncoder.encode(code);
     }

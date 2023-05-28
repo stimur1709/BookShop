@@ -12,7 +12,7 @@ public class Blacklist {
     @Id
     private String id;
 
-    public String token;
+    private String token;
 
     public Blacklist(String id, String token) {
         this.id = id;

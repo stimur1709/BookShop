@@ -7,7 +7,7 @@ import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.BookReviewQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

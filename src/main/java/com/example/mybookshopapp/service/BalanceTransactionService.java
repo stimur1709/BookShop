@@ -2,13 +2,13 @@ package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.dao.BooksTransactionsDao;
 import com.example.mybookshopapp.dao.TransactionsIntervalDao;
-import com.example.mybookshopapp.data.daoEntity.BooksTransactionsCount;
-import com.example.mybookshopapp.data.daoEntity.TransactionsInterval;
+import com.example.mybookshopapp.data.dao.BooksTransactionsCount;
+import com.example.mybookshopapp.data.dao.TransactionsInterval;
 import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.example.mybookshopapp.data.query.BTQuery;
 import com.example.mybookshopapp.repository.BalanceTransactionRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

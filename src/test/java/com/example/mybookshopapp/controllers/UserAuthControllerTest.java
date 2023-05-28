@@ -77,7 +77,7 @@ class UserAuthControllerTest {
 
     @Test
     @DisplayName("Проверка аутентификации пользователя")
-    public void correctLoginTest() throws Exception {
+    void correctLoginTest() throws Exception {
         ContactConfirmationPayload payload = new ContactConfirmationPayload();
         payload.setContact("stimur1709@mail.ru");
         payload.setCode("123456789");

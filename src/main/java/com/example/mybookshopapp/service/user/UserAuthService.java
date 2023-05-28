@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service.userService;
+package com.example.mybookshopapp.service.user;
 
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.UserContact;
@@ -12,17 +12,15 @@ import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
+import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +36,16 @@ public class UserAuthService {
     private final AuthenticationManager authenticationManager;
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
     private final PasswordEncoder passwordEncoder;
-    private final MessageSource messageSource;
-    private final LocaleResolver localeResolver;
-    private final HttpServletRequest request;
     private final HttpServletResponse response;
     private final BookShopService bookShopService;
     private final UserProfileService userProfileService;
+    private final MessageLocale messageLocale;
 
     @Autowired
     public UserAuthService(JWTUtil jwtUtil, BlacklistService blacklistService,
                            UserContactService userContactService, Generator generator,
                            AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService,
-                           PasswordEncoder passwordEncoder, MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request, HttpServletResponse response, BookShopService bookShopService, UserProfileService userProfileService) {
+                           PasswordEncoder passwordEncoder, HttpServletResponse response, BookShopService bookShopService, UserProfileService userProfileService, MessageLocale messageLocale) {
         this.jwtUtil = jwtUtil;
         this.blacklistService = blacklistService;
         this.userContactService = userContactService;
@@ -57,19 +53,17 @@ public class UserAuthService {
         this.authenticationManager = authenticationManager;
         this.bookStoreUserDetailsService = bookStoreUserDetailsService;
         this.passwordEncoder = passwordEncoder;
-        this.messageSource = messageSource;
-        this.localeResolver = localeResolver;
-        this.request = request;
         this.response = response;
         this.bookShopService = bookShopService;
         this.userProfileService = userProfileService;
+        this.messageLocale = messageLocale;
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
         Integer userOld = userProfileService.getUserId();
         UserContact userContact = userContactService.getUserContact(payload.getContact());
         if (userContact == null) {
-            String message = messageSource.getMessage("message.userNotFound", null, localeResolver.resolveLocale(request));
+            String message = messageLocale.getMessage("message.userNotFound");
             return new ContactConfirmationResponse(false, message);
         }
         try {
@@ -109,27 +103,25 @@ public class UserAuthService {
                 return blockContact(dif);
             }
             if (dif > 300000) {
-                String message = messageSource.getMessage("message.newCode", null, localeResolver.resolveLocale(request));
+                String message = messageLocale.getMessage("message.newCode");
                 return new ContactConfirmationResponse(false, message);
             }
             return badContact(userContact.getCodeTrails());
         }
 
         if (dif > 1000000) {
-            String message = messageSource.getMessage("message.newCode", null, localeResolver.resolveLocale(request));
+            String message = messageLocale.getMessage("message.newCode");
             return new ContactConfirmationResponse(false, message);
         }
 
         userContact.setApproved((short) 1);
         userContactService.save(userContact);
 
-        ContactConfirmationResponse response = new ContactConfirmationResponse(true, userContact.getType());
-
         if (userContact.getParentUserContact() != null) {
             userContactService.delete(userContact.getParentUserContact());
         }
 
-        return response;
+        return new ContactConfirmationResponse(true, userContact.getType());
     }
 
     public ContactConfirmationResponse handlerRequestContactConfirmation(ContactConfirmationPayload payload) {
@@ -150,17 +142,17 @@ public class UserAuthService {
     }
 
     private ContactConfirmationResponse blockContact(ContactType type, long time) {
-        ContactConfirmationResponse response = new ContactConfirmationResponse(false);
-        String messagePhone = messageSource.getMessage("message.blockContactPhone", null, localeResolver.resolveLocale(request));
-        String messageMail = messageSource.getMessage("message.blockContactMail", null, localeResolver.resolveLocale(request));
-        response.setError(type.equals(ContactType.PHONE)
+        ContactConfirmationResponse contactConfirmationResponse = new ContactConfirmationResponse(false);
+        String messagePhone = messageLocale.getMessage("message.blockContactPhone");
+        String messageMail = messageLocale.getMessage("message.blockContactMail");
+        contactConfirmationResponse.setError(type.equals(ContactType.PHONE)
                 ? generator.generatorTextBlockContact(time, messagePhone)
                 : generator.generatorTextBlockContact(time, messageMail));
-        return response;
+        return contactConfirmationResponse;
     }
 
     private ContactConfirmationResponse blockContact(long time) {
-        String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
+        String message = messageLocale.getMessage("message.blockContactApproved");
         return new ContactConfirmationResponse(false,
                 generator.generatorTextBlockContact(time, message));
     }

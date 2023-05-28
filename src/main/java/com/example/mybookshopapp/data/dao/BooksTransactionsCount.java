@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.daoEntity;
+package com.example.mybookshopapp.data.dao;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -6,7 +6,7 @@ import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.ModelRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +47,11 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
         return q.getProperty() == null
                 ? PageRequest.of(q.getOffset(), q.getLimit())
                 : PageRequest.of(q.getOffset(), q.getLimit(),
-                Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty()));
+                Sort.by(getSortDirection(q.isReverse()), q.getProperty()));
+    }
+
+    private Sort.Direction getSortDirection(boolean reverse) {
+        return reverse ? Sort.Direction.ASC : Sort.Direction.DESC;
     }
 
     @Override
@@ -71,7 +75,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
 
     protected BookCodeType getStatusUser() {
         String url = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        BookCodeType status = BookCodeType.UNLINK;
+        BookCodeType status;
         switch (url) {
             case "cart":
                 status = BookCodeType.CART;
@@ -82,7 +86,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
             case "postponed":
                 status = BookCodeType.KEPT;
                 break;
-            case "myarchive":
+            default:
                 status = BookCodeType.ARCHIVED;
                 break;
         }

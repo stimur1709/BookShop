@@ -5,13 +5,13 @@ import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.entity.config.Api;
 import com.example.mybookshopapp.data.entity.payments.BalanceTransaction;
 import com.example.mybookshopapp.data.entity.user.User;
-import com.example.mybookshopapp.data.outher.YKassa.Amount;
-import com.example.mybookshopapp.data.outher.YKassa.Confirmation;
-import com.example.mybookshopapp.data.outher.YKassa.Payment;
-import com.example.mybookshopapp.data.outher.YKassa.PaymentRequest;
+import com.example.mybookshopapp.data.outher.kassa.Amount;
+import com.example.mybookshopapp.data.outher.kassa.Confirmation;
+import com.example.mybookshopapp.data.outher.kassa.Payment;
+import com.example.mybookshopapp.data.outher.kassa.PaymentRequest;
 import com.example.mybookshopapp.repository.BalanceTransactionRepository;
 import com.example.mybookshopapp.repository.BookRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -64,13 +64,13 @@ public class PaymentService {
     }
 
     @Async
-    void createBalanceTransaction(String codePaymentEx, String codePaymentIn, String amount) {
+    public void createBalanceTransaction(String codePaymentEx, String codePaymentIn, String amount) {
         balanceTransactionRepository.save(new BalanceTransaction(userProfileService.getCurrentUser().getId(), Integer.parseInt(amount), codePaymentIn, codePaymentEx));
     }
 
     @Async
     @Transactional
-    void createBalanceTransaction(UUID codePaymentIn, List<String> books) {
+    public void createBalanceTransaction(UUID codePaymentIn, List<String> books) {
         List<BalanceTransaction> transactions = new ArrayList<>();
         List<Book> bookList = bookRepository.findBookEntitiesBySlugIn(books);
         for (Book book : bookList) {
@@ -88,9 +88,8 @@ public class PaymentService {
     }
 
     @Async
-    @Transactional
     @Scheduled(fixedDelay = 100000)
-    void getStatusPayment() {
+    public void getStatusPayment() {
         log.info("Запрос статус платежей");
         List<String> transactions = balanceTransactionRepository.findDistinctByStatusPaymentIn(Arrays.asList(1, 2));
         sendUrl(transactions);
@@ -115,7 +114,7 @@ public class PaymentService {
                         status = 3;
                         break;
                     }
-                    case "canceled": {
+                    default: {
                         status = 4;
                         break;
                     }

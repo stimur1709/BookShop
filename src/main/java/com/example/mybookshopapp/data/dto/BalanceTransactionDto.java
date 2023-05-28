@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class BalanceTransactionDto extends Dto implements Serializable {
+public class BalanceTransactionDto extends Dto {
 
     private String description;
     private int value;

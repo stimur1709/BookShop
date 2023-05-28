@@ -23,7 +23,7 @@ public class ResponseResultDto {
 
     public ResponseResultDto(Boolean result, String text) {
         this.result = result;
-        if (result) {
+        if (Boolean.TRUE.equals(result)) {
             this.text = text;
         } else {
             this.error = text;
@@ -37,10 +37,4 @@ public class ResponseResultDto {
         this.maps = maps;
     }
 
-    public ResponseResultDto(Boolean result, String text, String name, String date) {
-        this.result = result;
-        this.text = text;
-        this.name = name;
-        this.date = date;
-    }
 }

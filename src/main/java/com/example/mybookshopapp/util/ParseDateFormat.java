@@ -13,4 +13,7 @@ public class ParseDateFormat {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return simpleDateFormat.parse(date);
     }
+
+    private ParseDateFormat() {
+    }
 }

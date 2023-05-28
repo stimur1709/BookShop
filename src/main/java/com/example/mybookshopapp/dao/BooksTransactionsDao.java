@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.dao;
 
-import com.example.mybookshopapp.data.daoEntity.BooksTransactionsCount;
+import com.example.mybookshopapp.data.dao.BooksTransactionsCount;
 import com.example.mybookshopapp.data.query.BTQuery;
 import com.example.mybookshopapp.util.ParseDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;

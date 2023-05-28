@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.UserDto;
 import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.outher.SearchWordDto;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.web.bind.annotation.ModelAttribute;
 

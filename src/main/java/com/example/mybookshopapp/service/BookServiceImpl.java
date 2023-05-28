@@ -12,7 +12,7 @@ import com.example.mybookshopapp.repository.BookQueryRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.BooksQueryRepository;
 import com.example.mybookshopapp.repository.BooksViewedRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

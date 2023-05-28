@@ -1,5 +1,7 @@
 package com.example.mybookshopapp.controllers.rest;
 
+import com.example.mybookshopapp.data.dao.BooksTransactionsCount;
+import com.example.mybookshopapp.data.dao.TransactionsInterval;
 import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
 import com.example.mybookshopapp.data.query.BTQuery;
 import com.example.mybookshopapp.service.BalanceTransactionService;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -23,21 +26,13 @@ public class RestBalanceTransactionController
     }
 
     @GetMapping("interval")
-    public ResponseEntity<?> getTransactionsInterval(BTQuery query) {
-        try {
-            return new ResponseEntity<>(service.getTransactionsInterval(query), HttpStatus.OK);
-        } catch (ParseException e) {
-            return new ResponseEntity<>("Ошибка", HttpStatus.CONFLICT);
-        }
+    public ResponseEntity<List<TransactionsInterval>> getTransactionsInterval(BTQuery query) throws ParseException {
+        return new ResponseEntity<>(service.getTransactionsInterval(query), HttpStatus.OK);
     }
 
     @GetMapping("books")
-    public ResponseEntity<?> getBooksTransactionsCount(BTQuery query) {
-        try {
-            return new ResponseEntity<>(service.getBooksTransactionsCount(query), HttpStatus.OK);
-        } catch (ParseException e) {
-            return new ResponseEntity<>("Ошибка", HttpStatus.CONFLICT);
-        }
+    public ResponseEntity<List<BooksTransactionsCount>> getBooksTransactionsCount(BTQuery query) throws ParseException {
+        return new ResponseEntity<>(service.getBooksTransactionsCount(query), HttpStatus.OK);
     }
 
 }

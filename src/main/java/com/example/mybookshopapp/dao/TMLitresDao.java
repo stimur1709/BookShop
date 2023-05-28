@@ -1,6 +1,6 @@
 package com.example.mybookshopapp.dao;
 
-import com.example.mybookshopapp.data.daoEntity.TMLitres;
+import com.example.mybookshopapp.data.dao.TMLitres;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

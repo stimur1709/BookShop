@@ -37,7 +37,7 @@ public class EmailConfig {
         mailSender.setHost(email.getHost());
         mailSender.setUsername(email.getUsername());
         mailSender.setPort(email.getPort());
-        mailSender.setPassword("RAqxPp23uQ3j8uGUfhHG");
+        mailSender.setPassword(email.getPassword());
         Properties properties = mailSender.getJavaMailProperties();
         properties.put("mail.transport.protocol", email.getProtocol());
         properties.put("mail.smtp.auth", email.isSmtpAuth());

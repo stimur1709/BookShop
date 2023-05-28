@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.dao.TMLitresDao;
-import com.example.mybookshopapp.data.daoEntity.TMLitres;
+import com.example.mybookshopapp.data.dao.TMLitres;
 import com.example.mybookshopapp.data.entity.books.Book;
 import com.example.mybookshopapp.data.outher.litres.Litres;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class ExternalBookLoader {
     public void loaderBooks() {
         List<TMLitres> searchList = tmLitresDao.getTagWithMinBook();
         for (TMLitres tmLitres : searchList) {
-            if (tmLitres.getActive()) {
+            if (tmLitres.isActive()) {
                 log.info("Начался парсинг книг по тэгу {}", tmLitres.getSearchName());
                 String url = getUrl(tmLitres);
                 Litres exchange = restTemplate.getForObject(url, Litres.class);

@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.AuthorDto;
 import com.example.mybookshopapp.data.entity.Author;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.AuthorRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class AuthorServiceImpl extends ModelServiceImpl<Author, Query, AuthorDto
         return super.getPageContents(q);
     }
 
-    public TreeMap<String, List<AuthorDto>> getAuthorsMap() {
+    public SortedMap<String, List<AuthorDto>> getAuthorsMap() {
         return new TreeMap<>(repository.findAll().stream().map(m -> modelMapper.map(m, AuthorDto.class))
                 .collect(Collectors.groupingBy((AuthorDto a) -> a.getName().substring(0, 1))));
     }

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.outher.YKassa;
+package com.example.mybookshopapp.data.outher.kassa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

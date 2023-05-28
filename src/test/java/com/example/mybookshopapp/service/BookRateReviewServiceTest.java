@@ -9,7 +9,7 @@ import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.repository.*;
 import com.example.mybookshopapp.repository.BookQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
-import com.example.mybookshopapp.service.userService.UserAuthService;
+import com.example.mybookshopapp.service.user.UserAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

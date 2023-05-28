@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.GenreRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

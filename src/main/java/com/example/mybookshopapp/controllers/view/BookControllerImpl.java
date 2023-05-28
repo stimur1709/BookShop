@@ -3,13 +3,14 @@ package com.example.mybookshopapp.controllers.view;
 import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.data.query.Query;
-import com.example.mybookshopapp.service.*;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.BookReviewServiceImpl;
+import com.example.mybookshopapp.service.BookServiceImpl;
+import com.example.mybookshopapp.service.BookShopService;
+import com.example.mybookshopapp.service.DownloadService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.nio.file.Path;
 
 @Controller
 public class BookControllerImpl extends ViewControllerImpl {
@@ -26,10 +26,8 @@ public class BookControllerImpl extends ViewControllerImpl {
     private final BookServiceImpl bookService;
     private final BookReviewServiceImpl bookReviewService;
     private final DownloadService downloadService;
-    private final BookFileServiceImpl storage;
 
-    protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
-                                 BookFileServiceImpl storage, BookServiceImpl bookService,
+    protected BookControllerImpl(UserProfileService userProfileService, HttpServletRequest request, BookServiceImpl bookService,
                                  BookReviewServiceImpl bookReviewService,
                                  DownloadService downloadService, BookShopService bookShopService,
                                  MessageLocale messageLocale) {
@@ -37,7 +35,6 @@ public class BookControllerImpl extends ViewControllerImpl {
         this.bookService = bookService;
         this.bookReviewService = bookReviewService;
         this.downloadService = downloadService;
-        this.storage = storage;
     }
 
     @GetMapping("/books/{slug}")
@@ -58,7 +55,7 @@ public class BookControllerImpl extends ViewControllerImpl {
     }
 
     private String getProperty(String url) {
-        String property = null;
+        String property;
         switch (url) {
             case "viewed":
                 property = "viewed";
@@ -66,7 +63,7 @@ public class BookControllerImpl extends ViewControllerImpl {
             case "popular":
                 property = "popularity";
                 break;
-            case "recent":
+            default:
                 property = "pub_date";
                 break;
         }
@@ -74,16 +71,12 @@ public class BookControllerImpl extends ViewControllerImpl {
     }
 
     @GetMapping("/books/download/{hash}")
-    public ResponseEntity<?> bookFile(@PathVariable("hash") String hash) throws IOException {
-        downloadService.fileDownload(hash);
-        Path path = storage.getBookFilePath(hash);
-        MediaType mediaType = storage.getBookFileName(hash);
-        byte[] data = storage.getBookFileByteArray(hash);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
-                .contentType(mediaType)
-                .contentLength(data.length)
-                .body(new ByteArrayResource(data));
+    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) {
+        try {
+            return downloadService.fileDownload(hash);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

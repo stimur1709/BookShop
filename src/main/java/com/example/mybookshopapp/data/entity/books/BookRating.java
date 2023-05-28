@@ -2,6 +2,7 @@ package com.example.mybookshopapp.data.entity.books;
 
 import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "book_rating")
+@NoArgsConstructor
 public class BookRating {
 
     @EmbeddedId
@@ -26,8 +28,5 @@ public class BookRating {
 
     @Column(name = "user_id", insertable = false, updatable = false)
     private Integer userId;
-
-    public BookRating() {
-    }
 
 }

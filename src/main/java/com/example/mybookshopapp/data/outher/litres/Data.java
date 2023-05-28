@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.outher.litres;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,9 @@ public class Data {
     private String type;
     private Instance instance;
     private String value;
-    private int documents_count;
-    private boolean is_selected;
+    @JsonProperty("documents_count")
+    private int documentsCount;
+    @JsonProperty("is_selected")
+    private boolean isSelected;
 
 }

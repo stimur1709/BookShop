@@ -48,24 +48,28 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 return;
             } else {
                 try {
-                    String username = jwtUtil.extractUsername(jwt);
-                    BookstoreUserDetails userDetails =
-                            (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                    if (username != null && jwtUtil.validateToken(jwt, userDetails) && blacklistService.findToken(username)) {
-                        UsernamePasswordAuthenticationToken authenticationToken =
-                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                            log.info("Аутентификация");
-                            userLoginHistoryService.saveLoginHistory(userDetails.getUser(), request);
-                            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                        }
-                    }
+                    authUser(jwt, request);
                 } catch (Exception ex) {
                     response.setHeader("Authorization", "");
                 }
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void authUser(String jwt, HttpServletRequest request) {
+        String username = jwtUtil.extractUsername(jwt);
+        BookstoreUserDetails userDetails =
+                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
+        if (username != null && jwtUtil.validateToken(jwt, userDetails) && blacklistService.findToken(username)) {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                log.info("Аутентификация");
+                userLoginHistoryService.saveLoginHistory(userDetails.getUser(), request);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        }
     }
 }

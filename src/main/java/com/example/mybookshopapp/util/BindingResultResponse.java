@@ -10,6 +10,10 @@ import java.util.Map;
 @Component
 public class BindingResultResponse {
 
+
+    private BindingResultResponse() {
+    }
+
     public static Map<String, Object> getMessage(BindingResult bindingResult) {
         Map<String, Object> response = new HashMap<>();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {

@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.daoEntity;
+package com.example.mybookshopapp.data.dao;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +14,6 @@ public class TMLitres {
     private int searchId;
     private int lastStart;
     private long total;
-    private Boolean active;
+    private boolean active;
     private short type;
 }

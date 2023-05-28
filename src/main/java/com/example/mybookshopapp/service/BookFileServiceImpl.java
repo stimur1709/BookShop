@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.BookFileDto;
 import com.example.mybookshopapp.data.entity.books.BookFile;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.BookFileRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

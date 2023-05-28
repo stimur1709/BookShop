@@ -45,7 +45,7 @@
                         <div class="pict pict_left">
                             <img th:src="'/img/' + ${content.image.getName()}" alt="card.jpg"/>
                         </div>
-                        <div th:if="${content.description.length() >= 200}">
+                        <div th:if="${content.description != null && content.description.length() >= 200}">
                             <h2 th:text="#{messages.biography}">Биография</h2>
                             <span th:text="${content.description.substring(0, content.description.length()/2)}"
                                   style="line-height: 1.5em; color: #757575; margin-bottom: 10px">
@@ -62,7 +62,7 @@
                             судьбу, поступив в Литературный институт" в 1952г.
                         </span>
                         </div>
-                        <div th:if="${content.description.length() < 200}">
+                        <div th:if="${content.description != null && content.description.length() < 200}">
                             <h2 th:text="#{messages.biography}">Биография</h2>
                             <span th:text="${content.description}"
                                   style="line-height: 1.5em; color: #757575; margin-bottom: 10px">

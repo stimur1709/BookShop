@@ -60,7 +60,7 @@ public class MailService {
     }
 
     private String getSubject(int type) {
-        String subject = null;
+        String subject;
         switch (type) {
             case 1:
                 subject = "Bookstore email verification!";
@@ -71,7 +71,7 @@ public class MailService {
             case 3:
                 subject = "Купленные книги";
                 break;
-            case 4:
+            default:
                 subject = "Восстановление пароля";
                 break;
         }

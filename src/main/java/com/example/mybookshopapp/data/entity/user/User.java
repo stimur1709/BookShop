@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Schema(description = "Сущность пользователя")
-public class User extends Models implements Serializable {
+public class User extends Models {
 
     @Column(columnDefinition = "VARCHAR(32) NOT NULL", unique = true)
     private String hash;

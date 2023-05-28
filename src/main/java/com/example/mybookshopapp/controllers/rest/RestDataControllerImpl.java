@@ -17,7 +17,7 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
 
     protected final S service;
 
-    public RestDataControllerImpl(S service) {
+    protected RestDataControllerImpl(S service) {
         this.service = service;
     }
 

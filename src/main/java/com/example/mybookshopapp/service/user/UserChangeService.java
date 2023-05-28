@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.service.userService;
+package com.example.mybookshopapp.service.user;
 
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.User;

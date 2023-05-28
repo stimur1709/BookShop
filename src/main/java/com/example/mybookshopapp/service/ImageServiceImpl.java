@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.ImageDto;
 import com.example.mybookshopapp.data.entity.Image;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.ImageRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
@@ -77,22 +77,28 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
     }
 
     @Scheduled(fixedDelayString = "PT24H")
-    protected void deletingUnusedPictures() {
+    protected void deletingUnusedImage() {
         log.info("The procedure for deleting unused images has been started");
-        int size;
+        int size = deletingUnusedInBd();
+        size += deletingUnusedInProject();
+        log.info("{} pictures removed", size);
+    }
+
+    private int deletingUnusedInBd() {
         List<Image> unusedPictures = repository.findUnusedPictures();
         for (Image image : unusedPictures) {
             File file = new File(uploadPath + File.separator + image.getName());
-            if (file.delete()) {
-                log.info("{} picture deleted", image.getName());
-            } else {
-                log.error("{} image deletion error", image.getName());
-            }
+            delete(file);
         }
-        if (unusedPictures.size() > 0) {
+        if (!unusedPictures.isEmpty()) {
             repository.deleteAll(unusedPictures);
         }
-        size = unusedPictures.size();
+        return unusedPictures.size();
+
+    }
+
+    private int deletingUnusedInProject() {
+        int size = 0;
         File dir = new File(uploadPath);
         File[] arrFiles = dir.listFiles();
         if (arrFiles != null && arrFiles.length > 0) {
@@ -105,18 +111,24 @@ public class ImageServiceImpl extends ModelServiceImpl<Image, Query, ImageDto, I
             List<File> filesDelete = Arrays.stream(arrFiles)
                     .filter(f -> imagesName.contains(f.getName()))
                     .collect(Collectors.toList());
-            if (filesDelete.size() > 0) {
+            if (!filesDelete.isEmpty()) {
                 for (File file : filesDelete) {
-                    if (file.delete()) {
-                        log.info("{} picture deleted", file.getName());
-                    } else {
-                        log.error("{} image deletion error", file.getName());
-                    }
+                    delete(file);
                 }
                 size += filesDelete.size();
             }
         }
-        log.info("{} pictures removed", size);
+        return size;
+    }
+
+    public void delete(File file) {
+        try {
+            Files.delete(file.toPath());
+            log.info("{} picture deleted", file.getName());
+        } catch (IOException e) {
+            log.error("{} image deletion error", file.getName());
+            throw new RuntimeException(e);
+        }
     }
 
 

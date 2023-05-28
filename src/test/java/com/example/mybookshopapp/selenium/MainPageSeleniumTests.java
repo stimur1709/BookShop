@@ -30,7 +30,7 @@ class MainPageSeleniumTests {
     }
 
     @Test
-    public void testMainPageAccess() throws InterruptedException {
+    void testMainPageAccess() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
         mainPage
                 .callPage()
@@ -40,7 +40,7 @@ class MainPageSeleniumTests {
     }
 
     @Test
-    public void testMainPageSearchByQuery() throws InterruptedException {
+    void testMainPageSearchByQuery() throws InterruptedException {
         MainPage mainPage = new MainPage(driver);
         mainPage
                 .callPage()

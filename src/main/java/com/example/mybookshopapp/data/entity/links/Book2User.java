@@ -2,6 +2,7 @@ package com.example.mybookshopapp.data.entity.links;
 
 import com.example.mybookshopapp.data.entity.links.key.KeyBook2User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "book2user")
+@NoArgsConstructor
 public class Book2User {
 
     @EmbeddedId
@@ -32,8 +34,5 @@ public class Book2User {
     @UpdateTimestamp
     @Column(columnDefinition = "DATE NOT NULL")
     private LocalDateTime time;
-
-    public Book2User() {
-    }
 
 }

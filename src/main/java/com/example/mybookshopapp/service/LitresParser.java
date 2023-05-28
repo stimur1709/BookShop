@@ -13,6 +13,7 @@ import com.example.mybookshopapp.repository.AuthorRepository;
 import com.example.mybookshopapp.repository.BookRepository;
 import com.example.mybookshopapp.repository.GenreRepository;
 import com.example.mybookshopapp.repository.TagRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,9 +26,10 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
+@Slf4j
 public class LitresParser {
 
-    private final String LITRES_URL = "https://www.litres.ru/";
+    private static final String LITRES = "https://www.litres.ru/";
 
     private final ImageServiceImpl imageService;
     private final BookRepository bookRepository;
@@ -49,7 +51,7 @@ public class LitresParser {
         List<Book> books = new ArrayList<>();
         if ((exchange != null ? exchange.getPayload() : null) != null) {
             for (Data data : exchange.getPayload().getData()) {
-                System.out.println(data.getInstance().getTitle());
+                log.info(data.getInstance().getTitle());
 
                 Optional<Book> optionalBook = bookRepository.findFirstByTitleIgnoreCase(data.getInstance().getTitle());
                 Optional<String> first = books.stream()
@@ -62,17 +64,17 @@ public class LitresParser {
                 }
             }
         }
-        System.out.println(books.size());
+        log.info(String.valueOf(books.size()));
         for (Book book : books) {
-            System.out.println(book.getTitle());
+            log.info(book.getTitle());
             for (Author author : book.getAuthorList()) {
-                System.out.println("    " + author.getName() + "  --  ");
+                log.info("    " + author.getName() + "  --  ");
             }
             for (Genre author : book.getGenreList()) {
-                System.out.println("    " + author.getName() + "  --  " + author.getId());
+                log.info("    " + author.getName() + "  --  " + author.getId());
             }
         }
-        System.out.println("--------------");
+        log.info("--------------");
         return bookRepository.saveAll(books);
     }
 
@@ -81,11 +83,11 @@ public class LitresParser {
         book.setSlug(UUID.randomUUID().toString());
         book.setTitle(instance.getTitle());
         book.setIsBestseller(instance.getLabels().isBestseller() ? 1 : 0);
-        String IMAGE_URL = "https://cv7.litres.ru/";
-        Image image = imageService.downloadImage(IMAGE_URL + instance.getCoverUrl());
+        String imageUrl = "https://cv7.litres.ru/";
+        Image image = imageService.downloadImage(imageUrl + instance.getCoverUrl());
         book.setImage(image);
 
-        Document doc = htmlParse(LITRES_URL + instance.getUrl());
+        Document doc = htmlParse(LITRES + instance.getUrl());
         String description = getDescription(doc, 1);
         book.setDescription(description);
 
@@ -152,8 +154,8 @@ public class LitresParser {
     private Author createAuthor(Person person) {
         Author author = new Author();
         author.setName(person.getFullName());
-        String description = getDescription(htmlParse(LITRES_URL + person.getUrl() + "ob-avtore/"), 2);
-        Image image = downloadAuthorImage(htmlParse(LITRES_URL + person.getUrl()));
+        String description = getDescription(htmlParse(LITRES + person.getUrl() + "ob-avtore/"), 2);
+        Image image = downloadAuthorImage(htmlParse(LITRES + person.getUrl()));
         author.setImage(image);
         author.setDescription(description);
         author.setSlug(UUID.randomUUID().toString());
@@ -162,11 +164,11 @@ public class LitresParser {
 
     private Author refreshAuthor(Author author, Person person) {
         if (author.getDescription() == null || author.getDescription().isBlank()) {
-            String description = getDescription(htmlParse(LITRES_URL + person.getUrl() + "ob-avtore/"), 2);
+            String description = getDescription(htmlParse(LITRES + person.getUrl() + "ob-avtore/"), 2);
             author.setDescription(description);
         }
         if (author.getImage() == null || author.getImage().getId() == 1) {
-            Image image = downloadAuthorImage(htmlParse(LITRES_URL + person.getUrl()));
+            Image image = downloadAuthorImage(htmlParse(LITRES + person.getUrl()));
             author.setImage(image);
         }
         return author;
@@ -195,6 +197,8 @@ public class LitresParser {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
+            log.error("Ошибка");
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         }
     }
@@ -210,19 +214,19 @@ public class LitresParser {
 
     private boolean checkContainsGenre(List<Genre> genres, String name) {
         boolean b = genres.stream().map(Genre::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        System.out.println(b + " -- " + name);
+        log.info(b + " -- " + name);
         return b;
     }
 
     private boolean checkContainsAuthor(List<Author> authors, String name) {
         boolean b = authors.stream().map(Author::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        System.out.println(b + " -- " + name);
+        log.info(b + " -- " + name);
         return b;
     }
 
     private boolean checkContainsTag(List<TagBook> tagBooks, String name) {
         boolean b = tagBooks.stream().map(TagBook::getName).anyMatch(n -> n.equalsIgnoreCase(name));
-        System.out.println(b + " -- " + name);
+        log.info(b + " -- " + name);
         return b;
     }
 

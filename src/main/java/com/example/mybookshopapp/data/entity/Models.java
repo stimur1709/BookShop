@@ -1,7 +1,6 @@
 package com.example.mybookshopapp.data.entity;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class Models {
 
     @Id
@@ -21,5 +19,8 @@ public class Models {
 
     public Models(Integer id) {
         this.id = id;
+    }
+
+    public Models() {
     }
 }

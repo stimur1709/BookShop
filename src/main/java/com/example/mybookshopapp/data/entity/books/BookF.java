@@ -1,6 +1,5 @@
 package com.example.mybookshopapp.data.entity.books;
 
-import com.example.mybookshopapp.data.entity.Author;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.entity.TagBook;
 import lombok.Getter;
@@ -49,22 +48,9 @@ public class BookF extends BooksFModels {
     private List<BookRating> bookRatingList;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book2Author",
-            joinColumns = {@JoinColumn(name = "book_id")},
-            inverseJoinColumns = {@JoinColumn(name = "author_id")})
-    private List<Author> authorList;
-
-    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book2genre",
             joinColumns = {@JoinColumn(name = "book_id")},
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     private List<Genre> genreList;
 
-    public int discountPrice() {
-        if (discount == 0) {
-            return price;
-        } else {
-            return price - Math.toIntExact(Math.round(price * discount));
-        }
-    }
 }

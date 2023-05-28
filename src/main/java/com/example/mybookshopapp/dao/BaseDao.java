@@ -13,7 +13,7 @@ public abstract class BaseDao<E> {
     protected final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final Class<E> object;
 
-    public BaseDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, Class<E> object) {
+    protected BaseDao(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, Class<E> object) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.object = object;
@@ -25,14 +25,6 @@ public abstract class BaseDao<E> {
 
     public List<E> getContent(String sql) {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(object));
-    }
-
-
-    public E getData(String sql) {
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(object))
-                .stream()
-                .findFirst()
-                .orElse(null);
     }
 
     public void saveOrUpdate(String sql, Map<String, Object> paramMap) {

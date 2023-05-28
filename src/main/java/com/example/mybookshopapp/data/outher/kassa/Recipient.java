@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.outher.YKassa;
+package com.example.mybookshopapp.data.outher.kassa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class Recipient {
     @JsonProperty("account_id")
-    private String account_id;
+    private String accountId;
     @JsonProperty("gateway_id")
-    private String gateway_id;
+    private String gatewayId;
 }

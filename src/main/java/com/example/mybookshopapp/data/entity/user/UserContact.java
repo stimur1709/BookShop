@@ -18,7 +18,7 @@ import java.util.Date;
 @Table(name = "user_contact")
 @Schema(description = "Сущность контакта пользователя")
 @ToString
-public class UserContact extends Models implements Serializable {
+public class UserContact extends Models {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", columnDefinition = "INT")
@@ -82,7 +82,6 @@ public class UserContact extends Models implements Serializable {
         this.codeTime = new Date();
         this.user = user;
         this.parentUserContact = userContact;
-        this.code = code;
     }
 
     public UserContact(User user, ContactType contactType, String contact, String code) {

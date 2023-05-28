@@ -1,4 +1,4 @@
-package com.example.mybookshopapp.data.outher.YKassa;
+package com.example.mybookshopapp.data.outher.kassa;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PaymentRequest {
-    public Amount amount;
-    public boolean capture;
-    public Confirmation confirmation;
-    public String description;
+    private Amount amount;
+    private boolean capture;
+    private Confirmation confirmation;
+    private String description;
 
     public PaymentRequest(Amount amount, Confirmation confirmation, String description) {
         this.amount = amount;

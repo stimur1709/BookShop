@@ -3,6 +3,7 @@ package com.example.mybookshopapp.data.entity.books;
 import com.example.mybookshopapp.data.entity.links.key.KeyBookReviewLike;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "book_review_like")
 @Schema(description = "Лайки и дизлайки отзывов")
+@NoArgsConstructor
 public class BookReviewLike {
 
     @EmbeddedId
@@ -28,6 +30,4 @@ public class BookReviewLike {
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
 
-    public BookReviewLike() {
-    }
 }

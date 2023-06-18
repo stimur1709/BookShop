@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,6 +17,7 @@ public class Query {
     private boolean reverse;
     private String search;
     private String property;
+    private List<Integer> ids;
 
     public Query(Integer offset, Integer limit, String property, boolean reverse, String search) {
         this.offset = offset;
@@ -48,4 +52,12 @@ public class Query {
     public String getSearch() {
         return search == null ? "" : search;
     }
+
+    public boolean checkQuery() {
+        if (ids == null) {
+            ids = Collections.emptyList();
+        }
+        return (search != null && !search.isBlank()) || !ids.isEmpty();
+    }
+
 }

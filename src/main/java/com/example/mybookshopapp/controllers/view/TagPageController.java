@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.TagServiceImpl;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +35,7 @@ public class TagPageController extends ViewControllerImpl {
 
     @GetMapping("/{slug}")
     public String tagPage(@PathVariable(value = "slug") String slug, Model model) {
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "tag", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, "tag", slug));
         model.addAttribute("content", tagService.getContent(slug));
         model.addAttribute("booksTag", books);
         model.addAttribute("show", books.getTotalPages() > 1);

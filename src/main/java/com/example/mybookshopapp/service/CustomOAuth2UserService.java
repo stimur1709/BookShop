@@ -120,18 +120,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         authorities.add(new OAuth2UserAuthority(userAttributes));
 
         ObjectMapper mapper = new ObjectMapper();
-        List<VkToken> vkTokenList = mapper.convertValue(response.getBody().get("response"), new TypeReference<>() {
-        });
-        VkToken vkToken = vkTokenList.get(0);
-        Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
-        System.out.println(userRequest.getAdditionalParameters().get("email"));
-
-        if (userContact.isEmpty()) {
-            UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
-            User user = new User(vkToken.getFirstname(), vkToken.getLastname(), vkToken.getId());
-            contact.setUser(user);
-            userRepository.save(user);
-            userContactService.save(contact);
+        Map<String, Object> body = response.getBody();
+        if (body != null) {
+            List<VkToken> vkTokenList = mapper.convertValue(body.get("response"), new TypeReference<>() {
+            });
+            VkToken vkToken = vkTokenList.get(0);
+            Optional<UserContact> userContact = userContactService.checkUserExistsByContact(vkToken.getId());
+            if (userContact.isEmpty()) {
+                UserContact contact = userContactService.save(new UserContact(ContactType.VK, vkToken.getId()));
+                User user = new User(vkToken.getFirstname(), vkToken.getLastname(), vkToken.getId());
+                contact.setUser(user);
+                userRepository.save(user);
+                userContactService.save(contact);
+            }
         }
 
         return new DefaultOAuth2User(authorities, userAttributes, userNameAttributeName);

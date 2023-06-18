@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/authors")
-public class RestAuthorControllerImpl extends RestDataControllerImpl<Query, AuthorDto, AuthorServiceImpl> {
+public class RestAuthorControllerImpl
+        extends RestDataControllerImpl<Query, AuthorDto, AuthorDto, AuthorServiceImpl> {
 
     @Autowired
     public RestAuthorControllerImpl(AuthorServiceImpl service) {

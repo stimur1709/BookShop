@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.query.BookQuery;
 import com.example.mybookshopapp.service.AuthorServiceImpl;
 import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +23,8 @@ public class AuthorControllerImpl extends ViewControllerImpl {
 
     private final AuthorServiceImpl authorService;
     private final BookServiceImpl bookService;
+
+    private static final String AUTHOR = "author";
 
     @Autowired
     protected AuthorControllerImpl(UserProfileService userProfileService, HttpServletRequest request,
@@ -42,15 +44,15 @@ public class AuthorControllerImpl extends ViewControllerImpl {
     @GetMapping("/{slug}")
     public String authorPage(@PathVariable("slug") String slug, Model model) {
         model.addAttribute("content", authorService.getContent(slug));
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 5, "author", slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 5, AUTHOR, slug));
         model.addAttribute("authorBooks", books.getContent());
         return "authors/slug";
     }
 
-    @GetMapping("/books/author/{slug}")
+    @GetMapping("{slug}/books")
     public String authorBooksPage(@PathVariable("slug") String slug, Model model) {
-        Page<BooksFDto> books = bookService.getContents(new BookQuery(0, 20, "author", slug));
-        model.addAttribute("author", authorService.getContent(slug));
+        Page<BooksFDto> books = bookService.getPageContents(new BookQuery(0, 20, AUTHOR, slug));
+        model.addAttribute(AUTHOR, authorService.getContent(slug));
         model.addAttribute("books", books);
         return "books/author";
     }

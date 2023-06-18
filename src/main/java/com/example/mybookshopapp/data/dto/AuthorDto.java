@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.data.dto;
 
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.entity.Image;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class AuthorDto extends Dto {
     private String slug;
     private String name;
     private String description;
-    private List<BooksFDto> bookList;
     private Image image;
+    private List<BooksFDto> bookList;
 
 }

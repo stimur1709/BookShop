@@ -4,7 +4,7 @@ import com.example.mybookshopapp.data.dto.BookFileDto;
 import com.example.mybookshopapp.data.entity.books.BookFile;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.BookFileRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookFileDto, BookFileRepository> {
+public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookFileDto, BookFileDto, BookFileRepository> {
 
     @Value("${download.path}")
     private String downloadPath;
@@ -27,7 +27,7 @@ public class BookFileServiceImpl extends ModelServiceImpl<BookFile, Query, BookF
     @Autowired
     protected BookFileServiceImpl(BookFileRepository repository, UserProfileService userProfileService,
                                   ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, BookFileDto.class, BookFile.class, userProfileService, modelMapper, request);
+        super(repository, BookFileDto.class, BookFileDto.class, BookFile.class, userProfileService, modelMapper, request);
     }
 
     public Path getBookFilePath(String hash) {

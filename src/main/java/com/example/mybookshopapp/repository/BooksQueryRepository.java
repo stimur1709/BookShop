@@ -13,8 +13,12 @@ public interface BooksQueryRepository extends ModelRepository<BooksF> {
     @Query(value = "select * from get_books(?1)", nativeQuery = true)
     Page<BooksF> getBooks(Integer userId, Pageable pageable);
 
-    @Query(value = "select * from find_books(?1, ?2, ?3, ?4, ?5, ?6) ", nativeQuery = true)
-    Page<BooksF> findBooks(Integer userId, String search, boolean bestseller, boolean discount, Date from, Date to, Pageable nextPage);
+    @Query(value = "select * from find_books(?1, ?2, ?3, ?4, ?5, ?6) b " +
+            "where case when ?7 is not null then b.id not in (?7) else true end ", nativeQuery = true)
+    Page<BooksF> findBooks(Integer userId, String search,
+                           boolean bestseller, boolean discount,
+                           Date from, Date to, List<Integer> ids,
+                           Pageable nextPage);
 
     @Query(value = "select * from get_books_by_tag_slug(?1, ?2) ", nativeQuery = true)
     Page<BooksF> getBooksByTagSlug(Integer userId, String slug, Pageable pageable);
@@ -28,9 +32,8 @@ public interface BooksQueryRepository extends ModelRepository<BooksF> {
     @Query(value = "select * from get_books(?1) where code = ?2 ", nativeQuery = true)
     List<BooksF> getBooksUser(Integer userId, String name);
 
-    @Query(value = "select count(*) " +
-            "    from books b " +
-            "             join book2user b2u on b.id = b2u.book_id and b2u.user_id = ?1 " +
+    @Query(value = "select count(*) from books b " +
+            "    join book2user b2u on b.id = b2u.book_id and b2u.user_id = ?1 " +
             "    where b2u.type_id in (?2) ", nativeQuery = true)
     long getCountBooksForUser(Integer userId, List<Integer> ids);
 

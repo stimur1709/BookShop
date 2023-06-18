@@ -5,14 +5,15 @@ import com.example.mybookshopapp.data.dto.BalanceTransactionDto;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import com.example.mybookshopapp.data.outher.*;
+import com.example.mybookshopapp.data.query.BTQuery;
+import com.example.mybookshopapp.service.BalanceTransactionService;
 import com.example.mybookshopapp.service.BookShopService;
-import com.example.mybookshopapp.service.PaymentService;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.service.UserLoginHistoryService;
-import com.example.mybookshopapp.service.userService.UserAuthService;
-import com.example.mybookshopapp.service.userService.UserChangeService;
-import com.example.mybookshopapp.service.userService.UserProfileService;
-import com.example.mybookshopapp.service.userService.UserRegisterService;
+import com.example.mybookshopapp.service.user.UserAuthService;
+import com.example.mybookshopapp.service.user.UserChangeService;
+import com.example.mybookshopapp.service.user.UserProfileService;
+import com.example.mybookshopapp.service.user.UserRegisterService;
 import com.example.mybookshopapp.util.FormValidator;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +42,10 @@ public class UserAuthController extends ViewControllerImpl {
     private final FormValidator formValidator;
     private final UserContactService userContactService;
     private final UserLoginHistoryService userLoginHistoryService;
-    private final PaymentService paymentService;
+    private final BalanceTransactionService balanceTransactionService;
 
     @Autowired
-    protected UserAuthController(UserProfileService userProfileService, HttpServletRequest request, BookShopService bookShopService, MessageLocale messageLocale, UserRegisterService userRegisterService, UserAuthService userAuthService, UserChangeService userChangeService, FormValidator formValidator, UserContactService userContactService, UserLoginHistoryService userLoginHistoryService, PaymentService paymentService) {
+    protected UserAuthController(UserProfileService userProfileService, HttpServletRequest request, BookShopService bookShopService, MessageLocale messageLocale, UserRegisterService userRegisterService, UserAuthService userAuthService, UserChangeService userChangeService, FormValidator formValidator, UserContactService userContactService, UserLoginHistoryService userLoginHistoryService, BalanceTransactionService balanceTransactionService) {
         super(userProfileService, request, bookShopService, messageLocale);
         this.userRegisterService = userRegisterService;
         this.userAuthService = userAuthService;
@@ -52,7 +53,7 @@ public class UserAuthController extends ViewControllerImpl {
         this.formValidator = formValidator;
         this.userContactService = userContactService;
         this.userLoginHistoryService = userLoginHistoryService;
-        this.paymentService = paymentService;
+        this.balanceTransactionService = balanceTransactionService;
     }
 
 
@@ -108,7 +109,7 @@ public class UserAuthController extends ViewControllerImpl {
     public String profilePage(@RequestParam(value = "difference", defaultValue = "0") Double difference, Model model) {
         model.addAttribute("currentUser", userProfileService.getCurrentUserDTO());
 
-        Page<BalanceTransactionDto> pageTr = paymentService.getTransactionsUser();
+        Page<BalanceTransactionDto> pageTr = balanceTransactionService.getPageContents(new BTQuery(0, 5, "time", userProfileService.getUserId(), List.of(3)));
         model.addAttribute("transactions", pageTr.getContent());
         model.addAttribute("showTr", pageTr.getTotalPages() > 1);
         model.addAttribute("totalPagesTr", pageTr.getTotalPages());
@@ -125,13 +126,6 @@ public class UserAuthController extends ViewControllerImpl {
             model.addAttribute("sum", difference);
         }
         return "profile";
-    }
-
-    @GetMapping("/api/transactions")
-    @ResponseBody
-    public List<BalanceTransactionDto> getTransactionsUser(@RequestParam("offset") int offset,
-                                                           @RequestParam("limit") int limit) {
-        return paymentService.getTransactionsUser(offset, limit);
     }
 
     @GetMapping("/api/loginStory")
@@ -171,7 +165,7 @@ public class UserAuthController extends ViewControllerImpl {
 
     @GetMapping("/api/profile/cancel")
     @ResponseBody
-    public ResponseEntity<?> cancelProfile() {
+    public ResponseEntity<Boolean> cancelProfile() {
         userContactService.deleteAllNoApprovedUserContactByUser();
         return new ResponseEntity<>(HttpStatus.OK);
     }

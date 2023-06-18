@@ -1,11 +1,11 @@
 package com.example.mybookshopapp.controllers.view;
 
-import com.example.mybookshopapp.data.dto.BooksFDto;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
 import com.example.mybookshopapp.data.outher.Balance;
 import com.example.mybookshopapp.service.BookServiceImpl;
 import com.example.mybookshopapp.service.BookShopService;
 import com.example.mybookshopapp.service.PaymentService;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

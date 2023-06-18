@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,7 +17,7 @@ import java.util.UUID;
 public class BalanceTransaction extends Models {
 
     @Column(name = "user_id", columnDefinition = "INT NOT NULL")
-    private int user;
+    private Integer user;
 
     @Column(columnDefinition = "DATE NOT NULL")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,13 +49,6 @@ public class BalanceTransaction extends Models {
     @JoinColumn(columnDefinition = "INT NOT NULL", name = "book_id", insertable = false, updatable = false)
     @JsonBackReference
     private Book books;
-
-    @Transient
-    private String formatDate;
-
-    public void setFormatDate(SimpleDateFormat simpleDateFormat) {
-        this.formatDate = simpleDateFormat.format(time);
-    }
 
     public BalanceTransaction(int user, int value, String codePaymentIn, String codePaymentEx) {
         this.user = user;

@@ -1,17 +1,19 @@
 package com.example.mybookshopapp.data.entity.books;
 
-import com.example.mybookshopapp.data.entity.Image;
-import com.example.mybookshopapp.data.entity.Models;
+import com.example.mybookshopapp.data.entity.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "books")
+@ToString
 public class Book extends Models {
 
     @Column(name = "pub_date", columnDefinition = "DATE NOT NULL")
@@ -26,7 +28,7 @@ public class Book extends Models {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String title;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "image_id")
     private Image image;
 
@@ -44,6 +46,27 @@ public class Book extends Models {
 
     @Transient
     private int discountPrice;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "book2tag",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @ToString.Exclude
+    private List<TagBook> tagList;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "book2Author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @ToString.Exclude
+    private List<Author> authorList;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "book2genre",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ToString.Exclude
+    private List<Genre> genreList;
 
     public int getDiscountPrice() {
         if (discount == 0) {

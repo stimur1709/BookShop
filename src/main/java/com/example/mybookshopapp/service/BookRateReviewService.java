@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.service;
 
 import com.example.mybookshopapp.repository.BookReviewLikeRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

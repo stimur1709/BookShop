@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource("/application-test.yaml")
+@TestPropertySource("/application-test.properties")
 @Slf4j
 @DisplayName("Аутентификация пользователя")
 class UserAuthControllerTest {
@@ -77,7 +77,7 @@ class UserAuthControllerTest {
 
     @Test
     @DisplayName("Проверка аутентификации пользователя")
-    public void correctLoginTest() throws Exception {
+    void correctLoginTest() throws Exception {
         ContactConfirmationPayload payload = new ContactConfirmationPayload();
         payload.setContact("stimur1709@mail.ru");
         payload.setCode("123456789");
@@ -88,6 +88,6 @@ class UserAuthControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(cookie().exists("token"));
+                .andExpect(header().exists("Authorization"));
     }
 }

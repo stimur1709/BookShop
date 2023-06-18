@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.data.dto;
 
-import com.example.mybookshopapp.data.entity.Genre;
+import com.example.mybookshopapp.data.dto.book.BooksFDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +11,15 @@ import java.util.List;
 @Setter
 public class GenreDto extends Dto {
 
-    private Genre parent;
-
     private String slug;
-
     private String name;
 
-    private List<Genre> childGenres;
+    @JsonIgnoreProperties(value = "bookList")
+    private GenreDto parent;
+
+    @JsonIgnoreProperties(value = {"bookList", "parent"})
+    private List<GenreDto> childGenres;
 
     private List<BooksFDto> bookList;
+
 }

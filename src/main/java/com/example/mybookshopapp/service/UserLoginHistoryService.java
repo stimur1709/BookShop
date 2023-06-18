@@ -3,7 +3,7 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.entity.user.User;
 import com.example.mybookshopapp.data.entity.user.UserLoginHistory;
 import com.example.mybookshopapp.repository.UserLoginHistoryRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.UserGeolocation;
 import io.ipgeolocation.api.Geolocation;
 import org.springframework.beans.factory.annotation.Autowired;

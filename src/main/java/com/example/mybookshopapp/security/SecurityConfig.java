@@ -6,6 +6,7 @@ import com.example.mybookshopapp.service.BlacklistService;
 import com.example.mybookshopapp.service.BookStoreUserDetailsService;
 import com.example.mybookshopapp.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -40,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final PasswordEncoder passwordEncoder;
 
+    @Value("${jwt.key}")
+    private String crmUrl;
+
     @Autowired
     public SecurityConfig(BookStoreUserDetailsService bookStoreUserDetailsService, JWTRequestFilter filter,
                           BlacklistService blacklistService, CustomOAuth2UserService customOAuth2UserService,
@@ -64,12 +68,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
+                .antMatchers("/api/transactions/**").hasRole("ADMIN")
                 .antMatchers("/my", "/profile", "/api/bookReview", "/order/**").hasRole("USER")
                 .antMatchers("/restore/**").hasRole("ANONYMOUS")
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
                 .loginPage("/signin").failureUrl("/signin")
-                .and().logout().logoutSuccessHandler(logoutSuccessHandler()).deleteCookies("token")
+                .and().logout().logoutSuccessHandler(logoutSuccessHandler())
                 .and().sessionManagement()
                 .and().oauth2Login()
                 .tokenEndpoint()
@@ -109,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200/"));
+        configuration.setAllowedOrigins(List.of(crmUrl));
         configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

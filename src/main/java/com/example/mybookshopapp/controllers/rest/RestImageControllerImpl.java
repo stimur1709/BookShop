@@ -16,7 +16,8 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/image")
-public class RestImageControllerImpl extends RestDataControllerImpl<Query, ImageDto, ImageServiceImpl> {
+public class RestImageControllerImpl
+        extends RestDataControllerImpl<Query, ImageDto, ImageDto, ImageServiceImpl> {
 
     @Autowired
     public RestImageControllerImpl(ImageServiceImpl service) {

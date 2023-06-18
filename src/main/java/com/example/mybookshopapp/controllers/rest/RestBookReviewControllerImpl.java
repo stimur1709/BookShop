@@ -14,7 +14,8 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/review")
-public class RestBookReviewControllerImpl extends RestDataControllerImpl<Query, BookReviewDto, BookReviewServiceImpl> {
+public class RestBookReviewControllerImpl
+        extends RestDataControllerImpl<Query, BookReviewDto, BookReviewDto, BookReviewServiceImpl> {
 
     private final BookRateReviewService bookRateReviewService;
 

@@ -1,10 +1,12 @@
 package com.example.mybookshopapp.data.outher;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class RegistrationForm {
 
     private String firstname;
@@ -13,6 +15,4 @@ public class RegistrationForm {
     private String phone;
     private String password;
 
-    public RegistrationForm() {
-    }
 }

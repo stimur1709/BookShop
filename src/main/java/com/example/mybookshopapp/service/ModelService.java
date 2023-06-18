@@ -8,17 +8,17 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
-public interface ModelService<Q extends Query, D extends Dto> {
+public interface ModelService<Q extends Query, D extends Dto, O extends Dto> {
 
-    Page<D> getContents(Q query);
+    Page<D> getPageContents(Q query);
 
     PageRequest getPageRequest(Q query);
 
     D getContent(String slug);
 
-    List<D> getAllContents(Q query);
+    List<D> getListContents(Q query);
 
-    D save(D dto) throws DefaultException;
+    O save(O dto) throws DefaultException;
 
     List<D> saveAll(List<D> dtoList);
 

@@ -15,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -41,34 +40,36 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String token;
-        String username;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    try {
-                        token = cookie.getValue();
-                        username = jwtUtil.extractUsername(token);
-                        BookstoreUserDetails userDetails =
-                                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
-                        if (username != null && jwtUtil.validateToken(token, userDetails) && blacklistService.findToken(username)) {
-                            UsernamePasswordAuthenticationToken authenticationToken =
-                                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                            if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                                log.info("Аутентификация");
-                                userLoginHistoryService.saveLoginHistory(userDetails.getUser(), request);
-                                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                            }
-                        }
-                    } catch (Exception ex) {
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                    }
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
+            String jwt = authHeader.substring(7);
+            if (jwt.isBlank()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid JWT Token in Bearer Header");
+                return;
+            } else {
+                try {
+                    authUser(jwt, request);
+                } catch (Exception ex) {
+                    response.setHeader("Authorization", "");
                 }
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void authUser(String jwt, HttpServletRequest request) {
+        String username = jwtUtil.extractUsername(jwt);
+        BookstoreUserDetails userDetails =
+                (BookstoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(username);
+        if (username != null && jwtUtil.validateToken(jwt, userDetails) && blacklistService.findToken(username)) {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                log.info("Аутентификация");
+                userLoginHistoryService.saveLoginHistory(userDetails.getUser(), request);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        }
     }
 }

@@ -27,4 +27,9 @@ public class BookQuery extends Query {
     public BookQuery(Integer offset, Integer limit, String property, boolean reverse, String search) {
         super(offset, limit, property, reverse, search);
     }
+
+    @Override
+    public boolean checkQuery() {
+        return super.checkQuery() || discount || bestseller || from != null || to != null;
+    }
 }

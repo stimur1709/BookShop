@@ -7,7 +7,7 @@ import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.BookReviewQueryRepository;
 import com.example.mybookshopapp.repository.BookReviewRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewRepository> {
+public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewDto, BookReviewRepository> {
 
     private final BookReviewQueryRepository bookReviewQueryRepository;
     private final MessageLocale messageLocale;
@@ -26,7 +26,7 @@ public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, B
     protected BookReviewServiceImpl(BookReviewRepository repository, UserProfileService userProfileService,
                                     ModelMapper modelMapper, HttpServletRequest request,
                                     BookReviewQueryRepository bookReviewQueryRepository, MessageLocale messageLocale) {
-        super(repository, BookReviewDto.class, BookReview.class, userProfileService, modelMapper, request);
+        super(repository, BookReviewDto.class, BookReviewDto.class, BookReview.class, userProfileService, modelMapper, request);
         this.bookReviewQueryRepository = bookReviewQueryRepository;
         this.messageLocale = messageLocale;
     }
@@ -45,7 +45,7 @@ public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, B
     }
 
     @Override
-    public List<BookReviewDto> getAllContents(Query q) {
+    public List<BookReviewDto> getListContents(Query q) {
         User user = userProfileService.getCurrentUser();
         return bookReviewQueryRepository.getReviewByBookAndUser(q.getSearch(), user.getId())
                 .stream()

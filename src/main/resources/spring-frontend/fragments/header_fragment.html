@@ -94,7 +94,8 @@
                                 </g>
                             </svg>
                             <span class="CartBlock-text" id="username" th:text="${getUser.getLastname()}"></span>
-                            <span class="CartBlock-budget" th:text="#{message.onAccount} + ${getUser.getBalance()} + #{message.rub}">На счете рублей</span>
+                            <span class="CartBlock-budget"
+                                  th:text="#{message.onAccount} + ${getUser.getBalance()} + #{message.rub}">На счете рублей</span>
                         </a>
                         <a class="CartBlock-block" th:if="${!isAuthenticatedUser}"
                            th:href="@{/signin}">

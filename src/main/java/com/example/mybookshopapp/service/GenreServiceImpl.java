@@ -4,22 +4,24 @@ import com.example.mybookshopapp.data.dto.GenreDto;
 import com.example.mybookshopapp.data.entity.Genre;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.repository.GenreRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, GenreRepository> {
+public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, GenreDto, GenreRepository> {
 
 
     @Autowired
     protected GenreServiceImpl(GenreRepository repository, UserProfileService userProfileService,
                                ModelMapper modelMapper, HttpServletRequest request) {
-        super(repository, GenreDto.class, Genre.class, userProfileService, modelMapper, request);
+        super(repository, GenreDto.class, GenreDto.class, Genre.class, userProfileService, modelMapper, request);
     }
 
     public List<Genre> getParentGenreList() {
@@ -31,4 +33,19 @@ public class GenreServiceImpl extends ModelServiceImpl<Genre, Query, GenreDto, G
         return modelMapper.map(repository.findGenreEntityBySlug(slug), GenreDto.class);
     }
 
+    @Override
+    public Page<GenreDto> getPageContents(Query q) {
+        if (q.checkQuery()) {
+            return repository.findGenres(q.getSearch(), q.getIds(), getPageRequest(q))
+                    .map(m -> modelMapper.map(m, GenreDto.class));
+        }
+        return super.getPageContents(q);
+    }
+
+    @Override
+    public List<GenreDto> getListContents(Query query) {
+        return repository.getParentGenreList().stream()
+                .map(m -> modelMapper.map(m, GenreDto.class))
+                .collect(Collectors.toList());
+    }
 }

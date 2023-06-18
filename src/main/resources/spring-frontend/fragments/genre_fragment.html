@@ -4,8 +4,8 @@
 <body>
 <div th:fragment="genreList(genres)" th:each="genre : ${genres}"
      th:class="${genre.getParent() == null ? 'Tags Tags_embed' : (genre.getChildGenres().size() != 0 ? 'Tags' : 'Tag')}">
-    <div th:if="${genre.getChildGenres().size() != 0}"
-         th:class="${genre.getChildGenres().size() != 0 ? 'Tags-title' : ''}">
+    <div th:if="${genre.getChildGenres().size() != 0 || genre.getParent() == null}"
+         th:class="${genre.getChildGenres().size() != 0 || genre.getParent() == null ? 'Tags-title' : ''}">
         <div class="Tag">
             <a th:href="${'/genres/' + genre.getSlug()}"
                th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
@@ -13,7 +13,8 @@
     </div>
     <span th:if="${genre.getChildGenres() != null}"
           th:replace="~{fragments/genre_fragment::genreList(${genre.getChildGenres()})}"></span>
-    <a th:if="${genre.getChildGenres().size() == 0}" th:href="${'/genres/' + genre.getSlug()}"
+    <a th:if="${genre.getChildGenres().size() == 0 && genre.getParent() != null}"
+       th:href="${'/genres/' + genre.getSlug()}"
        th:text="${genre.getName() + '(' + (genre.getBookList() == null ? '0' : genre.getBookList().size()) + ')'}"></a>
 </div>
 <span class="breadcrumbs-item" th:fragment="parentGenre(genre)" th:if="${genre != null}">

@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.example</groupId>
     <artifactId>MyBookShopApp</artifactId>
@@ -15,6 +15,10 @@
     <description>MyBookShopApp</description>
     <properties>
         <java.version>1.8</java.version>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.projectKey>bookshop</sonar.projectKey>
+        <sonar.projectName>'bookshop'</sonar.projectName>
+        <sonar.token>sqp_24244cef356c26f3c8b6736e46a2632f4e771a10</sonar.token>
     </properties>
     <dependencies>
         <dependency>
@@ -142,6 +146,21 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.9.1.2184</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -166,6 +185,13 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.4.0.905</version>
+            </plugin>
         </plugins>
     </build>
 </project>
+
+

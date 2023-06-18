@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/genres")
-public class RestGenresControllerImpl extends RestDataControllerImpl<Query, GenreDto, GenreServiceImpl> {
+public class RestGenresControllerImpl
+        extends RestDataControllerImpl<Query, GenreDto, GenreDto, GenreServiceImpl> {
 
     @Autowired
     public RestGenresControllerImpl(GenreServiceImpl service) {

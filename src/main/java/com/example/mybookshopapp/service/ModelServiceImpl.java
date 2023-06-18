@@ -6,7 +6,7 @@ import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
 import com.example.mybookshopapp.repository.ModelRepository;
-import com.example.mybookshopapp.service.userService.UserProfileService;
+import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,18 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class ModelServiceImpl<M extends Models, Q extends Query, D extends Dto, R extends ModelRepository<M>>
-        implements ModelService<Q, D> {
+public abstract class ModelServiceImpl<M extends Models, Q extends Query, D extends Dto, O extends Dto, R extends ModelRepository<M>>
+        implements ModelService<Q, D, O> {
 
     protected final R repository;
-    private final Class<D> dto;
+    private final Class<D> dtoS;
+    private final Class<O> dto;
     private final Class<M> model;
     protected final UserProfileService userProfileService;
     protected final ModelMapper modelMapper;
     protected final HttpServletRequest request;
 
-    protected ModelServiceImpl(R repository, Class<D> dto, Class<M> model, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request) {
+    protected ModelServiceImpl(R repository, Class<D> dtoS, Class<O> dto, Class<M> model, UserProfileService userProfileService, ModelMapper modelMapper, HttpServletRequest request) {
         this.repository = repository;
+        this.dtoS = dtoS;
         this.dto = dto;
         this.model = model;
         this.userProfileService = userProfileService;
@@ -36,39 +38,43 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
     }
 
     @Override
-    public Page<D> getContents(Q q) {
-        return repository.findAll(PageRequest.of(q.getOffset(), q.getLimit())).map(m -> modelMapper.map(m, dto));
+    public Page<D> getPageContents(Q q) {
+        return repository.findAll(getPageRequest(q)).map(m -> modelMapper.map(m, dtoS));
     }
 
     @Override
     public PageRequest getPageRequest(Q q) {
         return q.getProperty() == null
                 ? PageRequest.of(q.getOffset(), q.getLimit())
-                : PageRequest.of(q.getOffset(), q.getLimit(), Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty()));
+                : PageRequest.of(q.getOffset(), q.getLimit(), Sort.by(getSortDirection(q.isReverse()), q.getProperty()));
+    }
+
+    private Sort.Direction getSortDirection(boolean reverse) {
+        return reverse ? Sort.Direction.ASC : Sort.Direction.DESC;
     }
 
     @Override
-    public List<D> getAllContents(Q q) {
+    public List<D> getListContents(Q q) {
         Sort sort = Sort.by(q.isReverse() ? Sort.Direction.ASC : Sort.Direction.DESC, q.getProperty());
         return repository.findAll(sort)
                 .stream()
-                .map(m -> modelMapper.map(m, dto))
+                .map(m -> modelMapper.map(m, dtoS))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public D save(D dto) throws DefaultException {
+    public O save(O dto) throws DefaultException {
         return modelMapper.map(repository.save(modelMapper.map(dto, this.model)), this.dto);
     }
 
     @Override
     public D getContent(String slug) {
-        return modelMapper.map(repository.getById(Integer.parseInt(slug)), this.dto);
+        return modelMapper.map(repository.getById(Integer.parseInt(slug)), this.dtoS);
     }
 
     protected BookCodeType getStatusUser() {
         String url = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
-        BookCodeType status = BookCodeType.UNLINK;
+        BookCodeType status;
         switch (url) {
             case "cart":
                 status = BookCodeType.CART;
@@ -79,7 +85,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
             case "postponed":
                 status = BookCodeType.KEPT;
                 break;
-            case "myarchive":
+            default:
                 status = BookCodeType.ARCHIVED;
                 break;
         }
@@ -94,7 +100,7 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
                 .collect(Collectors.toList());
         return repository.saveAll(mList)
                 .stream()
-                .map(m -> modelMapper.map(m, this.dto))
+                .map(m -> modelMapper.map(m, this.dtoS))
                 .collect(Collectors.toList());
     }
 }

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tags")
-public class RestTagsControllerImpl extends RestDataControllerImpl<Query, TagBookDto, TagServiceImpl> {
+public class RestTagsControllerImpl
+        extends RestDataControllerImpl<Query, TagBookDto, TagBookDto, TagServiceImpl> {
 
     @Autowired
     public RestTagsControllerImpl(TagServiceImpl service) {

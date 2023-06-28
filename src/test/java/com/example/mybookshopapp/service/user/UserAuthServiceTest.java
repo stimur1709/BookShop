@@ -1,11 +1,12 @@
 package com.example.mybookshopapp.service.user;
 
-import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
-import com.example.mybookshopapp.data.outher.ContactConfirmationResponse;
 import com.example.mybookshopapp.data.entity.enums.ContactType;
 import com.example.mybookshopapp.data.entity.user.UserContact;
+import com.example.mybookshopapp.data.outher.ContactConfirmationPayload;
+import com.example.mybookshopapp.data.outher.ContactConfirmationResponse;
 import com.example.mybookshopapp.repository.UserContactRepository;
 import com.example.mybookshopapp.util.Generator;
+import com.example.mybookshopapp.util.MessageLocale;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,13 +14,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,7 +34,7 @@ class UserAuthServiceTest {
     private final UserContactRepository userContactRepository;
     private final PasswordEncoder passwordEncoder;
     private final Generator generator;
-    private final MessageSource messageSource;
+    private final MessageLocale messageLocale;
 
     private UserContact contactMail;
     private UserContact contactPhone;
@@ -45,12 +44,12 @@ class UserAuthServiceTest {
 
     @Autowired
     UserAuthServiceTest(UserAuthService userAuthService, UserContactRepository userContactRepository,
-                        PasswordEncoder passwordEncoder, Generator generator, MessageSource messageSource) {
+                        PasswordEncoder passwordEncoder, Generator generator, MessageLocale messageLocale) {
         this.userAuthService = userAuthService;
         this.userContactRepository = userContactRepository;
         this.passwordEncoder = passwordEncoder;
         this.generator = generator;
-        this.messageSource = messageSource;
+        this.messageLocale = messageLocale;
     }
 
     @BeforeEach
@@ -69,11 +68,6 @@ class UserAuthServiceTest {
     }
 
     @Test
-    void jwtLogin() {
-
-    }
-
-    @Test
     @Transactional
     @DisplayName("Подтверждение контакта")
     void handlerApproveContact() throws InterruptedException {
@@ -88,7 +82,7 @@ class UserAuthServiceTest {
         contactMail.setCodeTime(new Date(new Date().getTime() - 1000000));
         contactMail = userContactRepository.saveAndFlush(contactMail);
         response = userAuthService.handlerApproveContact(payload);
-        String message = messageSource.getMessage("message.newCode", null, new Locale("ru"));
+        String message = messageLocale.getMessage("message.newCode");
         assertEquals(response.getError(), message);
         log.info("Попытка подтверждения: {}", response.getError());
         for (int i = 1; i < 5; i++) {
@@ -100,7 +94,7 @@ class UserAuthServiceTest {
                 Thread.sleep(1000);
             } else {
                 long dif = Math.abs(contactPhone.getCodeTime().getTime() - new Date().getTime());
-                message = messageSource.getMessage("message.blockContactApproved", null, new Locale("ru"));
+                message = messageLocale.getMessage("message.blockContactApproved");
                 assertEquals(response.getError(), generator.generatorTextBlockContact(dif, message));
             }
             log.info("Попытка подтверждения: {}", response.getError());
@@ -118,7 +112,7 @@ class UserAuthServiceTest {
         contactMail.setCodeTime(new Date());
         userContactRepository.save(contactMail);
         response = userAuthService.handlerRequestContactConfirmation(payload);
-        String messageMail = messageSource.getMessage("message.blockContactMail", null, new Locale("ru"));
+        String messageMail = messageLocale.getMessage("message.blockContactMail");
         long time = Math.abs(contactMail.getCodeTime().getTime() - new Date().getTime());
         assertEquals(response.getError(), generator.generatorTextBlockContact(time, messageMail));
     }

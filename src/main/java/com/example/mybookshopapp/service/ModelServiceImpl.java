@@ -5,6 +5,7 @@ import com.example.mybookshopapp.data.entity.Models;
 import com.example.mybookshopapp.data.entity.links.BookCodeType;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
+import com.example.mybookshopapp.errors.RestDefaultException;
 import com.example.mybookshopapp.repository.ModelRepository;
 import com.example.mybookshopapp.service.user.UserProfileService;
 import org.modelmapper.ModelMapper;
@@ -103,4 +104,10 @@ public abstract class ModelServiceImpl<M extends Models, Q extends Query, D exte
                 .map(m -> modelMapper.map(m, this.dtoS))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(int id) throws RestDefaultException {
+        repository.deleteById(id);
+    }
+
 }

@@ -10,15 +10,13 @@ import com.example.mybookshopapp.data.outher.RestorePassword;
 import com.example.mybookshopapp.repository.UserRepository;
 import com.example.mybookshopapp.service.UserContactService;
 import com.example.mybookshopapp.util.Generator;
+import com.example.mybookshopapp.util.MessageLocale;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.LocaleResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,30 +30,26 @@ public class UserChangeService {
     private final Generator generator;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final MessageSource messageSource;
-    private final LocaleResolver localeResolver;
-    private final HttpServletRequest request;
+    private final MessageLocale messageLocale;
 
     @Autowired
     public UserChangeService(UserProfileService userProfileService, UserContactService userContactService,
                              Generator generator, PasswordEncoder passwordEncoder, UserRepository userRepository,
-                             MessageSource messageSource, LocaleResolver localeResolver, HttpServletRequest request) {
+                             MessageLocale messageLocale) {
         this.userProfileService = userProfileService;
         this.userContactService = userContactService;
         this.generator = generator;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.messageSource = messageSource;
-        this.localeResolver = localeResolver;
-        this.request = request;
+        this.messageLocale = messageLocale;
     }
 
     public ContactConfirmationResponse handlerRequestChangeContactConfirmation(ContactConfirmationPayload payload) {
         Optional<UserContact> userContact = userContactService.checkUserExistsByContact(payload.getContact());
         if (userContact.isPresent()) {
             if (userContact.get().getApproved() == (short) 1) {
-                String messagePhone = messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request));
-                String messageMail = messageSource.getMessage("message.mailBusy", null, localeResolver.resolveLocale(request));
+                String messagePhone = messageLocale.getMessage("message.phoneBusy");
+                String messageMail = messageLocale.getMessage("message.mailBusy");
                 String error = payload.getContactType().equals(ContactType.PHONE)
                         ? messagePhone
                         : messageMail;
@@ -64,7 +58,7 @@ public class UserChangeService {
 
             long dif = Math.abs(userContact.get().getCodeTime().getTime() - new Date().getTime());
             if (dif <= 300000 && userContact.get().getCodeTrails() >= 2) {
-                String message = messageSource.getMessage("message.blockContactApproved", null, localeResolver.resolveLocale(request));
+                String message = messageLocale.getMessage("message.blockContactApproved");
                 return new ContactConfirmationResponse(false,
                         generator.generatorTextBlockContact(dif, message));
             } else {
@@ -81,27 +75,30 @@ public class UserChangeService {
         return new ContactConfirmationResponse(true);
     }
 
-    public Map<String, Object> updateUser(ChangeProfileForm changeProfileForm) {
+    public Map<String, Object> updateUser(ChangeProfileForm profile) {
         Map<String, Object> response = new HashMap<>();
         User user = userProfileService.getCurrentUser();
-        user.setFirstname(changeProfileForm.getFirstname());
-        user.setLastname(changeProfileForm.getLastname());
-        user.setPassword(passwordEncoder.encode(changeProfileForm.getPassword()));
+        user.setFirstname(profile.getFirstname());
+        user.setLastname(profile.getLastname());
 
-        if (!changeProfileForm.getEmail().equals(changeProfileForm.getOldEmail())) {
-            if (userContactService.checkUserExistsByContact(changeProfileForm.getEmail()).isPresent()) {
-                response.put("email", messageSource.getMessage("message.mailBusy", null, localeResolver.resolveLocale(request)));
+        if (!profile.getPassword().isBlank() && profile.getPassword().equals(profile.getPasswordRepeat())) {
+            user.setPassword(passwordEncoder.encode(profile.getPassword()));
+        }
+
+        if (!profile.getEmail().equals(profile.getOldEmail())) {
+            if (userContactService.checkUserExistsByContact(profile.getEmail()).isPresent()) {
+                response.put("email", messageLocale.getMessage("message.mailBusy"));
             } else {
-                UserContact userContact = userContactService.getUserContact(changeProfileForm.getOldEmail());
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, changeProfileForm.getEmail(), userContact), user));
+                UserContact userContact = userContactService.getUserContact(profile.getOldEmail());
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.MAIL, profile.getEmail(), userContact), user));
             }
         }
-        if (!changeProfileForm.getPhone().equals(changeProfileForm.getOldPhone())) {
-            if (userContactService.checkUserExistsByContact(changeProfileForm.getPhone()).isPresent()) {
-                response.put("phone", messageSource.getMessage("message.phoneBusy", null, localeResolver.resolveLocale(request)));
+        if (!profile.getPhone().equals(profile.getOldPhone())) {
+            if (userContactService.checkUserExistsByContact(profile.getPhone()).isPresent()) {
+                response.put("phone", messageLocale.getMessage("message.phoneBusy"));
             } else {
-                UserContact userContact = userContactService.getUserContact(changeProfileForm.getOldPhone());
-                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, changeProfileForm.getPhone(), userContact), user));
+                UserContact userContact = userContactService.getUserContact(profile.getOldPhone());
+                user.getUserContact().add(userContactService.changeContact(new UserContact(ContactType.PHONE, profile.getPhone(), userContact), user));
             }
         }
         userRepository.save(user);

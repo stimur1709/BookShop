@@ -10,6 +10,7 @@ import com.example.mybookshopapp.repository.BookReviewRepository;
 import com.example.mybookshopapp.service.user.UserProfileService;
 import com.example.mybookshopapp.util.MessageLocale;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewDto, BookReviewRepository> {
+public class BookReviewServiceImpl
+        extends ModelServiceImpl<BookReview, Query, BookReviewDto, BookReviewDto, BookReviewRepository> {
 
     private final BookReviewQueryRepository bookReviewQueryRepository;
     private final MessageLocale messageLocale;
@@ -53,4 +55,14 @@ public class BookReviewServiceImpl extends ModelServiceImpl<BookReview, Query, B
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Page<BookReviewDto> getPageContents(Query query) {
+        return repository.findByStatus((short) 0, getPageRequest(query))
+                .map(m -> modelMapper.map(m, BookReviewDto.class));
+    }
+
+
+    public long getUnconfirmedReview() {
+        return repository.countByStatus((short) 0);
+    }
 }

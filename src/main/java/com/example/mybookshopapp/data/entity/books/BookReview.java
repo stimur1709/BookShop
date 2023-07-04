@@ -26,6 +26,8 @@ public class BookReview extends Models {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
+    private short status;
+
     public BookReview(int bookId, int userId, String text) {
         this.bookId = bookId;
         this.userId = userId;

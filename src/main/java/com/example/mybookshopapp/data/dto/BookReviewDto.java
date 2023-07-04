@@ -19,7 +19,8 @@ public class BookReviewDto extends Dto {
     private String text;
     private String name;
     private String date;
-    private Short value;
+    private short value;
     private long likes;
     private long dislikes;
+    private short status;
 }

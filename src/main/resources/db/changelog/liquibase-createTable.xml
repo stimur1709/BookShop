@@ -1113,4 +1113,11 @@
         <comment>insert data</comment>
         <sqlFile path="db/changelog/scripts/13-06-2023.sql"/>
     </changeSet>
+    <changeSet id="321249121235-1" author="S Timur">
+        <addColumn tableName="book_review">
+            <column name="status" value="1" defaultValue="0" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

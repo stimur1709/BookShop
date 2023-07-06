@@ -3,6 +3,7 @@ package com.example.mybookshopapp.controllers.rest;
 import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
+import com.example.mybookshopapp.errors.RestDefaultException;
 import com.example.mybookshopapp.service.ModelService;
 import com.example.mybookshopapp.util.BindingResultResponse;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,11 @@ public abstract class RestDataControllerImpl<Q extends Query, D extends Dto, O e
     @Override
     public List<D> getList(Q query) {
         return service.getListContents(query);
+    }
+
+    @Override
+    public ResponseEntity<Object> delete(int id) throws RestDefaultException {
+        service.delete(id);
+        return ok().build();
     }
 }

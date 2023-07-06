@@ -381,7 +381,7 @@
     <changeSet author="S Timur" id="29">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author"
                                  constraintName="fk8joa8tens71ol1st4fd9hssph" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="30">
@@ -399,25 +399,25 @@
     <changeSet author="S Timur" id="33">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre"
                                  constraintName="fkceqa97sssb6d5xg7n8jtt5gqb" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="34">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user"
                                  constraintName="fkd80i5quc7o0xb1d1k8ppqmtsu" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="35">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction"
                                  constraintName="fke2aw1i7lhjey4rskq9qhed9qs" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="37">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_rating"
                                  constraintName="fkg6p9bhsx856y3gj39utdc7udf" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_rating"
                                  constraintName="fvz6p9bbxx856y3gj39utdc4udf" deferrable="false"
@@ -427,13 +427,13 @@
     <changeSet author="S Timur" id="38">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_file"
                                  constraintName="fkg7meofferi2glg6uwj2yhfmp9" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="39">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review"
                                  constraintName="fkgme5o68sylsmw5hw0ys2x8iw8" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="40">
@@ -457,7 +457,7 @@
     <changeSet author="S Timur" id="43">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2tag"
                                  constraintName="fkkshb2gce4ettp6ehidjy86u5c" deferrable="false"
-                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet author="S Timur" id="44">
@@ -871,7 +871,7 @@
     <changeSet id="78" author="S Timur">
         <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_rating"
                                  constraintName="fk1i4g52uf4ebv1wepiujenmj7x" deferrable="false"
-                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
                                  referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet id="79" author="S Timur">
@@ -898,6 +898,18 @@
     </changeSet>
     <changeSet id="83" author="S Timur">
         <addPrimaryKey columnNames="book_id, user_id" constraintName="books_viewed_pkey" tableName="books_viewed"/>
+    </changeSet>
+    <changeSet id="425452689" author="S Timur">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="books_viewed"
+                                 constraintName="fk_bv_user_id" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="425452684" author="S Timur">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="books_viewed"
+                                 constraintName="fk_bv_book_id" deferrable="false"
+                                 initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+                                 referencedColumnNames="id" referencedTableName="books"/>
     </changeSet>
     <changeSet id="84" author="S Timur">
         <sqlFile path="db/changelog/scripts/function-get-books-viewed.sql"/>
@@ -1100,5 +1112,12 @@
     <changeSet id="312249121235-1" author="S Timur">
         <comment>insert data</comment>
         <sqlFile path="db/changelog/scripts/13-06-2023.sql"/>
+    </changeSet>
+    <changeSet id="321249121235-1" author="S Timur">
+        <addColumn tableName="book_review">
+            <column name="status" value="1" defaultValue="0" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

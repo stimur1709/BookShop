@@ -6,11 +6,12 @@ import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.service.BookRateReviewService;
 import com.example.mybookshopapp.service.BookReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/review")
@@ -29,7 +30,12 @@ public class RestBookReviewControllerImpl
     @ResponseBody
     public ResponseEntity<Map<String, Object>> rateBookReview(@RequestBody ReviewLikeDto reviewLikeDto) {
         Map<String, Object> response = bookRateReviewService.changeRateBookReview(reviewLikeDto.getReviewid(), reviewLikeDto.getValue());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ok(response);
+    }
+
+    @GetMapping("/unconfirmed")
+    public ResponseEntity<Long> getUnconfirmedReview() {
+        return ok(service.getUnconfirmedReview());
     }
 
 }

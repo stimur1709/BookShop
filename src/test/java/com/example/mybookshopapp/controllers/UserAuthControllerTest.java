@@ -88,6 +88,6 @@ class UserAuthControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(header().exists("Authorization"));
+                .andExpect(cookie().exists("token"));
     }
 }

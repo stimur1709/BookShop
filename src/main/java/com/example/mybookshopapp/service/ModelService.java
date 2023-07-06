@@ -3,6 +3,7 @@ package com.example.mybookshopapp.service;
 import com.example.mybookshopapp.data.dto.Dto;
 import com.example.mybookshopapp.data.query.Query;
 import com.example.mybookshopapp.errors.DefaultException;
+import com.example.mybookshopapp.errors.RestDefaultException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -22,6 +23,7 @@ public interface ModelService<Q extends Query, D extends Dto, O extends Dto> {
 
     List<D> saveAll(List<D> dtoList);
 
+    void delete(int id) throws RestDefaultException;
 }
 
 

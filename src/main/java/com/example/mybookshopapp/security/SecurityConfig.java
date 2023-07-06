@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${jwt.key}")
+    @Value("${cms.url}")
     private String crmUrl;
 
     @Autowired
@@ -68,8 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/api/transactions/**").hasRole("ADMIN")
-                .antMatchers("/my", "/profile", "/api/bookReview", "/order/**").hasRole("USER")
+                .antMatchers("/api/transactions/**", "/api/tags/save", "/api/genres/save", "/api/books/save", "/api/authors/save", "/api/image/save", "/api/**/delete/**").hasRole("ADMIN")
+                .antMatchers("/my", "/profile", "/order/**", "/api/profile/change", "/api/review/save")
+                .hasRole("USER")
                 .antMatchers("/restore/**").hasRole("ANONYMOUS")
                 .antMatchers("/**").permitAll()
                 .and().formLogin()

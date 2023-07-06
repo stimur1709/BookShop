@@ -56,7 +56,7 @@ spring:
 upload:
   path: src/main/resources/img/
 
-crm:
+cms:
   url: localhost:4200/
 
 download:

@@ -1497,7 +1497,7 @@ VALUES ('история экономики', 'a26217a1-8cd9-4bfb-a043-40ba6dab1d
 
 
 INSERT INTO image (name, size)
-VALUES ('518c2ec0-5673-4379-805d-2104fcbb67e5.png', 1477);
+VALUES ('1.png', 1477);
 INSERT INTO image (name, size)
 VALUES ('82675c55-baf3-44fe-8632-ae320a656a66.jpg', 2513);
 INSERT INTO image (name, size)

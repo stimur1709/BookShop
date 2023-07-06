@@ -143,15 +143,16 @@ public class UserAuthController extends ViewControllerImpl {
     }
 
     @DurationTrackable
-    @PostMapping("/api/profile/save")
+    @PostMapping("/api/profile/change")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> saveProfile(@RequestBody @Valid ChangeProfileForm changeProfileForm,
                                                            BindingResult bindingResult) {
         formValidator.validate(changeProfileForm, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, Object> response = new HashMap<>();
-            for (FieldError fieldError : bindingResult.getFieldErrors())
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 response.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
